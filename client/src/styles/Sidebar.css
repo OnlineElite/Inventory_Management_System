@@ -40,17 +40,10 @@
     flex-direction: column;
 }
 
-.btn{
-    width: fit-content;
-    align-self: center;
-    margin-block: 1rem;
-    background-color: black;
-    color: white;
+.mainlinks li a i{
+    font-weight: bold;
 }
-.btn i{
-    color: white;
-}
-.lines{
+/*.lines{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -63,21 +56,21 @@
     width: 38%;
     height: 1px;
     background-color: lightgrey;
-}
+}*/
 
 .mainlinks{
     width: 100%;
 }
 
-.mainlinks li{
+.mainlinks .link{
     list-style: none;
     padding-block: 0.5rem;
-
+    cursor: pointer;
     width: 100%;
     padding-left: 1rem;
 }
 
-.mainlinks li:hover{
+.active{
     background-color: gray;
 }
 
