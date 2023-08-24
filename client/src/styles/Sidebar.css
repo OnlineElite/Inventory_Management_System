@@ -1,0 +1,87 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar{
+    padding: 0;
+    max-height: 100vh;
+    min-height: 100vh;
+    overflow-y: scroll;
+}
+
+.userInfo{
+    display: flex;
+    background-color:black;
+    padding: 1rem;
+    padding-block: 2rem;
+}
+
+.userInfo .userImage{
+    width: 60px;  /* width 50%*/
+    height: 60px;  /* height 50%*/
+    border-radius: 50%;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:lightgrey;
+    margin-right: 0.5rem;
+}
+
+.userInfo .userImage i{
+    font-size: 45px;
+    color: blue;
+}
+
+.userInfo .username{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn{
+    width: fit-content;
+    align-self: center;
+    margin-block: 1rem;
+    background-color: black;
+    color: white;
+}
+.btn i{
+    color: white;
+}
+.lines{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    color: yellow;
+    margin-block: 1rem;
+}
+
+.lines .line{
+    width: 38%;
+    height: 1px;
+    background-color: lightgrey;
+}
+
+.mainlinks{
+    width: 100%;
+}
+
+.mainlinks li{
+    list-style: none;
+    padding-block: 0.5rem;
+
+    width: 100%;
+    padding-left: 1rem;
+}
+
+.mainlinks li:hover{
+    background-color: gray;
+}
+
+.sidebar ul{
+    margin-left: 0;
+    padding-left: 0;
+}
