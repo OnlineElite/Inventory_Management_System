@@ -5,6 +5,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import './App.css';
 import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
         <Sidebar/>
       </div>
       <div className="col">
-
+        <Header/>
       </div>
     </div>
   );
