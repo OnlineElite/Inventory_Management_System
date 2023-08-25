@@ -17,7 +17,7 @@ function Sidebar(){
             {/*<div className='lines'> <div className='line'></div>MAIN<div className='line'></div></div>*/}
             <ul className='mainlinks'>
                 <li className={active === 1 ? 'active link': 'link'} onClick={e => setActive(1)}>
-                    <Link to='/'  className='link'><i class="bi bi-grid-1x2-fill"></i> Dashboard</Link>
+                    <Link to='/dashboard'  className='link'><i class="bi bi-grid-1x2-fill"></i> Dashboard</Link>
                 </li>
                 <li className={active === 2 ? 'active link': 'link'} onClick={e => setActive(2)}>                   
                     <Link to='/stock' className='link'><i className="bi bi-tags-fill"></i> View Stock</Link>

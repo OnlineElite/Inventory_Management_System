@@ -1,0 +1,94 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*--------------------------RegisterForm & loginForm section-----------------------------*/
+
+.registerContainer, .logingContainer{
+    width: 100vw;
+    height: 80vh;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+}
+
+.RegisterForm, .LoginForm{
+    width: 35%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(241, 217, 208);
+    border-radius: 10px;
+    border: 2px solid white;
+}
+.registerContainer input, .logingContainer input{
+    width: 60%;
+    border-radius: 8px;
+    padding: 5px;
+    margin: 5px;
+    color: black;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: lightyellow;
+    border: 2px solid rgb(1, 1, 70);
+}
+
+.registerContainer button, .logingContainer button{
+    border-radius: 8px;
+    padding: 5px;
+    margin: 5px;
+   /* background-color: rgb(1, 1, 70);*/
+    /*color: white;*/
+    font-weight: bold;
+    align-self: flex-start;
+    margin-left: 20px;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 2px solid rgb(1, 1, 70);
+}
+
+.ro{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 20px;
+}
+.ro label{
+    width: 30%;
+    color: black;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+.registerContainer hr, .logingContainer hr{
+    width: 100%;
+    color: white;
+    size: 2px;
+    margin: 5px;
+}
+.registerContainer h1, .logingContainer h1{
+    width: 100%;
+    background-color: rgb(1, 1, 70);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: white;
+
+}
+
+.alert{
+    width: fit-content;
+    margin: auto;
+    padding-inline: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    height: fit-content;
+}
+
