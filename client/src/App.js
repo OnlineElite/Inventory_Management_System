@@ -3,20 +3,18 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
+import Dashboard from "./components/Dashbord";
+import LandingPage from "./components/LandingPage";
 import './App.css';
-import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
 
 
 function App() {
+
+  
+
   return (
-    <div className="d-flex">
-      <div className="w-auto">
-        <Sidebar/>
-      </div>
-      <div className="col">
-        <Header/>
-      </div>
+    <div>
+      <LandingPage/>
     </div>
   );
 }

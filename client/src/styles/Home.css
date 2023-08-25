@@ -1,0 +1,9 @@
+*{
+    background-origin: padding-box;
+    padding: 0;
+    margin: 0;
+}
+
+/*.home{
+    overflow-y: scroll;
+}*/
