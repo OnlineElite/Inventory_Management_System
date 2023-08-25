@@ -1,13 +1,14 @@
 import React from 'react'
+import 'bootstrap/dist/js/bootstrap.bundle.js';
 
-
-function Header(){
+function Header({Toggle}){
 
 
     return(
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a className="navbar-brand" href="#">Dashboard</a>
+                <a className="navbar-brand d-none d-md-block" href="#">Dashboard</a>
+                <a className="navbar-brand d-block d-md-none" onClick={Toggle}><i class="bi bi-list"></i></a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
