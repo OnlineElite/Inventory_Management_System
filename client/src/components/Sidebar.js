@@ -46,7 +46,7 @@ function Sidebar(){
             <hr/>
             <ul className='mainlinks '>
                 <li className={active === 8 ? 'active link': 'link '} onClick={e => setActive(8)}>
-                    <a onClick={handelLogout} href={() => false} className='logout'><i class="bi bi-box-arrow-right "></i> Log Out</a>
+                    <a onClick={handelLogout} href={() => false} className='logout'><i className="bi bi-box-arrow-right "></i> Log Out</a>
                 </li>
             </ul>
             <hr/>

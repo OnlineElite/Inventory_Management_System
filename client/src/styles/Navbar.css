@@ -11,7 +11,7 @@
     padding: 5px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .Navbarr .buttons, .Navbarr .form-inline{
@@ -25,6 +25,9 @@
 .Navbarr .buttons{
     margin-left: 5rem;
     width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
@@ -38,13 +41,18 @@
     border: 1px solid white;
 }
 
-.Navbarr .form-inline,.Navbarr ul{
-    width: 50%;   
+.Navbarr .form-inline,.Navbarr ul{ 
     padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
 
+}
+.Navbarr .form-inline{
+    width: 70%;
+}
+.Navbarr ul{
+    width: 30%;
 }
 .Navbarr .form-inline input{
     width: 70%;
@@ -90,4 +98,23 @@
 
 .Navbarr .icon{
     font-size: 3rem;
+}
+
+.user{
+    background-color: transparent;
+    border-radius: 8px;
+    color: yellow;
+    padding-inline: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: 0;
+    margin-left: 1rem;
+    font-size: 18px;
+}
+
+.user i{
+    font-size: 2rem;
+    color: yellow;
+    margin-right: 0.3rem;
 }

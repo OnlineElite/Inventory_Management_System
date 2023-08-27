@@ -1,9 +1,17 @@
 import React from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import '../styles/Navbaar.css'
+import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
-function Navbar(){
+import { connect } from 'react-redux';
+import {LogOutThunk} from '../actions/IMSAction'
+
+function Navbar(props){
+
+    const handleLogout =(e)=>{
+        props.logout(props.userEmail)
+    }
+
     return(
         <div className='Navbarr'>
             <nav className="navbar navbar-expand-lg navbar-light ">
@@ -23,14 +31,24 @@ function Navbar(){
                     <form className="form-inline my-2 my-lg-0">
                         <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
                         <button className="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-                        <div className='buttons'>                            
-                            <Link className='Link' to='/login' >
-                                <button className='btn btn-primary'>Loging</button> 
-                            </Link>
-                            <Link className='Link' to='/register' >
-                                <button className='btn btn-primary'>Register</button>
-                            </Link>
-                        </div>
+                        {props.isAuthenticated ? 
+                        (
+                            <div className='buttons d-flex'>                            
+                                <Link className='Link ' to='/login' >
+                                    <button className='btn btn-primary' onClick={handleLogout}>Logout</button> 
+                                </Link>
+                                <div className='user'> <i className="bi bi-person-circle"></i> {props.userfullName[0]} {props.userfullName[1]} </div>
+                            </div>
+                        ):
+                            (<div className='buttons'>                            
+                                <Link className='Link' to='/login' >
+                                    <button className='btn btn-primary'>Loging</button> 
+                                </Link>
+                                <Link className='Link' to='/register' >
+                                    <button className='btn btn-primary'>Register</button>
+                                </Link>
+                            </div>
+                        )}
                     </form>
                 </div>
             </nav>
@@ -38,4 +56,22 @@ function Navbar(){
     )
 }
 
-export default Navbar;
+const mapStateToProps =(state)=>{
+    return{
+        response : state.error,
+        isAuthenticated : state.isAuthenticated,
+        isAdmin : state.isAdmin,
+        userEmail : state.userEmail,
+        userfullName : state.userfullName
+    }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+    return{
+        logout : (user)=>{
+            dispatch(LogOutThunk(user))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Navbar);

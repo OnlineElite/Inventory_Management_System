@@ -54,12 +54,32 @@ async function login(req, res) {
     // Insert the user into the login table
     const query = "INSERT INTO login (email, password_hash, user_id) VALUES ($1, $2, $3)";
     await pool.query(query, [email, user.password_hash, user.user_id]);
-    res.json({ token : token, isAdmin : user.admin });
+    res.json({
+          token : token,
+          isAdmin : user.admin,
+          userEmail : user.email,
+          fullName : [user.first_name, user.last_name]
+        });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 }
 
-module.exports = { register, login };
+async function logout(req, res) {
+  const { email } = req.body;
+
+  try {
+    // delete the user from the login table
+    const query = "delete from login where email = $1";
+    await pool.query(query, [email]);
+
+    res.status(201).json({ message: "User loged out successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+module.exports = { register, login, logout };
 

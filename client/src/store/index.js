@@ -8,6 +8,8 @@ const initialState = {
     isAdmin : false,
     isAuthenticated: !!localStorage.getItem("token"),  //true or false (if local storage empty or not)
     token: localStorage.getItem("token") || "",
+    userEmail :null,
+    userfullName : null
 }
 
 export  const store = createStore(userReducer, initialState, applyMiddleware(thunk))

@@ -1,4 +1,5 @@
 import React from 'react'
+import Navbar from './Navbar';
 
 
 function UserInterface(){
@@ -6,7 +7,8 @@ function UserInterface(){
 
     return(
         <div>
-            <h1>Welcome in Categories</h1>
+            <Navbar/>
+            <h1>Welcome in user Interface</h1>
         </div>
     )
 }
