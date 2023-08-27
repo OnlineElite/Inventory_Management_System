@@ -4,11 +4,10 @@ import {userReducer} from '../reducers/IMSReducer'
 
 const initialState = {
     RegisterRespond : null,
-    LoginRespond : null,
     error : null,
-    admission : false,
-    userEmail : null,
-    isAdmin : false
+    isAdmin : false,
+    isAuthenticated: !!localStorage.getItem("token"),  //true or false (if local storage empty or not)
+    token: localStorage.getItem("token") || "",
 }
 
 export  const store = createStore(userReducer, initialState, applyMiddleware(thunk))

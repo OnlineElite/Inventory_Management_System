@@ -7,29 +7,27 @@ const registerUser = (answer)=>{
     }
 }
 
-const loginUser = (answer)=>{
-
-    return{
-        type : 'LOGIN_USER',
-        payload : answer
+const setAuthenticated = (isAuthenticated) =>{
+    return {
+        type: "SET_AUTHENTICATED",
+        payload: isAuthenticated
     }
 }
-
-const authontification =(value)=>{
-
-    return{
-        type: 'AUTHONTIFICATION',
-        payload: value
+  
+const setToken = (token) =>{
+    return {
+        type: "SET_TOKEN",
+        payload: token
     }
 }
-
-const userEmail =(value)=>{
-
-    return{
-        type: 'USER_EMAIL',
-        payload: value
+  
+const logout = () => {
+    return {
+        type: "LOGOUT"
     }
 }
+  
+
 
 const isAdmin =(value)=>{
 
@@ -48,10 +46,9 @@ const handellError = (message)=>{
 
 const registerThunk = (user) => async (dispatch)=>{
     try{
-        const url = 'http://localhost:3002/register';    //attention port 3002
-        
+        const baseURL = process.env.REACT_APP_API_URL; 
+        const url = `${baseURL}/register`;
         const data = {...user}
-        console.log('data to fetch', data)
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
@@ -62,6 +59,7 @@ const registerThunk = (user) => async (dispatch)=>{
         const datarecived = await response.json();
         console.log('data register receved', datarecived )
         dispatch(registerUser(datarecived.message))
+        dispatch(handellError(datarecived.error))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -70,10 +68,9 @@ const registerThunk = (user) => async (dispatch)=>{
 
 const loginThunk = (user) => async (dispatch)=>{
     try{
-        const url = 'http://localhost:3002/login';    //attention port 3002
-    
+        const baseURL = process.env.REACT_APP_API_URL; 
+        const url = `${baseURL}/login`;
         const data = {...user}
-    
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
@@ -83,10 +80,10 @@ const loginThunk = (user) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         console.log('data login recived', datarecived )
-        dispatch(loginUser(datarecived.message))
-        dispatch(authontification(datarecived.admission))
-        dispatch(userEmail(datarecived.email))
+        dispatch(setToken(datarecived.token))
         dispatch(isAdmin(datarecived.isAdmin))
+        dispatch(setAuthenticated(true))
+        dispatch(handellError(datarecived.error))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -108,8 +105,8 @@ const LogOutThunk = (useremail) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         console.log('data loged out recived', datarecived )
-        dispatch(loginUser(datarecived.message))
-        dispatch(authontification(datarecived.admission))
+        //dispatch(loginUser(datarecived.message))
+        //dispatch(authontification(datarecived.admission))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))

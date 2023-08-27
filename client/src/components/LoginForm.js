@@ -2,13 +2,16 @@ import React from 'react'
 import Navbar from './Navbar'
 import { useState, useEffect } from 'react';
 import {connect} from 'react-redux'
+import loginimg from '../images/Inventory-Management.png'
 import '../styles/LogReg.css'
 import {loginThunk} from '../actions/IMSAction'
+import { useNavigate } from "react-router-dom";
 
 function LoginForm(props){
 
     const [info, setInfo] = useState({})
     const [showAlert, setShowAlert] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const ids = ['email', 'password'];
@@ -60,16 +63,22 @@ function LoginForm(props){
     useEffect(() => {
         if (props.response) {
             setShowAlert(true);
-            const timeoutId = setTimeout(() => {
+            setTimeout(() => {
                 setShowAlert(false);
             }, 3000);
-        
-            if(props.admission === true){
-                console.log('to dashbord page')
+            navigate(`/dashboard`);
+            /* console.log('isAuthenticated',props.isAuthenticated )
+            if(props.isAuthenticated === true){
+                //const baseURL = process.env.REACT_APP_API_URL; 
+                
                 if(props.isAdmin === true){
-                    window.location.href = 'http://localhost:3000/dashbord';
+                    console.log('to dashbord page')
+                    navigate(`/dashboard`);
+                    //window.location.href = 'http://localhost:3000/dashboard';
                 }else{
-                    window.location.href = 'http://localhost:3000/userInterface';
+                    console.log('to userInterface page')
+                    navigate(`/userInterface`);
+                    //window.location.href = 'http://localhost:3000/userInterface';
                 }                 
             }
             else{
@@ -77,22 +86,30 @@ function LoginForm(props){
             }
             return () => {
                 clearTimeout(timeoutId);
-            };
+            };*/
         }
-    }, [props.response, props.admission]);
+    }, [props.response, props.isAdmin, props.isAuthenticated, navigate]);
 
     return(
         <div className='logincomp'>
             <Navbar/>
-            {showAlert && ( <div className="alert alert-success" role="alert"> {props.response} {props.useremail} </div> )}
+            
             <div className="logingContainer">
-                <form className="LoginForm" onSubmit={HandelSubmit} >
-                    <h1>Login :</h1>
-                    <div className="ro"><label htmlFor="email">Email : </label><input type="email" id="email" name="email"/></div>
-                    <div className="ro"><label htmlFor="password">Password : </label><input type="password" id="password" name="password"/></div>
-                    <hr/>
-                    <button  id="login" type="submit" disabled>Login</button>
-                </form>
+            {showAlert && ( <div className="alert alert-success" role="alert"> {props.response} </div> )}  
+                <div className="row">
+                    <h1>Login</h1>
+                    <div className=" image col-12 col-md-6 col-sm-6 col-lg-6">
+                        <img src={loginimg} alt="login and register"/>
+                    </div>
+                    <div className=" form col-12 col-md-6 col-sm-6 col-lg-6">
+                        <form className="LoginForm" onSubmit={HandelSubmit} >
+                            <div className="ro"><label htmlFor="email">Email : </label><input type="email" id="email" name="email"/></div>
+                            <div className="ro"><label htmlFor="password">Password : </label><input type="password" id="password" name="password"/></div>
+                            <hr/>
+                            <button  id="login" type="submit" disabled>Login</button>
+                        </form>                      
+                    </div>
+                </div>   
             </div>
         </div>
     )
@@ -100,9 +117,8 @@ function LoginForm(props){
 
 const mapStateToProps =(state)=>{
     return{
-        response : state.LoginRespond,
-        admission : state.admission,
-        useremail : state.userEmail,
+        response : state.error,
+        isAuthenticated : state.isAuthenticated,
         isAdmin : state.isAdmin
     }
 }

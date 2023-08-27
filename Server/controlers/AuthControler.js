@@ -11,7 +11,7 @@ async function register(req, res) {
     // Check if username is already taken
     const existingUser = await User.findByemail(email);
     if (existingUser) {
-      return res.status(409).json({ error: "Email already exists" });
+      return res.status(409).json({ message: "Email already exists" });
     }
 
     // Hash the password
@@ -54,7 +54,7 @@ async function login(req, res) {
     // Insert the user into the login table
     const query = "INSERT INTO login (email, password_hash, user_id) VALUES ($1, $2, $3)";
     await pool.query(query, [email, user.password_hash, user.user_id]);
-    res.json({ token });
+    res.json({ token : token, isAdmin : user.admin });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -62,3 +62,4 @@ async function login(req, res) {
 }
 
 module.exports = { register, login };
+
