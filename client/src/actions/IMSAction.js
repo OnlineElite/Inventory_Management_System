@@ -27,13 +27,26 @@ const logout = () => {
     }
 }
   
-
+const userEmail =(email)=>{
+    return{
+        type: 'USER_EMAIL',
+        payload : email
+    }
+}
 
 const isAdmin =(value)=>{
 
     return{
         type: 'IS_ADMIN',
         payload: value
+    }
+}
+
+const userFallName =(faullName)=>{
+
+    return{
+        type: 'USER_FULL_NAME',
+        payload: faullName
     }
 }
 
@@ -84,6 +97,8 @@ const loginThunk = (user) => async (dispatch)=>{
         dispatch(isAdmin(datarecived.isAdmin))
         dispatch(setAuthenticated(true))
         dispatch(handellError(datarecived.error))
+        dispatch(userEmail(datarecived.userEmail)) //to delete the user from login table
+        dispatch(userFallName(datarecived.fullName))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -92,8 +107,8 @@ const loginThunk = (user) => async (dispatch)=>{
 
 const LogOutThunk = (useremail) => async (dispatch)=>{
     try{
-        const url = 'http://localhost:3002/logout';    //attention port 3002
-    
+        const baseURL = process.env.REACT_APP_API_URL; 
+        const url = `${baseURL}/logout`;
         const data = {email : useremail}
     
         const header = {
@@ -104,9 +119,7 @@ const LogOutThunk = (useremail) => async (dispatch)=>{
         
         const response = await fetch(url ,header );
         const datarecived = await response.json();
-        console.log('data loged out recived', datarecived )
-        //dispatch(loginUser(datarecived.message))
-        //dispatch(authontification(datarecived.admission))
+        console.log('data loged out recived', datarecived.message )
     }catch(err){
         console.error(err)
         dispatch(handellError(err))

@@ -5,13 +5,14 @@ import {connect} from 'react-redux'
 import loginimg from '../images/Inventory-Management.png'
 import '../styles/LogReg.css'
 import {loginThunk} from '../actions/IMSAction'
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
+import { Navigate} from 'react-router-dom'
 
 function LoginForm(props){
 
     const [info, setInfo] = useState({})
     const [showAlert, setShowAlert] = useState(false);
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     useEffect(() => {
         const ids = ['email', 'password'];
@@ -57,38 +58,27 @@ function LoginForm(props){
         const ids = ['email', 'password'];
         const inputs = ids.map(id => document.getElementById(id));
         inputs.forEach((inp) => { inp.value =""})
-        
-    }
-
-    useEffect(() => {
         if (props.response) {
             setShowAlert(true);
             setTimeout(() => {
                 setShowAlert(false);
             }, 3000);
-            navigate(`/dashboard`);
-            /* console.log('isAuthenticated',props.isAuthenticated )
-            if(props.isAuthenticated === true){
-                //const baseURL = process.env.REACT_APP_API_URL; 
-                
-                if(props.isAdmin === true){
-                    console.log('to dashbord page')
-                    navigate(`/dashboard`);
-                    //window.location.href = 'http://localhost:3000/dashboard';
-                }else{
-                    console.log('to userInterface page')
-                    navigate(`/userInterface`);
-                    //window.location.href = 'http://localhost:3000/userInterface';
-                }                 
-            }
-            else{
-                console.log('wrong information')
-            }
-            return () => {
-                clearTimeout(timeoutId);
+            
+            (props.isAuthenticated)?   
+                (props.isAdmin)?
+                    <Navigate to="/dashboard" />:
+                    <Navigate to="/userInterface" />
+            :<Navigate to="/login" />
+
+            /*return () => {
+                (props.isAuthenticated)?   
+                    (props.isAdmin)?
+                        <Navigate to="/dashboard" />:
+                        <Navigate to="/userInterface" />
+                :<Navigate to="/login" />
             };*/
-        }
-    }, [props.response, props.isAdmin, props.isAuthenticated, navigate]);
+        }   
+    }
 
     return(
         <div className='logincomp'>

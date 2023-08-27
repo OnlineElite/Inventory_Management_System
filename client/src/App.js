@@ -13,8 +13,8 @@ import './App.css';
 import { Routes, Route, Navigate} from 'react-router-dom'
 
 const PrivateRoute = ({ element, isAuthenticated, isAdmin }) => {
-  return isAuthenticated ? 
-          isAdmin? element : <Navigate to="/userInterface" />
+  return  isAuthenticated ? 
+            isAdmin? element : <Navigate to="/userInterface" />
           :<Navigate to="/login" />;
 };
 
