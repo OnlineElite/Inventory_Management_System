@@ -4,17 +4,17 @@ const userReducer = (state, action)=>{
         case 'REGISTER_USER':
             return {...state, RegisterRespond : action.payload}
 
-        case 'LOGIN_USER':
-            return {...state, LoginRespond : action.payload}
+        case "SET_TOKEN":
+            return {...state, token : action.payload}
+
+        case "SET_AUTHENTICATED":
+            return {...state, isAuthenticated: action.payload };
 
         case 'ERROR_MESSAGE':
             return {...state, error : action.payload}
 
-        case 'AUTHONTIFICATION':
+        case 'AUTHONTICATION':
             return {...state, admission : action.payload}
-
-        case 'USER_EMAIL':
-            return {...state, userEmail : action.payload}
 
         case 'IS_ADMIN':
             return {...state, isAdmin : action.payload}

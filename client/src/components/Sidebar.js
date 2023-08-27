@@ -5,6 +5,10 @@ import {Link} from 'react-router-dom'
 function Sidebar(){
     const [active, setActive] = useState(1)
 
+    const handelLogout =()=>{
+
+    }
+
     return(
         <div className=' sidebar d-flex justify-content-between flex-column bg-dark text-white'>
             <div className='userInfo'>
@@ -17,7 +21,7 @@ function Sidebar(){
             {/*<div className='lines'> <div className='line'></div>MAIN<div className='line'></div></div>*/}
             <ul className='mainlinks'>
                 <li className={active === 1 ? 'active link': 'link'} onClick={e => setActive(1)}>
-                    <Link to='/dashboard'  className='link'><i class="bi bi-grid-1x2-fill"></i> Dashboard</Link>
+                    <Link to='/'  className='link'><i className="bi bi-grid-1x2-fill"></i> Dashboard</Link>
                 </li>
                 <li className={active === 2 ? 'active link': 'link'} onClick={e => setActive(2)}>                   
                     <Link to='/stock' className='link'><i className="bi bi-tags-fill"></i> View Stock</Link>
@@ -32,21 +36,20 @@ function Sidebar(){
                     <Link to='/categories' className='link'><i class="bi bi-grid-3x3-gap-fill"></i> Categories</Link>
                 </li>
                 <li className={active === 6 ? 'active link': 'link'} onClick={e => setActive(6)}>                   
-                    <Link to='/landing' className='link'><i className="bi bi-flag-fill"></i> Brands</Link>
+                    <Link to='/brands' className='link'><i className="bi bi-flag-fill"></i> Brands</Link>
                 </li>
                 <li className={active === 7 ? 'active link': 'link'} onClick={e => setActive(7)}>
                     <Link to='/' className='link'><i className="bi bi-gear-wide-connected"></i> Settings</Link>
                 </li>
             </ul>
-            {/*<div className='lines'> <div className='line'></div>CUSTOMIZE<div className='line'></div></div>*/}
-            <ul className='mainlinks'>
-                
-            </ul>
-            <ul className='mainlinks'>
-                <li className={active === 8 ? 'active link': 'link'} onClick={e => setActive(8)}>
-                    <a ><i class="bi bi-box-arrow-right"></i> Log Out</a>
+             {/*<div className='lines'> <div className='line'></div>CUSTOMIZE<div className='line'></div></div>*/}
+            <hr/>
+            <ul className='mainlinks '>
+                <li className={active === 8 ? 'active link': 'link '} onClick={e => setActive(8)}>
+                    <a onClick={handelLogout} href={() => false} className='logout'><i class="bi bi-box-arrow-right "></i> Log Out</a>
                 </li>
             </ul>
+            <hr/>
             
         </div>
     )

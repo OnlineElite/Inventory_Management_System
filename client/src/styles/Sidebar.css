@@ -65,6 +65,7 @@
 
 .mainlinks{
     width: 100%;
+
 }
 
 .mainlinks .link{
@@ -73,6 +74,12 @@
     cursor: pointer;
     width: 100%;
     padding-left: 1rem;
+}
+
+.mainlinks .logout{
+    padding-left: 1rem;
+    text-decoration: none;
+    color: white;
 }
 
 .active{
