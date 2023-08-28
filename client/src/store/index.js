@@ -5,7 +5,7 @@ import {userReducer} from '../reducers/IMSReducer'
 const initialState = {
     RegisterRespond : null,
     error : null,
-    isAdmin : false,
+    isAdmin : true,
     isAuthenticated: !!localStorage.getItem("token"),  //true or false (if local storage empty or not)
     token: localStorage.getItem("token") || "",
     userEmail :null,
