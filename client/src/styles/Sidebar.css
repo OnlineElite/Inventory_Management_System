@@ -68,6 +68,10 @@
 
 }
 
+.mainlinks a{
+    text-decoration: none;
+}
+
 .mainlinks .link{
     list-style: none;
     padding-block: 0.5rem;

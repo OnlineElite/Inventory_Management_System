@@ -22,19 +22,19 @@ function App(props) {
 
   return (
     <div>
-      {/*<Dashboard/>*/}
-        <Routes>
-          <Route exact path='/' element={<LandingPage/>} />
-          <Route path='/register' element={<RegisterForm/>} />
-          <Route path='/login' element={<LoginForm/>} />
-          <Route path="/userInterface" element={<UserInterface/>} />
-          <Route path="/dashboard" element={<Dashboard/>} />
-          <Route path="/dashboard"
-            element={<PrivateRoute element={<Dashboard/>} 
-              isAuthenticated={props.isAuthenticated} isAdmin={props.isAdmin}
-            />}
-          />
-        </Routes>
+      <Dashboard/>
+      {/*<Routes>
+        <Route exact path='/' element={<LandingPage/>} />
+        <Route path='/register' element={<RegisterForm/>} />
+        <Route path='/login' element={<LoginForm/>} />
+        <Route path="/userInterface" element={<UserInterface/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+        <Route path="/dashboard"
+          element={<PrivateRoute element={<Dashboard/>} 
+            isAuthenticated={props.isAuthenticated} isAdmin={props.isAdmin}
+          />}
+        />
+      </Routes>*/}
     </div>
   );
 }
