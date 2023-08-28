@@ -5,14 +5,12 @@ import {connect} from 'react-redux'
 import loginimg from '../images/Inventory-Management.png'
 import '../styles/LogReg.css'
 import {loginThunk} from '../actions/IMSAction'
-//import { useNavigate } from "react-router-dom";
 import { Navigate} from 'react-router-dom'
 
 function LoginForm(props){
 
     const [info, setInfo] = useState({})
     const [showAlert, setShowAlert] = useState(false);
-    //const navigate = useNavigate();
 
     useEffect(() => {
         const ids = ['email', 'password'];
@@ -66,17 +64,17 @@ function LoginForm(props){
             
             (props.isAuthenticated)?   
                 (props.isAdmin)?
-                    <Navigate to="/dashboard" />:
+                    <Navigate to="/dashboard" />: 
                     <Navigate to="/userInterface" />
             :<Navigate to="/login" />
 
-            /*return () => {
+            return () => {
                 (props.isAuthenticated)?   
                     (props.isAdmin)?
                         <Navigate to="/dashboard" />:
                         <Navigate to="/userInterface" />
                 :<Navigate to="/login" />
-            };*/
+            };
         }   
     }
 
