@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/Sidebar.css'
 import {Link} from 'react-router-dom'
-function Sidebar(){
+import { connect } from 'react-redux';
+import {LogOutThunk} from '../actions/IMSAction'
+function Sidebar(props){
     const [active, setActive] = useState(1)
 
-    const handelLogout =()=>{
-
+    const handelLogout =(e)=>{
+        e.preventDefault()
+        props.logout(props.userEmail)
     }
 
     return(
@@ -42,11 +45,13 @@ function Sidebar(){
                     <Link to='/' className='link'><i className="bi bi-gear-wide-connected"></i> Settings</Link>
                 </li>
             </ul>
-             {/*<div className='lines'> <div className='line'></div>CUSTOMIZE<div className='line'></div></div>*/}
+             
             <hr/>
             <ul className='mainlinks '>
                 <li className={active === 8 ? 'active link': 'link '} onClick={e => setActive(8)}>
-                    <a onClick={handelLogout} href={() => false} className='logout'><i className="bi bi-box-arrow-right "></i> Log Out</a>
+                    <Link className='Link ' to='/login' >
+                        <a onClick={handelLogout} href={() => false} className='logout'><i className="bi bi-box-arrow-right "></i> Log Out</a> 
+                    </Link>              
                 </li>
             </ul>
             <hr/>
@@ -55,4 +60,22 @@ function Sidebar(){
     )
 }
 
-export default Sidebar;
+const mapStateToProps =(state)=>{
+    return{
+        response : state.error,
+        isAuthenticated : state.isAuthenticated,
+        isAdmin : state.isAdmin,
+        userEmail : state.userEmail,
+        userfullName : state.userfullName
+    }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+    return{
+        logout : (user)=>{
+            dispatch(LogOutThunk(user))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Sidebar);

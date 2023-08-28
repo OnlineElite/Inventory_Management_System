@@ -1,0 +1,17 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+
+.products .filters{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.products .filters input, .products .filters select{
+    width: 20%;
+}
