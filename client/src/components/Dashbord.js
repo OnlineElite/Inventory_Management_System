@@ -8,6 +8,7 @@ import Home from "./Home";
 import Products from './Products'
 import Categories from "./Categories";
 import ViewStock from './ViewStock'
+import Settings from './Settings';
 import Users from './Users'
 import Brands from './Brands'
 import { useState } from "react";
@@ -30,13 +31,15 @@ function Dashboard(){
                 </div>
                 <div className="col overflow-auto">
                     <Header Toggle={Toggle}/>
+                    
                     <Routes>
-                        <Route exact path="/" element={<Home/>} />
-                        <Route path="products" element={<Products/>} />
-                        <Route path="categories" element={<Categories/>} />
-                        <Route path="/stock" element={<ViewStock/>} />
-                        <Route path="/users" element={<Users/>} />
-                        <Route path="/brands" element={<Brands/>} />
+                        <Route path="/" element={<Home/>} />
+                        <Route path="/dashboard/products" element={<Products/>} />
+                        <Route path="/dashboard/categories" element={<Categories/>} />
+                        <Route path="/dashboard/stock" element={<ViewStock/>} />
+                        <Route path="/dashboard/users" element={<Users/>} />
+                        <Route path="/dashboard/brands" element={<Brands/>} />
+                        <Route path="/dashboard/settings" element={<Settings/>} />
                     </Routes>
                 </div>
                 

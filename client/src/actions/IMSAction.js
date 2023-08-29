@@ -126,4 +126,4 @@ const LogOutThunk = (useremail) => async (dispatch)=>{
     }
 }
 
-export {registerThunk, loginThunk, LogOutThunk}
+export {registerThunk, loginThunk, LogOutThunk, logout}

@@ -8,7 +8,7 @@ function Header({Toggle}){
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a className="navbar-brand d-none d-md-block" href='#/'>Dashboard</a>
-                <a className="navbar-brand d-block d-md-none" onClick={Toggle}><i class="bi bi-list"   href='#/'></i></a>
+                <a className="navbar-brand d-block d-md-none" onClick={Toggle}><i className="bi bi-list"   href='#/'></i></a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -19,7 +19,7 @@ function Header({Toggle}){
                             <a className="nav-link text-white" aria-current='page' href='#/'><i className='bi bi-search'/> Search </a>
                         </li>
                         <li className="nav-item mx-2 border rounded">
-                            <a className="nav-link text-white" aria-current='page'  href='#/'><i class="bi bi-person-circle"></i> Account </a>
+                            <a className="nav-link text-white" aria-current='page'  href='#/'><i className="bi bi-person-circle"></i> Account </a>
                         </li>
                     </ul>
                 </div>
