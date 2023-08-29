@@ -5,9 +5,11 @@ import {connect} from 'react-redux'
 import loginimg from '../images/Inventory-Management.png'
 import '../styles/LogReg.css'
 import {loginThunk} from '../actions/IMSAction'
-import { Navigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 function LoginForm(props){
+
+    const navigate = useNavigate();
 
     const [info, setInfo] = useState({})
     const [showAlert, setShowAlert] = useState(false);
@@ -62,7 +64,7 @@ function LoginForm(props){
                 setShowAlert(false);
             }, 3000);
             
-            (props.isAuthenticated)?   
+            /*(props.isAuthenticated)?   
                 (props.isAdmin)?
                     <Navigate to="/dashboard" />: 
                     <Navigate to="/userInterface" />
@@ -74,10 +76,16 @@ function LoginForm(props){
                         <Navigate to="/dashboard" />:
                         <Navigate to="/userInterface" />
                 :<Navigate to="/login" />
-            };
+            };*/
         }   
     }
 
+
+                        if (props.isAuthenticated) {
+                          console.log("################# logged");
+                          navigate(`/dashboard`);
+                        } 
+                        
     return(
         <div className='logincomp'>
             <Navbar/>
