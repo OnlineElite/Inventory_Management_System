@@ -58,33 +58,21 @@ function LoginForm(props){
         const ids = ['email', 'password'];
         const inputs = ids.map(id => document.getElementById(id));
         inputs.forEach((inp) => { inp.value =""})
-        if (props.response) {
+       if (props.response) {
             setShowAlert(true);
             setTimeout(() => {
                 setShowAlert(false);
             }, 3000);
-            
-            /*(props.isAuthenticated)?   
-                (props.isAdmin)?
-                    <Navigate to="/dashboard" />: 
-                    <Navigate to="/userInterface" />
-            :<Navigate to="/login" />
-
-            return () => {
-                (props.isAuthenticated)?   
-                    (props.isAdmin)?
-                        <Navigate to="/dashboard" />:
-                        <Navigate to="/userInterface" />
-                :<Navigate to="/login" />
-            };*/
-        }   
+        } 
     }
 
 
-                        if (props.isAuthenticated) {
-                          console.log("################# logged");
-                          navigate(`/dashboard`);
-                        } 
+    useEffect(()=>{
+        if (props.isAuthenticated) {
+            console.log("################# logged");
+            navigate(`/dashboard`);
+        } 
+    })
                         
     return(
         <div className='logincomp'>

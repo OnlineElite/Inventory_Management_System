@@ -49,7 +49,7 @@ async function login(req, res) {
     const secretKey = process.env.SECRET_KEY;
 
     // Generate and return a JWT
-    const token = jwt.sign({ id: user.user_id }, secretKey, { expiresIn: "1h", });  //mybe you should change user.id by user.user_id
+    const token = jwt.sign({ id: user.user_id }, secretKey, { expiresIn: "3h", });  //mybe you should change user.id by user.user_id
 
     // Insert the user into the login table
     const query = "INSERT INTO login (email, password_hash, user_id) VALUES ($1, $2, $3)";

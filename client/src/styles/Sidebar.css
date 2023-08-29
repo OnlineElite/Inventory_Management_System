@@ -45,23 +45,14 @@
     flex-direction: column;
 }
 
+.userInfo .username h3{
+    color: yellow;
+}
+
 .mainlinks li a i{
     font-weight: bold;
 }
-/*.lines{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 5px;
-    color: yellow;
-    margin-block: 1rem;
-}
 
-.lines .line{
-    width: 38%;
-    height: 1px;
-    background-color: lightgrey;
-}*/
 
 .mainlinks{
     width: 100%;
@@ -94,3 +85,4 @@
     margin-left: 0;
     padding-left: 0;
 }
+

@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
-import {LogOutThunk} from '../actions/IMSAction'
+import {LogOutThunk, logout} from '../actions/IMSAction'
 
 function Navbar(props){
 
     const handleLogout =(e)=>{
-        props.logout(props.userEmail)
+        props.fetchlogout(props.userEmail)
+        props.logoutset()
     }
 
     return(
@@ -37,10 +38,10 @@ function Navbar(props){
                                 <Link className='Link ' to='/login' >
                                     <button className='btn btn-primary' onClick={handleLogout}>Logout</button> 
                                 </Link>
-                                {/*<div className='user'> <i className="bi bi-person-circle"></i> {props.userfullName[0]} {props.userfullName[1]} </div>*/}
+                                <div className='user'> <i className="bi bi-person-circle"></i> {props.userfullName[0]} {props.userfullName[1]} </div>
                             </div>
                         ):
-                            (<div className='buttons'>                            
+                        (<div className='buttons'>                            
                                 <Link className='Link' to='/login' >
                                     <button className='btn btn-primary'>Loging</button> 
                                 </Link>
@@ -68,8 +69,11 @@ const mapStateToProps =(state)=>{
 
 const mapDispatchToProps =(dispatch)=>{
     return{
-        logout : (user)=>{
+        fetchlogout : (user)=>{
             dispatch(LogOutThunk(user))
+        },
+        logoutset : ()=>{
+            dispatch(logout())
         }
     }
 }
