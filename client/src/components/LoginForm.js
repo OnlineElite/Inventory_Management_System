@@ -69,7 +69,6 @@ function LoginForm(props){
 
     useEffect(()=>{
         if (props.isAuthenticated) {
-            console.log("################# logged");
             navigate(`/dashboard`);
         } 
     })
