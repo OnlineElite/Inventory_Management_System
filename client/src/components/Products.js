@@ -72,7 +72,7 @@ function Products(){
             brand : 'Lenovo'
         },
         {
-            id : 1,
+            id : 6,
             name : 'Galaxy s8',
             ref : 'rtxs8',
             stock : 9,
@@ -80,7 +80,7 @@ function Products(){
             brand : 'Samsung'
         },
         {
-            id : 2,
+            id : 7,
             name : 'Iphone 11 pro',
             ref : 'i0011',
             stock : 5,
@@ -88,7 +88,7 @@ function Products(){
             brand : 'Apple'
         },
         {
-            id : 3,
+            id : 8,
             name : 'HP Elite book',
             ref : 'hp000u5b',
             stock : 3,
@@ -96,7 +96,7 @@ function Products(){
             brand : 'HP'
         },
         {
-            id : 4,
+            id : 9,
             name : 'Galaxy A10',
             ref : 'rtx00r7',
             stock : 11,
@@ -104,47 +104,7 @@ function Products(){
             brand : 'Samsung'
         },
         {
-            id : 5,
-            name : 'Think pad',
-            ref : 'tn00x5r',
-            stock : 7,
-            category : 'PC portable',
-            brand : 'Lenovo'
-        },
-        {
-            id : 1,
-            name : 'Galaxy s8',
-            ref : 'rtxs8',
-            stock : 9,
-            category : 'phone',
-            brand : 'Samsung'
-        },
-        {
-            id : 2,
-            name : 'Iphone 11 pro',
-            ref : 'i0011',
-            stock : 5,
-            category : 'phone',
-            brand : 'Apple'
-        },
-        {
-            id : 3,
-            name : 'HP Elite book',
-            ref : 'hp000u5b',
-            stock : 3,
-            category : 'PC portable',
-            brand : 'HP'
-        },
-        {
-            id : 4,
-            name : 'Galaxy A10',
-            ref : 'rtx00r7',
-            stock : 11,
-            category : 'phone',
-            brand : 'Samsung'
-        },
-        {
-            id : 5,
+            id : 10,
             name : 'Think pad',
             ref : 'tn00x5r',
             stock : 7,

@@ -54,7 +54,7 @@ async function login(req, res) {
 
     // Generate and return a JWT
     const token = jwt.sign(
-      { id: user.user_id, sessionId: sessionId },
+      { id: user.user_id },
       secretKey,
       {
         expiresIn: "3h",
@@ -62,8 +62,8 @@ async function login(req, res) {
     ); //mybe you should change user.id by user.user_id
 
     // Insert the user into the login table
-    const query = "INSERT INTO login (email, password_hash, user_id) VALUES ($1, $2, $3)";
-    await pool.query(query, [email, user.password_hash, user.user_id]);
+    //const query = "INSERT INTO login (email, password_hash, user_id) VALUES ($1, $2, $3)";
+    //await pool.query(query, [email, user.password_hash, user.user_id]);
     res.json({
       token: token,
       isAdmin: user.admin,
