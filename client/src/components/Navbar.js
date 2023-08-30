@@ -38,7 +38,7 @@ function Navbar(props){
                                 <Link className='Link ' to='/login' >
                                     <button className='btn btn-primary' onClick={handleLogout}>Logout</button> 
                                 </Link>
-                                <div className='user'> <i className="bi bi-person-circle"></i> {props.userfullName[0]} {props.userfullName[1]} </div>
+                                <div className='user'> <i className="bi bi-person-circle"></i> {props.userfullName[0] } {props.userfullName[1] } </div>
                             </div>
                         ):
                         (<div className='buttons'>                            

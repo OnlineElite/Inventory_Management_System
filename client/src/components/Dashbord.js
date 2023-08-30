@@ -34,12 +34,12 @@ function Dashboard(){
                     
                     <Routes>
                         <Route path="/" element={<Home/>} />
-                        <Route path="/dashboard/products" element={<Products/>} />
-                        <Route path="/dashboard/categories" element={<Categories/>} />
-                        <Route path="/dashboard/stock" element={<ViewStock/>} />
-                        <Route path="/dashboard/users" element={<Users/>} />
-                        <Route path="/dashboard/brands" element={<Brands/>} />
-                        <Route path="/dashboard/settings" element={<Settings/>} />
+                        <Route path="/products" element={<Products/>} />
+                        <Route path="/categories" element={<Categories/>} />
+                        <Route path="/stock" element={<ViewStock/>} />
+                        <Route path="/users" element={<Users/>} />
+                        <Route path="/brands" element={<Brands/>} />
+                        <Route path="/settings" element={<Settings/>} />
                     </Routes>
                 </div>
                 

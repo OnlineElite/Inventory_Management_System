@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
 const pool = require("../config/db");
@@ -48,18 +49,27 @@ async function login(req, res) {
 
     const secretKey = process.env.SECRET_KEY;
 
+    // Generate a unique session ID
+    const sessionId = crypto.randomBytes(16).toString("hex");
+
     // Generate and return a JWT
-    const token = jwt.sign({ id: user.user_id }, secretKey, { expiresIn: "3h", });  //mybe you should change user.id by user.user_id
+    const token = jwt.sign(
+      { id: user.user_id },
+      secretKey,
+      {
+        expiresIn: "3h",
+      }
+    ); //mybe you should change user.id by user.user_id
 
     // Insert the user into the login table
-    const query = "INSERT INTO login (email, password_hash, user_id) VALUES ($1, $2, $3)";
-    await pool.query(query, [email, user.password_hash, user.user_id]);
+    //const query = "INSERT INTO login (email, password_hash, user_id) VALUES ($1, $2, $3)";
+    //await pool.query(query, [email, user.password_hash, user.user_id]);
     res.json({
-          token : token,
-          isAdmin : user.admin,
-          userEmail : user.email,
-          fullName : [user.first_name, user.last_name]
-        });
+      token: token,
+      isAdmin: user.admin,
+      userEmail: user.email,
+      fullName: [user.first_name, user.last_name],
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
