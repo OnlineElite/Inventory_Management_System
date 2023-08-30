@@ -57,6 +57,13 @@ const handellError = (message)=>{
     }
 }
 
+const handelProducts = (products)=>{
+    return {
+        type : 'PRODUCTS',
+        payload : products
+    }
+}
+
 const registerThunk = (user) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_URL; 
@@ -126,4 +133,18 @@ const LogOutThunk = (useremail) => async (dispatch)=>{
     }
 }
 
-export {registerThunk, loginThunk, LogOutThunk, logout}
+const bringProductsThunk = () => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/products`;
+        
+        const response = await fetch(url);
+        const datarecived = await response.json();
+        console.log('data loged out recived', datarecived.products )
+        dispatch(handelProducts(datarecived.products))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+export {registerThunk, loginThunk, LogOutThunk, logout, bringProductsThunk}

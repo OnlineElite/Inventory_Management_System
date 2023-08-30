@@ -10,6 +10,7 @@ const initialState = {
     token: localStorage.getItem("token") || "",
     userEmail :null,
     userfullName : localStorage.getItem("username")? localStorage.getItem("username").split(",") : "",
+    products : []
 }
 
 export  const store = createStore(userReducer, initialState, applyMiddleware(thunk))

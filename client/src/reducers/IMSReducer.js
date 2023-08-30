@@ -32,6 +32,9 @@ const userReducer = (state, action)=>{
             localStorage.removeItem("token");
             return {...state, isAuthenticated: false, token: "", userfullName: "" };
 
+        case 'PRODUCTS':
+            return {...state, products : action.payload}
+
         default:
             return state;
     }
