@@ -35,6 +35,12 @@ const userReducer = (state, action)=>{
         case 'PRODUCTS':
             return {...state, products : action.payload}
 
+        case 'CATEGORIES':
+            return {...state, categories : action.payload}
+
+        case 'BRANDS':
+            return {...state, brands : action.payload}
+        
         default:
             return state;
     }

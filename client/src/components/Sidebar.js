@@ -21,9 +21,9 @@ function Sidebar(props){
             <i className="bi bi-person-fill"></i>
           </div>
           <div className="username">
-            <h3>
+            <h4>
               {props.userfullName[0]} {props.userfullName[1]}{" "}
-            </h3>
+            </h4>
             <p>(admin)</p>
           </div>
         </div>

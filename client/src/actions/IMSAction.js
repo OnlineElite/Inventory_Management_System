@@ -64,6 +64,18 @@ const handelProducts = (products)=>{
     }
 }
 
+const handelCategories = (category)=>{
+    return {
+        type : 'CATEGORIES',
+        payload : category
+    }
+}
+const handelBrands = (brand)=>{
+    return {
+        type : 'BRANDS',
+        payload : brand
+    }
+}
 const registerThunk = (user) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_URL; 
@@ -77,7 +89,7 @@ const registerThunk = (user) => async (dispatch)=>{
         
         const response = await fetch(url ,header );
         const datarecived = await response.json();
-        console.log('data register receved', datarecived )
+        //console.log('data register receved', datarecived )
         dispatch(registerUser(datarecived.message))
         dispatch(handellError(datarecived.error))
     }catch(err){
@@ -99,7 +111,7 @@ const loginThunk = (user) => async (dispatch)=>{
         
         const response = await fetch(url ,header );
         const datarecived = await response.json();
-        console.log('data login recived', datarecived )
+        //console.log('data login recived', datarecived )
         dispatch(setToken(datarecived.token))
         dispatch(isAdmin(datarecived.isAdmin))
         dispatch(setAuthenticated(true))
@@ -140,11 +152,42 @@ const bringProductsThunk = () => async (dispatch)=>{
         
         const response = await fetch(url);
         const datarecived = await response.json();
-        console.log('data loged out recived', datarecived.products )
+        
         dispatch(handelProducts(datarecived.products))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
     }
 }
-export {registerThunk, loginThunk, LogOutThunk, logout, bringProductsThunk}
+
+const bringCategoriesThunk = () => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/categories`;
+        
+        const response = await fetch(url);
+        const datarecived = await response.json();
+        
+        dispatch(handelCategories(datarecived.categories))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const bringBrandsThunk = () => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/brands`;
+        
+        const response = await fetch(url);
+        const datarecived = await response.json();
+        
+        dispatch(handelBrands(datarecived.brands))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+export {registerThunk, loginThunk, LogOutThunk, logout, bringProductsThunk, bringCategoriesThunk, bringBrandsThunk}
+

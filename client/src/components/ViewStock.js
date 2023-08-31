@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
-import {bringProductsThunk} from '../actions/IMSAction'
+import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk} from '../actions/IMSAction'
 import '../styles/Stock.css'
 
 function ViewStock(props){
 
+    const [records, setRecords] = useState(props.products)
+
     useEffect(()=>{
         props.getProducts()
+        props.getCategories()
+        props.getBrands()
     }, [props])
+
     const columns = [
         {
             name : 'Name',
@@ -39,103 +44,22 @@ function ViewStock(props){
             name : 'Brand',
             selector : row => row.brand_name,
             sortable : true
+        },
+        {
+            name: 'Actions',
+            cell: (row) => (
+              <div className='d-flex'>
+                <span className='btn text-primary' onClick={() => handleShow(row)}><i class="bi bi-eye-fill"></i></span>
+                <span className='btn' onClick={() => handleUpdate(row)}><i class="bi bi-pencil-fill"></i></span>
+                <span className='btn text-danger' onClick={() => handleDelete(row)}><i class="bi bi-trash-fill"></i></span>
+              </div>
+            ),
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
         }
     ];
-
-
-    /*const data = [
-        {
-            id : 1,
-            name : 'Galaxy s8',
-            ref : 'rtxs8',
-            stock : 9,
-            price : 1200,
-            category : 'phone',
-            brand : 'Samsung'
-        },
-        {
-            id : 2,
-            name : 'Iphone 11 pro',
-            ref : 'i0011',
-            stock : 5,
-            price : 1200,
-            category : 'phone',
-            brand : 'Apple'
-        },
-        {
-            id : 3,
-            name : 'HP Elite book',
-            ref : 'hp000u5b',
-            stock : 3,
-            price : 1200,
-            category : 'PC portable',
-            brand : 'HP'
-        },
-        {
-            id : 4,
-            name : 'Galaxy A10',
-            ref : 'rtx00r7',
-            stock : 11,
-            price : 1200,
-            category : 'phone',
-            brand : 'Samsung'
-        },
-        {
-            id : 5,
-            name : 'Think pad',
-            ref : 'tn00x5r',
-            stock : 7,
-            price : 1200,
-            category : 'PC portable',
-            brand : 'Lenovo'
-        },
-        {
-            id : 6,
-            name : 'Galaxy s8',
-            ref : 'rtxs8',
-            stock : 9,
-            price : 1200,
-            category : 'phone',
-            brand : 'Samsung'
-        },
-        {
-            id : 7,
-            name : 'Ultra 8 pro',
-            ref : 'i0011',
-            stock : 5,
-            price : 1200,
-            category : 'watch',
-            brand : 'Apple'
-        },
-        {
-            id : 8,
-            name : 'HP Elite book',
-            ref : 'hp000u5b',
-            stock : 3,
-            price : 1200,
-            category : 'PC portable',
-            brand : 'HP'
-        },
-        {
-            id : 9,
-            name : 'Galaxy A10',
-            ref : 'rtx00r7',
-            stock : 11,
-            price : 1200,
-            category : 'phone',
-            brand : 'Samsung'
-        },
-        {
-            id : 10,
-            name : 'Think pad',
-            ref : 'tn00x5r',
-            stock : 7,
-            price : 1200,
-            category : 'PC portable',
-            brand : 'Lenovo'
-        }
-    ]*/
-    const [records, setRecords] = useState(props.products)
+    
     const filterByName =(e)=>{
         const newData = props.products.filter(row =>{ 
             return row.product_name.toLowerCase().includes(e.target.value.toLowerCase())
@@ -152,20 +76,44 @@ function ViewStock(props){
 
     const filterByCategory =(e)=>{
         const newData = props.products.filter(row =>{ 
-            return row.category_name.toLowerCase() === e.target.value.toLowerCase()
+            if(e.target.value === 'Category'){
+                return props.products
+            }else{
+                return row.category_name.toLowerCase() === e.target.value.toLowerCase()
+            }
         })
         setRecords(newData)
     }
 
     const filterByBrand =(e)=>{
         const newData = props.products.filter(row =>{ 
-            return row.brand_name.toLowerCase() === e.target.value.toLowerCase()
+            if(e.target.value === 'Brand'){
+                return props.products
+            }else{         
+                return row.brand_name.toLowerCase() === e.target.value.toLowerCase()
+            }
         })
         setRecords(newData)
     }
 
+    const handleUpdate=()=>{
+
+    }
+
+    const handleDelete=()=>{
+
+    }
+
+    const handleShow=()=>{
+
+    }
+
+    const HandellAddItem = ()=>{
+
+    }
+
     return(
-        <div className='products'>
+        <div className='products bg-light'>
             <div className='container'>
                 <h1>Welcome in Products</h1>
                 <div className='filters'>
@@ -173,29 +121,52 @@ function ViewStock(props){
                     <input type='text' placeholder='Filter by Ref' onChange={filterByRef} />
                     <select onChange={filterByCategory}>
                         <option > Category</option>
-                        <option>Phone</option>
-                        <option>Pc portable</option>
-                        <option>Smart TV</option>
-                        <option>Watch</option>
+                        {props.categories.map((category, index)=>(
+                            <option name='option' key={index}> {category.name}</option>
+                        ))}
                     </select>
                     <select onChange={filterByBrand} >
                         <option > Brand</option>
-                        <option>Samsung</option>
-                        <option>HP</option>
-                        <option>Lenovo TV</option>
-                        <option>Apple</option>
+                        {props.brands.map((brand, index)=>(
+                            <option name='option' key={index}> {brand.name}</option>
+                        ))}
                     </select>
                 </div>
                 <div className='container mt-3'>
                     <DataTable 
-                    columns ={columns} 
-                    data ={records} 
-                    selectableRows 
-                    fixedHeader 
-                    pagination>
-
+                        title = {'Manage Stock'}
+                        columns ={columns} 
+                        data ={records} 
+                        selectableRows 
+                        selectableRowsHighlight
+                        highlightOnHover
+                        fixedHeader 
+                        bordered
+                        pagination
+                        actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#exampleModal" onClick={HandellAddItem}>Add Item</button>}
+                    >
                     </DataTable>
                 </div>
+                {/* Add Item Modal */}
+                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            ...
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Save changes</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>          
 
             </div>
         </div>
@@ -207,7 +178,9 @@ const mapStateToProps =(state)=>{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
         isAdmin : state.isAdmin,
-        products : state.products
+        products : state.products,
+        categories : state.categories,
+        brands : state.brands
     }
 }
 
@@ -215,6 +188,12 @@ const mapDispatchToProps =(dispatch)=>{
     return{
         getProducts : ()=>{
             dispatch(bringProductsThunk())
+        },
+        getCategories : ()=>{
+            dispatch(bringCategoriesThunk())
+        },
+        getBrands : ()=>{
+            dispatch(bringBrandsThunk())
         }
     }
 }

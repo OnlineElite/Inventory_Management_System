@@ -1,8 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/Home.css'
-function Home(){
+import { connect } from 'react-redux'
+function Home(props){
+    const [outOfStock, setOutOfStock] = useState(null)
+    const [totalStockValue, setTotalStockValue] = useState(null)
+    const [totalProducts, setTotalProducts] = useState(null)
+    const [totalCategories, setTotalCategories] = useState(null)
 
+    useEffect(()=>{
+        setTotalCategories(props.categories.length)
+        setTotalProducts(props.products.length)
+        const total = props.products.reduce((accumulator, product) => {
+            return accumulator + Number(product.product_price);
+        }, 0);
+        setTotalStockValue(total)
 
+        const outOfStock = props.products.filter((product)=>{
+            return product.product_stock === 0
+        })
+        setOutOfStock(outOfStock.length)
+    },[props])
     return(
         <div className=' home p-3 bg-light'>
             <h2 className=' px-3 '>Inventory State</h2>
@@ -13,7 +30,7 @@ function Home(){
                             <i className="bi bi-cart4" style={{fontSize: '2rem'}}></i>
                             <div className=''>
                                 <p>Total Products</p>
-                                <h2>21</h2>
+                                <h2> {totalProducts} </h2>
                             </div>
                         </div>
                     </div>
@@ -22,7 +39,7 @@ function Home(){
                             <i className="bi bi-coin" style={{fontSize: '2rem'}}></i>
                             <div className=''>
                                 <p>Total Stock Values</p>
-                                <h2>53200.00$</h2>
+                                <h2>{totalStockValue}$</h2>
                             </div>
                         </div>
                     </div>
@@ -31,7 +48,7 @@ function Home(){
                             <i className="bi bi-cart-x-fill" style={{fontSize: '2rem'}}></i>
                             <div className=''>
                                 <p>Out Of Stock</p>
-                                <h2>2</h2>
+                                <h2> {outOfStock} </h2>
                             </div>
                         </div>
                     </div>
@@ -40,7 +57,7 @@ function Home(){
                             <i className="bi bi-tags " style={{fontSize: '2rem'}}></i>
                             <div className=''>
                                 <p>All Categories</p>
-                                <h2>3</h2>
+                                <h2> {totalCategories} </h2>
                             </div>
                         </div>
                     </div>
@@ -50,4 +67,15 @@ function Home(){
     )
 }
 
-export default Home;
+const mapStateToProps =(state)=>{
+   
+    return{
+        response : state.error,
+        isAuthenticated : state.isAuthenticated,
+        isAdmin : state.isAdmin,
+        products : state.products,
+        categories : state.categories
+    }
+}
+
+export default connect(mapStateToProps) (Home);

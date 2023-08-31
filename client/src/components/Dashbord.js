@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import { Routes, Route} from 'react-router-dom'
@@ -11,14 +11,17 @@ import ViewStock from './ViewStock'
 import Settings from './Settings';
 import Users from './Users'
 import Brands from './Brands'
-import { useState } from "react";
-function Dashboard(){
+
+
+function Dashboard(props){
 
     const [toggle, setToggle] = useState(false)
 
     function Toggle(){
       setToggle(!toggle)
     }
+
+    
 
     return(
         <div>
@@ -47,5 +50,7 @@ function Dashboard(){
         </div>
     )
 }
+
+
 
 export default Dashboard;
