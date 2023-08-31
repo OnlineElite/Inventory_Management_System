@@ -28,7 +28,7 @@ async function getCategories(req, res) {
 async function getBrands(req, res) {
 
   try { 
-    const brand = await Product.importCategories();
+    const brand = await Product.importBrands();
     
     res.status(201).json({ brands: brand });
   } catch (error) {

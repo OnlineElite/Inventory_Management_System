@@ -45,7 +45,7 @@
     flex-direction: column;
 }
 
-.userInfo .username h3{
+.userInfo .username h4{
     color: yellow;
 }
 
@@ -85,4 +85,5 @@
     margin-left: 0;
     padding-left: 0;
 }
+
 

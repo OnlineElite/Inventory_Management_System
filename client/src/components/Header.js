@@ -1,5 +1,6 @@
 import React from 'react'
 import 'bootstrap/dist/js/bootstrap.bundle.js';
+import { connect } from 'react-redux';
 
 function Header({Toggle}){
 
@@ -28,4 +29,13 @@ function Header({Toggle}){
     )
 }
 
-export default Header;
+const mapStateToProps =(state)=>{
+    return{
+        response : state.error,
+        isAuthenticated : state.isAuthenticated,
+        isAdmin : state.isAdmin,
+        products : state.products
+    }
+}
+
+export default connect(mapStateToProps) (Header);
