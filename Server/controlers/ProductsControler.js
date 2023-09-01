@@ -1,5 +1,5 @@
 const pool = require("../config/db");
-const Product = require("../models/Products.js");
+const {Product, ProductAction} = require("../models/Products.js");
 
 async function getProducts(req, res) {
 
@@ -37,4 +37,16 @@ async function getBrands(req, res) {
   }
 }
 
-module.exports = {getProducts, getCategories, getBrands}
+async function AddingProduct(req, res) {
+
+  try { 
+    await ProductAction.addProduct(req.body.product);
+    
+    res.status(201).json({ message: 'Product added successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+module.exports = {getProducts, getCategories, getBrands, AddingProduct}

@@ -1,18 +1,26 @@
 import React, {useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
-import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk} from '../actions/IMSAction'
+import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, addProductThunk} from '../actions/IMSAction'
 import '../styles/Stock.css'
 
 function ViewStock(props){
 
     const [records, setRecords] = useState(props.products)
+    const [selecaddcategory, setSelecaddcategory] = useState('');
+    const [selectfilterCategory, setSelectfilterCategory] = useState('');
+    const [selectaddbrand, setSelectaddbrand] = useState('');
+    const [selectfilterBrand, setSelectfilterBrand] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
 
-    useEffect(()=>{
+    const callActions =()=>{
         props.getProducts()
         props.getCategories()
         props.getBrands()
-    }, [props])
+    }
+    useEffect(()=>{
+        callActions()
+    }, [])
 
     const columns = [
         {
@@ -49,14 +57,14 @@ function ViewStock(props){
             name: 'Actions',
             cell: (row) => (
               <div className='d-flex'>
-                <span className='btn text-primary' onClick={() => handleShow(row)}><i class="bi bi-eye-fill"></i></span>
-                <span className='btn' onClick={() => handleUpdate(row)}><i class="bi bi-pencil-fill"></i></span>
-                <span className='btn text-danger' onClick={() => handleDelete(row)}><i class="bi bi-trash-fill"></i></span>
+                <span className='btn text-primary' onClick={() => handleShow(row)}><i className="bi bi-eye-fill"></i></span>
+                <span className='btn' onClick={() => handleUpdate(row)}><i className="bi bi-pencil-fill"></i></span>
+                <span className='btn text-danger' onClick={() => handleDelete(row)}><i className="bi bi-trash-fill"></i></span>
               </div>
             ),
             ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
+            allowoverflow: true,
+            
         }
     ];
     
@@ -83,6 +91,8 @@ function ViewStock(props){
             }
         })
         setRecords(newData)
+        setSelectfilterCategory(e.target.value)
+        
     }
 
     const filterByBrand =(e)=>{
@@ -94,6 +104,15 @@ function ViewStock(props){
             }
         })
         setRecords(newData)
+        setSelectfilterBrand(e.target.value)
+        
+    }
+
+    const addCategory =(e)=>{
+        setSelecaddcategory(e.target.value);
+    }
+    const addBrand =(e)=>{
+        setSelectaddbrand(e.target.value);
     }
 
     const handleUpdate=()=>{
@@ -107,9 +126,44 @@ function ViewStock(props){
     const handleShow=()=>{
 
     }
+    
+    const HandellAddItem = (e)=>{
+        e.preventDefault()
+        var values = [];
+        const ids = ['name', 'ref', 'quantity', 'price', 'category', 'brand']
+        const inputs = ids.map((id) => document.getElementById(id))
+        inputs.forEach((inp) => { 
 
-    const HandellAddItem = ()=>{
-
+            if(inp.name === 'category' ) {
+                props.categories.forEach((item)=>{
+                    if(item.name ===inp.value)
+                    values.push(item.id);
+                })
+            }else if(inp.name === 'brand'){
+                props.brands.forEach((item)=>{
+                    if(item.name === inp.value) 
+                    values.push(item.id);
+                })
+            }else{
+                values.push(inp.value);
+            }
+        })
+        const itemInfo = {
+            product_name: values[0],
+            product_ref: values[1],
+            product_stock: values[2],
+            product_price: values[3],
+            category_name: values[4],
+            brand_name: values[5]
+        }
+        props.addProduct(itemInfo)
+        inputs.forEach((inp) => inp.value = ' ')
+        if (props.response) {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000);
+        } 
     }
 
     return(
@@ -119,14 +173,14 @@ function ViewStock(props){
                 <div className='filters'>
                     <input type='text' placeholder='Filter by Name' onChange={filterByName}/>
                     <input type='text' placeholder='Filter by Ref' onChange={filterByRef} />
-                    <select onChange={filterByCategory}>
-                        <option > Category</option>
+                    <select value= {selectfilterCategory} onChange={filterByCategory}>
+                        <option disabled={true} value=""> Category</option>
                         {props.categories.map((category, index)=>(
                             <option name='option' key={index}> {category.name}</option>
                         ))}
                     </select>
-                    <select onChange={filterByBrand} >
-                        <option > Brand</option>
+                    <select value= {selectfilterBrand} onChange={filterByBrand} >
+                        <option disabled={true} value=""> Brand</option>
                         {props.brands.map((brand, index)=>(
                             <option name='option' key={index}> {brand.name}</option>
                         ))}
@@ -143,26 +197,62 @@ function ViewStock(props){
                         fixedHeader 
                         bordered
                         pagination
-                        actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#exampleModal" onClick={HandellAddItem}>Add Item</button>}
+                        actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#exampleModal" >Add Item</button>}
                     >
                     </DataTable>
                 </div>
                 {/* Add Item Modal */}
-                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
+                        {showAlert && ( <div className="alert alert-success" role="alert"> {props.response} </div> )} 
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <h3 className="modal-title" id="exampleModalLabel">Add Item To Stock</h3>
+                            <span type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
-                            </button>
+                            </span>
                         </div>
                         <div className="modal-body">
-                            ...
+                            <div className="roo">
+                                <label htmlFor="name">Name:</label>
+                                <input id="name" type="text" name="name"/>
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="ref">Ref :</label> 
+                                <input id="ref" type="text" name="ref"/>
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="quantity">Quantity :</label> 
+                                <input id="quantity" type="number" min={0} max={30} name="quantity"/>
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="price">Price :</label> 
+                                <input id="price" type="text" name="price"/>
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="category">Category :</label> 
+                                <select value= {selecaddcategory} id="category" name="category"  onChange={addCategory}>
+                                <option disabled={true} value=""> Category</option>
+                                    {props.categories.map((category)=>(
+                                        <option name='option' key={category.id}> {category.name}</option>
+                                    ))}
+                                </select>
+                                
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="brand">Brand :</label>
+                                <select value= {selectaddbrand} id="brand" name="brand" onChange={addBrand}>
+                                <option disabled={true} value=""> Brand</option>
+                                    {props.brands.map((brand)=>(
+                                        <option name='option' key={brand.id}> {brand.name}</option>
+                                    ))}
+                                </select>
+        
+                            </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Save changes</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={HandellAddItem}>Add Item</button>
                         </div>
                         </div>
                     </div>
@@ -174,13 +264,15 @@ function ViewStock(props){
 }
 
 const mapStateToProps =(state)=>{
+    console.log('message add', state.addMsg)
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
         isAdmin : state.isAdmin,
         products : state.products,
         categories : state.categories,
-        brands : state.brands
+        brands : state.brands,
+        response : state.addMsg
     }
 }
 
@@ -194,6 +286,9 @@ const mapDispatchToProps =(dispatch)=>{
         },
         getBrands : ()=>{
             dispatch(bringBrandsThunk())
+        },
+        addProduct : (product)=>{
+            dispatch(addProductThunk(product))
         }
     }
 }

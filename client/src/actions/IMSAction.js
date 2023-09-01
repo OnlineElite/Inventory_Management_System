@@ -76,6 +76,13 @@ const handelBrands = (brand)=>{
         payload : brand
     }
 }
+
+const addProductResponse = (message)=>{
+    return {
+        type : 'ADD_PRODUCT',
+        payload : message
+    }
+}
 const registerThunk = (user) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_URL; 
@@ -167,7 +174,7 @@ const bringCategoriesThunk = () => async (dispatch)=>{
         
         const response = await fetch(url);
         const datarecived = await response.json();
-        
+        //console.log('categories data', datarecived.categories)
         dispatch(handelCategories(datarecived.categories))
     }catch(err){
         console.error(err)
@@ -182,12 +189,44 @@ const bringBrandsThunk = () => async (dispatch)=>{
         
         const response = await fetch(url);
         const datarecived = await response.json();
-        
+        //console.log('brands data', datarecived.brands)
         dispatch(handelBrands(datarecived.brands))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
     }
 }
-export {registerThunk, loginThunk, LogOutThunk, logout, bringProductsThunk, bringCategoriesThunk, bringBrandsThunk}
+
+const addProductThunk = (product) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/addProduct`;
+        const data = {product : product}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data add item recived', datarecived.message )
+        dispatch(addProductResponse(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+export {
+    registerThunk, 
+    loginThunk, 
+    LogOutThunk, 
+    logout, 
+    bringProductsThunk,
+    bringCategoriesThunk, 
+    bringBrandsThunk,
+    addProductThunk
+}
 

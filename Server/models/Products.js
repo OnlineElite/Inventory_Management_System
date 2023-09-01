@@ -17,18 +17,29 @@ class Product {
     }
 
     static async importCategories() {
-      const query = `select name from categories`;
+      const query = `select id, name from categories`;
       const result = await pool.query(query);
       return result.rows;
     }
 
     static async importBrands() {
-      const query = `select name from brands`;
+      const query = `select id, name from brands`;
       const result = await pool.query(query);
       return result.rows;
     }
   }
+
+class ProductAction {
+  static async addProduct(product){
+    const query = `insert into products (name , ref, stock, price, category_id, brand_id)
+    values ('${product.product_name}', '${product.product_ref}', ${product.product_stock}, 
+    ${product.product_price}, ${product.category_name}, ${product.brand_name})`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+}
   
   
-  module.exports = Product;
+  module.exports = {Product, ProductAction};
   
