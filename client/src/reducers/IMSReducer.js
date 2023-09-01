@@ -40,7 +40,10 @@ const userReducer = (state, action)=>{
 
         case 'BRANDS':
             return {...state, brands : action.payload}
-        
+
+        case 'ADD_PRODUCT':
+            return {...state, addMsg : action.payload}
+    
         default:
             return state;
     }

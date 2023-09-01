@@ -15,3 +15,48 @@
 .products .filters input, .products .filters select{
     width: 20%;
 }
+/*----------modal---------*/
+.modal h3{
+    width: 100%;
+    text-align: center;
+    color:blue ;
+}
+.modal-content{
+    background-color: white;
+    border-radius: 8px;
+}
+.modal-body{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.modal-body .roo{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+.modal-body .roo label{
+    width: fit-content;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+}
+.modal-body .roo input, .modal-body .roo select{
+    background-color: lightgrey;
+    width: 80%;
+    font-size: 18px;
+    color: black ;
+    border-radius: 8px;
+    border: none;
+padding: 5px;
+}
+
+.close{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: black;
+}
