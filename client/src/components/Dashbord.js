@@ -13,7 +13,7 @@ import Users from './Users'
 import Brands from './Brands'
 
 
-function Dashboard(props){
+function Dashboard(){
 
     const [toggle, setToggle] = useState(false)
 
@@ -21,7 +21,6 @@ function Dashboard(props){
       setToggle(!toggle)
     }
 
-    
 
     return(
         <div>
@@ -34,6 +33,7 @@ function Dashboard(props){
                 </div>
                 <div className="col overflow-auto">
                     <Header Toggle={Toggle}/>
+                    
                     
                     <Routes>
                         <Route path="/" element={<Home/>} />

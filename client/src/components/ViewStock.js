@@ -1,7 +1,8 @@
 import React, {useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
-import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, addProductThunk} from '../actions/IMSAction'
+import {bringProductsThunk, bringCategoriesThunk, 
+    bringBrandsThunk, addProductThunk, deleteProductThunk, updateProductThunk} from '../actions/IMSAction'
 import '../styles/Stock.css'
 
 function ViewStock(props){
@@ -12,6 +13,8 @@ function ViewStock(props){
     const [selectaddbrand, setSelectaddbrand] = useState('');
     const [selectfilterBrand, setSelectfilterBrand] = useState('');
     const [showAlert, setShowAlert] = useState(false);
+    const [deleteCondition, setDeleteCondition] = useState(null)
+    const [equivalent, setEquivalent] = useState('')
 
     const callActions =()=>{
         props.getProducts()
@@ -57,9 +60,9 @@ function ViewStock(props){
             name: 'Actions',
             cell: (row) => (
               <div className='d-flex'>
-                <span className='btn text-primary' onClick={() => handleShow(row)}><i className="bi bi-eye-fill"></i></span>
-                <span className='btn' onClick={() => handleUpdate(row)}><i className="bi bi-pencil-fill"></i></span>
-                <span className='btn text-danger' onClick={() => handleDelete(row)}><i className="bi bi-trash-fill"></i></span>
+                <span className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShow(row)}><i className="bi bi-eye-fill"></i></span>
+                <span className="btn" data-toggle="modal" data-target="#update" onClick={() => clickUpdateButton(row)}><i className="bi bi-pencil-fill"></i></span>
+                <span className='btn text-danger'   onClick={() => handleDelete(row)}><i className="bi bi-trash-fill"></i></span>
               </div>
             ),
             ignoreRowClick: true,
@@ -115,16 +118,115 @@ function ViewStock(props){
         setSelectaddbrand(e.target.value);
     }
 
-    const handleUpdate=()=>{
-
+    const clickUpdateButton=(row)=>{      
+        const ids = ['upname', 'upref', 'upquantity', 'upprice', 'upcategory', 'upbrand']
+        const inputs = ids.map((id) => document.getElementById(id))
+        inputs.forEach((inp) => { 
+            switch(inp.id){
+                case 'upname':
+                    inp.value = row.product_name
+                    break;
+                case 'upref':
+                    inp.value = row.product_ref 
+                    break;
+                case 'upquantity':
+                    inp.value = row.product_stock
+                    break;
+                case 'upprice':
+                    inp.value = row.product_price
+                    break;
+                case 'upcategory':
+                    inp.value = row.category_name
+                    break;
+                case 'upbrand':
+                    inp.value = row.brand_name
+                    break;
+                default :
+                    inp.value = ''
+            }
+        })
+        setDeleteCondition(row.product_ref)
     }
 
-    const handleDelete=()=>{
+    const hundeleUpdate =(e)=>{
+        e.preventDefault()
+        var values = [];
+        const ids = ['upname', 'upref', 'upquantity', 'upprice', 'upcategory', 'upbrand']
+        const inputs = ids.map((id) => document.getElementById(id))
+        inputs.forEach((inp) => { 
 
+            if(inp.name === 'upcategory' ) {
+                props.categories.forEach((item)=>{
+                    if(item.name === inp.value)
+                    values.push(item.id);
+                })
+            }else if(inp.name === 'upbrand'){
+                props.brands.forEach((item)=>{
+                    if(item.name === inp.value) 
+                    values.push(item.id);
+                })
+            }else{
+                values.push(inp.value);
+            }
+        })
+        const itemInfo = {
+            product_name: values[0],
+            product_ref: values[1],
+            product_stock: values[2],
+            product_price: values[3],
+            category_name: values[4],
+            brand_name: values[5],
+            condition : deleteCondition
+        }
+        props.updateProduct(itemInfo)
+        
+        if (props.updateMsg) {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000);
+        } 
     }
 
-    const handleShow=()=>{
+    const handleDelete=(row)=>{
+        props.deleteProduct(row.product_ref)
+        if (props.deleteMsg) {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000);
+        }
+        //window.location.reload();
+    }
 
+    const handleShow=(row)=>{
+        setEquivalent(row.category_name)
+        const ids = ['detailName', 'detailRef', 'detailQuantity', 'detailPrice', 'detailCategory', 'detailBrand']
+        const spans = ids.map((id) => document.getElementById(id))
+        spans.forEach((sp) => { 
+            switch(sp.id){
+                case 'detailName':
+                    sp.textContent = row.product_name
+                    break;
+                case 'detailRef':
+                    sp.textContent = row.product_ref 
+                    break;
+                case 'detailQuantity':
+                    sp.textContent = row.product_stock
+                    break;
+                case 'detailPrice':
+                    sp.textContent = row.product_price+'DH'
+                    break;
+                case 'detailCategory':
+                    sp.textContent = row.category_name
+                    break;
+                case 'detailBrand':
+                    sp.textContent = row.brand_name
+                    break;
+                default :
+                    sp.textContent = ''
+            }
+        })
     }
     
     const HandellAddItem = (e)=>{
@@ -157,19 +259,22 @@ function ViewStock(props){
             brand_name: values[5]
         }
         props.addProduct(itemInfo)
-        inputs.forEach((inp) => inp.value = ' ')
-        if (props.response) {
+        
+        if (props.addMsg) {
             setShowAlert(true);
             setTimeout(() => {
                 setShowAlert(false);
             }, 3000);
         } 
+        //window.location.reload();
     }
 
+    const handleShowinsideView=()=>{
+
+    }
     return(
         <div className='products bg-light'>
             <div className='container'>
-                <h1>Welcome in Products</h1>
                 <div className='filters'>
                     <input type='text' placeholder='Filter by Name' onChange={filterByName}/>
                     <input type='text' placeholder='Filter by Ref' onChange={filterByRef} />
@@ -187,9 +292,10 @@ function ViewStock(props){
                     </select>
                 </div>
                 <div className='container mt-3'>
+                { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
                     <DataTable 
                         title = {'Manage Stock'}
-                        columns ={columns} 
+                        columns ={columns}
                         data ={records} 
                         selectableRows 
                         selectableRowsHighlight
@@ -197,15 +303,15 @@ function ViewStock(props){
                         fixedHeader 
                         bordered
                         pagination
-                        actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#exampleModal" >Add Item</button>}
+                        actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addproduct" >Add Item</button>}
                     >
                     </DataTable>
                 </div>
                 {/* Add Item Modal */}
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="addproduct" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                         <div className="modal-content">
-                        {showAlert && ( <div className="alert alert-success" role="alert"> {props.response} </div> )} 
+                        {showAlert && ( <div className="alert alert-success" role="alert"> {props.addMsgMsg} </div> )} 
                         <div className="modal-header">
                             <h3 className="modal-title" id="exampleModalLabel">Add Item To Stock</h3>
                             <span type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -250,6 +356,7 @@ function ViewStock(props){
         
                             </div>
                         </div>
+                        
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <button type="button" className="btn btn-primary" onClick={HandellAddItem}>Add Item</button>
@@ -257,14 +364,139 @@ function ViewStock(props){
                         </div>
                     </div>
                 </div>          
-
+                {/* Update Item Modal */}
+                <div className="modal fade" id="update" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                        {showAlert && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )} 
+                        <div className="modal-header">
+                            <h3 className="modal-title" id="exampleModalLabel">Update Item</h3>
+                            <span type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </span>
+                        </div>
+                        <div className="modal-body">
+                            <div className="roo">
+                                <label htmlFor="upname">Name:</label>
+                                <input id="upname" type="text" name="upname"/>
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="upref">Ref :</label> 
+                                <input id="upref" type="text" name="upref"/>
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="upquantity">Quantity :</label> 
+                                <input id="upquantity" type="number" min={0} max={30} name="upquantity"/>
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="upprice">Price :</label> 
+                                <input id="upprice" type="text" name="upprice"/>
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="upcategory">Category :</label> 
+                                <select  id="upcategory" name="upcategory" >
+                                <option disabled={true} value=""> Category</option>
+                                    {props.categories.map((category)=>(
+                                        <option name='option' key={category.id}> {category.name}</option>
+                                    ))}
+                                </select>
+                                
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="upbrand">Brand :</label>
+                                <select id="upbrand" name="upbrand" >
+                                <option disabled={true} value=""> Brand</option>
+                                    {props.brands.map((brand)=>(
+                                        <option name='option' key={brand.id}> {brand.name}</option>
+                                    ))}
+                                </select>
+        
+                            </div>
+                        </div>
+                        
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={hundeleUpdate}>Update Item</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                {/* View Item Modal */}
+                <div className="modal fade " id="viewproduct" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-lg view">
+                        <div className="modal-content">
+                        <div className="modal-header">
+                            <h3 className="modal-title" id="exampleModalLabel">Product Details</h3>
+                            <span type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </span>
+                        </div>
+                        <div className="modal-body">
+                            <div className="row">
+                                <div className=' left col-auto col-sm-6 col-md-6 col-lg-6'>
+                                        <div className='lines'>
+                                            <span className='detail' >Reference:</span><span  id='detailRef' className='leftR'> </span>
+                                        </div>
+                                        <div className='lines'>
+                                            <span className='detail'  >Name:</span><span id='detailName' className='leftR'>  </span>
+                                        </div>
+                                        <div className='lines'>
+                                            <span className='detail'  >Quantity:</span><span id='detailQuantity' className='leftR'> </span>
+                                        </div>
+                                        <div className='lines'>
+                                            <span className='detail'  >Description:</span><span id='detailDescription' className='leftR'> No description yet </span>
+                                        </div>
+                                        <div className='lines'>
+                                            <span className='detail'  >Category:</span><span id='detailCategory' className='leftR'>  </span>
+                                        </div>
+                                        <div className='lines'>
+                                            <span className='detail'  >Brand:</span><span id='detailBrand' className='leftR'>  </span>
+                                        </div>
+                                </div>
+                                <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
+                                    <div className='productImage'></div>
+                                    <div className=''>
+                                        <span >Price :</span><span id='detailPrice'  className='price'> </span>
+                                    </div>
+                                </div>
+                            </div>                  
+                        </div>
+                        <div class="modal-footer">
+                           <h3 className='text-dark equivalet'>Equivalents:</h3> 
+                            <div className='equivals'>
+                                {props.products.map((product)=>(
+                                    product.category_name === equivalent?(
+                                    <div className="card border-primary mb-3" style={{maxWidth: '9.2rem'}}>
+                                        <div className="card-body text-primary infor ">
+                                            <div className='lines'>
+                                                <span className='detail'>Reference:</span ><span className='result'> {product.product_ref} </span>
+                                            </div>
+                                            <div className='lines'>
+                                                <span className='detail'>Name:</span><span className='result'> {product.product_name} </span>
+                                            </div>
+                                            <div className='lines'>
+                                                <span className='detail'>Quantity:</span><span className='result'> {product.product_stock} </span>
+                                            </div>
+                                            <div className='lines'>
+                                                <span className='detail'>Price :</span><span className='result'> {product.product_price}DH </span>
+                                            </div>
+                                        </div>
+                                        <div className="card-footer "><button className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShowinsideView()}><i className="bi bi-eye-fill"></i></button></div>
+                                    </div>): ''
+                                ))}
+                            </div>
+                        </div>
+                        
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
 }
 
 const mapStateToProps =(state)=>{
-    console.log('message add', state.addMsg)
+    
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
@@ -272,7 +504,10 @@ const mapStateToProps =(state)=>{
         products : state.products,
         categories : state.categories,
         brands : state.brands,
-        response : state.addMsg
+        addMsg : state.addMsg,
+        deleteMsg : state.deleteMsg,
+        updateMsg : state.updateMsg
+
     }
 }
 
@@ -289,8 +524,15 @@ const mapDispatchToProps =(dispatch)=>{
         },
         addProduct : (product)=>{
             dispatch(addProductThunk(product))
+        },
+        deleteProduct : (product_ref)=>{
+            dispatch(deleteProductThunk(product_ref))
+        },
+        updateProduct : (product)=>{
+            dispatch(updateProductThunk(product))
         }
     }
+    
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (ViewStock);

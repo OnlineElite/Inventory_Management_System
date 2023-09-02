@@ -13,7 +13,9 @@ const initialState = {
     products : [],
     categories : [],
     brands : [],
-    addMsg : null
+    addMsg : null,
+    deleteMsg : null,
+    updateMsg : null
 }
 
 export  const store = createStore(userReducer, initialState, applyMiddleware(thunk))
