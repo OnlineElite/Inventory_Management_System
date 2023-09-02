@@ -49,4 +49,27 @@ async function AddingProduct(req, res) {
   }
 }
 
-module.exports = {getProducts, getCategories, getBrands, AddingProduct}
+async function DeletingProduct(req, res) {
+
+  try{
+    await ProductAction.deleteProduct(req.body.product_ref)
+    res.status(201).json({ message: 'Product deleted successfully' });
+  }catch(error){
+    console.log(error)
+    res.status(500).json({error : "Internal server error"})
+  }
+}
+
+async function UpdatingProduct(req, res) {
+
+  try { 
+    await ProductAction.updateProduct(req.body.product);
+    
+    res.status(201).json({ message: 'Product updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+module.exports = {getProducts, getCategories, getBrands, AddingProduct, DeletingProduct, UpdatingProduct}

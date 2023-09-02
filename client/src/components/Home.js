@@ -19,6 +19,7 @@ function Home(props){
             return product.product_stock === 0
         })
         setOutOfStock(outOfStock.length)
+        
     },[props])
     return(
         <div className=' home p-3 bg-light'>
@@ -61,6 +62,7 @@ function Home(props){
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>

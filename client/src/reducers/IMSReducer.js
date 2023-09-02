@@ -43,7 +43,13 @@ const userReducer = (state, action)=>{
 
         case 'ADD_PRODUCT':
             return {...state, addMsg : action.payload}
-    
+
+        case 'DELETE_PRODUCT':
+            return {...state, deleteMsg : action.payload}
+
+        case 'UPDATE_PRODUCT':
+            return {...state, updateMsg : action.payload}
+
         default:
             return state;
     }

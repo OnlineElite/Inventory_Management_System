@@ -83,6 +83,21 @@ const addProductResponse = (message)=>{
         payload : message
     }
 }
+
+const deleteProductResponse = (message)=>{
+    return {
+        type : 'DELETE_PRODUCT',
+        payload : message
+    }
+}
+
+const updateProductResponse = (message)=>{
+    return {
+        type : 'UPDATE_PRODUCT',
+        payload : message
+    }
+}
+
 const registerThunk = (user) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_URL; 
@@ -219,6 +234,50 @@ const addProductThunk = (product) => async (dispatch)=>{
     }
 }
 
+const deleteProductThunk = (productRef) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/deleteProduct`;
+        const data = {product_ref : productRef}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data delete item recived', datarecived.message )
+        dispatch(deleteProductResponse(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const updateProductThunk = (product) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/updateProduct`;
+        const data = {product : product}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data update item recived', datarecived.message )
+        dispatch(updateProductResponse(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
 export {
     registerThunk, 
     loginThunk, 
@@ -227,6 +286,8 @@ export {
     bringProductsThunk,
     bringCategoriesThunk, 
     bringBrandsThunk,
-    addProductThunk
+    addProductThunk,
+    deleteProductThunk,
+    updateProductThunk
 }
 
