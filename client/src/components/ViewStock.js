@@ -275,16 +275,17 @@ function ViewStock(props){
     return(
         <div className='products bg-light'>
             <div className='container'>
+                <h2>Stock Manager</h2>
                 <div className='filters'>
-                    <input type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                    <input type='text' placeholder='Filter by Ref' onChange={filterByRef} />
-                    <select value= {selectfilterCategory} onChange={filterByCategory}>
+                    <input className='filterinp' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                    <input className='filterinp' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
+                    <select className='filterinp' value= {selectfilterCategory} onChange={filterByCategory}>
                         <option disabled={true} value=""> Category</option>
                         {props.categories.map((category, index)=>(
                             <option name='option' key={index}> {category.name}</option>
                         ))}
                     </select>
-                    <select value= {selectfilterBrand} onChange={filterByBrand} >
+                    <select className='filterinp' value= {selectfilterBrand} onChange={filterByBrand} >
                         <option disabled={true} value=""> Brand</option>
                         {props.brands.map((brand, index)=>(
                             <option name='option' key={index}> {brand.name}</option>
@@ -473,6 +474,9 @@ function ViewStock(props){
                                             </div>
                                             <div className='lines'>
                                                 <span className='detail'>Name:</span><span className='result'> {product.product_name} </span>
+                                            </div>
+                                            <div className='lines'>
+                                                <span className='detail'>Brand:</span><span className='result'> {product.brand_name} </span>
                                             </div>
                                             <div className='lines'>
                                                 <span className='detail'>Quantity:</span><span className='result'> {product.product_stock} </span>

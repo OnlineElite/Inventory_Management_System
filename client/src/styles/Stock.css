@@ -47,7 +47,7 @@
     font-weight: bold;
 }
 .modal-body .roo input, .modal-body .roo select{
-    background-color: lightgrey;
+    background-color: rgb(208, 255, 208);
     width: 80%;
     font-size: 18px;
     color: black ;
@@ -134,4 +134,10 @@ padding: 5px;
 .modal-footer .equivalet{
     width: 100%;
     text-align: left;
+}
+
+.filters .filterinp{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px;
 }
