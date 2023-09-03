@@ -46,6 +46,11 @@ function ViewStock(props){
             selector : row => row.product_price,
             sortable : true
         },
+        /*{
+            name : 'Description',
+            selector : row => row.product_desc,
+            sortable : true
+        },*/
         {
             name : 'Category',
             selector : row => row.category_name,
@@ -119,7 +124,7 @@ function ViewStock(props){
     }
 
     const clickUpdateButton=(row)=>{      
-        const ids = ['upname', 'upref', 'upquantity', 'upprice', 'upcategory', 'upbrand']
+        const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand']
         const inputs = ids.map((id) => document.getElementById(id))
         inputs.forEach((inp) => { 
             switch(inp.id){
@@ -134,6 +139,9 @@ function ViewStock(props){
                     break;
                 case 'upprice':
                     inp.value = row.product_price
+                    break;
+                case 'updesc':
+                    inp.value = row.product_desc
                     break;
                 case 'upcategory':
                     inp.value = row.category_name
@@ -151,7 +159,7 @@ function ViewStock(props){
     const hundeleUpdate =(e)=>{
         e.preventDefault()
         var values = [];
-        const ids = ['upname', 'upref', 'upquantity', 'upprice', 'upcategory', 'upbrand']
+        const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand']
         const inputs = ids.map((id) => document.getElementById(id))
         inputs.forEach((inp) => { 
 
@@ -174,8 +182,9 @@ function ViewStock(props){
             product_ref: values[1],
             product_stock: values[2],
             product_price: values[3],
-            category_name: values[4],
-            brand_name: values[5],
+            product_desc : values[4],
+            category_name: values[5],
+            brand_name: values[6],
             condition : deleteCondition
         }
         props.updateProduct(itemInfo)
@@ -201,7 +210,7 @@ function ViewStock(props){
 
     const handleShow=(row)=>{
         setEquivalent({category : row.category_name, ref : row.product_ref, quantity : row.product_stock})
-        const ids = ['detailName', 'detailRef', 'detailQuantity', 'detailPrice', 'detailCategory', 'detailBrand']
+        const ids = ['detailName', 'detailRef', 'detailQuantity', 'detailPrice','detailDescription', 'detailCategory', 'detailBrand']
         const spans = ids.map((id) => document.getElementById(id))
         spans.forEach((sp) => { 
             switch(sp.id){
@@ -216,6 +225,9 @@ function ViewStock(props){
                     break;
                 case 'detailPrice':
                     sp.textContent = row.product_price+'DH'
+                    break;
+                case 'detailDescription':
+                    sp.textContent = row.product_desc
                     break;
                 case 'detailCategory':
                     sp.textContent = row.category_name
@@ -232,7 +244,7 @@ function ViewStock(props){
     const HandellAddItem = (e)=>{
         e.preventDefault()
         var values = [];
-        const ids = ['name', 'ref', 'quantity', 'price', 'category', 'brand']
+        const ids = ['name', 'ref', 'quantity', 'price','desc', 'category', 'brand']
         const inputs = ids.map((id) => document.getElementById(id))
         inputs.forEach((inp) => { 
 
@@ -255,11 +267,12 @@ function ViewStock(props){
             product_ref: values[1],
             product_stock: values[2],
             product_price: values[3],
-            category_name: values[4],
-            brand_name: values[5]
+            product_desc : values[4],
+            category_name: values[5],
+            brand_name: values[6]
         }
         props.addProduct(itemInfo)
-        
+        console.log(itemInfo)
         if (props.addMsg) {
             setShowAlert(true);
             setTimeout(() => {
@@ -312,7 +325,7 @@ function ViewStock(props){
                 </div>
                 {/* Add Item Modal */}
                 <div className="modal fade" id="addproduct" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-lg">
                         <div className="modal-content">
                         {showAlert && ( <div className="alert alert-success" role="alert"> {props.addMsgMsg} </div> )} 
                         <div className="modal-header">
@@ -345,8 +358,7 @@ function ViewStock(props){
                                     {props.categories.map((category)=>(
                                         <option name='option' key={category.id}> {category.name}</option>
                                     ))}
-                                </select>
-                                
+                                </select>                              
                             </div>
                             <div className="roo">
                                 <label htmlFor="brand">Brand :</label>
@@ -356,7 +368,10 @@ function ViewStock(props){
                                         <option name='option' key={brand.id}> {brand.name}</option>
                                     ))}
                                 </select>
-        
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="desc">Description :</label> 
+                                <textarea id="desc" type="text"  name="desc"/>
                             </div>
                         </div>
                         
@@ -366,10 +381,10 @@ function ViewStock(props){
                         </div>
                         </div>
                     </div>
-                </div>          
+                </div>
                 {/* Update Item Modal */}
                 <div className="modal fade" id="update" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-lg">
                         <div className="modal-content">
                         {showAlert && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )} 
                         <div className="modal-header">
@@ -403,7 +418,6 @@ function ViewStock(props){
                                         <option name='option' key={category.id}> {category.name}</option>
                                     ))}
                                 </select>
-                                
                             </div>
                             <div className="roo">
                                 <label htmlFor="upbrand">Brand :</label>
@@ -413,7 +427,10 @@ function ViewStock(props){
                                         <option name='option' key={brand.id}> {brand.name}</option>
                                     ))}
                                 </select>
-        
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="updesc">Description :</label> 
+                                <textarea id="updesc" type="text"  name="updesc"/>
                             </div>
                         </div>
                         
@@ -448,7 +465,7 @@ function ViewStock(props){
                                             <span id='detailQuantity' className='leftR' style={{color : (equivalent.quantity === 0)? 'red': 'black'}} > </span>
                                         </div>
                                         <div className='lines'>
-                                            <span className='detail'  >Description:</span><span id='detailDescription' className='leftR'> No description yet </span>
+                                            <span className='detail'  >Description:</span><span id='detailDescription' className='leftR'>  </span>
                                         </div>
                                         <div className='lines'>
                                             <span className='detail'  >Category:</span><span id='detailCategory' className='leftR'>  </span>
@@ -474,7 +491,7 @@ function ViewStock(props){
                                 </div>
                             </div>                  
                         </div>
-                        <div class="modal-footer">
+                        <div className="modal-footer">
                            <h3 className='text-dark equivalet'>Equivalents:</h3> 
                             <div className='equivals'>
                                 {props.products.map((product)=>(
