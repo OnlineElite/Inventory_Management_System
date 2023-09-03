@@ -87,7 +87,7 @@ function Products(props){
 
 
     return(
-        <div className='ProductsWindow'>
+        <div className='ProductsWindow' id='products'>
             <div className='container bg-light'>
                 <h1>Manage products</h1>
                 <div className='filters'>
