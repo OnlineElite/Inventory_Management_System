@@ -16,7 +16,17 @@
     margin-inline: 0.5rem;
     width: 15rem;
     margin-bottom: 1rem;
+    height: fit-content;
+}
 
+.ProductsWindow .card-img-top{
+    height: 10rem;
+}
+
+.ProductsWindow .card-body{
+    margin: 0;
+    padding-block: 0.5rem;
+    padding-inline: 1rem;
 }
 
 .ProductsWindow  .filters{
@@ -24,11 +34,13 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin-block: 2rem;
 }
 
 .ProductsWindow  .filters input, .ProductsWindow .filters select{
     width: 20%;
 }
+
 
 .ProductsWindow .filters .filterinp{
     border-radius: 5px;
@@ -43,4 +55,109 @@
 .ProductsWindow .card-body .detail{
     color: blue;
     font-weight: bold;
+}
+
+.ProductsWindow .card-footer{
+    display: flex;
+    justify-content: center;
+}
+
+.ProductsWindow .showMore{
+    width: fit-content;
+
+}
+/*--------modal---------*/
+
+.ProductsWindow  .productImage{
+    width: 50%;
+    max-height: 200px;
+    min-height: 200px;
+    background-color: lightgrey;
+    border: 1px solid rgb(185, 183, 183);
+    border-radius: 6px;
+    
+}
+
+.ProductsWindow  .productImage img{
+    width: 100%;
+    height: 100%;
+}
+
+.ProductsWindow .modal-body .row .right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+
+.ProductsWindow .modal-body .detail{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.ProductsWindow .equivals{
+    width: 100%;
+    display: flex;
+    flex-wrap:wrap;
+    align-items: center;
+}
+
+.ProductsWindow .card-body .lines span{
+    font-size: 12px;
+    
+}
+
+.ProductsWindow .card-body .lines{
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 25px;
+}
+
+.ProductsWindow .card-body .detail{
+    color: black;
+}
+
+.ProductsWindow .equivals .card{
+    background-color: rgba(236, 248, 252, 0.979);
+    min-width: 9.2rem;
+    max-height: 12rem;
+    margin-inline: 0.5rem;
+}
+
+.ProductsWindow .view .modal-body .row{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1rem;
+}
+.ProductsWindow .modal-body .price{
+    color: crimson;
+    font-weight: bold;
+    padding-right: 2.5rem;
+}
+
+.ProductsWindow .modal-body .leftR{
+    float: right;
+    margin-right: 1.5rem;
+}
+
+.ProductsWindow .modal-footer .equivalet{
+    width: 100%;
+    text-align: left;
+}
+
+.ProductsWindow .filters .filterinp{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px;
+}
+
+.ProductsWindow .equivals .c-footer {
+    border-top: 1px solid rgb(173, 172, 172);
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }

@@ -5,27 +5,28 @@
 }
 
 
-.products .filters{
+#stock .products .filters{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    margin-block: 2rem;
 }
 
-.products .filters input, .products .filters select{
+#stock .products .filters input, .products .filters select{
     width: 20%;
 }
 /*----------modal---------*/
-.modal h3{
+#stock .modal h3{
     width: 100%;
     text-align: center;
     color:blue ;
 }
-.modal-content{
+#stock .modal-content{
     background-color: white;
     border-radius: 8px;
 }
-.modal-body{
+#stock .modal-body{
     width: 100%;
     height: fit-content;
     display: flex;
@@ -34,19 +35,19 @@
     flex-direction: column;
  
 }
-.modal-body .roo{
+#stock  .modal-body .roo{
     width: 100%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 3px;
 }
-.modal-body .roo label{
+#stock .modal-body .roo label{
     width: fit-content;
     color: black;
     font-size: 18px;
     font-weight: bold;
 }
-.modal-body .roo input, .modal-body .roo select, .modal-body .roo textarea{
+#stock .modal-body .roo input, .modal-body .roo select, .modal-body .roo textarea{
     background-color: rgb(208, 255, 208);
     width: 80%;
     font-size: 18px;
@@ -58,13 +59,14 @@
 }
 
 
-.close{
+#stock .close{
     font-weight: bold;
     font-size: 1.5rem;
     color: black;
 }
 
-.productImage{
+
+#stock .products .productImage{
     width: 50%;
     max-height: 200px;
     min-height: 200px;
@@ -74,53 +76,53 @@
     
 }
 
-.productImage img{
+#stock .products .productImage img{
     width: 100%;
     height: 100%;
 }
 
-.modal-body .row .right{
+#stock .modal-body .row .right{
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
 
-.modal-body .detail{
+#stock .modal-body .detail{
     font-weight: bold;
     font-size: 18px;
 }
 
-.equivals{
+#stock .equivals{
     width: 100%;
     display: flex;
     flex-wrap:wrap;
     align-items: center;
 }
 
-.card-body .lines span{
+#stock .card-body .lines span{
     font-size: 12px;
     
 }
 
-.card-body .lines{
+#stock .card-body .lines{
     overflow: hidden;
     max-width: 100%;
     max-height: 25px;
 }
 
-.card-body .detail{
+#stock .card-body .detail{
     color: black;
 }
 
-.equivals .card{
+#stock .equivals .card{
     background-color: rgba(236, 248, 252, 0.979);
     min-width: 9.2rem;
     max-height: 12rem;
     margin-inline: 0.5rem;
 }
 
-.view .modal-body .row{
+#stock .view .modal-body .row{
     width: 100%;
     height: fit-content;
     display: flex;
@@ -128,29 +130,29 @@
     justify-content: space-between;
     padding-inline: 1rem;
 }
-.modal-body .price{
+#stock .modal-body .price{
     color: crimson;
     font-weight: bold;
     padding-right: 2.5rem;
 }
 
-.modal-body .leftR{
+#stock .modal-body .leftR{
     float: right;
     margin-right: 1.5rem;
 }
 
-.modal-footer .equivalet{
+#stock .modal-footer .equivalet{
     width: 100%;
     text-align: left;
 }
 
-.filters .filterinp{
+#stock .filters .filterinp{
     border-radius: 5px;
     border: 1px solid lightgray;
     padding: 5px;
 }
 
-.equivals .c-footer {
+#stock .equivals .c-footer {
     border-top: 1px solid rgb(173, 172, 172);
     width: 100%;
     display: flex;
