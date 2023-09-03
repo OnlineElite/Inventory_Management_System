@@ -109,6 +109,7 @@ padding: 5px;
 .equivals .card{
     background-color: rgba(236, 248, 252, 0.979);
     min-width: 9.2rem;
+    max-height: 12rem;
     margin-inline: 0.5rem;
 }
 
@@ -140,4 +141,12 @@ padding: 5px;
     border-radius: 5px;
     border: 1px solid lightgray;
     padding: 5px;
+}
+
+.equivals .c-footer {
+    border-top: 1px solid rgb(173, 172, 172);
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
