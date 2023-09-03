@@ -290,7 +290,7 @@ function ViewStock(props){
 
 
     return(
-        <div className='products bg-light'>
+        <div className='products bg-light' id='stock'>
             <div className='container'>
                 <h2>Stock Manager</h2>
                 <div className='filters'>
