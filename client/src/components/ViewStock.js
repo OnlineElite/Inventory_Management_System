@@ -1,8 +1,10 @@
 import React, {useEffect, useState } from 'react'
+import prodimg from '../images/Example.webp'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
 import {bringProductsThunk, bringCategoriesThunk, 
     bringBrandsThunk, addProductThunk, deleteProductThunk, updateProductThunk} from '../actions/IMSAction'
+
 import '../styles/Stock.css'
 
 function ViewStock(props){
@@ -484,9 +486,9 @@ function ViewStock(props){
                                         </div>
                                 </div>
                                 <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
-                                    <div className='productImage'></div>
+                                    <div className='productImage'> <img src= {prodimg} alt='product'/> </div>
                                     <div className=''>
-                                        <span className='text-primary'>Price :</span><span id='detailPrice'  className='price'> </span>
+                                        <span className='text-primary'>Price : </span><span id='detailPrice'  className='price'> </span>
                                     </div>
                                 </div>
                             </div>                  
@@ -508,10 +510,10 @@ function ViewStock(props){
                                                 <span className='detail'>Brand:</span><span className='result'> {product.brand_name} </span>
                                             </div>
                                             <div className='lines'>
-                                                <span className='detail'>Quantity:</span><span className='result'> {product.product_stock} </span>
+                                                <span className='detail'>Quantity:</span><span className='result'  style={{color : (product.product_stock === 0)? 'red': 'black'}}> {product.product_stock} </span>
                                             </div>
                                             <div className='lines'>
-                                                <span className='detail'>Price :</span><span className='result'> {product.product_price}DH </span>
+                                                <span className='detail'>Price :</span><span className='result text-danger'> {product.product_price}DH </span>
                                             </div>
                                         </div>
                                         <div className=" c-footer">

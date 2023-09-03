@@ -1,0 +1,46 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.ProductsWindow .prod{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 1rem;
+    padding-left: 1rem;
+}
+
+.ProductsWindow .container .card{
+    margin-inline: 0.5rem;
+    width: 15rem;
+    margin-bottom: 1rem;
+
+}
+
+.ProductsWindow  .filters{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.ProductsWindow  .filters input, .ProductsWindow .filters select{
+    width: 20%;
+}
+
+.ProductsWindow .filters .filterinp{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px;
+}
+
+.ProductsWindow .price{
+    color: rgb(5, 177, 5);
+}
+
+.ProductsWindow .card-body .detail{
+    color: blue;
+    font-weight: bold;
+}
