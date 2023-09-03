@@ -200,7 +200,7 @@ function ViewStock(props){
     }
 
     const handleShow=(row)=>{
-        setEquivalent(row.category_name)
+        setEquivalent({category : row.category_name, ref : row.product_ref, quantity : row.product_stock})
         const ids = ['detailName', 'detailRef', 'detailQuantity', 'detailPrice', 'detailCategory', 'detailBrand']
         const spans = ids.map((id) => document.getElementById(id))
         spans.forEach((sp) => { 
@@ -272,6 +272,8 @@ function ViewStock(props){
     const handleShowinsideView=()=>{
 
     }
+
+
     return(
         <div className='products bg-light'>
             <div className='container'>
@@ -436,13 +438,14 @@ function ViewStock(props){
                             <div className="row">
                                 <div className=' left col-auto col-sm-6 col-md-6 col-lg-6'>
                                         <div className='lines'>
-                                            <span className='detail' >Reference:</span><span  id='detailRef' className='leftR'> </span>
+                                            <span className='detail ' >Reference:</span><span  id='detailRef' className='leftR text-primary'> </span>
                                         </div>
                                         <div className='lines'>
                                             <span className='detail'  >Name:</span><span id='detailName' className='leftR'>  </span>
                                         </div>
                                         <div className='lines'>
-                                            <span className='detail'  >Quantity:</span><span id='detailQuantity' className='leftR'> </span>
+                                            <span className='detail'  >Quantity:</span>
+                                            <span id='detailQuantity' className='leftR' style={{color : (equivalent.quantity === 0)? 'red': 'black'}} > </span>
                                         </div>
                                         <div className='lines'>
                                             <span className='detail'  >Description:</span><span id='detailDescription' className='leftR'> No description yet </span>
@@ -453,11 +456,20 @@ function ViewStock(props){
                                         <div className='lines'>
                                             <span className='detail'  >Brand:</span><span id='detailBrand' className='leftR'>  </span>
                                         </div>
+                                        <div className='lines'>
+                                            <span className='detail'  >Equivalents:</span>
+                                            <span id='detailBrand' className='leftR'> 
+                                                {props.products.map((product)=>(
+                                                    (product.category_name === equivalent.category && product.product_ref !== equivalent.ref)?
+                                                    <span className='text-success'> {product.product_ref}, </span> : ''
+                                                ))}
+                                            </span>
+                                        </div>
                                 </div>
                                 <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
                                     <div className='productImage'></div>
                                     <div className=''>
-                                        <span >Price :</span><span id='detailPrice'  className='price'> </span>
+                                        <span className='text-primary'>Price :</span><span id='detailPrice'  className='price'> </span>
                                     </div>
                                 </div>
                             </div>                  
@@ -466,7 +478,7 @@ function ViewStock(props){
                            <h3 className='text-dark equivalet'>Equivalents:</h3> 
                             <div className='equivals'>
                                 {props.products.map((product)=>(
-                                    product.category_name === equivalent?(
+                                    (product.category_name === equivalent.category && product.product_ref !== equivalent.ref)?(
                                     <div className="card border-primary mb-3" style={{maxWidth: '9.2rem'}}>
                                         <div className="card-body text-primary infor ">
                                             <div className='lines'>
@@ -485,7 +497,11 @@ function ViewStock(props){
                                                 <span className='detail'>Price :</span><span className='result'> {product.product_price}DH </span>
                                             </div>
                                         </div>
-                                        <div className="card-footer "><button className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShowinsideView()}><i className="bi bi-eye-fill"></i></button></div>
+                                        <div className=" c-footer">
+                                            <button className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShowinsideView()}>
+                                                <i className="bi bi-eye-fill"></i>
+                                            </button>
+                                        </div>
                                     </div>): ''
                                 ))}
                             </div>
