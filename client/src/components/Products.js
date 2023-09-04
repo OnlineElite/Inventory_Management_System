@@ -128,7 +128,7 @@ function Products(props){
                                 </div>
                             </div>
                             <div className="card-footer text-muted">
-                                <button className='btn btn-primary showMore'>Show more</button>
+                                <button className='btn btn-primary showMore'>Show Details</button>
                             </div>
                       </div>
                     ))}     

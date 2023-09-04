@@ -7,7 +7,11 @@ CREATE TABLE users (
     email VARCHAR(100) UNIQUE NOT NULL,
 	password VARCHAR(50) DEFAULT 'default_password' NOT NULL,
 	admin boolean Default false NOT NULL,
-	password_hash VARCHAR(100) NOT NULL
+	password_hash VARCHAR(100) NOT NULL,
+	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_date TIMESTAMP,
+    deleted_date TIMESTAMP
+	
 );
 
 CREATE TABLE login (
@@ -23,12 +27,18 @@ update users set admin = true where email = 'Jamalboujbari@gmail.com'
 --------Stock---------------*/
 create table categories(
 	id serial primary key,
-	name varchar(255) unique
+	name varchar(255) unique,
+	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_date TIMESTAMP,
+    deleted_date TIMESTAMP
 )
 
 create table brands(
 	id serial primary key,
-	name varchar(255) unique
+	name varchar(255) unique,
+	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_date TIMESTAMP,
+    deleted_date TIMESTAMP
 )
 
 create table products(
@@ -37,6 +47,9 @@ create table products(
 	ref varchar(255) unique not null,
 	stock int not null,
 	price DECIMAL(10, 2),
+	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_date TIMESTAMP,
+    deleted_date TIMESTAMP,
 	Description varchar(500) not null,
 	category_id INT,
     brand_id INT,
@@ -62,5 +75,7 @@ select * from users
 select * from products
 select * from categories
 select * from brands
+
+
 
 

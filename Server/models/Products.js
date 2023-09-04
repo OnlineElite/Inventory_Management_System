@@ -8,6 +8,7 @@ class Product {
       products.stock as product_stock,
       products.price as product_price,
       products.Description as product_desc,
+      products.created_date as product_date,
       categories.name as category_name, 
       brands.name as brand_name
       from products
