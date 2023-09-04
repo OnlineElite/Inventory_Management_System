@@ -36,7 +36,8 @@ create table products(
 	name varchar(255) not null,
 	ref varchar(255) unique not null,
 	stock int not null,
-	price DECIMAL(10, 2), 
+	price DECIMAL(10, 2),
+	Description varchar(500) not null,
 	category_id INT,
     brand_id INT,
     FOREIGN KEY (category_id) REFERENCES categories(id),
@@ -46,28 +47,20 @@ create table products(
 insert into categories (name) values( 'Phone'), ('Pc Portable'), ('Smart TV'), ('Watch');
 insert into brands (name) values ( 'Samsung'), ('HP'), ('Lenovo'), ('Apple'), ('LG'),('Hwaui')																	
 
-insert into products (name , ref, stock, price, category_id, brand_id)
-values ('sumsung A20', 'SA0001', 10,1200.00, 1, 1), ('hp elite book', 'HP1005',7, 4500.00, 2, 2),
-('iphone 11 pro ', 'I11007', 3, 9800.00, 1, 4),('apple s8', 'AS3015', 11, 600.00,4,4),
-('lenovo think pad','LT0016', 8, 3500.00,2,3), ('Lg smart TV "', 'STV0001', 0,3500.00, 3, 5), ('GT3 watch' , 'GT8000',0, 1500.00, 4, 6)
-
-select
-      products.name as product_name, 
-      products.ref as product_ref, 
-      products.stock as product_stock,
-      products.price as product_price,
-      categories.name as category_name, 
-      brands.name as brand_name
-      from products 
-      inner join categories on categories.id = products.category_id
-      inner join brands on brands.id = products.brand_id
+insert into products (name , ref, stock, price, Description, category_id, brand_id)
+values ('Smart TV 32"', 'STV32LED', 4,2200.00,'32 inch Intelligent Network TV Ultraclear 1920x1080, LED Screen Computer Monitor WiFi Wireless.', 3, 1),
+('Sumsung S21', 'SM2100',7, 8700.00,'Samsung Galaxy S21 5G capability, 8GB RAM coupled with 128/256GB storage, and a 4000mAh battery', 1, 1),
+('HP PROBOOK 450 ', 'i51335U', 14, 7300.00,'HP ProBook 450 G10, 15,6" FHD, Windows 11 Professionnel, i5,16 Go,512 Go SSD', 2, 2),
+('Lenovo Ninkear ', 'i71165G7', 11, 4600.00,'Ninkear N14 Pro Laptop 14-inch IPS Full HD Intel Core i7-1165G7 16GB RAM+1TB SSD', 2,3),
+('Hwaui GT3','HGT32023', 21, 400.00,'GT3 Pro Smart Watch Men AMOLED 390*390 HD Screen Heart Rate Bluetooth Call ', 4,6), 
+('Huawei Y9 ', 'HWY919', 0,3200.00,'Huawei Y9 Features 6.5″ display, Kirin 710 chipset, 4000 mAh battery, 128 GB storage, 6 GB RAM. ', 1, 6), 
+('Smart TV LG 32"' , 'OLED65C36LA',0, 4500.00,'Smart TV 2023 LG OLED evo C3 4K 65 pouces', 3, 5),
+('Iphone 14' , 'iPH14pro',5, 10500.00,'Super Retina XDR display 6.1‑inch (diagonal) all‑screen OLED display 2532‑by‑1170-pixel', 1, 4)
 
 
+select * from users
 select * from products
 select * from categories
 select * from brands
-
-
-
 
 
