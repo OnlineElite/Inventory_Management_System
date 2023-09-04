@@ -5,7 +5,7 @@
 }
 
 
-#stock .products .filters{
+#stock  .filters{
     width: 100%;
     display: flex;
     align-items: center;
@@ -159,5 +159,28 @@
     align-items: flex-start;
     justify-content: center;
 }
+#stock .dates{
+    width: 100%;
+    margin-left: 2rem;
+}
 
+
+#stock .dates input{
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    border: 1px solid lightgray;
+    width: 20%;
+    margin-inline: 0.5rem;
+    
+}
+
+#stock .dates label{
+    font-weight: bold;
+    font-size: 18px;
+    width: 3rem;
+}
+#stock .date{
+    margin-bottom: 0.5rem;
+}
 

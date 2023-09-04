@@ -34,6 +34,11 @@ function ViewStock(props){
             sortable : true
         },
         {
+            name : 'Created At',
+            selector : row => row.product_date,
+            sortable : true
+        },
+        {
             name : 'Ref',
             selector : row => row.product_ref,
             sortable : true
@@ -293,6 +298,10 @@ function ViewStock(props){
         <div className='products bg-light' id='stock'>
             <div className='container'>
                 <h2>Stock Manager</h2>
+                <div className='dates mt-5'>
+                    <div className='date'><label>From:</label><input type='date' name='from' id='from'></input></div>
+                    <div className='date'><label>To:</label><input type='date' name='to' id='to'></input></div>
+                </div>
                 <div className='filters'>
                     <input className='filterinp' type='text' placeholder='Filter by Name' onChange={filterByName}/>
                     <input className='filterinp' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
