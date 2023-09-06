@@ -2,7 +2,16 @@ const express = require("express");
 const multer =require('multer') 
 const path = require('path')
 const verifyToken = require("../middleware/AuthMiddleware");
-const {getProducts, getCategories, getBrands, AddingProduct, DeletingProduct, UpdatingProduct} = require("../controlers/ProductsControler");
+const {
+  getProducts, 
+  getCategories, 
+  getBrands, 
+  AddingProduct, 
+  DeletingProduct, 
+  UpdatingProduct,
+  AddingBrand,
+  AddingCategory
+} = require("../controlers/ProductsControler");
 
 const router = express.Router();
 
@@ -15,13 +24,17 @@ const storage = multer.diskStorage({
   }
 })
 const upload = multer({ storage : storage })
-
+// Product Routers
 router.get('/products',upload.single('image'), getProducts)
-router.get('/categories',getCategories)
-router.get('/brands',getBrands)
 router.post('/addProduct',AddingProduct)
 router.post('/deleteProduct', DeletingProduct)
 router.post('/updateProduct', UpdatingProduct)
+// Categories Routers
+router.get('/categories',getCategories)
+router.post('/addCategory', AddingCategory)
+//Brands Routers
+router.get('/brands',getBrands)
+router.post('/addBrand', AddingBrand)
 
 router.get("/protected", verifyToken, (req, res) => {
   res.json({ message: "You are authorized to access this route" });

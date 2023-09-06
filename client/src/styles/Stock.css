@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin-block: 2rem;
+    margin-block: 1rem;
 }
 
 #stock .products .filters input, .products .filters select{
@@ -181,6 +181,6 @@
     width: 3rem;
 }
 #stock .date{
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
 }
 

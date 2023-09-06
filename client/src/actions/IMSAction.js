@@ -77,21 +77,21 @@ const handelBrands = (brand)=>{
     }
 }
 
-const addProductResponse = (message)=>{
+const addMessage = (message)=>{
     return {
         type : 'ADD_PRODUCT',
         payload : message
     }
 }
 
-const deleteProductResponse = (message)=>{
+const deleteMessage = (message)=>{
     return {
         type : 'DELETE_PRODUCT',
         payload : message
     }
 }
 
-const updateProductResponse = (message)=>{
+const updateMessage = (message)=>{
     return {
         type : 'UPDATE_PRODUCT',
         payload : message
@@ -236,7 +236,7 @@ const addProductThunk = (product) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         console.log('data add item recived', datarecived.message )
-        dispatch(addProductResponse(datarecived.message))
+        dispatch(addMessage(datarecived.message))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -258,7 +258,7 @@ const deleteProductThunk = (productRef) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         console.log('data delete item recived', datarecived.message )
-        dispatch(deleteProductResponse(datarecived.message))
+        dispatch(deleteMessage(datarecived.message))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -280,7 +280,7 @@ const updateProductThunk = (product) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         console.log('data update item recived', datarecived.message )
-        dispatch(updateProductResponse(datarecived.message))
+        dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -302,6 +302,50 @@ const bringUsersThunk = () => async (dispatch)=>{
     }
 }
 
+const addCategoryThunk = (category) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/addCategory`;
+        const data = {category : category}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data add category recived', datarecived.message )
+        dispatch(addMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const addBrandThunk = (brand) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/addBrand`;
+        const data = {brand : brand}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data add brand recived', datarecived.message )
+        dispatch(addMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
 export {
     registerThunk, 
     loginThunk, 
@@ -313,6 +357,8 @@ export {
     addProductThunk,
     deleteProductThunk,
     updateProductThunk,
-    bringUsersThunk
+    bringUsersThunk,
+    addCategoryThunk,
+    addBrandThunk
 }
 

@@ -82,6 +82,14 @@ function ViewStock(props){
             
         }
     ];
+
+    function handleCloseModal(){ 
+           
+        document.getElementById("addproduct").classList.remove("show", "d-block");
+        document.getElementById("update").classList.remove("show", "d-block");
+        document.querySelectorAll(".modal-backdrop")
+            .forEach(el => el.classList.remove("modal-backdrop"));
+    }
     
     const filterByName =(e)=>{
         const newData = props.products.filter(row =>{ 
@@ -161,6 +169,7 @@ function ViewStock(props){
             }
         })
         setDeleteCondition(row.product_ref)
+        
     }
 
     const hundeleUpdate =(e)=>{
@@ -202,6 +211,10 @@ function ViewStock(props){
                 setShowAlert(false);
             }, 3000);
         } 
+
+        handleCloseModal()     
+        setRecords(props.products)
+        
     }
 
     const handleDelete=(row)=>{
@@ -211,8 +224,8 @@ function ViewStock(props){
             setTimeout(() => {
                 setShowAlert(false);
             }, 3000);
-        }
-        //window.location.reload();
+        }  
+        setRecords(props.products)
     }
 
     const handleShow=(row)=>{
@@ -297,16 +310,12 @@ function ViewStock(props){
                 setShowAlert(false);
             }, 3000);
         } 
-        //window.location.reload();
+        handleCloseModal()     
+        setRecords(props.products)
     }
 
     const handleShowinsideView=()=>{
-        let formData = new FormData();
-        formData.append('name', 'jamal');
-        formData.append('ref', 'nhkgh1125');
-        formData.append('quantity',10); 
-        formData.append('price', 20);
-        console.log('formData', formData);
+        
     }
 
 
