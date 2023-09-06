@@ -26,13 +26,15 @@ class Product {
     }
 
     static async importBrands() {
-      const query = `select id, name from brands`;
+      const query = `select * from brands`;
       const result = await pool.query(query);
       return result.rows;
     }
   }
 
 class ProductAction {
+
+  //---Products Action
   static async addProduct(product){
     const query = `insert into products (name , ref, stock, price, Description, category_id, brand_id, image)
     values ('${product.product_name}', '${product.product_ref}', ${product.product_stock}, 
@@ -57,6 +59,23 @@ class ProductAction {
     const result = await pool.query(query);
     return result.rows;
   }
+
+  //---Categories Action
+  static async addCategory(category){
+    const query = `insert into categories (name) values ('${category}')`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  //---Brands Action
+  static async addBrand(brand){
+    const query = `insert into brands (name) values ('${brand}')`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
 }
   
   

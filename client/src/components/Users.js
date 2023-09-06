@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
 import {bringUsersThunk} from '../actions/IMSAction'
-
+import '../styles/Users.css'
 
 function Users(props){
     const [showAlert, setShowAlert] = useState(false);
@@ -17,13 +17,8 @@ function Users(props){
 
     const columns = [
         {
-            name : 'First name',
-            selector : row => row.first_name,
-            sortable : true
-        },
-        {
-            name : 'Last name',
-            selector : row => row.last_name,
+            name : 'Full Name',
+            selector : row => row.first_name +' '+ row.last_name,
             sortable : true
         },
         {
@@ -60,6 +55,28 @@ function Users(props){
             
         }
     ];
+
+    const filterByName =(e)=>{
+        const newData = props.users.filter(row =>{ 
+            return (row.first_name.toLowerCase().includes(e.target.value.toLowerCase())
+            || row.last_name.toLowerCase().includes(e.target.value.toLowerCase())) 
+        })
+        setRecords(newData)
+    }
+
+    const filterByUsername =(e)=>{
+        const newData = props.users.filter(row =>{ 
+            return row.username.toLowerCase().includes(e.target.value.toLowerCase())
+        })
+        setRecords(newData)
+    }
+
+    const filterByemail=(e)=>{
+        const newData = props.users.filter(row =>{ 
+            return row.email.toLowerCase().includes(e.target.value.toLowerCase())
+        })
+        setRecords(newData)
+    }
     
     const handleDelete=()=>{
 
@@ -73,7 +90,16 @@ function Users(props){
 
     return(
         <div className='Users' id='users'>
-            <h1>Welcome in Users</h1>
+            <h1>Users Manager</h1>
+            <div className='filters'>
+                <div className='dates mt-3'>
+                    <div className='date'><label>From:</label><input type='date' name='from' id='from'></input></div>
+                    <div className='date'><label>To:</label><input type='date' name='to' id='to'></input></div>
+                </div>
+                <input className='filterinp' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                <input className='filterinp' type='text' placeholder='Filter by Usename' onChange={filterByUsername}/>
+                <input className='filterinp' type='text' placeholder='Filter by email' onChange={filterByemail} />
+            </div>
             <div className='container mt-3'>
                 { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
                 <DataTable 
