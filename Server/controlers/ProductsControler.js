@@ -40,9 +40,10 @@ async function getBrands(req, res) {
 async function AddingProduct(req, res) {
 
   try { 
-    await ProductAction.addProduct(req.body.product);
     
+    await ProductAction.addProduct(req.body.product);
     res.status(201).json({ message: 'Product added successfully' });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

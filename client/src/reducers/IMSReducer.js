@@ -50,6 +50,9 @@ const userReducer = (state, action)=>{
         case 'UPDATE_PRODUCT':
             return {...state, updateMsg : action.payload}
 
+        case 'USERS':
+            return {...state, users : action.payload}
+
         default:
             return state;
     }

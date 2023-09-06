@@ -98,6 +98,15 @@ const updateProductResponse = (message)=>{
     }
 }
 
+const handelUsers = (user)=>{
+    return {
+        type : 'USERS',
+        payload : user
+    }
+}
+
+
+
 const registerThunk = (user) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_URL; 
@@ -278,6 +287,21 @@ const updateProductThunk = (product) => async (dispatch)=>{
     }
 }
 
+const bringUsersThunk = () => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_USER_URL; 
+        const url = `${baseURL}/getUsers`;
+        
+        const response = await fetch(url);
+        const datarecived = await response.json();
+        
+        dispatch(handelUsers(datarecived.Users))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
 export {
     registerThunk, 
     loginThunk, 
@@ -288,6 +312,7 @@ export {
     bringBrandsThunk,
     addProductThunk,
     deleteProductThunk,
-    updateProductThunk
+    updateProductThunk,
+    bringUsersThunk
 }
 

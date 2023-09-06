@@ -250,36 +250,47 @@ function ViewStock(props){
     
     const HandellAddItem = (e)=>{
         e.preventDefault()
-        var values = [];
-        const ids = ['name', 'ref', 'quantity', 'price','desc', 'category', 'brand']
-        const inputs = ids.map((id) => document.getElementById(id))
-        inputs.forEach((inp) => { 
+        const values = [];
+        const ids = ['name', 'ref', 'quantity', 'price', 'desc', 'category', 'brand', 'image'];
+        const inputs = ids.map((id) => document.getElementById(id));
 
-            if(inp.name === 'category' ) {
-                props.categories.forEach((item)=>{
-                    if(item.name ===inp.value)
-                    values.push(item.id);
-                })
-            }else if(inp.name === 'brand'){
-                props.brands.forEach((item)=>{
-                    if(item.name === inp.value) 
-                    values.push(item.id);
-                })
-            }else{
-                values.push(inp.value);
+        inputs.forEach((inp) => {
+        if (inp.id === 'category') {
+            const category = props.categories.find((item) => item.name === inp.value);
+            if (category) {
+            values.push(category.id);
             }
-        })
-        const itemInfo = {
-            product_name: values[0],
-            product_ref: values[1],
-            product_stock: values[2],
-            product_price: values[3],
-            product_desc : values[4],
-            category_name: values[5],
-            brand_name: values[6]
+        } else if (inp.id === 'brand') {
+            const brand = props.brands.find((item) => item.name === inp.value);
+            if (brand) {
+            values.push(brand.id);
+            }
+        } else if (inp.id === 'image' && inp.files.length > 0) {
+            values.push(inp.files[0].name);
+        } else {
+            values.push(inp.value);
         }
-        props.addProduct(itemInfo)
-        console.log(itemInfo)
+        });
+
+        console.log('values', values);
+
+        let formData = new FormData();
+        formData.append('name', values[0]);
+        formData.append('ref', values[1]);
+        formData.append('quantity', values[2]); 
+        formData.append('price', values[3]);
+        formData.append('desc', values[4]);
+        formData.append('category', values[5]);
+        formData.append('brand', values[6]);
+
+        if (values[7] instanceof File) {
+        formData.append('image', values[7])
+        }
+
+        console.log('formData', formData);
+
+        //props.addProduct(formData)
+    
         if (props.addMsg) {
             setShowAlert(true);
             setTimeout(() => {
@@ -290,7 +301,12 @@ function ViewStock(props){
     }
 
     const handleShowinsideView=()=>{
-
+        let formData = new FormData();
+        formData.append('name', 'jamal');
+        formData.append('ref', 'nhkgh1125');
+        formData.append('quantity',10); 
+        formData.append('price', 20);
+        console.log('formData', formData);
     }
 
 
@@ -383,6 +399,10 @@ function ViewStock(props){
                             <div className="roo">
                                 <label htmlFor="desc">Description :</label> 
                                 <textarea id="desc" type="text"  name="desc"/>
+                            </div>
+                            <div className="roo">
+                                <label htmlFor="image">Image :</label> 
+                                <input id="image" type="file"  name="image" />
                             </div>
                         </div>
                         
