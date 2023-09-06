@@ -1,45 +1,49 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
+import {bringUsersThunk} from '../actions/IMSAction'
 
 
 function Users(props){
     const [showAlert, setShowAlert] = useState(false);
-    const [records, setRecords] = useState(props.products)
+    const [records, setRecords] = useState(props.users)
+
+    const callUsers =()=>{
+        props.getUsers()
+    }
+    useEffect(()=>{
+        callUsers()
+    },[])
+
     const columns = [
         {
-            name : 'Name',
-            selector : row => row.product_name,
+            name : 'First name',
+            selector : row => row.first_name,
             sortable : true
         },
         {
-            name : 'Ref',
-            selector : row => row.product_ref,
+            name : 'Last name',
+            selector : row => row.last_name,
             sortable : true
         },
         {
-            name : 'Stock',
-            selector : row => row.product_stock,
+            name : 'Usename',
+            selector : row => row.username,
             sortable : true
         },
         {
-            name : 'Price',
-            selector : row => row.product_price,
-            sortable : true
-        },
-        /*{
-            name : 'Description',
-            selector : row => row.product_desc,
-            sortable : true
-        },*/
-        {
-            name : 'Category',
-            selector : row => row.category_name,
+            name : 'Email',
+            selector : row => row.email,
             sortable : true
         },
         {
-            name : 'Brand',
-            selector : row => row.brand_name,
+            name : 'Role',
+            selector : row => row.admin,
+            sortable : true
+        },
+        {
+            name : 'Created At',
+            selector : row => row.created_date,
             sortable : true
         },
         {
@@ -93,7 +97,7 @@ const mapStateToProps =(state)=>{
     
     return{
         response : state.error,
-        products : state.products,
+        users : state.users,
         isAuthenticated : state.isAuthenticated,
         isAdmin : state.isAdmin,
         deleteMsg : state.deleteMsg,
@@ -104,7 +108,7 @@ const mapStateToProps =(state)=>{
 const mapDispatchToProps =(dispatch)=>{
     return{
         getUsers : ()=>{
-            dispatch()
+            dispatch(bringUsersThunk())
         },
 
         deleteProduct : ()=>{
