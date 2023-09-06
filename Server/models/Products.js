@@ -20,7 +20,7 @@ class Product {
     }
 
     static async importCategories() {
-      const query = `select id, name from categories`;
+      const query = `select * from categories`;
       const result = await pool.query(query);
       return result.rows;
     }

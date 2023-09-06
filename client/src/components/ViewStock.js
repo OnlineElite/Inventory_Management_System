@@ -346,7 +346,7 @@ function ViewStock(props){
                         fixedHeader 
                         bordered
                         pagination
-                        actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addproduct" >Add Item</button>}
+                        actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addproduct" >Add Product</button>}
                     >
                     </DataTable>
                 </div>
