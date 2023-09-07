@@ -46,3 +46,52 @@
 #users .modal-body input{
     width: 75%;
 }
+
+/*--------modal-----------*/
+#users .modal h3{
+    width: 100%;
+    text-align: center;
+    color:blue ;
+}
+#users .modal-content{
+    background-color: white;
+    border-radius: 8px;
+}
+#users .modal-body{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+ 
+}
+#users  .modal-body .roo{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+#users .modal-body .roo label{
+    width: fit-content;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+}
+#users .modal-body .roo input, .modal-body .roo select, .modal-body .roo textarea{
+    background-color: rgb(208, 255, 208);
+    width: 80%;
+    font-size: 18px;
+    color: black ;
+    border-radius: 8px;
+    border:none;
+    padding: 5px;
+    
+}
+
+
+#users .close{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: black;
+}

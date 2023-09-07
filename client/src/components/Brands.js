@@ -94,9 +94,28 @@ function Brands(props){
         }  
         setRecords(props.brands)
     }
+
+    const tableCustomStyles = {
+        headRow: {
+          style: {
+            color:'#223336',
+            backgroundColor: 'lightBlue'
+          },
+        },
+        rows: {
+          style: {
+            color: "STRIPEDCOLOR",
+            backgroundColor: "STRIPEDCOLOR"
+          },
+          stripedStyle: {
+            color: "NORMALCOLOR",
+            backgroundColor: "NORMALCOLOR"
+          }
+        }
+    }
     return(
         <div className='Brands' id='Brands'>
-            <h1>Brands Manager</h1>
+            <h1 className='mx-3'>Brands Manager</h1>
             <div className='filters'>
                 <div className='dates mt-3'>
                     <div className='date'><label>From:</label><input type='date' name='from' id='from'></input></div>
@@ -116,6 +135,7 @@ function Brands(props){
                     fixedHeader 
                     bordered
                     pagination
+                    customStyles={tableCustomStyles}
                     actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addBrand" >Add Brand</button>}
                 >
                 </DataTable>
