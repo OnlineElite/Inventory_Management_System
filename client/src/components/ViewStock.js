@@ -318,6 +318,24 @@ function ViewStock(props){
         
     }
 
+    const tableCustomStyles = {
+        headRow: {
+          style: {
+            color:'#223336',
+            backgroundColor: 'lightBlue'
+          },
+        },
+        rows: {
+          style: {
+            color: "STRIPEDCOLOR",
+            backgroundColor: "STRIPEDCOLOR"
+          },
+          stripedStyle: {
+            color: "NORMALCOLOR",
+            backgroundColor: "NORMALCOLOR"
+          }
+        }
+    }
 
     return(
         <div className='products bg-light' id='stock'>
@@ -355,6 +373,7 @@ function ViewStock(props){
                         fixedHeader 
                         bordered
                         pagination
+                        customStyles={tableCustomStyles}
                         actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addproduct" >Add Product</button>}
                     >
                     </DataTable>

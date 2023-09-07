@@ -30,25 +30,29 @@ function Navbar(props){
                         </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        <button className="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
                         {props.isAuthenticated ? 
                         (
-                            <div className='buttons d-flex'>                            
-                                <Link className='Link ' to='/login' >
-                                    <button className='btn btn-primary' onClick={handleLogout}>Logout</button> 
-                                </Link>
-                                <div className='user'> <i className="bi bi-person-circle"></i> {props.userfullName[0] } {props.userfullName[1] } </div>
-                            </div>
+                            <>
+                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                                <button className="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+                                <div className='buttons d-flex'>                            
+                                    <Link className='Link ' to='/login' >
+                                        <button className='btn btn-primary' onClick={handleLogout}>Logout</button> 
+                                    </Link>
+                                    <div className='user'> <i className="bi bi-person-circle"></i> {props.userfullName[0] } {props.userfullName[1] } </div>
+                                </div>
+                            </>
                         ):
-                        (<div className='buttons'>                            
-                                <Link className='Link' to='/login' >
-                                    <button className='btn btn-primary'>Loging</button> 
-                                </Link>
-                                <Link className='Link' to='/register' >
-                                    <button className='btn btn-primary'>Register</button>
-                                </Link>
-                            </div>
+                        (   <>
+                                <div className='buttons '>                            
+                                    <Link className='Link' to='/login' >
+                                        <button className='btn btn-primary'>Loging</button> 
+                                    </Link>
+                                    <Link className='Link' to='/register' >
+                                        <button className='btn btn-primary'>Register</button>
+                                    </Link>
+                                </div>
+                            </>
                         )}
                     </form>
                 </div>

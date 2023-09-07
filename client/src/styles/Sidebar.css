@@ -13,11 +13,16 @@
 }
 
 .userInfo{
+    min-width: 200px;
+    min-height: 100px;
     display: flex;
     background-color:black;
     padding: 1rem;
     padding-block: 2rem;
+    background-image: url('../images/logname.png');
+    background-size: cover;
 }
+
 
 .userInfo .userImage{
     width: 60px;  /* width 50%*/

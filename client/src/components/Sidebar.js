@@ -14,18 +14,9 @@ function Sidebar(props){
     }
 
     return (
-      <div className=" sidebar d-flex justify-content-between flex-column bg-dark text-white">
+      <div className=" sidebar d-flex justify-content-between flex-column bg-primary text-white">
         <div className="userInfo">
-          <div className="userImage">
-            {" "}
-            <i className="bi bi-person-fill"></i>
-          </div>
-          <div className="username">
-            <h4>
-              {props.userfullName[0]} {props.userfullName[1]}{" "}
-            </h4>
-            <p>(admin)</p>
-          </div>
+          
         </div>
 
         <ul className="mainlinks">

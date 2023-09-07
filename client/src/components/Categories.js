@@ -96,9 +96,28 @@ function Categories(props){
         setRecords(props.categories)
     }
 
+    const tableCustomStyles = {
+        headRow: {
+          style: {
+            color:'#223336',
+            backgroundColor: 'lightBlue'
+          },
+        },
+        rows: {
+          style: {
+            color: "STRIPEDCOLOR",
+            backgroundColor: "STRIPEDCOLOR"
+          },
+          stripedStyle: {
+            color: "NORMALCOLOR",
+            backgroundColor: "NORMALCOLOR"
+          }
+        }
+    }
+
     return(
         <div className='Category' id='Category'>
-            <h1>Categories Manager </h1>
+            <h1 className='px-3'>Categories Manager </h1>
             <div className='filters'>
                 <div className='dates mt-3'>
                     <div className='date'><label>From:</label><input type='date' name='from' id='from'></input></div>
@@ -117,6 +136,7 @@ function Categories(props){
                     highlightOnHover
                     fixedHeader 
                     bordered
+                    customStyles={tableCustomStyles}
                     pagination
                     actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addCategory" >Add Category</button>}
                 >
