@@ -75,6 +75,30 @@ async function AddingCategory(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+
+async function UpdatingCategory(req, res) {
+
+  try { 
+    await ProductAction.updateCategory(req.body.category);
+    
+    res.status(201).json({ message: 'Category updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+async function DeletingCategory(req, res) {
+
+  try{
+    await ProductAction.deleteCategory(req.body.category_name)
+    res.status(201).json({ message: 'Category deleted successfully' });
+  }catch(error){
+    console.log(error)
+    res.status(500).json({error : "Internal server error"})
+  }
+}
+
 // Brands Action
 async function getBrands(req, res) {
 
@@ -101,6 +125,28 @@ async function AddingBrand(req, res) {
   }
 }
 
+async function UpdatingBrand(req, res) {
+
+  try { 
+    await ProductAction.updateBrand(req.body.brand);
+    
+    res.status(201).json({ message: 'Brand updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+async function DeletingBrand(req, res) {
+
+  try{
+    await ProductAction.deleteBrand(req.body.brand_name)
+    res.status(201).json({ message: 'Brand deleted successfully' });
+  }catch(error){
+    console.log(error)
+    res.status(500).json({error : "Internal server error"})
+  }
+}
 module.exports = {
   getProducts, 
   getCategories, 
@@ -109,5 +155,9 @@ module.exports = {
   DeletingProduct,
   UpdatingProduct,
   AddingCategory,
-  AddingBrand
+  AddingBrand,
+  UpdatingCategory,
+  UpdatingBrand,
+  DeletingCategory,
+  DeletingBrand
 }

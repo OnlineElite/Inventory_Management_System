@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
-import {bringCategoriesThunk, addCategoryThunk} from '../actions/IMSAction'
+import {bringCategoriesThunk, addCategoryThunk, updateCategoryThunk, deleteCategoryThunk} from '../actions/IMSAction'
 import '../styles/Categories.css'
 
 function Categories(props){
     const [showAlert, setShowAlert] = useState(false);
     const [records, setRecords] = useState(props.categories)
+    const [condition, setCondition] = useState(null)
     
     const callCategory =()=>{
         props.getCategories()
@@ -39,7 +40,7 @@ function Categories(props){
             name: 'Actions',
             cell: (row) => (
               <div className='d-flex'>
-                <span className="btn" data-toggle="modal" data-target="#update" onClick={() => clickUpdateButton(row)}><i className="bi bi-pencil-fill"></i></span>
+                <span className="btn" data-toggle="modal" data-target="#updateCategory" onClick={() => clickUpdateButton(row)}><i className="bi bi-pencil-fill"></i></span>
                 <span className='btn text-danger'   onClick={() => handleDelete(row)}><i className="bi bi-trash-fill"></i></span>
               </div>
             ),
@@ -52,6 +53,7 @@ function Categories(props){
     function handleCloseModal(){ 
            
         document.getElementById("addCategory").classList.remove("show", "d-block");
+        document.getElementById("updateCategory").classList.remove("show", "d-block");
         document.querySelectorAll(".modal-backdrop")
             .forEach(el => el.classList.remove("modal-backdrop"));
     }
@@ -71,11 +73,27 @@ function Categories(props){
         setRecords(props.categories)
     }
 
-    const handleDelete=()=>{
-
+    const clickUpdateButton=(row)=>{
+        let newCategory = document.getElementById('upname')
+        newCategory.value = row.name;
+        setCondition(row.name)
     }
-    const clickUpdateButton=()=>{
-
+    const HandellUpdateCategory=(row)=>{
+        let newCategory = document.getElementById('upname')
+        props.updateCategory({newValue: newCategory.value, condition : condition})
+        handleCloseModal()
+        setRecords(props.categories)
+    }
+    
+    const handleDelete=(row)=>{
+        props.deleteCategory(row.name)
+        if (props.deleteMsg) {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000);
+        }  
+        setRecords(props.categories)
     }
 
     return(
@@ -100,7 +118,7 @@ function Categories(props){
                     fixedHeader 
                     bordered
                     pagination
-                    actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addCategory" >Add category</button>}
+                    actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addCategory" >Add Category</button>}
                 >
                 </DataTable>
             </div>
@@ -124,7 +142,32 @@ function Categories(props){
                     
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" className="btn btn-primary" onClick={HandellAddCategory}>Add Item</button>
+                        <button type="button" className="btn btn-primary" onClick={HandellAddCategory}>Add Category</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            {/* Update category Modal */}
+            <div className="modal fade" id="updateCategory" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-sm">
+                    <div className="modal-content">
+                    {showAlert && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )} 
+                    <div className="modal-header">
+                        <h3 className="modal-title" id="exampleModalLabel">Update Category</h3>
+                        <span type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </span>
+                    </div>
+                    <div className="modal-body">
+                        <div className="roo">
+                            <label htmlFor="upname">Name:</label>
+                            <input id="upname" type="text" name="upname" placeholder='New category name'/>
+                        </div>
+                    </div>
+                    
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" className="btn btn-primary" onClick={HandellUpdateCategory}>Update Category</button>
                     </div>
                     </div>
                 </div>
@@ -152,11 +195,11 @@ const mapDispatchToProps =(dispatch)=>{
         addCategory : (newCategory)=>{
             dispatch(addCategoryThunk(newCategory))
         },
-        updateCategory : ()=>{
-            dispatch()
+        updateCategory : (newCategory)=>{
+            dispatch(updateCategoryThunk(newCategory))
         },
-        deleteCategory : ()=>{
-            dispatch()
+        deleteCategory : (category_name)=>{
+            dispatch(deleteCategoryThunk(category_name))
         }
     }
     

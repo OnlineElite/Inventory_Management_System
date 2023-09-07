@@ -346,6 +346,94 @@ const addBrandThunk = (brand) => async (dispatch)=>{
     }
 }
 
+const updateCategoryThunk = (category) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/updateCategory`;
+        const data = {category : category}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data update category recived', datarecived.message )
+        dispatch(updateMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const updateBrandThunk = (brand) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/updateBrand`;
+        const data = {brand : brand}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data update category recived', datarecived.message )
+        dispatch(updateMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const deleteCategoryThunk = (categName) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/deleteCategory`;
+        const data = {category_name : categName}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data delete category recived', datarecived.message )
+        dispatch(deleteMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const deleteBrandThunk = (brandName) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/deleteBrand`;
+        const data = {brand_name : brandName}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data delete brand recived', datarecived.message )
+        dispatch(deleteMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
 export {
     registerThunk, 
     loginThunk, 
@@ -359,6 +447,10 @@ export {
     updateProductThunk,
     bringUsersThunk,
     addCategoryThunk,
-    addBrandThunk
+    addBrandThunk,
+    updateCategoryThunk,
+    updateBrandThunk,
+    deleteCategoryThunk,
+    deleteBrandThunk
 }
 
