@@ -68,9 +68,37 @@ class ProductAction {
     return result.rows;
   }
 
+  static async updateCategory(category){
+    const query = `update categories set name = '${category.newValue}' where name = '${category.condition}'`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async deleteCategory(categName){
+    const query = `delete from categories where name = '${categName}'`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
   //---Brands Action
   static async addBrand(brand){
     const query = `insert into brands (name) values ('${brand}')`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async updateBrand(category){
+    const query = `update brands set name = '${category.newValue}' where name = '${category.condition}'`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async deleteBrand(categName){
+    const query = `delete from brands where name = '${categName}'`
 
     const result = await pool.query(query);
     return result.rows;

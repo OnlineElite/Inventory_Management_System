@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
-import {bringBrandsThunk, addBrandThunk} from '../actions/IMSAction'
+import {bringBrandsThunk, addBrandThunk, updateBrandThunk, deleteBrandThunk} from '../actions/IMSAction'
 import '../styles/Brands.css'
 
 function Brands(props){
     const [showAlert, setShowAlert] = useState(false);
     const [records, setRecords] = useState(props.brands)
+    const [condition, setCondition] = useState(null)
+    
     const callBrands =()=>{
         props.getBrands()
     }
@@ -38,7 +40,7 @@ function Brands(props){
             name: 'Actions',
             cell: (row) => (
               <div className='d-flex'>
-                <span className="btn" data-toggle="modal" data-target="#update" onClick={() => clickUpdateButton(row)}><i className="bi bi-pencil-fill"></i></span>
+                <span className="btn" data-toggle="modal" data-target="#updateBrand" onClick={() => clickUpdateButton(row)}><i className="bi bi-pencil-fill"></i></span>
                 <span className='btn text-danger'   onClick={() => handleDelete(row)}><i className="bi bi-trash-fill"></i></span>
               </div>
             ),
@@ -51,6 +53,7 @@ function Brands(props){
     function handleCloseModal(){ 
            
         document.getElementById("addBrand").classList.remove("show", "d-block");
+        document.getElementById("updateBrand").classList.remove("show", "d-block");
         document.querySelectorAll(".modal-backdrop")
             .forEach(el => el.classList.remove("modal-backdrop"));
     }
@@ -69,13 +72,28 @@ function Brands(props){
         setRecords(props.brands)
     }
 
-   const handleDelete=()=>{
-
+    const clickUpdateButton=(row)=>{
+        let newBrand = document.getElementById('upname')
+        newBrand.value = row.name;
+        setCondition(row.name)
     }
-    const clickUpdateButton=()=>{
-
+    const HandellUpdateBrand=(row)=>{
+        let newBrand = document.getElementById('upname')
+        props.updateBrand({newValue: newBrand.value, condition : condition})
+        handleCloseModal()
+        setRecords(props.brands)
     }
-
+    
+    const handleDelete=(row)=>{
+        props.deleteBrand(row.name)
+        if (props.deleteMsg) {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000);
+        }  
+        setRecords(props.brands)
+    }
     return(
         <div className='Brands' id='Brands'>
             <h1>Brands Manager</h1>
@@ -98,7 +116,7 @@ function Brands(props){
                     fixedHeader 
                     bordered
                     pagination
-                    actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addBrand" >Add category</button>}
+                    actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addBrand" >Add Brand</button>}
                 >
                 </DataTable>
             </div>
@@ -127,6 +145,31 @@ function Brands(props){
                     </div>
                 </div>
             </div>
+            {/* Update brand Modal */}
+            <div className="modal fade" id="updateBrand" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-sm">
+                    <div className="modal-content">
+                    {showAlert && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )} 
+                    <div className="modal-header">
+                        <h3 className="modal-title" id="exampleModalLabel">Update Brand</h3>
+                        <span type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </span>
+                    </div>
+                    <div className="modal-body">
+                        <div className="roo">
+                            <label htmlFor="upname">Name:</label>
+                            <input id="upname" type="text" name="upname" placeholder='New brand name'/>
+                        </div>
+                    </div>
+                    
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" className="btn btn-primary" onClick={HandellUpdateBrand}>Update Brand</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
@@ -151,11 +194,11 @@ const mapDispatchToProps =(dispatch)=>{
         addBrand : (newBrand)=>{
             dispatch(addBrandThunk(newBrand))
         },
-        updateBrand : ()=>{
-            dispatch()
+        updateBrand : (newBrand)=>{
+            dispatch(updateBrandThunk(newBrand))
         },
-        deleteBrand : ()=>{
-            dispatch()
+        deleteBrand : (brand_name)=>{
+            dispatch(deleteBrandThunk(brand_name))
         }
     }
     

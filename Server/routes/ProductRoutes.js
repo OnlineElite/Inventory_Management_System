@@ -10,7 +10,11 @@ const {
   DeletingProduct, 
   UpdatingProduct,
   AddingBrand,
-  AddingCategory
+  AddingCategory,
+  UpdatingCategory,
+  UpdatingBrand,
+  DeletingCategory,
+  DeletingBrand
 } = require("../controlers/ProductsControler");
 
 const router = express.Router();
@@ -32,9 +36,13 @@ router.post('/updateProduct', UpdatingProduct)
 // Categories Routers
 router.get('/categories',getCategories)
 router.post('/addCategory', AddingCategory)
+router.post('/updateCategory', UpdatingCategory)
+router.post('/deleteCategory', DeletingCategory)
 //Brands Routers
 router.get('/brands',getBrands)
 router.post('/addBrand', AddingBrand)
+router.post('/updateBrand', UpdatingBrand)
+router.post('/deleteBrand', DeletingBrand)
 
 router.get("/protected", verifyToken, (req, res) => {
   res.json({ message: "You are authorized to access this route" });
