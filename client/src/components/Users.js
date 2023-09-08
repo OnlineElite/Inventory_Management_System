@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
-import {bringUsersThunk} from '../actions/IMSAction'
 import '../styles/Users.css'
 
 function Users(props){
@@ -9,12 +8,6 @@ function Users(props){
     const [records, setRecords] = useState(props.users)
     const [condition, setCondition] = useState(null)
     const [selecadmin, setSelecadmin] = useState('');
-    const callUsers =()=>{
-        props.getUsers()
-    }
-    useEffect(()=>{
-        callUsers()
-    },[])
 
     const columns = [
         {
@@ -259,9 +252,6 @@ const mapStateToProps =(state)=>{
 
 const mapDispatchToProps =(dispatch)=>{
     return{
-        getUsers : ()=>{
-            dispatch(bringUsersThunk())
-        },
         deleteProduct : ()=>{
             dispatch()
         },

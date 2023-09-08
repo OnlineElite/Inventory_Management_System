@@ -6,8 +6,8 @@ function Header(props){
 
 
     return(
-        <div>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-info">
+        <div className='Header' id='Header'>
+            <nav className="navbar navbar-expand-lg shadow mb-5 bg-light ">
                 <span className="navbar-brand d-none d-md-block " href='#/'>Dashboard</span>
                 <button className="navbar-brand d-block d-md-none" onClick={props.Toggle}><i className="bi bi-list"   href='#/'></i></button>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,10 +17,10 @@ function Header(props){
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item border rounded ">
-                            <button className="nav-link text-white" aria-current='page' href='#/'><i className='bi bi-search'/> Search </button>
+                            <button className="nav-link border border-black rounded text-black" aria-current='page' href='#/'><i className='bi bi-search'/> Search </button>
                         </li>
-                        <li className="nav-item mx-2 border rounded">
-                            <button className="nav-link text-white" aria-current='page'  href='#/'><i className="bi bi-person-circle"></i> {props.userfullName[0]} {props.userfullName[1]}{" "} </button>
+                        <li className="nav-item mx-2 border border-black rounded">
+                            <button className="nav-link text-black" aria-current='page'  href='#/'><i className="bi bi-person-circle"></i> {props.userfullName[0]} {props.userfullName[1]}{" "} </button>
                         </li>
                     </ul>
                 </div>

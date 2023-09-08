@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import logo from '../images/top.png'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/Sidebar.css'
 import {Link} from 'react-router-dom'
@@ -8,15 +9,16 @@ function Sidebar(props){
     const [active, setActive] = useState("dashboard");
 
     const handelLogout =(e)=>{
-        e.preventDefault()
-        props.fetchlogout(props.userEmail)
-        props.logoutset()
+      e.preventDefault()
+      props.fetchlogout(props.userEmail)
+      props.logoutset()
     }
 
     return (
       <div className=" sidebar d-flex justify-content-between flex-column bg-primary text-white">
-        <div className="userInfo">
-          
+        <div className="userInfo bg-primary">
+          <img src= {logo} alt='logo'/>
+          {/*<p>(admin)</p>*/}
         </div>
 
         <ul className="mainlinks">
@@ -25,7 +27,7 @@ function Sidebar(props){
               className={active === "dashboard" ? "active link" : "link"}
               onClick={(e) => setActive("dashboard")}
             >
-              <i className="bi bi-grid-1x2-fill"></i> Dashboard
+              <i className="bi bi-grid-1x2-fill mx-2"></i> Dashboard
             </li>
           </Link>
           <Link to="/dashboard/stock">
@@ -33,7 +35,7 @@ function Sidebar(props){
               className={active === "stock" ? "active link" : "link"}
               onClick={(e) => setActive("stock")}
             >
-              <i className="bi bi-tags-fill"></i> View Stock
+              <i className="bi bi-tags-fill mx-2"></i> View Stock
             </li>
           </Link>
           <Link to="/dashboard/products">
@@ -41,7 +43,7 @@ function Sidebar(props){
               className={active === "products" ? "active link" : "link"}
               onClick={(e) => setActive("products")}
             >
-              <i className="bi bi-award-fill"></i> Products
+              <i className="bi bi-award-fill mx-2"></i> Products
             </li>
           </Link>
           <Link to="/dashboard/users">
@@ -49,7 +51,7 @@ function Sidebar(props){
               className={active === "users" ? "active link" : "link"}
               onClick={(e) => setActive("users")}
             >
-              <i className="bi bi-people-fill"></i> Users
+              <i className="bi bi-people-fill mx-2"></i> Users
             </li>
           </Link>
           <Link to="/dashboard/categories">
@@ -57,7 +59,7 @@ function Sidebar(props){
               className={active === "categories" ? "active link" : "link"}
               onClick={(e) => setActive("categories")}
             >
-              <i className="bi bi-grid-3x3-gap-fill"></i> Categories
+              <i className="bi bi-grid-3x3-gap-fill mx-2"></i> Categories
             </li>
           </Link>
           <Link to="/dashboard/brands">
@@ -65,7 +67,7 @@ function Sidebar(props){
               className={active === "brands" ? "active link" : "link"}
               onClick={(e) => setActive("brands")}
             >
-              <i className="bi bi-flag-fill"></i> Brands
+              <i className="bi bi-flag-fill mx-2"></i> Brands
             </li>
           </Link>
           <Link to="/dashboard/settings">
@@ -73,7 +75,7 @@ function Sidebar(props){
               className={active === "settings" ? "active link" : "link"}
               onClick={(e) => setActive("settings")}
             >
-              <i className="bi bi-gear-wide-connected"></i> Settings
+              <i className="bi bi-gear-wide-connected mx-2"></i> Settings
             </li>
           </Link>
         </ul>
@@ -85,7 +87,7 @@ function Sidebar(props){
               className={active === "login" ? "active link" : "link "}
               onClick={(e) => setActive("login")}
             >
-              <i className="bi bi-box-arrow-right "></i> Log Out
+              <i className="bi bi-box-arrow-right mx-2"></i> Log Out
             </li>
           </Link>
         </ul>

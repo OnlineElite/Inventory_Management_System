@@ -1,9 +1,8 @@
-import React, {useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import prodimg from '../images/Example.webp'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
-import {bringProductsThunk, bringCategoriesThunk, 
-    bringBrandsThunk, addProductThunk, deleteProductThunk, updateProductThunk} from '../actions/IMSAction'
+import { addProductThunk, deleteProductThunk, updateProductThunk} from '../actions/IMSAction'
 
 import '../styles/Stock.css'
 
@@ -17,15 +16,6 @@ function ViewStock(props){
     const [showAlert, setShowAlert] = useState(false);
     const [deleteCondition, setDeleteCondition] = useState(null)
     const [equivalent, setEquivalent] = useState('')
-
-    const callActions =()=>{
-        props.getProducts()
-        props.getCategories()
-        props.getBrands()
-    }
-    useEffect(()=>{
-        callActions()
-    }, [])
 
     const columns = [
         {
@@ -599,25 +589,16 @@ const mapStateToProps =(state)=>{
         isAdmin : state.isAdmin,
         products : state.products,
         categories : state.categories,
+        users : state.users,
         brands : state.brands,
         addMsg : state.addMsg,
         deleteMsg : state.deleteMsg,
         updateMsg : state.updateMsg
-
     }
 }
 
 const mapDispatchToProps =(dispatch)=>{
     return{
-        getProducts : ()=>{
-            dispatch(bringProductsThunk())
-        },
-        getCategories : ()=>{
-            dispatch(bringCategoriesThunk())
-        },
-        getBrands : ()=>{
-            dispatch(bringBrandsThunk())
-        },
         addProduct : (product)=>{
             dispatch(addProductThunk(product))
         },
