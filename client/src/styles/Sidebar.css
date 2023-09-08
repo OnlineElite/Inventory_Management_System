@@ -13,16 +13,32 @@
 }
 
 .userInfo{
-    min-width: 200px;
-    min-height: 100px;
+    width: 240px;
+    height: 60px;
     display: flex;
     background-color:black;
     padding: 1rem;
     padding-block: 2rem;
-    background-image: url('../images/logname.png');
-    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    border-bottom: 0.5px solid rgb(179, 176, 176);
+    padding-block: 0;
 }
 
+/*.userInfo p{
+    position: absolute;
+    left: 40%;
+    top: 90%;
+    font-size: 18px;
+    color: black;
+}*/
+
+.userInfo img{
+    width: 70%;
+    height: fit-content;
+}
 
 .userInfo .userImage{
     width: 60px;  /* width 50%*/
@@ -83,7 +99,7 @@
 }
 
 .active{
-    background-color: gray;
+    background-color: rgb(2, 30, 155);
 }
 
 .sidebar ul{

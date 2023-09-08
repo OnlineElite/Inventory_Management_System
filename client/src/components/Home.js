@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import '../styles/Home.css'
 import { connect } from 'react-redux'
 function Home(props){
     const [outOfStock, setOutOfStock] = useState(null)
@@ -40,7 +39,7 @@ function Home(props){
                             <i className="bi bi-coin" style={{fontSize: '2rem'}}></i>
                             <div className=''>
                                 <p>Total Stock Values</p>
-                                <h2>{totalStockValue}$</h2>
+                                {totalStockValue? <h2>{totalStockValue} $</h2>: <h2> </h2>}
                             </div>
                         </div>
                     </div>
