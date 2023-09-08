@@ -142,15 +142,23 @@ const loginThunk = (user) => async (dispatch)=>{
         
         const response = await fetch(url ,header );
         const datarecived = await response.json();
-        //console.log('data login recived', datarecived )
-        dispatch(setToken(datarecived.token))
-        dispatch(isAdmin(datarecived.isAdmin))
-        dispatch(setAuthenticated(true))
-        dispatch(handellError(datarecived.error))
-        dispatch(userEmail(datarecived.userEmail)) //to delete the user from login table
-        dispatch(userFallName(datarecived.fullName))
+
+
+        if(response.ok){
+            dispatch(setToken(datarecived.token));
+            dispatch(isAdmin(datarecived.isAdmin));
+            dispatch(setAuthenticated(true));
+            dispatch(handellError(datarecived.error));
+            dispatch(userEmail(datarecived.userEmail)); //to delete the user from login table
+            dispatch(userFallName(datarecived.fullName));
+        }else{
+
+            dispatch(setAuthenticated(false));
+            dispatch(handellError(datarecived.error));
+        }
+        
     }catch(err){
-        console.error(err)
+        console.error("catch error", err)
         dispatch(handellError(err))
     }
 }
