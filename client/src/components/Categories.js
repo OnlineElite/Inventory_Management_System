@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import { DatePicker } from 'antd';
 import {connect} from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {bringCategoriesThunk, addCategoryThunk, updateCategoryThunk, deleteCategoryThunk} from '../actions/IMSAction'
 //import 'antd/dist/antd.css';
 import '../styles/Categories.css'
@@ -73,7 +74,8 @@ function Categories(props){
         e.preventDefault()
         let newCategory = document.getElementById('name').value
         props.addCategory(newCategory)
-        handleCloseModal()     
+        handleCloseModal()
+        props.getCategories()
         setRecords(props.categories)
     }
 
@@ -86,18 +88,22 @@ function Categories(props){
         let newCategory = document.getElementById('upname')
         props.updateCategory({newValue: newCategory.value, condition : condition})
         handleCloseModal()
+        props.getCategories()
         setRecords(props.categories)
     }
     
     const handleDelete=(row)=>{
+        console.log('befor', props.categories)
         props.deleteCategory(row.name)
         if (props.deleteMsg) {
             setShowAlert(true);
             setTimeout(() => {
                 setShowAlert(false);
             }, 3000);
+            props.getCategories()
+            setRecords(props.categories)
+            console.log('after', props.categories)
         }  
-        setRecords(props.categories)
     }
 
     const tableCustomStyles = {
@@ -145,8 +151,10 @@ function Categories(props){
                             }
                         }}
                     />
+                    
                 </div>
                 <input className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                <span className='refresh py-2 '><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
             </div>
             <div className='container mt-3'>
                 { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
@@ -164,6 +172,7 @@ function Categories(props){
                     actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addCategory" >Add Category</button>}
                 >
                 </DataTable>
+                
             </div>
             {/* Add category Modal */}
             <div className="modal fade" id="addCategory" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -243,6 +252,9 @@ const mapDispatchToProps =(dispatch)=>{
         },
         deleteCategory : (category_name)=>{
             dispatch(deleteCategoryThunk(category_name))
+        },
+        getCategories : ()=>{
+            dispatch(bringCategoriesThunk())
         }
     }
     
