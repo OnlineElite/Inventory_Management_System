@@ -3,8 +3,10 @@ import prodimg from '../images/Example.webp'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
 import { addProductThunk, deleteProductThunk, updateProductThunk} from '../actions/IMSAction'
-
+import { DatePicker } from 'antd';
 import '../styles/Stock.css'
+
+const { RangePicker } = DatePicker;
 
 function ViewStock(props){
 
@@ -332,19 +334,38 @@ function ViewStock(props){
             <div className='container'>
                 <h2>Stock Manager</h2>
                 <div className='dates mt-5'>
-                    <div className='date'><label>From:</label><input type='date' name='from' id='from'></input></div>
-                    <div className='date'><label>To:</label><input type='date' name='to' id='to'></input></div>
+                    <RangePicker
+                        onChange={(values) =>{
+                            if (values && values.length === 2) {
+                                let startDate = values[0].format('YYYY-MM-DD')
+                                let endDate = values[1].format('YYYY-MM-DD')
+                                const theRest = props.products.filter((row)=>{
+
+                                    const date = new Date(row.product_date);
+                                    const year = date.getFullYear();
+                                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                                    const day = String(date.getDate()).padStart(2, '0');
+                                    const formattedDate = `${year}-${month}-${day}`;
+                                    
+                                    return (startDate <= formattedDate && formattedDate<= endDate)
+                                })
+                                setRecords(theRest)
+                            }else {
+                                setRecords(props.products)
+                            }
+                        }}
+                    />
                 </div>
                 <div className='filters'>
-                    <input className='filterinp' type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                    <input className='filterinp' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
-                    <select className='filterinp' value= {selectfilterCategory} onChange={filterByCategory}>
+                    <input className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                    <input className='filterinp py-2' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
+                    <select className='filterinp py-2' value= {selectfilterCategory} onChange={filterByCategory}>
                         <option disabled={true} value=""> Category</option>
                         {props.categories.map((category, index)=>(
                             <option name='option' key={index}> {category.name}</option>
                         ))}
                     </select>
-                    <select className='filterinp' value= {selectfilterBrand} onChange={filterByBrand} >
+                    <select className='filterinp py-2' value= {selectfilterBrand} onChange={filterByBrand} >
                         <option disabled={true} value=""> Brand</option>
                         {props.brands.map((brand, index)=>(
                             <option name='option' key={index}> {brand.name}</option>

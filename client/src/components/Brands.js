@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import { DatePicker } from 'antd';
 import {connect} from 'react-redux'
 import {bringBrandsThunk, addBrandThunk, updateBrandThunk, deleteBrandThunk} from '../actions/IMSAction'
 import '../styles/Brands.css'
+
+const { RangePicker } = DatePicker;
 
 function Brands(props){
     const [showAlert, setShowAlert] = useState(false);
@@ -117,11 +120,30 @@ function Brands(props){
         <div className='Brands' id='Brands'>
             <h1 className='mx-3'>Brands Manager</h1>
             <div className='filters'>
-                <div className='dates mt-3'>
-                    <div className='date'><label>From:</label><input type='date' name='from' id='from'></input></div>
-                    <div className='date'><label>To:</label><input type='date' name='to' id='to'></input></div>
+                <div className='dates mt-3 mx-3'>
+                <RangePicker
+                        onChange={(values) =>{
+                            if (values && values.length === 2) {
+                                let startDate = values[0].format('YYYY-MM-DD')
+                                let endDate = values[1].format('YYYY-MM-DD')
+                                const theRest = props.brands.filter((row)=>{
+
+                                    const date = new Date(row.created_date);
+                                    const year = date.getFullYear();
+                                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                                    const day = String(date.getDate()).padStart(2, '0');
+                                    const formattedDate = `${year}-${month}-${day}`;
+                                    
+                                    return (startDate <= formattedDate && formattedDate<= endDate)
+                                })
+                                setRecords(theRest)
+                            }else {
+                                setRecords(props.brands)
+                            }
+                        }}
+                    />
                 </div>
-                <input className='filterinp' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                <input className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
             </div>
             <div className='container mt-3'>
                 { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
