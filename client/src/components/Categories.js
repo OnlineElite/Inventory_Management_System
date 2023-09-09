@@ -5,14 +5,12 @@ import {connect} from 'react-redux'
 import {bringCategoriesThunk, addCategoryThunk, updateCategoryThunk, deleteCategoryThunk} from '../actions/IMSAction'
 //import 'antd/dist/antd.css';
 import '../styles/Categories.css'
-import moment from 'moment'
 const { RangePicker } = DatePicker;
 
 function Categories(props){
     const [showAlert, setShowAlert] = useState(false);
     const [records, setRecords] = useState(props.categories)
     const [condition, setCondition] = useState(null)
-    const [dates, setDates] = useState([])
 
     const callCategory =()=>{
         props.getCategories()
@@ -131,13 +129,18 @@ function Categories(props){
                             if (values && values.length === 2) {
                                 let startDate = values[0].format('YYYY-MM-DD')
                                 let endDate = values[1].format('YYYY-MM-DD')
-                                const theRest = props.categories.filter((row)=>
-                                    startDate <= (row.created_date).format('YYYY-MM-DD') <= endDate
-                                )
-                                setDates([startDate, endDate])
+                                const theRest = props.categories.filter((row)=>{
+
+                                    const date = new Date(row.created_date);
+                                    const year = date.getFullYear();
+                                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                                    const day = String(date.getDate()).padStart(2, '0');
+                                    const formattedDate = `${year}-${month}-${day}`;
+                                    
+                                    return (startDate <= formattedDate && formattedDate<= endDate)
+                                })
                                 setRecords(theRest)
                             }else {
-                                setDates([null, null]);
                                 setRecords(props.categories)
                             }
                         }}
