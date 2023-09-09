@@ -46,7 +46,7 @@ function Navbar(props){
                         (   <>
                                 <div className='buttons '>                            
                                     <Link className='Link' to='/login' >
-                                        <button className='btn btn-primary'>Loging</button> 
+                                        <button className='btn btn-primary'>Login</button> 
                                     </Link>
                                     <Link className='Link' to='/register' >
                                         <button className='btn btn-primary'>Register</button>
