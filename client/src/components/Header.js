@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import { connect } from 'react-redux';
-
+import '../styles/Header.css'
 function Header(props){
 
+    const [toggle, setToggle] = useState(false)
+    const showSearsh =()=>{
+        setToggle(!toggle)
+    }
 
     return(
         <div className='Header ' id='Header'>
@@ -16,8 +20,9 @@ function Header(props){
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li className="nav-item border rounded ">
-                            <button className="nav-link border border-black rounded text-black" aria-current='page' href='#/'><i className='bi bi-search'/> Search </button>
+                        <li id='searsh' className="nav-item border border-black rounded mx-2">
+                            <input className='HeaderSearsh ' placeholder='Search' type='text' name='HeaderSearsh' />
+                            <i onClick={showSearsh} className='bi bi-search mx-1'/>
                         </li>
                         <li className="nav-item mx-2 border border-black rounded">
                             <button className="nav-link text-black" aria-current='page'  href='#/'><i className="bi bi-person-circle"></i> {props.userfullName[0]} {props.userfullName[1]}{" "} </button>

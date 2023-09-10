@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {connect} from 'react-redux'
 import { DatePicker } from 'antd';
+import {updateUserThunk, deleteUserThunk} from '../actions/IMSAction'
 import '../styles/Users.css'
 
 const { RangePicker } = DatePicker;
@@ -10,7 +12,6 @@ function Users(props){
     const [showAlert, setShowAlert] = useState(false);
     const [records, setRecords] = useState(props.users)
     const [condition, setCondition] = useState(null)
-    const [selecadmin, setSelecadmin] = useState('');
 
     const columns = [
         {
@@ -30,7 +31,7 @@ function Users(props){
         },
         {
             name : 'IsAdmin',
-            selector : row => row.admin,
+            selector : row => row.admin ? "Yes": "No",
             sortable : true
         },
         {
@@ -52,9 +53,6 @@ function Users(props){
             
         }
     ];
-    const addAdmin =(e)=>{
-        setSelecadmin(e.target.value);
-    }
 
     function handleCloseModal(){    
         document.getElementById("updateUser").classList.remove("show", "d-block");
@@ -84,9 +82,6 @@ function Users(props){
         setRecords(newData)
     }
     
-    const handleDelete=()=>{
-
-    }
     const clickUpdateButton=(row)=>{
         const ids = ['fname', 'lname', 'username', 'email', 'admin']
         const inputs = ids.map((id) => document.getElementById(id))
@@ -105,10 +100,10 @@ function Users(props){
                     inp.value = row.email
                     break;
                 case 'admin':
-                    inp.value = row.admin
+                    (row.admin)? inp.selectedIndex = 2 : inp.selectedIndex = 1
                     break;
                 default :
-                    inp.value = ''
+                    inp.value = null
             }
         })
         setCondition(row.username)
@@ -129,8 +124,7 @@ function Users(props){
             admin : values[4],
             condition : condition
         }
-        //props.updateUser(itemInfo)
-        console.log('itemInfo', itemInfo)
+        props.updateUser(itemInfo)
         if (props.updateMsg) {
             setShowAlert(true);
             setTimeout(() => {
@@ -139,6 +133,11 @@ function Users(props){
         }
         handleCloseModal()     
         setRecords(props.users)
+    }
+
+    const handleDelete=(row)=>{
+        console.log('condition', row.username)
+        props.deleteUser(row.username)
     }
 
     const handleShow=()=>{
@@ -164,12 +163,29 @@ function Users(props){
         }
     }
 
+    const handeleReset =(e)=>{
+        e.preventDefault()
+        const ids = ['filterName', 'filterDate', 'filterEmail', 'filterUsername']
+        const inputs = ids.map((id)=> document.getElementById(id))
+        inputs.forEach((inp)=> {
+            switch(inp.id){
+                case 'filterName': inp.value = ''; break;
+                case 'filterEmail': inp.value = ''; break;
+                case 'filterUsername': inp.value = ''; break;
+                case 'filterDate': inp.value = []; break;
+                default: inp.value = ''
+            }
+        })
+        setRecords(props.users)
+    }
+
     return(
         <div className='Users' id='users'>
             <h1 className='px-3'>Users Manager</h1>
             <div className='filters'>
                 <div className='dates mt-3'>
                     <RangePicker
+                        id = 'filterDate'
                         onChange={(values) =>{
                             if (values && values.length === 2) {
                                 let startDate = values[0].format('YYYY-MM-DD')
@@ -191,9 +207,10 @@ function Users(props){
                         }}
                     />
                 </div>
-                <input className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                <input className='filterinp py-2' type='text' placeholder='Filter by Usename' onChange={filterByUsername}/>
-                <input className='filterinp py-2' type='text' placeholder='Filter by email' onChange={filterByemail} />
+                <input id='filterName' className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                <input id='filterUsername' className='filterinp py-2' type='text' placeholder='Filter by Usename' onChange={filterByUsername}/>
+                <input id='filterEmail' className='filterinp py-2' type='text' placeholder='Filter by email' onChange={filterByemail} />
+                <span className='refresh py-2 ' onClick={handeleReset}><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
             </div>
             <div className='container mt-3'>
                 { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
@@ -241,7 +258,7 @@ function Users(props){
                             </div>
                             <div className="roo">
                                 <label htmlFor="admin">Is Admin :</label> 
-                                <select  id="admin" value={selecadmin} onChange={addAdmin} name="admin" >
+                                <select  id="admin" name="admin" >
                                     <option disabled={true} value=""> true/false</option>
                                     <option name='option' >false</option>
                                     <option name='option' >true</option>
@@ -274,11 +291,11 @@ const mapStateToProps =(state)=>{
 
 const mapDispatchToProps =(dispatch)=>{
     return{
-        deleteProduct : ()=>{
-            dispatch()
+        deleteUser : (condition)=>{
+            dispatch(deleteUserThunk(condition))
         },
-        updateUser : ()=>{
-            dispatch()
+        updateUser : (user)=>{
+            dispatch(updateUserThunk(user))
         }
     }
     

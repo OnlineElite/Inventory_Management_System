@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {connect} from 'react-redux'
 import prodimg from '../images/Example.webp'
 import '../styles/Products.css'
@@ -85,26 +86,42 @@ function Products(props){
         })
     }
 
+    const handeleReset =(e)=>{
+        e.preventDefault()
+        const ids = ['filterName', 'filterRef', 'filterCategory', 'filterBrand']
+        const inputs = ids.map((id)=> document.getElementById(id))
+        inputs.forEach((inp)=> {
+            switch(inp.id){
+                case 'filterName': inp.value = ''; break;
+                case 'filterRef': inp.value = ''; break;
+                case 'filterCategory': inp.selectedIndex = 0; break;
+                case 'filterBrand': inp.selectedIndex = 0; break;
+                default: inp.value = ''
+            }
+        })
+        setRecords(props.products)
+    }
 
     return(
         <div className='ProductsWindow' id='products'>
             <div className='container bg-light'>
                 <h1>Manage products</h1>
                 <div className='filters'>
-                    <input className='filterinp' type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                    <input className='filterinp' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
-                    <select className='filterinp' value= {selectfilterCategory} onChange={filterByCategory}>
+                    <input id='filterName' className='filterinp' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                    <input id='filterRef' className='filterinp' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
+                    <select id='filterCategory' className='filterinp' value= {selectfilterCategory} onChange={filterByCategory}>
                         <option disabled={true} value=""> Category</option>
                         {props.categories.map((category, index)=>(
                             <option name='option' key={index}> {category.name}</option>
                         ))}
                     </select>
-                    <select className='filterinp' value= {selectfilterBrand} onChange={filterByBrand} >
+                    <select id='filterBrand' className='filterinp' value= {selectfilterBrand} onChange={filterByBrand} >
                         <option disabled={true} value=""> Brand</option>
                         {props.brands.map((brand, index)=>(
                             <option name='option' key={index}> {brand.name}</option>
                         ))}
                     </select>
+                    <span className='refresh py-2 ' onClick={handeleReset}><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
                 </div>
                 <div className='prod bg-light'>
                     {records.map((product)=>(

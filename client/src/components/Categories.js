@@ -93,7 +93,6 @@ function Categories(props){
     }
     
     const handleDelete=(row)=>{
-        console.log('befor', props.categories)
         props.deleteCategory(row.name)
         if (props.deleteMsg) {
             setShowAlert(true);
@@ -102,7 +101,6 @@ function Categories(props){
             }, 3000);
             props.getCategories()
             setRecords(props.categories)
-            console.log('after', props.categories)
         }  
     }
 
@@ -124,6 +122,20 @@ function Categories(props){
           }
         }
     }
+
+    const handeleReset =(e)=>{
+        e.preventDefault()
+        const ids = ['filterName', 'filterDate']
+        const inputs = ids.map((id)=> document.getElementById(id))
+        inputs.forEach((inp)=> {
+            switch(inp.id){
+                case 'filterName': inp.value = ''; break;
+                case 'filterDate': inp.value = []; break;
+                default: inp.value = ''
+            }
+        })
+        setRecords(props.categories)
+    }
     
     return(
         <div className='Category' id='Category'>
@@ -131,6 +143,7 @@ function Categories(props){
             <div className='filters'>
                 <div className='dates mt-3 mx-3 '>
                     <RangePicker
+                        id = 'filterDate'
                         onChange={(values) =>{
                             if (values && values.length === 2) {
                                 let startDate = values[0].format('YYYY-MM-DD')
@@ -153,8 +166,8 @@ function Categories(props){
                     />
                     
                 </div>
-                <input className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                <span className='refresh py-2 '><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
+                <input id='filterName' className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                <span className='refresh py-2 ' onClick={handeleReset}><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
             </div>
             <div className='container mt-3'>
                 { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}

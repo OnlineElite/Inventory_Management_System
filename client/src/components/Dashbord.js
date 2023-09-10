@@ -32,6 +32,7 @@ function Dashboard(props){
     useEffect(()=>{
         callActions()
     }, [])
+    
 
     return(
         <div>
