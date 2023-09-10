@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DatePicker } from 'antd';
 import {connect} from 'react-redux'
 import {bringBrandsThunk, addBrandThunk, updateBrandThunk, deleteBrandThunk} from '../actions/IMSAction'
@@ -116,12 +117,28 @@ function Brands(props){
           }
         }
     }
+
+    const handeleReset =(e)=>{
+        e.preventDefault()
+        const ids = ['filterName', 'filterDate']
+        const inputs = ids.map((id)=> document.getElementById(id))
+        inputs.forEach((inp)=> {
+            switch(inp.id){
+                case 'filterName': inp.value = ''; break;
+                case 'filterDate': inp.value = []; break;
+                default: inp.value = ''
+            }
+        })
+        setRecords(props.brands)
+    }
+
     return(
         <div className='Brands' id='Brands'>
             <h1 className='mx-3'>Brands Manager</h1>
             <div className='filters'>
                 <div className='dates mt-3 mx-3'>
                 <RangePicker
+                        id = 'filterDate'
                         onChange={(values) =>{
                             if (values && values.length === 2) {
                                 let startDate = values[0].format('YYYY-MM-DD')
@@ -143,7 +160,8 @@ function Brands(props){
                         }}
                     />
                 </div>
-                <input className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                <input id='filterName' className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                <span className='refresh py-2 ' onClick={handeleReset}><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
             </div>
             <div className='container mt-3'>
                 { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}

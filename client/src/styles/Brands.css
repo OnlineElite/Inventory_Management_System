@@ -7,8 +7,18 @@
 #Brands  .filters{
     width: 100%;
     display: flex;
+    align-items: center;
     margin-block: 1rem;
     padding-left: 2rem;
+}
+
+#Brands  .filters .refresh{
+    margin-inline: 0.5rem;
+    margin-top: 1rem;
+}
+
+#Brands  .filters .refresh .reload{
+    font-size: 1.5rem;
 }
 
 #Brands .filterinp{

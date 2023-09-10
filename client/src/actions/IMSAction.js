@@ -442,6 +442,50 @@ const deleteBrandThunk = (brandName) => async (dispatch)=>{
     }
 }
 
+const updateUserThunk = (Userinfo) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_USER_URL; 
+        const url = `${baseURL}/updateUser`;
+        const data = {user : Userinfo}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data update user recived', datarecived.message )
+        dispatch(updateMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const deleteUserThunk = (condition) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_USER_URL; 
+        const url = `${baseURL}/deleteUser`;
+        const data = {condition : condition}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data delete user recived', datarecived.message )
+        dispatch(deleteMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
 export {
     registerThunk, 
     loginThunk, 
@@ -459,6 +503,8 @@ export {
     updateCategoryThunk,
     updateBrandThunk,
     deleteCategoryThunk,
-    deleteBrandThunk
+    deleteBrandThunk,
+    updateUserThunk,
+    deleteUserThunk
 }
 
