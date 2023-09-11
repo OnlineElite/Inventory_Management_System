@@ -102,142 +102,312 @@ function Products(props){
         setRecords(props.products)
     }
 
-    return(
-        <div className='ProductsWindow' id='products'>
-            <div className='container bg-light'>
-                <h1>Manage products</h1>
-                <div className='filters'>
-                    <input id='filterName' className='filterinp' type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                    <input id='filterRef' className='filterinp' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
-                    <select id='filterCategory' className='filterinp' value= {selectfilterCategory} onChange={filterByCategory}>
-                        <option disabled={true} value=""> Category</option>
-                        {props.categories.map((category, index)=>(
-                            <option name='option' key={index}> {category.name}</option>
-                        ))}
-                    </select>
-                    <select id='filterBrand' className='filterinp' value= {selectfilterBrand} onChange={filterByBrand} >
-                        <option disabled={true} value=""> Brand</option>
-                        {props.brands.map((brand, index)=>(
-                            <option name='option' key={index}> {brand.name}</option>
-                        ))}
-                    </select>
-                    <span className='refresh py-2 ' onClick={handeleReset}><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
-                </div>
-                <div className='prod bg-light'>
-                    {records.map((product)=>(
-                        <div className="card" key={product.product_ref} onClick={()=> handleShow(product.product_ref)} data-toggle="modal" data-target="#viewproducts"  >
-                            <img src= {prodimg} className="card-img-top" alt="product"/>
-                            <div className="card-body">
-                                <div className='lines'>
-                                    <span className='detail'>Reference:</span ><span className='result'> {product.product_ref} </span>
-                                </div>
-                                <div className='lines'>
-                                    <span className='detail'>Name:</span><span className='result'> {product.product_name} </span>
-                                </div>
-                                <div className='lines'>
-                                    <span className='detail'>Brand:</span><span className='result'> {product.brand_name} </span>
-                                </div>
-                                <div className='lines'>
-                                    <span className='detail'>Quantity:</span><span className='result'  style={{color : (product.product_stock === 0)? 'red': 'black'}}> {product.product_stock} </span>
-                                </div>
-                                <div className='lines'>
-                                    <span className='detail'>Price :</span><span className='result price'> {product.product_price}DH </span>
-                                </div>
-                            </div>
-                            <div className="card-footer text-muted">
-                                <button className='btn btn-primary showMore'>Show Details</button>
-                            </div>
+    return (
+      <div className="ProductsWindow" id="products">
+        <div className="container bg-light">
+          <h1>Manage products</h1>
+          <div className="filters">
+            <input
+              id="filterName"
+              className="filterinp"
+              type="text"
+              placeholder="Filter by Name"
+              onChange={filterByName}
+            />
+            <input
+              id="filterRef"
+              className="filterinp"
+              type="text"
+              placeholder="Filter by Ref"
+              onChange={filterByRef}
+            />
+            <select
+              id="filterCategory"
+              className="filterinp"
+              value={selectfilterCategory}
+              onChange={filterByCategory}
+            >
+              <option disabled={true} value="">
+                {" "}
+                Category
+              </option>
+              {props.categories.map((category, index) => (
+                <option name="option" key={index}>
+                  {" "}
+                  {category.name}
+                </option>
+              ))}
+            </select>
+            <select
+              id="filterBrand"
+              className="filterinp"
+              value={selectfilterBrand}
+              onChange={filterByBrand}
+            >
+              <option disabled={true} value="">
+                {" "}
+                Brand
+              </option>
+              {props.brands.map((brand, index) => (
+                <option name="option" key={index}>
+                  {" "}
+                  {brand.name}
+                </option>
+              ))}
+            </select>
+            <span className="refresh py-2 " onClick={handeleReset}>
+              <FontAwesomeIcon
+                className="reload"
+                icon="fa-solid fa-rotate-right"
+              />
+            </span>
+          </div>
+          <div className="prod bg-light">
+            {records.map(
+              (product) => (
+                console.log(product.product_image),
+                (
+                  <div
+                    className="card"
+                    key={product.product_ref}
+                    onClick={() => handleShow(product.product_ref)}
+                    data-toggle="modal"
+                    data-target="#viewproducts"
+                  >
+                    <img
+                      src={
+                        product.product_image != null
+                          ? "http://localhost:3005/uploads/" + product.product_image
+                          : prodimg
+                      }
+                      className="card-img-top"
+                      alt="product"
+                    />
+                    <div className="card-body">
+                      <div className="lines">
+                        <span className="detail">Reference:</span>
+                        <span className="result"> {product.product_ref} </span>
                       </div>
-                    ))}     
-                </div>
-                {/* View Item Modal */}
-                <div className="modal fade " id="viewproducts" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-lg view">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h3 className="modal-title" id="exampleModalLabel">Product Details</h3>
-                                <span type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </span>
-                            </div>
-                            <div className="modal-body">
-                                <div className="row">
-                                    <div className=' left col-auto col-sm-6 col-md-6 col-lg-6'>
-                                            <div className='lines'>
-                                                <span className='detail ' >Reference:</span><span  id='detailRef' className='leftR text-primary'> </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'  >Name:</span><span id='detailName' className='leftR'>  </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'  >Quantity:</span>
-                                                <span id='detailQuantity' className='leftR' style={{color : (equivalent.quantity === 0)? 'red': 'black'}} > </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'  >Description:</span><span id='detailDescription' className='leftR'>  </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'  >Category:</span><span id='detailCategory' className='leftR'>  </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'  >Brand:</span><span id='detailBrand' className='leftR'>  </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'  >Equivalents:</span>
-                                                <span id='detailBrand' className='leftR'> 
-                                                    {props.products.map((product)=>(
-                                                        (product.category_name === equivalent.category && product.product_ref !== equivalent.ref)?
-                                                        <span className='text-success' key={product.product_ref}> {product.product_ref}, </span> : ''
-                                                    ))}
-                                                </span>
-                                            </div>
-                                    </div>
-                                    <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
-                                        <div className='productImage'> <img src= {prodimg} alt='product'/> </div>
-                                        <div className=''>
-                                            <span className='text-primary'>Price : </span><span id='detailPrice'  className='price'> </span>
-                                        </div>
-                                    </div>
-                                </div>                  
-                            </div>
-                            <div className="modal-footer">
-                                <h3 className='text-dark equivalet'>Equivalents:</h3> 
-                                <div className='equivals'>
-                                    {props.products.map((product)=>(
-                                        (product.category_name === equivalent.category && product.product_ref !== equivalent.ref)?(
-                                        <div className="card border-primary mb-3" key={product.product_ref} style={{maxWidth: '9.2rem'}}>
-                                            <div className="card-body text-primary infor ">
-                                                <div className='lines'>
-                                                    <span className='detail'>Reference:</span ><span className='result'> {product.product_ref} </span>
-                                                </div>
-                                                <div className='lines'>
-                                                    <span className='detail'>Name:</span><span className='result'> {product.product_name} </span>
-                                                </div>
-                                                <div className='lines'>
-                                                    <span className='detail'>Brand:</span><span className='result'> {product.brand_name} </span>
-                                                </div>
-                                                <div className='lines'>
-                                                    <span className='detail'>Quantity:</span><span className='result'  style={{color : (product.product_stock === 0)? 'red': 'black'}}> {product.product_stock} </span>
-                                                </div>
-                                                <div className='lines'>
-                                                    <span className='detail'>Price :</span><span className='result text-danger'> {product.product_price}DH </span>
-                                                </div>
-                                            </div>
-                                            <div className=" c-footer">
-                                                <button className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShowinsideView()}>
-                                                    <i className="bi bi-eye-fill"></i>
-                                                </button>
-                                            </div>
-                                        </div>): ''
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+                      <div className="lines">
+                        <span className="detail">Name:</span>
+                        <span className="result"> {product.product_name} </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Brand:</span>
+                        <span className="result"> {product.brand_name} </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Quantity:</span>
+                        <span
+                          className="result"
+                          style={{
+                            color:
+                              product.product_stock === 0 ? "red" : "black",
+                          }}
+                        >
+                          {" "}
+                          {product.product_stock}{" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Price :</span>
+                        <span className="result price">
+                          {" "}
+                          {product.product_price}DH{" "}
+                        </span>
+                      </div>
                     </div>
+                    <div className="card-footer text-muted">
+                      <button className="btn btn-primary showMore">
+                        Show Details
+                      </button>
+                    </div>
+                  </div>
+                )
+              )
+            )}
+          </div>
+          {/* View Item Modal */}
+          <div
+            className="modal fade "
+            id="viewproducts"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog modal-lg view">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h3 className="modal-title" id="exampleModalLabel">
+                    Product Details
+                  </h3>
+                  <span
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </span>
                 </div>
+                <div className="modal-body">
+                  <div className="row">
+                    <div className=" left col-auto col-sm-6 col-md-6 col-lg-6">
+                      <div className="lines">
+                        <span className="detail ">Reference:</span>
+                        <span id="detailRef" className="leftR text-primary">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Name:</span>
+                        <span id="detailName" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Quantity:</span>
+                        <span
+                          id="detailQuantity"
+                          className="leftR"
+                          style={{
+                            color: equivalent.quantity === 0 ? "red" : "black",
+                          }}
+                        >
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Description:</span>
+                        <span id="detailDescription" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Category:</span>
+                        <span id="detailCategory" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Brand:</span>
+                        <span id="detailBrand" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Equivalents:</span>
+                        <span id="detailBrand" className="leftR">
+                          {props.products.map((product) =>
+                            product.category_name === equivalent.category &&
+                            product.product_ref !== equivalent.ref ? (
+                              <span
+                                className="text-success"
+                                key={product.product_ref}
+                              >
+                                {" "}
+                                {product.product_ref},{" "}
+                              </span>
+                            ) : (
+                              ""
+                            )
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className=" right col-auto col-sm-6 col-md-6 col-lg-6">
+                      <div className="productImage">
+                        {" "}
+                        <img src={prodimg} alt="product" />{" "}
+                      </div>
+                      <div className="">
+                        <span className="text-primary">Price : </span>
+                        <span id="detailPrice" className="price">
+                          {" "}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <h3 className="text-dark equivalet">Equivalents:</h3>
+                  <div className="equivals">
+                    {props.products.map((product) =>
+                      product.category_name === equivalent.category &&
+                      product.product_ref !== equivalent.ref ? (
+                        <div
+                          className="card border-primary mb-3"
+                          key={product.product_ref}
+                          style={{ maxWidth: "9.2rem" }}
+                        >
+                          <div className="card-body text-primary infor ">
+                            <div className="lines">
+                              <span className="detail">Reference:</span>
+                              <span className="result">
+                                {" "}
+                                {product.product_ref}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Name:</span>
+                              <span className="result">
+                                {" "}
+                                {product.product_name}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Brand:</span>
+                              <span className="result">
+                                {" "}
+                                {product.brand_name}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Quantity:</span>
+                              <span
+                                className="result"
+                                style={{
+                                  color:
+                                    product.product_stock === 0
+                                      ? "red"
+                                      : "black",
+                                }}
+                              >
+                                {" "}
+                                {product.product_stock}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Price :</span>
+                              <span className="result text-danger">
+                                {" "}
+                                {product.product_price}DH{" "}
+                              </span>
+                            </div>
+                          </div>
+                          <div className=" c-footer">
+                            <button
+                              className="btn text-primary"
+                              data-toggle="modal"
+                              data-target="#viewproduct"
+                              onClick={() => handleShowinsideView()}
+                            >
+                              <i className="bi bi-eye-fill"></i>
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    )
+      </div>
+    );
 }
 
 const mapStateToProps =(state)=>{

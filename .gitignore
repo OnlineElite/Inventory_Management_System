@@ -1,2 +1,5 @@
 /Server/config/db.js
 Server/config/db.js
+
+Server/node_modules
+Server/public/uploads/
