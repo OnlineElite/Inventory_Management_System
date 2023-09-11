@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {connect} from 'react-redux'
 import { DatePicker } from 'antd';
 import {updateUserThunk, deleteUserThunk} from '../actions/IMSAction'
+import userimg from '../images/Example.webp'
 import '../styles/Users.css'
 
 const { RangePicker } = DatePicker;
@@ -43,7 +44,7 @@ function Users(props){
             name: 'Actions',
             cell: (row) => (
               <div className='d-flex'>
-                <span className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShow(row)}><i className="bi bi-eye-fill"></i></span>
+                <span className='btn text-primary' data-toggle="modal" data-target="#viewUser" onClick={() => handleShow(row)}><i className="bi bi-eye-fill"></i></span>
                 <span className="btn" data-toggle="modal" data-target="#updateUser" onClick={() => clickUpdateButton(row)}><i className="bi bi-pencil-fill"></i></span>
                 <span className='btn text-danger'   onClick={() => handleDelete(row)}><i className="bi bi-trash-fill"></i></span>
               </div>
@@ -270,6 +271,58 @@ function Users(props){
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <button type="button" className="btn btn-primary" onClick={hundeleUpdate}>Update User</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+            {/* View Item Modal */}
+            <div className="modal fade " id="viewUser" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-lg view">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h3 className="modal-title" id="exampleModalLabel">User Details</h3>
+                        <span type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </span>
+                    </div>
+                    <div className="modal-body">
+                        <div className="row">
+                            <div className=' left col-auto col-sm-6 col-md-6 col-lg-6'>
+                                    <div className='lines'>
+                                        <span className='detail ' >First Name:</span><span  id='detailRef' className='leftR text-primary'> </span>
+                                    </div>
+                                    <div className='lines'>
+                                        <span className='detail'  >Last Name:</span><span id='detailName' className='leftR'>  </span>
+                                    </div>
+                                    <div className='lines'>
+                                        <span className='detail'  >Username:</span>
+                                        <span id='detailQuantity'   > </span>
+                                    </div>
+                                    <div className='lines'>
+                                        <span className='detail'  >Email:</span><span id='detailDescription' className='leftR'>  </span>
+                                    </div>
+                                    <div className='lines'>
+                                        <span className='detail'  >Is Admin:</span><span id='detailCategory' className='leftR'>  </span>
+                                    </div>
+                                    <div className='lines'>
+                                        <span className='detail'  >Created Date:</span><span id='detailBrand' className='leftR'>  </span>
+                                    </div>
+                                    
+                            </div>
+                            <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
+                                <div className='productImage rounded'> <img className='rounded' src= {userimg} alt='product'/> </div>
+                                <div className=''>
+                                    <span className='text-primary'>Price : </span><span id='detailPrice'  className='price'> </span>
+                                </div>
+                            </div>
+                        </div>                  
+                    </div>
+                    <div className="modal-footer">
+                        <h3 className='text-dark equivalet'>Equivalents:</h3> 
+                        <div className='equivals'>
+                            
+                        </div>
+                    </div>
+                    
                     </div>
                 </div>
             </div>

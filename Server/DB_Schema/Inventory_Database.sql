@@ -53,6 +53,7 @@ create table products(
 	Description varchar(500) not null,
 	category_id INT,
     brand_id INT,
+	image varchar(255),
     FOREIGN KEY (category_id) REFERENCES categories(id),
     FOREIGN KEY (brand_id) REFERENCES brands(id)
 )
@@ -70,11 +71,28 @@ values ('Smart TV 32"', 'STV32LED', 4,2200.00,'32 inch Intelligent Network TV Ul
 ('Smart TV LG 32"' , 'OLED65C36LA',0, 4500.00,'Smart TV 2023 LG OLED evo C3 4K 65 pouces', 3, 5),
 ('Iphone 14' , 'iPH14pro',5, 10500.00,'Super Retina XDR display 6.1‑inch (diagonal) all‑screen OLED display 2532‑by‑1170-pixel', 1, 4)
 
-
 select * from users
 select * from products
 select * from categories
 select * from brands
+
+--Update categories trigger
+select * from categories
+
+CREATE OR REPLACE FUNCTION update_categories_update_date()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.update_date = NOW(); 
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER categories_update_trigger
+BEFORE INSERT OR UPDATE ON categories
+FOR EACH ROW
+EXECUTE FUNCTION update_categories_update_date();
+
+
 
 
 
