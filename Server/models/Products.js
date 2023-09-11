@@ -52,9 +52,9 @@ class ProductAction {
   }
 
   static async updateProduct(product){
-    const query = `update products set name = '${product.product_name}',ref = '${product.product_ref}',
-     stock = ${product.product_stock}, price = ${product.product_price}, Description =  '${product.product_desc}', category_id = ${product.category_name},
-    brand_id = ${product.brand_name} where ref = '${product.condition}'`
+    const query = `update products set name = '${product.name}',ref = '${product.ref}',
+     stock = ${product.quantity}, price = ${product.price}, Description =  '${product.desc}', category_id = ${product.category},
+    brand_id = ${product.brand}, image = '${product.image}' where ref = '${product.condition}'`
 
     const result = await pool.query(query);
     return result.rows;

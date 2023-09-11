@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {connect} from 'react-redux'
 import { DatePicker } from 'antd';
 import {updateUserThunk, deleteUserThunk} from '../actions/IMSAction'
-import userimg from '../images/Example.webp'
+import userimg from '../images/Default.png'
 import '../styles/Users.css'
 
 const { RangePicker } = DatePicker;
@@ -328,7 +328,7 @@ function Users(props){
                                     
                             </div>
                             <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
-                                <div className='productImage rounded'> <img className='rounded' src= {userimg} alt='product'/> </div>
+                                <div className='productImage rounded'> <img id='userimg' src= {userimg} alt='product'/> </div>
                             </div>
                         </div>                  
                     </div>

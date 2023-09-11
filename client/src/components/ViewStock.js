@@ -1,6 +1,7 @@
 import React, {useState } from 'react'
-import prodimg from '../images/Example.webp'
+import prodimg from '../images/Default.png'
 import DataTable from 'react-data-table-component'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {connect} from 'react-redux'
 import { addProductThunk, deleteProductThunk, updateProductThunk} from '../actions/IMSAction'
 import { DatePicker } from 'antd';
@@ -167,7 +168,7 @@ function ViewStock(props){
     const hundeleUpdate =(e)=>{
         e.preventDefault()
         var values = [];
-        const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand']
+        const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'upimage']
         const inputs = ids.map((id) => document.getElementById(id))
         inputs.forEach((inp) => { 
 
@@ -181,21 +182,27 @@ function ViewStock(props){
                     if(item.name === inp.value) 
                     values.push(item.id);
                 })
+            }else if (inp.id === 'upimage' && inp.files.length > 0) {
+                values.push(inp.files[0].name);
             }else{
                 values.push(inp.value);
             }
         })
-        const itemInfo = {
-            product_name: values[0],
-            product_ref: values[1],
-            product_stock: values[2],
-            product_price: values[3],
-            product_desc : values[4],
-            category_name: values[5],
-            brand_name: values[6],
-            condition : deleteCondition
+        
+        const formData = new FormData();
+        formData.append('name', values[0]);
+        formData.append('ref', values[1]);
+        formData.append('quantity', values[2]); 
+        formData.append('price', values[3]);
+        formData.append('desc', values[4]);
+        formData.append('category', values[5]);
+        formData.append('brand', values[6]);
+        formData.append('condition', deleteCondition);
+        if (inputs[7].type === "file" && inputs[7].files.length > 0) {
+            formData.append("image", inputs[7].files[0]);
         }
-        props.updateProduct(itemInfo)
+
+        props.updateProduct(formData)
         
         if (props.updateMsg) {
             setShowAlert(true);
@@ -222,7 +229,7 @@ function ViewStock(props){
 
     const handleShow=(row)=>{
         setEquivalent({category : row.category_name, ref : row.product_ref, quantity : row.product_stock})
-        const ids = ['detailName', 'detailRef', 'detailQuantity', 'detailPrice','detailDescription', 'detailCategory', 'detailBrand']
+        const ids = ['detailName', 'detailRef', 'detailQuantity', 'detailPrice','detailDescription', 'detailCategory', 'detailBrand', 'prodImg']
         const spans = ids.map((id) => document.getElementById(id))
         spans.forEach((sp) => { 
             switch(sp.id){
@@ -247,6 +254,11 @@ function ViewStock(props){
                 case 'detailBrand':
                     sp.textContent = row.brand_name
                     break;
+                case 'prodImg':
+                    sp.src = row.product_image != null
+                          ? `http://localhost:3005/uploads/${row.product_image}`
+                          : prodimg
+                        break;
                 default :
                     sp.textContent = ''
             }
@@ -325,12 +337,30 @@ function ViewStock(props){
         }
     }
 
+    const handeleReset =(e)=>{
+        e.preventDefault()
+        const ids = ['filterName', 'filterRef', 'filterCategory', 'filterBrand', 'filterDate']
+        const inputs = ids.map((id)=> document.getElementById(id))
+        inputs.forEach((inp)=> {
+            switch(inp.id){
+                case 'filterName': inp.value = ''; break;
+                case 'filterRef': inp.value = ''; break;
+                case 'filterCategory': inp.selectedIndex = 0; break;
+                case 'filterBrand': inp.selectedIndex = 0; break;
+                case 'filterDate': inp.value = []; break;
+                default: inp.value = ''
+            }
+        })
+        setRecords(props.products)
+    }
+
     return(
         <div className='products bg-light' id='stock'>
             <div className='container'>
                 <h2>Stock Manager</h2>
                 <div className='dates mt-5'>
                     <RangePicker
+                        id='filterDate'
                         onChange={(values) =>{
                             if (values && values.length === 2) {
                                 let startDate = values[0].format('YYYY-MM-DD')
@@ -351,17 +381,18 @@ function ViewStock(props){
                             }
                         }}
                     />
+                    <span className='refresh py-2  px-3' onClick={handeleReset}><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
                 </div>
                 <div className='filters'>
-                    <input className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                    <input className='filterinp py-2' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
-                    <select className='filterinp py-2' value= {selectfilterCategory} onChange={filterByCategory}>
+                    <input id='filterName' className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                    <input id='filterRef' className='filterinp py-2' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
+                    <select id='filterCategory' className='filterinp py-2' value= {selectfilterCategory} onChange={filterByCategory}>
                         <option disabled={true} value=""> Category</option>
                         {props.categories.map((category, index)=>(
                             <option name='option' key={index}> {category.name}</option>
                         ))}
                     </select>
-                    <select className='filterinp py-2' value= {selectfilterBrand} onChange={filterByBrand} >
+                    <select id='filterBrand' className='filterinp py-2' value= {selectfilterBrand} onChange={filterByBrand} >
                         <option disabled={true} value=""> Brand</option>
                         {props.brands.map((brand, index)=>(
                             <option name='option' key={index}> {brand.name}</option>
@@ -498,6 +529,10 @@ function ViewStock(props){
                                 <label htmlFor="updesc">Description :</label> 
                                 <textarea id="updesc" type="text"  name="updesc"/>
                             </div>
+                            <div className="roo">
+                                <label htmlFor="image">Image :</label> 
+                                <input id="upimage" type="file"  name="image" />
+                            </div>
                         </div>
                         
                         <div className="modal-footer">
@@ -550,7 +585,7 @@ function ViewStock(props){
                                         </div>
                                 </div>
                                 <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
-                                    <div className='productImage'> <img src= {prodimg} alt='product'/> </div>
+                                    <div className='productImage'> <img id='prodImg' src= '' alt='product'/> </div>
                                     <div className=''>
                                         <span className='text-primary'>Price : </span><span id='detailPrice'  className='price'> </span>
                                     </div>
