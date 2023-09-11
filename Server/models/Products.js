@@ -37,8 +37,8 @@ class ProductAction {
   //---Products Action
   static async addProduct(product){
     const query = `insert into products (name , ref, stock, price, Description, category_id, brand_id, image)
-    values ('${product.product_name}', '${product.product_ref}', ${product.product_stock}, 
-    ${product.product_price}, '${product.product_desc}', ${product.category_name}, ${product.brand_name}, '${product.product_image.name}')`
+    values ('${product.name}', '${product.ref}', ${product.quantity}, 
+    ${product.price}, '${product.desc}', ${product.category}, ${product.brand}, '${product.image}')`;
 
     const result = await pool.query(query);
     return result.rows;

@@ -277,9 +277,7 @@ function ViewStock(props){
         }
         });
 
-        console.log('values', values);
-
-        let formData = new FormData();
+        const formData = new FormData();
         formData.append('name', values[0]);
         formData.append('ref', values[1]);
         formData.append('quantity', values[2]); 
@@ -288,13 +286,11 @@ function ViewStock(props){
         formData.append('category', values[5]);
         formData.append('brand', values[6]);
 
-        if (values[7] instanceof File) {
-        formData.append('image', values[7])
-        }
+       if (inputs[7].type === "file" && inputs[7].files.length > 0) {
+         formData.append("image", inputs[7].files[0]);
+       }
 
-        console.log('formData', formData);
-
-        //props.addProduct(formData)
+        props.addProduct(formData)
     
         if (props.addMsg) {
             setShowAlert(true);

@@ -1,12 +1,14 @@
+let formidable = require("formidable");
+let fs = require("fs");
+
 const pool = require("../config/db");
-const {Product, ProductAction} = require("../models/Products.js");
+const { Product, ProductAction } = require("../models/Products.js");
 
 // Product Action
 async function getProducts(req, res) {
-
-  try { 
+  try {
     const Prods = await Product.importProducts();
-    
+
     res.status(201).json({ products: Prods });
   } catch (error) {
     console.error(error);
@@ -15,35 +17,43 @@ async function getProducts(req, res) {
 }
 
 async function AddingProduct(req, res) {
+  try {
 
-  try { 
+    console.log("image ################ ", req.file);
+
+    if (req.file){
+      req.body.image = req.file.filename;
+    } 
     
-    await ProductAction.addProduct(req.body.product);
-    res.status(201).json({ message: 'Product added successfully' });
-
+    await ProductAction.addProduct(req.body);
+    res.status(201).json({ message: "Product added successfully" });
   } catch (error) {
     console.error(error);
+
+    if (error.code == "LIMIT_FILE_SIZE") {
+      return res.status(500).send({
+        message: "File size cannot be larger than 2MB!",
+      });
+    }
     res.status(500).json({ error: "Internal server error" });
   }
 }
 
 async function DeletingProduct(req, res) {
-
-  try{
-    await ProductAction.deleteProduct(req.body.product_ref)
-    res.status(201).json({ message: 'Product deleted successfully' });
-  }catch(error){
-    console.log(error)
-    res.status(500).json({error : "Internal server error"})
+  try {
+    await ProductAction.deleteProduct(req.body.product_ref);
+    res.status(201).json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 
 async function UpdatingProduct(req, res) {
-
-  try { 
+  try {
     await ProductAction.updateProduct(req.body.product);
-    
-    res.status(201).json({ message: 'Product updated successfully' });
+
+    res.status(201).json({ message: "Product updated successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -52,10 +62,9 @@ async function UpdatingProduct(req, res) {
 
 // Categories Action
 async function getCategories(req, res) {
-
-  try { 
+  try {
     const categs = await Product.importCategories();
-    
+
     res.status(201).json({ categories: categs });
   } catch (error) {
     console.error(error);
@@ -64,12 +73,9 @@ async function getCategories(req, res) {
 }
 
 async function AddingCategory(req, res) {
-
-  try { 
-    
+  try {
     await ProductAction.addCategory(req.body.category);
-    res.status(201).json({ message: 'Category added successfully' });
-
+    res.status(201).json({ message: "Category added successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -77,11 +83,10 @@ async function AddingCategory(req, res) {
 }
 
 async function UpdatingCategory(req, res) {
-
-  try { 
+  try {
     await ProductAction.updateCategory(req.body.category);
-    
-    res.status(201).json({ message: 'Category updated successfully' });
+
+    res.status(201).json({ message: "Category updated successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -89,22 +94,20 @@ async function UpdatingCategory(req, res) {
 }
 
 async function DeletingCategory(req, res) {
-
-  try{
-    await ProductAction.deleteCategory(req.body.category_name)
-    res.status(201).json({ message: 'Category deleted successfully' });
-  }catch(error){
-    console.log(error)
-    res.status(500).json({error : "Internal server error"})
+  try {
+    await ProductAction.deleteCategory(req.body.category_name);
+    res.status(201).json({ message: "Category deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 
 // Brands Action
 async function getBrands(req, res) {
-
-  try { 
+  try {
     const brand = await Product.importBrands();
-    
+
     res.status(201).json({ brands: brand });
   } catch (error) {
     console.error(error);
@@ -113,12 +116,9 @@ async function getBrands(req, res) {
 }
 
 async function AddingBrand(req, res) {
-
-  try { 
-    
+  try {
     await ProductAction.addBrand(req.body.brand);
-    res.status(201).json({ message: 'Brand added successfully' });
-
+    res.status(201).json({ message: "Brand added successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -126,11 +126,10 @@ async function AddingBrand(req, res) {
 }
 
 async function UpdatingBrand(req, res) {
-
-  try { 
+  try {
     await ProductAction.updateBrand(req.body.brand);
-    
-    res.status(201).json({ message: 'Brand updated successfully' });
+
+    res.status(201).json({ message: "Brand updated successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -138,20 +137,19 @@ async function UpdatingBrand(req, res) {
 }
 
 async function DeletingBrand(req, res) {
-
-  try{
-    await ProductAction.deleteBrand(req.body.brand_name)
-    res.status(201).json({ message: 'Brand deleted successfully' });
-  }catch(error){
-    console.log(error)
-    res.status(500).json({error : "Internal server error"})
+  try {
+    await ProductAction.deleteBrand(req.body.brand_name);
+    res.status(201).json({ message: "Brand deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 }
 module.exports = {
-  getProducts, 
-  getCategories, 
-  getBrands, 
-  AddingProduct, 
+  getProducts,
+  getCategories,
+  getBrands,
+  AddingProduct,
   DeletingProduct,
   UpdatingProduct,
   AddingCategory,
@@ -159,5 +157,5 @@ module.exports = {
   UpdatingCategory,
   UpdatingBrand,
   DeletingCategory,
-  DeletingBrand
-}
+  DeletingBrand,
+};

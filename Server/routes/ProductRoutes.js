@@ -1,5 +1,5 @@
 const express = require("express");
-const multer =require('multer') 
+const multer =require('multer')
 const path = require('path')
 const verifyToken = require("../middleware/AuthMiddleware");
 const {
@@ -20,17 +20,19 @@ const {
 const router = express.Router();
 
 const storage = multer.diskStorage({
-  destination : (req, file, calback)=>{
-    calback(null, 'public/images')
+  destination: 'public/uploads',
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, uniqueSuffix + ext);
   },
-  filename : (req, file, calback)=>{
-    calback(null, file.fieldname +'_'+ Date.now()+ path.extname(file.originalname))
-  }
-})
-const upload = multer({ storage : storage })
+});
+
+const upload = multer({ storage });
+
 // Product Routers
-router.get('/products',upload.single('image'), getProducts)
-router.post('/addProduct',AddingProduct)
+router.get("/products", upload.any(), getProducts);
+router.post("/addProduct", upload.single("image"), AddingProduct);
 router.post('/deleteProduct', DeletingProduct)
 router.post('/updateProduct', UpdatingProduct)
 // Categories Routers
