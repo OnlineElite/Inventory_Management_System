@@ -2,3 +2,4 @@
 Server/config/db.js
 
 Server/node_modules
+Server/public/uploads/
