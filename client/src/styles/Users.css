@@ -99,9 +99,32 @@
     
 }
 
-
 #users .close{
     font-weight: bold;
     font-size: 1.5rem;
     color: black;
+}
+
+#users .modal-body .row{
+    width: 100%;
+}
+
+#users .lines{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+#users .right{
+    text-align: right;
+}
+#users .lines .detail{
+    color: gray;
+}
+
+#users .right img{
+    width: 50%;
+    height: 70%;
 }

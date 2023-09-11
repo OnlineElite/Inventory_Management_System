@@ -141,8 +141,27 @@ function Users(props){
         props.deleteUser(row.username)
     }
 
-    const handleShow=()=>{
-
+    const handleShow=(row)=>{
+        const ids = ['detailFname', 'detailLName', 'detailUsername', 'detailEmail', 'detailIsAdmin', 'detailCreatedDate']
+        const spans = ids.map((id)=> document.getElementById(id))
+        spans.forEach((sp)=>{
+            switch(sp.id){
+                case 'detailFname':
+                    sp.textContent = row.first_name; break;
+                case 'detailLName':
+                    sp.textContent = row.last_name; break;
+                case 'detailUsername':
+                    sp.textContent = row.username; break;
+                case 'detailEmail':
+                    sp.textContent = row.email; break;
+                case 'detailIsAdmin':
+                    row.admin?  sp.textContent = 'Yes' :  sp.textContent = 'No'; break;
+                case 'detailCreatedDate':
+                    sp.textContent = row.created_date; break;
+                default : 
+                    sp.textContent = null
+            }
+        })
     }
 
     const tableCustomStyles = {
@@ -288,41 +307,31 @@ function Users(props){
                         <div className="row">
                             <div className=' left col-auto col-sm-6 col-md-6 col-lg-6'>
                                     <div className='lines'>
-                                        <span className='detail ' >First Name:</span><span  id='detailRef' className='leftR text-primary'> </span>
+                                        <span className='detail ' >First Name:</span><span  id='detailFname' > </span>
                                     </div>
                                     <div className='lines'>
-                                        <span className='detail'  >Last Name:</span><span id='detailName' className='leftR'>  </span>
+                                        <span className='detail'  >Last Name:</span><span id='detailLName' >  </span>
                                     </div>
                                     <div className='lines'>
                                         <span className='detail'  >Username:</span>
-                                        <span id='detailQuantity'   > </span>
+                                        <span id='detailUsername'   > </span>
                                     </div>
                                     <div className='lines'>
-                                        <span className='detail'  >Email:</span><span id='detailDescription' className='leftR'>  </span>
+                                        <span className='detail'  >Email:</span><span id='detailEmail'>  </span>
                                     </div>
                                     <div className='lines'>
-                                        <span className='detail'  >Is Admin:</span><span id='detailCategory' className='leftR'>  </span>
+                                        <span className='detail'  >Is Admin:</span><span id='detailIsAdmin' className='leftR text-primary'>  </span>
                                     </div>
                                     <div className='lines'>
-                                        <span className='detail'  >Created Date:</span><span id='detailBrand' className='leftR'>  </span>
+                                        <span className='detail'  >Created Date:</span><span id='detailCreatedDate' >  </span>
                                     </div>
                                     
                             </div>
                             <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
                                 <div className='productImage rounded'> <img className='rounded' src= {userimg} alt='product'/> </div>
-                                <div className=''>
-                                    <span className='text-primary'>Price : </span><span id='detailPrice'  className='price'> </span>
-                                </div>
                             </div>
                         </div>                  
                     </div>
-                    <div className="modal-footer">
-                        <h3 className='text-dark equivalet'>Equivalents:</h3> 
-                        <div className='equivals'>
-                            
-                        </div>
-                    </div>
-                    
                     </div>
                 </div>
             </div>
