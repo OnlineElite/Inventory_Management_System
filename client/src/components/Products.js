@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {connect} from 'react-redux'
-import prodimg from '../images/Example.webp'
+import prodimg from '../images/Default.png'
 import '../styles/Products.css'
 function Products(props){
     const [records, setRecords] = useState(props.products)
@@ -55,7 +55,7 @@ function Products(props){
         let row = props.products.filter((product)=> product.product_ref === ref)
         console.log('row', row)
         setEquivalent({category : row[0].category_name, ref : row[0].product_ref, quantity : row[0].product_stock})
-        const ids = ['detailName', 'detailRef', 'detailQuantity', 'detailPrice','detailDescription', 'detailCategory', 'detailBrand']
+        const ids = ['detailName', 'detailRef', 'detailQuantity', 'detailPrice','detailDescription', 'detailCategory', 'detailBrand', 'prodImage']
         const spans = ids.map((id) => document.getElementById(id))
         spans.forEach((sp) => { 
             switch(sp.id){
@@ -79,6 +79,12 @@ function Products(props){
                     break;
                 case 'detailBrand':
                     sp.textContent = row[0].brand_name
+                    break;
+                  case 'prodImage':
+                    sp.src = row[0].product_image != null
+                          ? `http://localhost:3005/uploads/${row[0].product_image}`
+                          : prodimg
+                        break;
                     break;
                 default :
                     sp.textContent = ''
@@ -318,7 +324,7 @@ function Products(props){
                     <div className=" right col-auto col-sm-6 col-md-6 col-lg-6">
                       <div className="productImage">
                         {" "}
-                        <img src={prodimg} alt="product" />{" "}
+                        <img id='prodImage' src='' alt="product" />{" "}
                       </div>
                       <div className="">
                         <span className="text-primary">Price : </span>

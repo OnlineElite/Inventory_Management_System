@@ -34,7 +34,7 @@ const upload = multer({ storage });
 router.get("/products", upload.any(), getProducts);
 router.post("/addProduct", upload.single("image"), AddingProduct);
 router.post('/deleteProduct', DeletingProduct)
-router.post('/updateProduct', UpdatingProduct)
+router.post('/updateProduct',upload.single("image"), UpdatingProduct)
 // Categories Routers
 router.get('/categories',getCategories)
 router.post('/addCategory', AddingCategory)

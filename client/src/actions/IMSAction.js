@@ -283,17 +283,25 @@ const deleteProductThunk = (productRef) => async (dispatch)=>{
 
 const updateProductThunk = (product) => async (dispatch)=>{
     try{
+
+        for (var pair of product.entries()) {
+            console.log(pair[0] + ", " + pair[1]);
+        }
+    
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/updateProduct`;
-        const data = {product : product}
+        //const data = { product }
     
-        const header = {
-          method: 'POST',
-          headers: { 'Content-Type':'application/json'},
-          body: JSON.stringify(data)
+        const headers = {
+            "Content-Type": `multipart/form-data;`,
         };
-        
-        const response = await fetch(url ,header );
+
+        const response = await fetch(url, {
+            method: "POST",
+            //headers,
+            body: product,
+        });
+    
         const datarecived = await response.json();
         console.log('data update item recived', datarecived.message )
         dispatch(updateMessage(datarecived.message))

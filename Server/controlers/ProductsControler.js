@@ -51,11 +51,22 @@ async function DeletingProduct(req, res) {
 
 async function UpdatingProduct(req, res) {
   try {
-    await ProductAction.updateProduct(req.body.product);
+    console.log("image ################ ", req.file);
+
+    if (req.file){
+      req.body.image = req.file.filename;
+    }
+
+    await ProductAction.updateProduct(req.body);
 
     res.status(201).json({ message: "Product updated successfully" });
   } catch (error) {
     console.error(error);
+    if (error.code == "LIMIT_FILE_SIZE") {
+      return res.status(500).send({
+        message: "File size cannot be larger than 2MB!",
+      });
+    }
     res.status(500).json({ error: "Internal server error" });
   }
 }
