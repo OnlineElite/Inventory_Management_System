@@ -23,7 +23,7 @@ async function AddingProduct(req, res) {
 
     if (req.file){
       req.body.image = req.file.filename;
-    } 
+    }
     
     await ProductAction.addProduct(req.body);
     res.status(201).json({ message: "Product added successfully" });

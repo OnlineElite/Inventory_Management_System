@@ -19,6 +19,7 @@ function ViewStock(props){
     const [showAlert, setShowAlert] = useState(false);
     const [deleteCondition, setDeleteCondition] = useState(null)
     const [equivalent, setEquivalent] = useState('')
+    const [extentionMsg, setExtentionMsg] = useState( '')
 
     const columns = [
         {
@@ -202,18 +203,31 @@ function ViewStock(props){
             formData.append("image", inputs[7].files[0]);
         }
 
-        props.updateProduct(formData)
-        
+        function getExtension(filename) {
+            return filename.split('.').pop()
+        }  
+        let extention = getExtension(inputs[7].files[0].name).toLowerCase()
+        if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
+            console.log('accepted')
+            props.updateProduct(formData)
+        }else{
+            console.log('not accepted')
+            setExtentionMsg('File extention not suported plase enter a file with(jpg, png or webp)')
+            if (extentionMsg) {
+                setShowAlert(true);
+                setTimeout(() => {
+                    setShowAlert(false);
+                }, 3000);
+            } 
+        }
         if (props.updateMsg) {
             setShowAlert(true);
             setTimeout(() => {
                 setShowAlert(false);
             }, 3000);
         } 
-
         handleCloseModal()     
-        setRecords(props.products)
-        
+        setRecords(props.products) 
     }
 
     const handleDelete=(row)=>{
@@ -298,11 +312,25 @@ function ViewStock(props){
         formData.append('category', values[5]);
         formData.append('brand', values[6]);
 
-       if (inputs[7].type === "file" && inputs[7].files.length > 0) {
-         formData.append("image", inputs[7].files[0]);
-       }
+        if (inputs[7].type === "file" && inputs[7].files.length > 0) {
+            formData.append("image", inputs[7].files[0]);
+        }
 
-        props.addProduct(formData)
+        function getExtension(filename) {
+            return filename.split('.').pop()
+        }  
+        let extention = getExtension(inputs[7].files[0].name).toLowerCase()
+        if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
+            props.addProduct(formData)
+        }else{
+            setExtentionMsg('File extention not suported plase enter a file with(jpg, png or webp)')
+            if (extentionMsg) {
+                setShowAlert(true);
+                setTimeout(() => {
+                    setShowAlert(false);
+                }, 3000);
+            } 
+        }
     
         if (props.addMsg) {
             setShowAlert(true);
@@ -359,6 +387,10 @@ function ViewStock(props){
             <div className='container'>
                 <h2>Stock Manager</h2>
                 <div className='dates mt-5'>
+                    {showAlert && ( <div className="alert alert-success" role="alert"> {props.addMsgMsg} </div> )}
+                    {showAlert && ( <div className="alert alert-danger" role="alert"> {extentionMsg} </div> )}
+                    {showAlert && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )}
+                    { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
                     <RangePicker
                         id='filterDate'
                         onChange={(values) =>{
@@ -400,7 +432,6 @@ function ViewStock(props){
                     </select>
                 </div>
                 <div className='container mt-3'>
-                { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
                     <DataTable 
                         title = {'Manage Stock'}
                         columns ={columns}
@@ -420,7 +451,6 @@ function ViewStock(props){
                 <div className="modal fade" id="addproduct" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-lg">
                         <div className="modal-content">
-                        {showAlert && ( <div className="alert alert-success" role="alert"> {props.addMsgMsg} </div> )} 
                         <div className="modal-header">
                             <h3 className="modal-title" id="exampleModalLabel">Add Item To Stock</h3>
                             <span type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -483,7 +513,6 @@ function ViewStock(props){
                 <div className="modal fade" id="update" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-lg">
                         <div className="modal-content">
-                        {showAlert && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )} 
                         <div className="modal-header">
                             <h3 className="modal-title" id="exampleModalLabel">Update Item</h3>
                             <span type="button" className="close" data-dismiss="modal" aria-label="Close">
