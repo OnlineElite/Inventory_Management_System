@@ -15,8 +15,8 @@ function Sidebar(props){
     }
 
     return (
-      <div className=" sidebar d-flex justify-content-between flex-column bg-primary text-white">
-        <div className="userInfo bg-primary">
+      <div className=" sidebar d-flex justify-content-between flex-column text-white">
+        <div className="userInfo ">
           <img src= {logo} alt='logo'/>
           {/*<p>(admin)</p>*/}
         </div>
