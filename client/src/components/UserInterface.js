@@ -1,5 +1,8 @@
 import React from 'react'
 import Navbar from './Navbar';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import prodimg from '../images/Default.png'
 
 
 function UserInterface(){
@@ -8,7 +11,11 @@ function UserInterface(){
     return(
         <div>
             <Navbar/>
-            <h1>Welcome in user Interface</h1>
+            <div>
+                <h1>Our Categories</h1>
+                
+                  
+            </div>
         </div>
     )
 }
