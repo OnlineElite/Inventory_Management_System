@@ -84,7 +84,7 @@ function Products(props){
                     sp.src = row[0].product_image != null
                           ? `http://localhost:3005/uploads/${row[0].product_image}`
                           : prodimg
-                        break;
+                        
                     break;
                 default :
                     sp.textContent = ''
@@ -171,7 +171,6 @@ function Products(props){
           <div className="prod bg-light">
             {records.map(
               (product) => (
-                console.log(product.product_image),
                 (
                   <div
                     className="card"
@@ -284,12 +283,6 @@ function Products(props){
                         </span>
                       </div>
                       <div className="lines">
-                        <span className="detail">Description:</span>
-                        <span id="detailDescription" className="leftR">
-                          {" "}
-                        </span>
-                      </div>
-                      <div className="lines">
                         <span className="detail">Category:</span>
                         <span id="detailCategory" className="leftR">
                           {" "}
@@ -318,6 +311,12 @@ function Products(props){
                               ""
                             )
                           )}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Description:</span>
+                        <span id="detailDescription" className="leftR">
+                          {" "}
                         </span>
                       </div>
                     </div>
@@ -396,7 +395,7 @@ function Products(props){
                               className="btn text-primary"
                               data-toggle="modal"
                               data-target="#viewproduct"
-                              onClick={() => handleShowinsideView()}
+                              onClick={() => handleShow(product.product_ref)}
                             >
                               <i className="bi bi-eye-fill"></i>
                             </button>

@@ -5,7 +5,7 @@ import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
 import {LogOutThunk, logout} from '../actions/IMSAction'
-import prodimg from '../images/Default.png'
+import prodimg from '../images/Inventory-Management.png'
 function Navbar(props){
 
     const [disponibe, setDisponibe] = useState(true)
@@ -22,7 +22,7 @@ function Navbar(props){
                 <div className="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul className='navs'>
                         <li>
-                            <Link className='Link' to= '/'> Home </Link>
+                            <Link className='Link' to= '/userInterface'> Home </Link>
                         </li>
                         <li>
                             <Link className='Link' to='/' > About </Link> 
@@ -78,29 +78,31 @@ function Navbar(props){
                                         <div class="modal-body " id='cart_modal_body'>
                                             <div className='row'>
                                                 <div className=' prods col-12 col-sm-5 col-md-7 col-lg-7 col-xl-8'>
-                                                    <div className='product_row' id="cart-page">
-                                                        <div className='prodInfo'>
-                                                            <div className='prodimg'>
-                                                                <div className='imag'></div>
-                                                                <button className='text-danger'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
+                                                    <div>
+                                                        <div className='product_row' id="cart-page">
+                                                            <div className='prodInfo'>
+                                                                <div className='prodimg'>
+                                                                    <div className='imag'> <img src={prodimg} alt='prodimage'/></div>
+                                                                    <button className='text-danger'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
+                                                                </div>
+                                                                <div className='prodName'>
+                                                                    <p className=' descrip text-black'>discriptiondiscriptio ndiscriptiondis criptiondiscrip tiondiscriptiond iscriptiondi scriptiondisc ription</p>
+                                                                    <p className='text-warning'>name</p>
+                                                                    <p className= {disponibe? 'greenColor' : 'redColor'}>disponibe</p>
+                                                                </div>
                                                             </div>
-                                                            <div className='prodName'>
-                                                                <p className=' descrip text-black'>discriptiondiscriptio ndiscriptiondis criptiondiscrip tiondiscriptiond iscriptiondi scriptiondisc ription</p>
-                                                                <p className='text-warning'>name</p>
-                                                                <p className= {disponibe? 'greenColor' : 'redColor'}>disponibe</p>
+                                                            <div className='prodPrice'>
+                                                                <p className='price'>0.00$</p>
+                                                                <div><span className='oldPrice'>0.00%</span><span className='remise'>-20%</span></div>
+                                                                <div className='buttns'>
+                                                                    <button className='bg-danger'>+</button>
+                                                                    <span>1</span>
+                                                                    <button className='bg-danger'>–</button>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div className='prodPrice'>
-                                                            <p className='price'>0.00$</p>
-                                                            <div><span className='oldPrice'>0.00%</span><span className='remise'>-20%</span></div>
-                                                            <div className='buttns'>
-                                                                <button className='bg-danger'>+</button>
-                                                                <span>1</span>
-                                                                <button className='bg-danger'>–</button>
-                                                            </div>
-                                                        </div>
-                                                    </div> 
-                                                    <hr/>
+                                                        </div> 
+                                                        <hr/>
+                                                    </div>
                                                 </div>
                                                 <div className=' total col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
                                                 <div id="checkout" >

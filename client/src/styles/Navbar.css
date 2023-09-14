@@ -294,6 +294,11 @@
     margin-bottom: 0.5rem;
 }
 
+#navbar .product_row .prodInfo .prodimg .imag img{
+    width: 100%;
+    height: 100%;
+}
+
 #navbar .prods hr{
     width: 95%;
     margin: auto;

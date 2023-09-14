@@ -1,0 +1,214 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.userInterface .prod{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 1rem;
+    padding-left: 1rem;
+}
+
+.userInterface .container .card{
+    margin-inline: 0.5rem;
+    width: 15rem;
+    margin-bottom: 1rem;
+    height: fit-content;
+}
+
+.userInterface .card-img-top{
+    height: 10rem;
+    padding: 1rem;
+}
+
+.userInterface .card-body{
+    margin: 0;
+    padding-block: 0.5rem;
+    padding-inline: 1rem;
+}
+
+.userInterface  .filters{
+    width: 97%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-block: 2rem;
+}
+
+.userInterface  .filters input, .userInterface .filters select{
+    width: 20%;
+}
+
+.userInterface  .filters .refresh .reload{
+    font-size: 1.5rem;
+}
+
+.userInterface .filters .filterinp{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px;
+}
+
+.userInterface .price{
+    color: rgb(5, 177, 5);
+}
+
+.userInterface .card-body .detail{
+    color: blue;
+    font-weight: bold;
+}
+
+.userInterface .card-footer{
+    display: flex;
+    justify-content: center;
+}
+
+.userInterface .showMore{
+    width: fit-content;
+
+}
+/*--------show modal---------*/
+
+.userInterface  .productImage{
+    width: 80%;
+    height: 80%;
+    background-color: lightgrey;
+    border: 1px solid rgb(185, 183, 183);
+    border-radius: 6px;
+    
+}
+
+.userInterface  .productImage img{
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+}
+
+.userInterface .modal-body .row .right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+
+.userInterface .modal-body .detail{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.userInterface .equivals{
+    width: 100%;
+    display: flex;
+    flex-wrap:wrap;
+    align-items: center;
+}
+
+.userInterface .card-body .lines span{
+    font-size: 12px;
+    
+}
+
+.userInterface .card-body .lines{
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 25px;
+    
+}
+
+.userInterface .card-body .detail{
+    color: black;
+}
+
+.userInterface .equivals .card{
+    background-color: rgba(236, 248, 252, 0.979);
+    min-width: 9.2rem;
+    max-height: 12rem;
+    margin-inline: 0.5rem;
+}
+
+.userInterface .view .modal-body .row{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1rem;
+}
+.userInterface .modal-body .price{
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.userInterface .modal-footer .equivalet{
+    width: 100%;
+    text-align: left;
+}
+
+.userInterface .filters .filterinp{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px;
+}
+
+.userInterface .equivals .c-footer {
+    border-top: 1px solid rgb(173, 172, 172);
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+/***-----------------*/
+.userInterface .information{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0.5rem;
+}
+
+
+.userInterface .information #detailDescription{
+    font-size: 20px;
+    color: black;
+}
+
+.userInterface .information #detailOldPrice{
+    color: gray;
+    text-decoration: line-through;
+}
+
+.userInterface .information .remise{
+    background-color: rgb(177, 248, 177);
+    color: rgb(4, 156, 4);
+    margin-left: 0.5rem;
+}
+
+.userInterface .information .hr{
+    width: 100%;
+    height: 1px;
+    background-color: lightgray;
+}
+
+.userInterface .information button{
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    background-color: orange;
+    color: white;
+    font-size: 18px;
+}
+
+.userInterface .information .bi-heart-fill{
+    font-size: 30px;
+    float: left;
+}
+
+.userInterface .information .likePrices{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
