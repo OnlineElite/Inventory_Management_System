@@ -21,6 +21,7 @@
 
 .ProductsWindow .card-img-top{
     height: 10rem;
+    padding: 1rem;
 }
 
 .ProductsWindow .card-body{
@@ -112,8 +113,8 @@
 
 .ProductsWindow .card-body .lines{
     overflow: hidden;
-    max-width: 100%;
-    max-height: 25px;
+    width: 100%;
+    height: fit-content;
 }
 
 .ProductsWindow .card-body .detail{

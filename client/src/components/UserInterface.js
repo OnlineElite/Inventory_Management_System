@@ -1,23 +1,299 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import Navbar from './Navbar';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import prodimg from '../images/Default.png'
+import {connect} from 'react-redux'
+import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, bringUsersThunk} from '../actions/IMSAction'
 
+//import prodimg from '../images/Default.png'
+import  '../styles/UserInterface.css'
 
-function UserInterface(){
+function UserInterface(props){
 
+    const [equivalent, setEquivalent] = useState('')
+
+    const callActions =()=>{
+        props.getProducts()
+        props.getCategories()
+        props.getBrands()
+        props.getUsers()
+    }
+    useEffect(()=>{
+        callActions()
+    }, [])
+
+    const handleShow=(ref)=>{
+        let row = props.products.filter((product)=> product.product_ref === ref)
+        console.log('row', row)
+        setEquivalent({category : row[0].category_name, ref : row[0].product_ref, quantity : row[0].product_stock})
+        const ids = [ 'detailQuantity', 'detailPrice','detailDescription', 'prodImage','detailOldPrice']
+        const spans = ids.map((id) => document.getElementById(id))
+        spans.forEach((sp) => {
+            switch(sp.id){
+                case 'detailQuantity':
+                    sp.textContent = 'units left '+row[0].product_stock
+                    break;
+                case 'detailPrice':
+                    sp.textContent = ((row[0].product_price)-(row[0].product_price)*20/100).toFixed(2)+'DH'
+                    break;
+                case 'detailDescription':
+                    sp.textContent = row[0].product_desc
+                    break;
+                case 'detailOldPrice':
+                    sp.textContent =row[0].product_price+'DH'
+                    break;
+                  case 'prodImage':
+                    sp.src = row[0].product_image != null
+                          ? `http://localhost:3005/uploads/${row[0].product_image}`
+                          : prodimg  
+                    break;
+                default :
+                    sp.textContent = ''
+            }
+        })
+    }
+
+    const HandeleAddToCart =()=>{
+
+    }
+
+    const handeleAddToFavories =()=>{
+
+    }
 
     return(
-        <div>
+        <div className='userInterface'>
             <Navbar/>
-            <div>
-                <h1>Our Categories</h1>
-                
-                  
+            <div className='container'>
+              
+              <div className='prod' >
+                  {props.products.map((product)=>(
+                      <div
+                      className="card"
+                      key={product.product_ref}
+                      onClick={() => handleShow(product.product_ref)}
+                      data-toggle="modal"
+                      data-target="#viewproducts"
+                    >
+                      <img
+                        src={
+                          product.product_image != null
+                            ? "http://localhost:3005/uploads/" + product.product_image
+                            : prodimg
+                        }
+                        className="card-img-top"
+                        alt="product"
+                      />
+                      <div className="card-body">
+                        <div className="lines">
+                          <span className="detail">Reference:</span>
+                          <span className="result"> {product.product_ref} </span>
+                        </div>
+                        <div className="lines">
+                          <span className="detail">Name:</span>
+                          <span className="result"> {product.product_name} </span>
+                        </div>
+                        <div className="lines">
+                          <span className="detail">Brand:</span>
+                          <span className="result"> {product.brand_name} </span>
+                        </div>
+                        <div className="lines">
+                          <span className="detail">Quantity:</span>
+                          <span
+                            className="result"
+                            style={{
+                              color:
+                                product.product_stock === 0 ? "red" : "black",
+                            }}
+                          >
+                            {" "}
+                            {product.product_stock}{" "}
+                          </span>
+                        </div>
+                        <div className="lines">
+                          <span className="detail">Price :</span>
+                          <span className="result price">
+                            {" "}
+                            {product.product_price}DH{" "}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="card-footer text-muted">
+                        <button className="btn btn-primary showMore">
+                          Show Details
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              {/* View Item Modal */}
+              <div
+                className="modal fade "
+                id="viewproducts"
+                tabIndex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog modal-lg view">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h3 className="modal-title" id="exampleModalLabel">
+                        Product Details
+                      </h3>
+                      <span
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </span>
+                    </div>
+                    <div className="modal-body">
+                      <div className="row">
+                        <div className=" information col-12 col-sm-6 col-md-8 col-lg-8">
+                          <div className="  my-1">
+                            <span id="detailDescription" className="desc">{" "}</span>
+                          </div>
+                          <div className=' hr'></div>
+                          <div className=" likePrices w-100 my-1">
+                            <i onClick={handeleAddToFavories} className=" mx-2 bi bi-heart-fill"></i>
+                            <div className='prices'>
+                              <span className='remise mx-'>-20%</span>
+                              <span id="detailOldPrice" className="Oldprice mx-2">{" "}</span>
+                              <span id="detailPrice" className="price">{" "}</span>
+                            </div>
+                          </div>
+                          
+                          <div className=" my-1">
+                            <span  id="detailQuantity" className="quant" style={{color: equivalent.quantity === 0 ? "gray" : "orange" }}>{" "}</span>
+                          </div>
+                          {equivalent.quantity === 0 ? 
+                          <button style={{backgroundColor: "gray" }} disabled ><i className="bi bi-cart-plus-fill mx-2"></i>Add to cart</button> : 
+                          <button onClick={HandeleAddToCart} style={{backgroundColor: "orange" }}><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>}
+                          
+                        </div>
+                        <div className=" right col-12 col-sm-6 col-md-4 col-lg-4">
+                          <div className="productImage">
+                            {" "}
+                            <img id='prodImage' src='' alt="product" />{" "}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="modal-footer">
+                      <h3 className="text-dark equivalet">Equivalents:</h3>
+                      <div className="equivals">
+                        {props.products.map((product) =>
+                          product.category_name === equivalent.category &&
+                          product.product_ref !== equivalent.ref ? (
+                            <div
+                              className="card border-primary mb-3"
+                              key={product.product_ref}
+                              style={{ maxWidth: "9.2rem" }}
+                            >
+                              <div className="card-body text-primary infor ">
+                                <div className="lines">
+                                  <span className="detail">Reference:</span>
+                                  <span className="result">
+                                    {" "}
+                                    {product.product_ref}{" "}
+                                  </span>
+                                </div>
+                                <div className="lines">
+                                  <span className="detail">Name:</span>
+                                  <span className="result">
+                                    {" "}
+                                    {product.product_name}{" "}
+                                  </span>
+                                </div>
+                                <div className="lines">
+                                  <span className="detail">Brand:</span>
+                                  <span className="result">
+                                    {" "}
+                                    {product.brand_name}{" "}
+                                  </span>
+                                </div>
+                                <div className="lines">
+                                  <span className="detail">Quantity:</span>
+                                  <span
+                                    className="result"
+                                    style={{
+                                      color:
+                                        product.product_stock === 0
+                                          ? "red"
+                                          : "black",
+                                    }}
+                                  >
+                                    {" "}
+                                    {product.product_stock}{" "}
+                                  </span>
+                                </div>
+                                <div className="lines">
+                                  <span className="detail">Price :</span>
+                                  <span className="result text-danger">
+                                    {" "}
+                                    {product.product_price}DH{" "}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className=" c-footer">
+                                <button
+                                  className="btn text-primary"
+                                  data-toggle="modal"
+                                  data-target="#viewproduct"
+                                  onClick={() => handleShow(product.product_ref)}
+                                >
+                                  <i className="bi bi-eye-fill"></i>
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
     )
 }
 
-export default UserInterface;
+const mapStateToProps =(state)=>{
+    console.log('userInterface' ,state.products)
+    return{
+        response : state.error,
+        isAuthenticated : state.isAuthenticated,
+        isAdmin : state.isAdmin,
+        products : state.products,
+        categories : state.categories,
+        users : state.users,
+        brands : state.brands,
+        addMsg : state.addMsg,
+        deleteMsg : state.deleteMsg,
+        updateMsg : state.updateMsg
+    }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+    return{
+        getProducts : ()=>{
+            dispatch(bringProductsThunk())
+        },
+        getUsers : ()=>{
+            dispatch(bringUsersThunk())
+        },
+        getCategories : ()=>{
+            dispatch(bringCategoriesThunk())
+        },
+        getBrands : ()=>{
+            dispatch(bringBrandsThunk())
+        }
+    }
+    
+}
+export default connect(mapStateToProps, mapDispatchToProps)(UserInterface);
