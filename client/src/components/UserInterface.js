@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import prodimg from '../images/Default.png'
 import {connect} from 'react-redux'
-import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, bringUsersThunk} from '../actions/IMSAction'
+import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, bringUsersThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
 
 //import prodimg from '../images/Default.png'
 import  '../styles/UserInterface.css'
@@ -12,6 +12,10 @@ import  '../styles/UserInterface.css'
 function UserInterface(props){
 
     const [equivalent, setEquivalent] = useState('')
+    const [addToCart, setAddToCart] = useState('')
+    const [addToFavories, setAddToFavories] = useState('')
+    const [showAlert, setShowAlert] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
 
     const callActions =()=>{
         props.getProducts()
@@ -25,7 +29,9 @@ function UserInterface(props){
 
     const handleShow=(ref)=>{
         let row = props.products.filter((product)=> product.product_ref === ref)
-        console.log('row', row)
+         setIsLiked(row[0].product_liked)
+        setAddToCart(row[0].product_ref)
+        setAddToFavories(row[0].product_ref)
         setEquivalent({category : row[0].category_name, ref : row[0].product_ref, quantity : row[0].product_stock})
         const ids = [ 'detailQuantity', 'detailPrice','detailDescription', 'prodImage','detailOldPrice']
         const spans = ids.map((id) => document.getElementById(id))
@@ -54,12 +60,24 @@ function UserInterface(props){
         })
     }
 
-    const HandeleAddToCart =()=>{
-
+    const HandeleAddToCart =(ref)=>{
+      props.addToCart(ref)
+      if (props.updateMsg) {
+        setShowAlert(true);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 3000);
+      }      
     }
 
-    const handeleAddToFavories =()=>{
-
+    const handeleAddToFavories =(ref)=>{
+      props.addToFavories(ref)
+      if (props.updateMsg) {
+        setShowAlert(true);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 3000);
+      } 
     }
 
     return(
@@ -139,8 +157,9 @@ function UserInterface(props){
                   <div className="modal-content">
                     <div className="modal-header">
                       <h3 className="modal-title" id="exampleModalLabel">
-                        Product Details
+                        Product Details 
                       </h3>
+                        {showAlert && props.updateMsg && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )}
                       <span
                         type="button"
                         className="close"
@@ -158,7 +177,7 @@ function UserInterface(props){
                           </div>
                           <div className=' hr'></div>
                           <div className=" likePrices w-100 my-1">
-                            <i onClick={handeleAddToFavories} className=" mx-2 bi bi-heart-fill"></i>
+                            <i onClick={()=>handeleAddToFavories(addToFavories)} className=" mx-2 bi bi-heart-fill" style={{color : isLiked === true? 'red' : 'black'}}></i>
                             <div className='prices'>
                               <span className='remise mx-'>-20%</span>
                               <span id="detailOldPrice" className="Oldprice mx-2">{" "}</span>
@@ -170,9 +189,9 @@ function UserInterface(props){
                             <span  id="detailQuantity" className="quant" style={{color: equivalent.quantity === 0 ? "gray" : "orange" }}>{" "}</span>
                           </div>
                           {equivalent.quantity === 0 ? 
-                          <button style={{backgroundColor: "gray" }} disabled ><i className="bi bi-cart-plus-fill mx-2"></i>Add to cart</button> : 
-                          <button onClick={HandeleAddToCart} style={{backgroundColor: "orange" }}><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>}
-                          
+                            <button style={{backgroundColor: "gray" }} disabled ><i className="bi bi-cart-plus-fill mx-2"></i>Add to cart</button> 
+                            :<button onClick={()=>HandeleAddToCart(addToCart)} className='bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
+                          }
                         </div>
                         <div className=" right col-12 col-sm-6 col-md-4 col-lg-4">
                           <div className="productImage">
@@ -264,7 +283,7 @@ function UserInterface(props){
 }
 
 const mapStateToProps =(state)=>{
-    console.log('userInterface' ,state.products)
+    
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
@@ -292,6 +311,12 @@ const mapDispatchToProps =(dispatch)=>{
         },
         getBrands : ()=>{
             dispatch(bringBrandsThunk())
+        },
+        addToCart : (ref)=>{
+          dispatch(addToCartThunk(ref))
+        },
+        addToFavories : (ref)=>{
+          dispatch(addToFavoriesThunk(ref))
         }
     }
     

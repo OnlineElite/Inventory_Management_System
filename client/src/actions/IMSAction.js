@@ -240,9 +240,9 @@ const addProductThunk = (product) => async (dispatch)=>{
         const url = `${baseURL}/addProduct`;
         //const data = { product }
     
-        const headers = {
+        /*const headers = {
           "Content-Type": `multipart/form-data;`,
-        };
+        };*/
 
         const response = await fetch(url, {
           method: "POST",
@@ -292,9 +292,9 @@ const updateProductThunk = (product) => async (dispatch)=>{
         const url = `${baseURL}/updateProduct`;
         //const data = { product }
     
-        const headers = {
+        /*const headers = {
             "Content-Type": `multipart/form-data;`,
-        };
+        };*/
 
         const response = await fetch(url, {
             method: "POST",
@@ -502,6 +502,89 @@ const deleteUserThunk = (condition) => async (dispatch)=>{
     }
 }
 
+const addToCartThunk = (ref) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/addTocart`;
+        const data = {prod_ref : ref}
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data add to cart recived', datarecived.message )
+        dispatch(updateMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const deleteFromCartThunk = (ref) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/deleteFromCart`;
+        const data = {prod_ref : ref}
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data delete from cart recived', datarecived.message )
+        dispatch(deleteMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const addToFavoriesThunk = (ref) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/addToFavories`;
+        const data = {prod_ref : ref}
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data add to favories recived', datarecived.message )
+        dispatch(updateMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const deleteFromFavoriesThunk = (ref) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/deleteFromFavories`;
+        const data = {prod_ref : ref}
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data delete from favories recived', datarecived.message )
+        dispatch(deleteMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
 export {
     registerThunk, 
     loginThunk, 
@@ -521,6 +604,10 @@ export {
     deleteCategoryThunk,
     deleteBrandThunk,
     updateUserThunk,
-    deleteUserThunk
+    deleteUserThunk,
+    addToCartThunk,
+    deleteFromCartThunk,
+    addToFavoriesThunk,
+    deleteFromFavoriesThunk
 }
 

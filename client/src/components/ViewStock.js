@@ -133,7 +133,7 @@ function ViewStock(props){
     }
 
     const clickUpdateButton=(row)=>{      
-        const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand']
+        const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'upimage']
         const inputs = ids.map((id) => document.getElementById(id))
         inputs.forEach((inp) => { 
             switch(inp.id){
@@ -157,6 +157,11 @@ function ViewStock(props){
                     break;
                 case 'upbrand':
                     inp.value = row.brand_name
+                    break;
+                case 'upimage':
+                    inp.src = row.product_image != null
+                          ? `http://localhost:3005/uploads/${row.product_image}`
+                          : prodimg
                     break;
                 default :
                     inp.value = ''
@@ -387,10 +392,10 @@ function ViewStock(props){
             <div className='container'>
                 <h2>Stock Manager</h2>
                 <div className='dates mt-5'>
-                    {showAlert && ( <div className="alert alert-success" role="alert"> {props.addMsgMsg} </div> )}
-                    {showAlert && ( <div className="alert alert-danger" role="alert"> {extentionMsg} </div> )}
-                    {showAlert && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )}
-                    { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
+                    {showAlert && props.addMsgMsg && ( <div className="alert alert-success" role="alert"> {props.addMsgMsg} </div> )}
+                    {showAlert && extentionMsg && ( <div className="alert alert-danger" role="alert"> {extentionMsg} </div> )}
+                    {showAlert && props.updateMsg && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )}
+                    {showAlert && props.deleteMsg &&( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> )}
                     <RangePicker
                         id='filterDate'
                         onChange={(values) =>{

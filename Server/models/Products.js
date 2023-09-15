@@ -9,6 +9,8 @@ class Product {
       products.price as product_price,
       products.Description as product_desc,
       products.created_date as product_date,
+      products.inCart as product_incart,
+      products.liked as product_liked,
       products.image as product_image,
       categories.name as category_name, 
       brands.name as brand_name
@@ -55,6 +57,34 @@ class ProductAction {
     const query = `update products set name = '${product.name}',ref = '${product.ref}',
      stock = ${product.quantity}, price = ${product.price}, Description =  '${product.desc}', category_id = ${product.category},
     brand_id = ${product.brand}, image = '${product.image}' where ref = '${product.condition}'`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async addProductToCart(ref){
+    const query = `update products set inCart = true where ref = '${ref}'`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async DeleteProductFromCart(ref){
+    const query = `update products set inCart = false where ref = '${ref}'`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+addProductToFavories
+  static async addProductToFavories(ref){
+    const query = `update products set liked = true where ref = '${ref}'`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async DeleteProductFromFavories(ref){
+    const query = `update products set liked = false where ref = '${ref}'`
 
     const result = await pool.query(query);
     return result.rows;
