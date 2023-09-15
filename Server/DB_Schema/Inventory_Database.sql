@@ -48,6 +48,8 @@ create table products(
 	stock int not null,
 	price DECIMAL(10, 2),
 	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	inCart boolean Default false NOT NULL,
+	liked boolean Default false NOT NULL,
     updated_date TIMESTAMP,
     deleted_date TIMESTAMP,
 	Description varchar(500) not null,
@@ -76,21 +78,7 @@ select * from products
 select * from categories
 select * from brands
 
---Update categories trigger
-select * from categories
 
-CREATE OR REPLACE FUNCTION update_categories_update_date()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.update_date = NOW(); 
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER categories_update_trigger
-BEFORE INSERT OR UPDATE ON categories
-FOR EACH ROW
-EXECUTE FUNCTION update_categories_update_date();
 
 
 

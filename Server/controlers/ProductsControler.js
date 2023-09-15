@@ -71,6 +71,52 @@ async function UpdatingProduct(req, res) {
   }
 }
 
+// Cart action
+async function addingProductToCart(req, res) {
+  
+  try{
+    await ProductAction.addProductToCart(req.body.prod_ref)
+    res.status(201).json({ message: "Product added to cart successfully" })
+  }catch(error){
+    console.error(error)
+    res.status(500).json({error: "Internal server error"})
+  }
+}
+
+async function deletingProductFromCart(req, res) {
+  
+  try{
+    await ProductAction.DeleteProductFromCart(req.body.prod_ref)
+    res.status(201).json({ message: "Product deleted from cart successfully" })
+  }catch(error){
+    console.error(error)
+    res.status(500).json({error: "Internal server error"})
+  }
+}
+
+// Favories action
+async function addingProductToFavories(req, res) {
+  
+  try{
+    await ProductAction.addProductToFavories(req.body.prod_ref)
+    res.status(201).json({ message: "Product added to Favories successfully" })
+  }catch(error){
+    console.error(error)
+    res.status(500).json({error: "Internal server error"})
+  }
+}
+
+async function deletingProductFromFavories(req, res) {
+  
+  try{
+    await ProductAction.DeleteProductFromFavories(req.body.prod_ref)
+    res.status(201).json({ message: "Product deleted from Favories successfully" })
+  }catch(error){
+    console.error(error)
+    res.status(500).json({error: "Internal server error"})
+  }
+}
+
 // Categories Action
 async function getCategories(req, res) {
   try {
@@ -169,4 +215,8 @@ module.exports = {
   UpdatingBrand,
   DeletingCategory,
   DeletingBrand,
+  addingProductToCart,
+  deletingProductFromCart,
+  addingProductToFavories,
+  deletingProductFromFavories
 };
