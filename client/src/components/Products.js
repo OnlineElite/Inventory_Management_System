@@ -8,10 +8,6 @@ function Products(props){
     const [selectfilterBrand, setSelectfilterBrand] = useState('');
     const [selectfilterCategory, setSelectfilterCategory] = useState('');
     const [equivalent, setEquivalent] = useState('')
-    
-    const handleShowinsideView=()=>{
-        
-    }
 
     const filterByName =(e)=>{
         const newData = props.products.filter(prod =>{ 

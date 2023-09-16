@@ -10,22 +10,24 @@ import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, bringUsersTh
 import  '../styles/UserInterface.css'
 
 function UserInterface(props){
-
+    const callActions =()=>{
+      //if(props.products.length === 0 || props.categories.length === 0  || props.brands.length === 0 ){
+        props.getProducts()
+        props.getCategories()
+        props.getBrands()
+        props.getUsers()
+      //}
+    }
+    useEffect(()=>{
+        callActions()
+    }, [])
+    const [records, setRecords] = useState(props.products)
     const [equivalent, setEquivalent] = useState('')
     const [addToCart, setAddToCart] = useState('')
     const [addToFavories, setAddToFavories] = useState('')
     const [showAlert, setShowAlert] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
 
-    const callActions =()=>{
-        props.getProducts()
-        props.getCategories()
-        props.getBrands()
-        props.getUsers()
-    }
-    useEffect(()=>{
-        callActions()
-    }, [])
 
     const handleShow=(ref)=>{
         let row = props.products.filter((product)=> product.product_ref === ref)
@@ -80,71 +82,111 @@ function UserInterface(props){
       } 
     }
 
+    const filterByCategory =(categ_name)=>{
+      //const newData = props.products.filter(row =>{ 
+       // return row.category_name.toLowerCase() === categ_name.toLowerCase()
+      //})
+      //setRecords(newData)
+    }
+    const filterByBrand =(brand_name)=>{
+      //const newData = props.products.filter(row =>{                    
+        //return row.brand_name.toLowerCase() === brand_name.toLowerCase()         
+      //})
+      //setRecords(newData) 
+    }
+
     return(
         <div className='userInterface'>
-            <Navbar/>
-            <div className='container'>
-              
-              <div className='prod' >
-                  {props.products.map((product)=>(
-                      <div
-                      className="card"
-                      key={product.product_ref}
-                      onClick={() => handleShow(product.product_ref)}
-                      data-toggle="modal"
-                      data-target="#viewproducts"
-                    >
-                      <img
-                        src={
-                          product.product_image != null
-                            ? "http://localhost:3005/uploads/" + product.product_image
-                            : prodimg
-                        }
-                        className="card-img-top"
-                        alt="product"
-                      />
-                      <div className="card-body">
-                        <div className="lines">
-                          <span className="detail">Reference:</span>
-                          <span className="result"> {product.product_ref} </span>
+            <Navbar callActions = {callActions()} />
+            <div id='proods'>
+              <div className='row px-3'>
+                <div className=' col-12 col-sm-3 col-md-2 col-l-2 col-xl-2'>
+                  <div className=' container sideFilter px-2 border bg-light rounded'>
+                    <h5 className='w-100 text-dark '>Filter by category</h5>
+                    <ul className='categs'>
+                      {props.categories.map((categ, index)=>(
+                        <li key={index}>
+                          <input  onChange={()=>filterByCategory(categ.name)} id={categ.name} type='checkbox' name={categ.name} />
+                          <label className='mx-1 text-black' htmlFor={categ.name}>{categ.name}</label>
+                        </li>
+                      ))}
+                    </ul>
+                    <h5 className='w-100 text-dark'>Filter by brands</h5>
+                    <ul className='categs'>
+                      {props.brands.map((brand, index)=>(
+                        <li key={index}>
+                          <input  onChange={()=>filterByBrand(brand.name)} id={brand.name} type='checkbox' name={brand.name} />
+                          <label className='mx-1 text-black' htmlFor={brand.name}>{brand.name}</label>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className='  col-12 col-sm-9 col-md-10 col-l-10 col-xl-10'>
+                  <div className='container bg-light prod border rounded' >
+                      {records.map((product)=>(
+                          <div
+                          className="card "
+                          key={product.product_ref}
+                          onClick={() => handleShow(product.product_ref)}
+                          data-toggle="modal"
+                          data-target="#viewproducts"
+                        >
+                          <img
+                            src={
+                              product.product_image != null
+                                ? "http://localhost:3005/uploads/" + product.product_image
+                                : prodimg
+                            }
+                            className="card-img-top"
+                            alt="product"
+                          />
+                          <div className="card-body">
+                            <div className="lines">
+                              <span className="detail">Reference:</span>
+                              <span className="result"> {product.product_ref} </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Name:</span>
+                              <span className="result"> {product.product_name} </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Brand:</span>
+                              <span className="result"> {product.brand_name} </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Quantity:</span>
+                              <span
+                                className="result"
+                                style={{
+                                  color:
+                                    product.product_stock === 0 ? "red" : "black",
+                                }}
+                              >
+                                {" "}
+                                {product.product_stock}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Price :</span>
+                              <span className="result price">
+                                {" "}
+                                {product.product_price}DH{" "}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="card-footer text-muted">
+                            <button className="btn btn-primary showMore">
+                              Show Details
+                            </button>
+                          </div>
                         </div>
-                        <div className="lines">
-                          <span className="detail">Name:</span>
-                          <span className="result"> {product.product_name} </span>
-                        </div>
-                        <div className="lines">
-                          <span className="detail">Brand:</span>
-                          <span className="result"> {product.brand_name} </span>
-                        </div>
-                        <div className="lines">
-                          <span className="detail">Quantity:</span>
-                          <span
-                            className="result"
-                            style={{
-                              color:
-                                product.product_stock === 0 ? "red" : "black",
-                            }}
-                          >
-                            {" "}
-                            {product.product_stock}{" "}
-                          </span>
-                        </div>
-                        <div className="lines">
-                          <span className="detail">Price :</span>
-                          <span className="result price">
-                            {" "}
-                            {product.product_price}DH{" "}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="card-footer text-muted">
-                        <button className="btn btn-primary showMore">
-                          Show Details
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+                      ))}
+                  </div>
+                </div>
               </div>
+            </div>
+            <div className='container'>            
               {/* View Item Modal */}
               <div
                 className="modal fade "
@@ -283,7 +325,7 @@ function UserInterface(props){
 }
 
 const mapStateToProps =(state)=>{
-    
+  console.log('prods', state.products)
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,

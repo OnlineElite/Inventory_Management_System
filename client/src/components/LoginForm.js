@@ -99,8 +99,7 @@ function LoginForm(props){
 }
 
 const mapStateToProps =(state)=>{
-    console.log( 'error', state.error)
-    console.log( 'isAuthenticated', state.isAuthenticated)
+    
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
