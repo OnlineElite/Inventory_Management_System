@@ -6,6 +6,7 @@
 /*--------------------------Navbar section-----------------------------*/
 .Navbarr .navbar{
     background-color: rgb(1, 1, 70);
+    height: 4rem;
 }
 .Navbarr .navbar, .Navbarr .collapse{
     padding-inline: 5px;
@@ -14,12 +15,29 @@
     justify-content: center;
 }
 
+.Navbarr .navbar .logo{
+    width: 340px;
+    height: 60px;
+    display: flex;
+    padding-block: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    padding-block: 0;
+
+}
+
+.Navbarr .navbar .logo img{
+    width: 60%;
+    height: fit-content;
+}
+
 .Navbarr .navs{
     width: 30%;
 }
 .Navbarr .collapse{
     justify-content: center;
-    padding-inline: 0.5rem;
 }
 
 .Navbarr .buttons{
@@ -380,7 +398,7 @@
 }
 
 #navbar  .imgBotom i{
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 #navbar  .imgBotom button i{

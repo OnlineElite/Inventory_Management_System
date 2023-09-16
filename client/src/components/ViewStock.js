@@ -121,8 +121,7 @@ function ViewStock(props){
             }
         })
         setRecords(newData)
-        setSelectfilterBrand(e.target.value)
-        
+        setSelectfilterBrand(e.target.value)  
     }
 
     const addCategory =(e)=>{

@@ -8,7 +8,28 @@
     flex-wrap: wrap;
     align-items: center;
     margin-top: 1rem;
-    padding-left: 1rem;
+    padding-top: 0.3rem;
+    padding-left: 2rem;
+    width: 97%;
+}
+
+.userInterface .sideFilter{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.userInterface .sideFilter input:hover, .userInterface .sideFilter label :hover{
+    cursor: pointer;
+    color: orange;
+}
+
+.userInterface .sideFilter .categs li{
+    list-style: none ;
+}
+
+.userInterface #proods .row{
+    background-color: white;
 }
 
 .userInterface .container .card{

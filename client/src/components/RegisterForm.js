@@ -56,8 +56,7 @@ const RegisterForm = (props) => {
 
     const HandelSubmit = (e)=>{
         e.preventDefault()
-        console.log('Information saved');
-        console.log('info', info)
+        
         props.next(info)
         const ids = ['firstname', 'lastname', 'email', 'username', 'password'];
         const inputs = ids.map(id => document.getElementById(id));
