@@ -11,16 +11,17 @@ import  '../styles/UserInterface.css'
 
 function UserInterface(props){
     const callActions =()=>{
-      //if(props.products.length === 0 || props.categories.length === 0  || props.brands.length === 0 ){
         props.getProducts()
         props.getCategories()
         props.getBrands()
         props.getUsers()
-      //}
     }
     useEffect(()=>{
-        callActions()
-    }, [])
+      props.getProducts()
+      props.getCategories()
+      props.getBrands()
+      props.getUsers()
+    }, [props])
     const [records, setRecords] = useState(props.products)
     const [equivalent, setEquivalent] = useState('')
     const [addToCart, setAddToCart] = useState('')
@@ -82,19 +83,60 @@ function UserInterface(props){
       } 
     }
 
-    const filterByCategory =(categ_name)=>{
-      //const newData = props.products.filter(row =>{ 
-       // return row.category_name.toLowerCase() === categ_name.toLowerCase()
-      //})
-      //setRecords(newData)
-    }
-    const filterByBrand =(brand_name)=>{
-      //const newData = props.products.filter(row =>{                    
-        //return row.brand_name.toLowerCase() === brand_name.toLowerCase()         
-      //})
-      //setRecords(newData) 
+    const filterByCategory =()=>{
+      let inputs = []
+      let inpChecked = [];
+      props.categories.forEach((category) => {
+        let id = category.name;
+        let input = document.getElementById(id);
+        inputs.push(input)
+        if (input) {
+          let label = input.parentElement.querySelector('label');
+          if (input.checked) {
+            label.style.color = 'blue';
+            label.style.fontWeight = 'bold';
+            inpChecked.push(category.name);
+          } else {
+            label.style.color = 'black';
+            label.style.fontWeight = 'normal';
+          }
+        }
+      });
+      console.log('inpChecked', inpChecked)
+      let NewData = props.products.filter((product)=>{
+        return inpChecked.includes(product.category_name)
+      })
+      console.log('toDisplay', NewData);
+      (inputs.some((inp)=> inp.checked))? setRecords(NewData) : setRecords(props.products);
     }
 
+    const filterByBrand = () => {
+      let inputs = []
+      let inpChecked = [];
+      props.brands.forEach((brand) => {
+        let id = brand.name;
+        let input = document.getElementById(id);
+        inputs.push(input)
+        if (input) {
+          let label = input.parentElement.querySelector('label');
+          if (input.checked) {
+            label.style.color = 'blue';
+            label.style.fontWeight = 'bold';
+            inpChecked.push(brand.name);
+          } else {
+            label.style.color = 'black';
+            label.style.fontWeight = 'normal';
+          }
+        }
+      });
+      console.log('inpChecked', inpChecked)
+      let NewData = props.products.filter((product)=>{
+        return inpChecked.includes(product.brand_name)
+      })
+      console.log('toDisplay', NewData);
+      (inputs.some((inp)=> inp.checked))? setRecords(NewData) : setRecords(props.products);
+    };
+  
     return(
         <div className='userInterface'>
             <Navbar callActions = {callActions()} />
@@ -106,8 +148,8 @@ function UserInterface(props){
                     <ul className='categs'>
                       {props.categories.map((categ, index)=>(
                         <li key={index}>
-                          <input  onChange={()=>filterByCategory(categ.name)} id={categ.name} type='checkbox' name={categ.name} />
-                          <label className='mx-1 text-black' htmlFor={categ.name}>{categ.name}</label>
+                          <input  onChange={filterByCategory} id={categ.name} type='checkbox' name={categ.name} />
+                          <label className='mx-1' htmlFor={categ.name}>{categ.name}</label>
                         </li>
                       ))}
                     </ul>
@@ -115,8 +157,8 @@ function UserInterface(props){
                     <ul className='categs'>
                       {props.brands.map((brand, index)=>(
                         <li key={index}>
-                          <input  onChange={()=>filterByBrand(brand.name)} id={brand.name} type='checkbox' name={brand.name} />
-                          <label className='mx-1 text-black' htmlFor={brand.name}>{brand.name}</label>
+                          <input onChange={filterByBrand} id={brand.name} type='checkbox' name={brand.name} />
+                          <label className='mx-1' htmlFor={brand.name}>{brand.name}</label>
                         </li>
                       ))}
                     </ul>
@@ -325,7 +367,7 @@ function UserInterface(props){
 }
 
 const mapStateToProps =(state)=>{
-  console.log('prods', state.products)
+  
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,

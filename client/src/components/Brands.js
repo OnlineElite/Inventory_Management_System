@@ -13,12 +13,9 @@ function Brands(props){
     const [records, setRecords] = useState(props.brands)
     const [condition, setCondition] = useState(null)
     
-    const callBrands =()=>{
-        props.getBrands()
-    }
     useEffect(()=>{
-        callBrands()
-    }, [])
+        props.getBrands()
+    }, [props])
     const columns = [
         {
             name : 'Name',

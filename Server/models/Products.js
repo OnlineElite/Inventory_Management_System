@@ -75,7 +75,7 @@ class ProductAction {
     const result = await pool.query(query);
     return result.rows;
   }
-addProductToFavories
+
   static async addProductToFavories(ref){
     const query = `update products set liked = true where ref = '${ref}'`
 

@@ -13,12 +13,9 @@ function Categories(props){
     const [records, setRecords] = useState(props.categories)
     const [condition, setCondition] = useState(null)
 
-    const callCategory =()=>{
-        props.getCategories()
-    }
     useEffect(()=>{
-        callCategory()
-    }, [])
+        props.getCategories()
+    }, [props])
     const columns = [
         {
             name : 'Name',
@@ -265,9 +262,6 @@ const mapDispatchToProps =(dispatch)=>{
         },
         deleteCategory : (category_name)=>{
             dispatch(deleteCategoryThunk(category_name))
-        },
-        getCategories : ()=>{
-            dispatch(bringCategoriesThunk())
         }
     }
     
