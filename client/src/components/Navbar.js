@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
@@ -13,6 +12,35 @@ function Navbar(props, callActions){
     const [showAlert, setShowAlert] = useState(false);
     const [totalItem, setTotalItem] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
+
+    const hundellSubmit =(e)=>{
+        let btnType = e.target.dataset.btn;
+        let count = e.target.parentElement.children[1]
+        let currentCounter = e.target.parentElement.children[1].textContent
+
+        switch(btnType){
+            case 'increase':
+                if(currentCounter >= 10){
+                    count.textContent = currentCounter;
+                    //e.target.style.backgroundColor = 'gray';
+                }else{
+                    count.textContent = Number(currentCounter)+1;
+                    //e.target.style.backgroundColor = '#DC3545';
+                }
+                break;
+            case 'decrease':
+                if(currentCounter <= 1){
+                    count.textContent = 1;
+                    //e.target.style.backgroundColor = 'gray';
+                }else{
+                    count.textContent = Number(currentCounter)-1;
+                    //e.target.style.backgroundColor = '#DC3545';
+                }
+                break;
+            default:
+                console.log("wrong button");
+        }
+    }
 
     const handleLogout =(e)=>{
         props.fetchlogout(props.userEmail)
@@ -30,6 +58,14 @@ function Navbar(props, callActions){
     }
 
     const HandeleAddToCart =(ref)=>{
+        let allreadyInCart = props.products.filter((product)=> product.product_incart === true)
+        allreadyInCart.map((product)=>{
+            if(product.product_ref === ref){
+                alert('Allready added to cart!')
+            }else{
+                alert('Added to cart successfully')
+            }
+        })
         props.addToCart(ref)
         if (props.updateMsg) {
             setShowAlert(true);
@@ -59,7 +95,7 @@ function Navbar(props, callActions){
         } 
     }
     // handel Total Item & Total Amount
-    const HandelTotalItem_TotalAmount=()=>{
+   /* const HandelTotalItem_TotalAmount=()=>{
         let Total = props.products.filter((product)=>{
             return product.product_incart === true
         })
@@ -74,10 +110,23 @@ function Navbar(props, callActions){
         });
         let TotalAmount = ((total)-(total)*20/100).toFixed(2);
         setTotalAmount(TotalAmount)
-    }
+    }*/
     useEffect(()=>{
-        HandelTotalItem_TotalAmount()
-    }, [])
+        let Total = props.products.filter((product)=>{
+            return product.product_incart === true
+        })
+        let TotalItem = Total.length
+        setTotalItem(TotalItem)
+        
+        let total = 0;
+        props.products.forEach(product => {
+            if(product.product_incart === true){
+                total = total + Number(product.product_price) ;
+            }
+        });
+        let TotalAmount = ((total)-(total)*20/100).toFixed(2);
+        setTotalAmount(TotalAmount)
+    }, [props])
 
     const handelCheckout =()=>{
         var doc = new jsPDF()
@@ -181,9 +230,9 @@ function Navbar(props, callActions){
                                                                         <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
                                                                         <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
                                                                         <div className='buttns'>
-                                                                            <button className='bg-danger'>+</button>
-                                                                            <span>1</span>
-                                                                            <button className='bg-danger'>–</button>
+                                                                            <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' >+</button>
+                                                                            <span id='count'> 1</span>
+                                                                            <button  type='submit' onClick={hundellSubmit} data-btn = 'decrease'>–</button>
                                                                         </div>
                                                                     </div>
                                                                 </div> 
