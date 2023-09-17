@@ -5,8 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import prodimg from '../images/Default.png'
 import {connect} from 'react-redux'
 import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, bringUsersThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
-
-//import prodimg from '../images/Default.png'
+import Footer from '../components/Footer'
 import  '../styles/UserInterface.css'
 
 function UserInterface(props){
@@ -362,6 +361,7 @@ function UserInterface(props){
                 </div>
               </div>
             </div>
+            <Footer callActions = {callActions()} />
         </div>
     )
 }

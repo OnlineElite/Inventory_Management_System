@@ -87,7 +87,8 @@
 }
 
 .userInterface .showMore{
-    width: fit-content;
+    width: 100%;
+    text-align: center;
 
 }
 /*--------show modal---------*/

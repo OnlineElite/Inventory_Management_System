@@ -67,7 +67,8 @@
 }
 
 .ProductsWindow .showMore{
-    width: fit-content;
+    width: 100%;
+    text-align: center;
 
 }
 /*--------modal---------*/
