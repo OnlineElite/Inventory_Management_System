@@ -96,7 +96,8 @@ function Navbar(props){
         } 
     }
     // handel Total Item & Total Amount
-   const HandelTotalItem_TotalAmount=()=>{
+     const HandelTotalItem_TotalAmount=()=>{
+
         let Total = props.products.filter((product)=>{
             return product.product_incart === true
         })
@@ -126,7 +127,6 @@ function Navbar(props){
         doc.text(20,30,`The total items is : ${Item}`);
         doc.text(20,40,`The total Amount is : ${Amount}`);
         return doc.save('Facture.pdf')
-         
     }
 
 

@@ -93,10 +93,17 @@ const deleteMessage = (message)=>{
 
 const updateMessage = (message)=>{
     return {
-        type : 'UPDATE_PRODUCT',
-        payload : message
-    }
+      type: "UPDATE_MESSAGE",
+      payload: message,
+    };
 }
+
+const updateProduct = (product) => {
+  return {
+    type: "UPDATE_PRODUCT",
+    payload: product,
+  };
+};
 
 const handelUsers = (user)=>{
     return {
@@ -303,8 +310,14 @@ const updateProductThunk = (product) => async (dispatch)=>{
         });
     
         const datarecived = await response.json();
-        console.log('data update item recived', datarecived.message )
-        dispatch(updateMessage(datarecived.message))
+        if (datarecived.message === "Product updated successfully"){
+            dispatch(updateMessage(datarecived.message));
+
+            const updatedProductJson = formDataToJson(product);
+            dispatch(updateProduct(updatedProductJson));
+        }
+        console.log("data update item recived", datarecived.message);
+  
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -585,6 +598,21 @@ const deleteFromFavoriesThunk = (ref) => async (dispatch)=>{
         dispatch(handellError(err))
     }
 }
+
+
+const formDataToJson = (formData) => {
+  const jsonObject = {};
+
+  // Convert the FormData to an array of key-value pairs
+  const formDataArray = Array.from(formData.entries());
+
+  for (const [key, value] of formDataArray) {
+    jsonObject[key] = value;
+  }
+
+  return jsonObject;
+};
+
 export {
     registerThunk, 
     loginThunk, 

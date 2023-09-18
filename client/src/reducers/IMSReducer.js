@@ -48,6 +48,31 @@ const userReducer = (state, action)=>{
             return {...state, deleteMsg : action.payload}
 
         case 'UPDATE_PRODUCT':
+
+            const updatedProduct = action.payload;
+
+            const updatedProducts = state.products.map((element) => {
+              if (element.product_ref === updatedProduct.ref) {
+                    element.product_name = updatedProduct.name;
+                    element.product_ref = updatedProduct.ref;
+                    element.product_stock = parseInt(updatedProduct.quantity, 10);
+                    element.product_price = updatedProduct.price;
+                    element.product_desc = updatedProduct.desc;
+                    element.product_date = new Date().toISOString();
+                    element.product_incart = false;
+                    element.product_liked = false;
+                    element.product_image = null;
+                    element.category_name = updatedProduct.categoryName;
+                    element.brand_name = updatedProduct.brandName;
+                    return element;
+              } else {
+                return element;
+              }
+            });
+
+            return { ...state, products: updatedProducts };
+            
+            case 'UPDATE_MESSAGE':
             return {...state, updateMsg : action.payload}
 
         case 'USERS':
