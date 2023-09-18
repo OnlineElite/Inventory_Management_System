@@ -14,6 +14,7 @@ function Navbar(props){
     const [totalAmount, setTotalAmount] = useState(null);
 
     const hundellSubmit =(e)=>{
+        e.preventDefault()
         let btnType = e.target.dataset.btn;
         let count = e.target.parentElement.children[1]
         let currentCounter = e.target.parentElement.children[1].textContent
@@ -95,7 +96,8 @@ function Navbar(props){
         } 
     }
     // handel Total Item & Total Amount
-    const HandelTotalItem_TotalAmount=()=>{
+     const HandelTotalItem_TotalAmount=()=>{
+
         let Total = props.products.filter((product)=>{
             return product.product_incart === true
         })
@@ -115,13 +117,16 @@ function Navbar(props){
         HandelTotalItem_TotalAmount()
     }, [])
 
-    const handelCheckout =()=>{
+    const handelCheckout =(e)=>{
+        e.preventDefault()
+        let Amount = (totalAmount === null)? 0 : totalAmount
+        let Item = (totalItem === null)? 0 : totalItem
         var doc = new jsPDF()
         doc.text(20,20, 'this the default text');
         doc.setFont('courier');
-        doc.text(20,30,'the the text with the font seted');
-       return  doc.save('Facture.pdf')
-       
+        doc.text(20,30,`The total items is : ${Item}`);
+        doc.text(20,40,`The total Amount is : ${Amount}`);
+       return doc.save('Facture.pdf')
     }
 
 
@@ -239,7 +244,7 @@ function Navbar(props){
                                                     <hr/>
                                                     <div className='ro '><p id="delievery">Free Delievery abouve</p><span id='delev' >100DH</span></div>
                                                     <hr/>
-                                                    <button className="cart-btn bg-danger" onClick={handelCheckout}>Checkout</button>
+                                                    <button className="cart-btn bg-danger" onClick={()=> handelCheckout()}>Checkout</button>
                                                 </div>
                                                 </div>
                                             </div>
