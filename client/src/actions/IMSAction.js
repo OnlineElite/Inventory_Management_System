@@ -310,13 +310,13 @@ const updateProductThunk = (product) => async (dispatch)=>{
         });
     
         const datarecived = await response.json();
-        if (datarecived.message == "Product updated successfully"){
+        if (datarecived.message === "Product updated successfully"){
             dispatch(updateMessage(datarecived.message));
 
             const updatedProductJson = formDataToJson(product);
             dispatch(updateProduct(updatedProductJson));
         }
-          console.log("data update item recived", datarecived.message);
+        console.log("data update item recived", datarecived.message);
   
     }catch(err){
         console.error(err)

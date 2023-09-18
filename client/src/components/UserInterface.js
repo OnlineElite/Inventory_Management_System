@@ -10,17 +10,14 @@ import  '../styles/UserInterface.css'
 
 function UserInterface(props){
     const callActions =()=>{
-        props.getProducts()
-        props.getCategories()
-        props.getBrands()
-        props.getUsers()
-    }
-    useEffect(()=>{
       props.getProducts()
       props.getCategories()
       props.getBrands()
       props.getUsers()
-    }, [props])
+    }
+    useEffect(()=>{
+      callActions()
+    }, [])
     const [records, setRecords] = useState(props.products)
     const [equivalent, setEquivalent] = useState('')
     const [addToCart, setAddToCart] = useState('')
@@ -138,7 +135,7 @@ function UserInterface(props){
   
     return(
         <div className='userInterface'>
-            <Navbar callActions = {callActions()} />
+            <Navbar />
             <div id='proods'>
               <div className='row px-3'>
                 <div className=' col-12 col-sm-3 col-md-2 col-l-2 col-xl-2'>

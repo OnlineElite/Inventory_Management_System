@@ -220,10 +220,10 @@ function ViewStock(props){
         }  
         let extention = getExtension(inputs[7].files[0].name).toLowerCase()
         if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
-            console.log('accepted')
+            
             props.updateProduct(formData)
         }else{
-            console.log('not accepted')
+            
             setExtentionMsg('File extention not suported plase enter a file with(jpg, png or webp)')
             if (extentionMsg) {
                 setShowAlert(true);
@@ -354,10 +354,6 @@ function ViewStock(props){
         setRecords(props.products)
     }
 
-    const handleShowinsideView=()=>{
-        
-    }
-
     const tableCustomStyles = {
         headRow: {
           style: {
@@ -411,21 +407,21 @@ function ViewStock(props){
       setRecords(props.products);
     };
 
-        useEffect(() => {
-          if (selectedRange) {
-            const [startDate, endDate] = selectedRange;
+    useEffect(() => {
+      if (selectedRange) {
+        const [startDate, endDate] = selectedRange;
 
-            const theRest = props.products.filter((row) => {
-              const productDate = new Date(row.product_date);
+        const theRest = props.products.filter((row) => {
+          const productDate = new Date(row.product_date);
 
-              return startDate <= productDate && productDate <= endDate;
-            });
-            setRecords(theRest);
-          } else {
-            console.log("No date range selected.");
-            setRecords(props.products);
-          }
+          return startDate <= productDate && productDate <= endDate;
         });
+        setRecords(theRest);
+      } else {
+        console.log("No date range selected.");
+        setRecords(props.products);
+      }
+    },[]);
 
     return (
       <div className="products bg-light" id="stock">
@@ -921,7 +917,7 @@ function ViewStock(props){
                               className="btn text-primary"
                               data-toggle="modal"
                               data-target="#viewproduct"
-                              onClick={() => handleShowinsideView()}
+                              onClick={() => handleShow(product)}
                             >
                               <i className="bi bi-eye-fill"></i>
                             </button>
