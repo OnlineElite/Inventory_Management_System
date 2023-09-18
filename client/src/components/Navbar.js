@@ -14,6 +14,7 @@ function Navbar(props, callActions){
     const [totalAmount, setTotalAmount] = useState(null);
 
     const hundellSubmit =(e)=>{
+        e.preventDefault()
         let btnType = e.target.dataset.btn;
         let count = e.target.parentElement.children[1]
         let currentCounter = e.target.parentElement.children[1].textContent
@@ -95,7 +96,7 @@ function Navbar(props, callActions){
         } 
     }
     // handel Total Item & Total Amount
-   /* const HandelTotalItem_TotalAmount=()=>{
+   const HandelTotalItem_TotalAmount=()=>{
         let Total = props.products.filter((product)=>{
             return product.product_incart === true
         })
@@ -110,29 +111,20 @@ function Navbar(props, callActions){
         });
         let TotalAmount = ((total)-(total)*20/100).toFixed(2);
         setTotalAmount(TotalAmount)
-    }*/
+    }
     useEffect(()=>{
-        let Total = props.products.filter((product)=>{
-            return product.product_incart === true
-        })
-        let TotalItem = Total.length
-        setTotalItem(TotalItem)
-        
-        let total = 0;
-        props.products.forEach(product => {
-            if(product.product_incart === true){
-                total = total + Number(product.product_price) ;
-            }
-        });
-        let TotalAmount = ((total)-(total)*20/100).toFixed(2);
-        setTotalAmount(TotalAmount)
-    }, [props])
+        HandelTotalItem_TotalAmount()
+    }, [])
 
-    const handelCheckout =()=>{
+    const handelCheckout =(e)=>{
+        e.preventDefault()
+        let Amount = (totalAmount === null)? 0 : totalAmount
+        let Item = (totalItem === null)? 0 : totalItem
         var doc = new jsPDF()
         doc.text(20,20, 'this the default text');
         doc.setFont('courier');
-        doc.text(20,30,'the the text with the font seted');
+        doc.text(20,30,`The total items is : ${Item}`);
+        doc.text(20,40,`The total Amount is : ${Amount}`);
         doc.save('Facture.pdf')
         return callActions
     }
@@ -252,7 +244,7 @@ function Navbar(props, callActions){
                                                     <hr/>
                                                     <div className='ro '><p id="delievery">Free Delievery abouve</p><span id='delev' >100DH</span></div>
                                                     <hr/>
-                                                    <button className="cart-btn bg-danger" onClick={handelCheckout}>Checkout</button>
+                                                    <button className="cart-btn bg-danger" onClick={()=> handelCheckout()}>Checkout</button>
                                                 </div>
                                                 </div>
                                             </div>

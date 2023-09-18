@@ -346,10 +346,6 @@ function ViewStock(props){
         setRecords(props.products)
     }
 
-    const handleShowinsideView=()=>{
-        
-    }
-
     const tableCustomStyles = {
         headRow: {
           style: {
@@ -649,7 +645,7 @@ function ViewStock(props){
                                             </div>
                                         </div>
                                         <div className=" c-footer">
-                                            <button className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShowinsideView()}>
+                                            <button className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShow(product)}>
                                                 <i className="bi bi-eye-fill"></i>
                                             </button>
                                         </div>
