@@ -126,7 +126,7 @@ function Navbar(props){
         doc.setFont('courier');
         doc.text(20,30,`The total items is : ${Item}`);
         doc.text(20,40,`The total Amount is : ${Amount}`);
-       return doc.save('Facture.pdf')
+        return doc.save('Facture.pdf')
     }
 
 
