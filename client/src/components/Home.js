@@ -7,6 +7,7 @@ function Home(props){
     const [totalCategories, setTotalCategories] = useState(null)
 
     useEffect(()=>{
+        console.log(props.products);
         setTotalCategories(props.categories.length)
         setTotalProducts(props.products.length)
         const total = props.products.reduce((accumulator, product) => {

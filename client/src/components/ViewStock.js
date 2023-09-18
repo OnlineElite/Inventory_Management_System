@@ -1,4 +1,4 @@
-import React, {useState } from 'react'
+import React, { useState, useEffect } from "react";
 import prodimg from '../images/Default.png'
 import DataTable from 'react-data-table-component'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -20,7 +20,7 @@ function ViewStock(props){
     const [deleteCondition, setDeleteCondition] = useState(null)
     const [equivalent, setEquivalent] = useState('')
     const [extentionMsg, setExtentionMsg] = useState( '')
-
+    const [selectedRange, setSelectedRange] = useState(null);
     const columns = [
         {
             name : 'Name',
@@ -175,17 +175,23 @@ function ViewStock(props){
         var values = [];
         const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'upimage']
         const inputs = ids.map((id) => document.getElementById(id))
+
+        let catName, brandName;
+
         inputs.forEach((inp) => { 
 
             if(inp.name === 'upcategory' ) {
                 props.categories.forEach((item)=>{
                     if(item.name === inp.value)
                     values.push(item.id);
+
+                    catName = item.name;
                 })
             }else if(inp.name === 'upbrand'){
                 props.brands.forEach((item)=>{
                     if(item.name === inp.value) 
                     values.push(item.id);
+                    brandName = item.name;
                 })
             }else if (inp.id === 'upimage' && inp.files.length > 0) {
                 values.push(inp.files[0].name);
@@ -202,6 +208,8 @@ function ViewStock(props){
         formData.append('desc', values[4]);
         formData.append('category', values[5]);
         formData.append('brand', values[6]);
+        formData.append('categoryName', catName);
+        formData.append("brandName", brandName);
         formData.append('condition', deleteCondition);
         if (inputs[7].type === "file" && inputs[7].files.length > 0) {
             formData.append("image", inputs[7].files[0]);
@@ -369,301 +377,568 @@ function ViewStock(props){
         }
     }
 
-    const handeleReset =(e)=>{
-        e.preventDefault()
-        const ids = ['filterName', 'filterRef', 'filterCategory', 'filterBrand', 'filterDate']
-        const inputs = ids.map((id)=> document.getElementById(id))
-        inputs.forEach((inp)=> {
-            switch(inp.id){
-                case 'filterName': inp.value = ''; break;
-                case 'filterRef': inp.value = ''; break;
-                case 'filterCategory': inp.selectedIndex = 0; break;
-                case 'filterBrand': inp.selectedIndex = 0; break;
-                case 'filterDate': inp.value = []; break;
-                default: inp.value = ''
-            }
-        })
-        setRecords(props.products)
-    }
+    const handeleReset = (e) => {
+      e.preventDefault();
+      const ids = [
+        "filterName",
+        "filterRef",
+        "filterCategory",
+        "filterBrand",
+        "filterDate",
+      ];
+      const inputs = ids.map((id) => document.getElementById(id));
+      inputs.forEach((inp) => {
+        switch (inp.id) {
+          case "filterName":
+            inp.value = "";
+            break;
+          case "filterRef":
+            inp.value = "";
+            break;
+          case "filterCategory":
+            inp.selectedIndex = 0;
+            break;
+          case "filterBrand":
+            inp.selectedIndex = 0;
+            break;
+          //case 'filterDate': inp.value = []; break;
+          default:
+            inp.value = "";
+        }
+      });
 
-    return(
-        <div className='products bg-light' id='stock'>
-            <div className='container'>
-                <h2>Stock Manager</h2>
-                <div className='dates mt-5'>
-                    {showAlert && props.addMsgMsg && ( <div className="alert alert-success" role="alert"> {props.addMsgMsg} </div> )}
-                    {showAlert && extentionMsg && ( <div className="alert alert-danger" role="alert"> {extentionMsg} </div> )}
-                    {showAlert && props.updateMsg && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )}
-                    {showAlert && props.deleteMsg &&( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> )}
-                    <RangePicker
-                        id='filterDate'
-                        onChange={(values) =>{
-                            if (values && values.length === 2) {
-                                let startDate = values[0].format('YYYY-MM-DD')
-                                let endDate = values[1].format('YYYY-MM-DD')
-                                const theRest = props.products.filter((row)=>{
+      setSelectedRange(null);
+      setRecords(props.products);
+    };
 
-                                    const date = new Date(row.product_date);
-                                    const year = date.getFullYear();
-                                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                                    const day = String(date.getDate()).padStart(2, '0');
-                                    const formattedDate = `${year}-${month}-${day}`;
-                                    
-                                    return (startDate <= formattedDate && formattedDate<= endDate)
-                                })
-                                setRecords(theRest)
-                            }else {
-                                setRecords(props.products)
-                            }
-                        }}
+        useEffect(() => {
+          if (selectedRange) {
+            const [startDate, endDate] = selectedRange;
+
+            const theRest = props.products.filter((row) => {
+              const productDate = new Date(row.product_date);
+
+              return startDate <= productDate && productDate <= endDate;
+            });
+            setRecords(theRest);
+          } else {
+            console.log("No date range selected.");
+            setRecords(props.products);
+          }
+        });
+
+    return (
+      <div className="products bg-light" id="stock">
+        <div className="container">
+          <h2>Stock Manager</h2>
+          <div className="dates mt-5">
+            {showAlert && props.addMsgMsg && (
+              <div className="alert alert-success" role="alert">
+                {" "}
+                {props.addMsgMsg}{" "}
+              </div>
+            )}
+            {showAlert && extentionMsg && (
+              <div className="alert alert-danger" role="alert">
+                {" "}
+                {extentionMsg}{" "}
+              </div>
+            )}
+            {showAlert && props.updateMsg && (
+              <div className="alert alert-success" role="alert">
+                {" "}
+                {props.updateMsg}{" "}
+              </div>
+            )}
+            {showAlert && props.deleteMsg && (
+              <div className="alert alert-success" role="alert">
+                {" "}
+                {props.deleteMsg}{" "}
+              </div>
+            )}
+            <RangePicker
+              id="filterDate"
+              value={selectedRange}
+              onChange={(value) => setSelectedRange(value)}
+            />
+            <span className="refresh py-2  px-3" onClick={handeleReset}>
+              <FontAwesomeIcon
+                className="reload"
+                icon="fa-solid fa-rotate-right"
+              />
+            </span>
+          </div>
+          <div className="filters">
+            <input
+              id="filterName"
+              className="filterinp py-2"
+              type="text"
+              placeholder="Filter by Name"
+              onChange={filterByName}
+            />
+            <input
+              id="filterRef"
+              className="filterinp py-2"
+              type="text"
+              placeholder="Filter by Ref"
+              onChange={filterByRef}
+            />
+            <select
+              id="filterCategory"
+              className="filterinp py-2"
+              value={selectfilterCategory}
+              onChange={filterByCategory}
+            >
+              <option disabled={true} value="">
+                {" "}
+                Category
+              </option>
+              {props.categories.map((category, index) => (
+                <option name="option" key={index}>
+                  {" "}
+                  {category.name}
+                </option>
+              ))}
+            </select>
+            <select
+              id="filterBrand"
+              className="filterinp py-2"
+              value={selectfilterBrand}
+              onChange={filterByBrand}
+            >
+              <option disabled={true} value="">
+                {" "}
+                Brand
+              </option>
+              {props.brands.map((brand, index) => (
+                <option name="option" key={index}>
+                  {" "}
+                  {brand.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="container mt-3">
+            <DataTable
+              title={"Manage Stock"}
+              columns={columns}
+              data={records}
+              selectableRows
+              selectableRowsHighlight
+              highlightOnHover
+              fixedHeader
+              bordered
+              pagination
+              customStyles={tableCustomStyles}
+              actions={
+                <button
+                  type="button"
+                  className="btn btn-info"
+                  data-toggle="modal"
+                  data-target="#addproduct"
+                >
+                  Add Product
+                </button>
+              }
+            ></DataTable>
+          </div>
+          {/* Add Item Modal */}
+          <div
+            className="modal fade"
+            id="addproduct"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog modal-lg">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h3 className="modal-title" id="exampleModalLabel">
+                    Add Item To Stock
+                  </h3>
+                  <span
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </span>
+                </div>
+                <div className="modal-body">
+                  <div className="roo">
+                    <label htmlFor="name">Name:</label>
+                    <input id="name" type="text" name="name" />
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="ref">Ref :</label>
+                    <input id="ref" type="text" name="ref" />
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="quantity">Quantity :</label>
+                    <input
+                      id="quantity"
+                      type="number"
+                      min={0}
+                      max={30}
+                      name="quantity"
                     />
-                    <span className='refresh py-2  px-3' onClick={handeleReset}><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
-                </div>
-                <div className='filters'>
-                    <input id='filterName' className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                    <input id='filterRef' className='filterinp py-2' type='text' placeholder='Filter by Ref' onChange={filterByRef} />
-                    <select id='filterCategory' className='filterinp py-2' value= {selectfilterCategory} onChange={filterByCategory}>
-                        <option disabled={true} value=""> Category</option>
-                        {props.categories.map((category, index)=>(
-                            <option name='option' key={index}> {category.name}</option>
-                        ))}
-                    </select>
-                    <select id='filterBrand' className='filterinp py-2' value= {selectfilterBrand} onChange={filterByBrand} >
-                        <option disabled={true} value=""> Brand</option>
-                        {props.brands.map((brand, index)=>(
-                            <option name='option' key={index}> {brand.name}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className='container mt-3'>
-                    <DataTable 
-                        title = {'Manage Stock'}
-                        columns ={columns}
-                        data ={records} 
-                        selectableRows 
-                        selectableRowsHighlight
-                        highlightOnHover
-                        fixedHeader 
-                        bordered
-                        pagination
-                        customStyles={tableCustomStyles}
-                        actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addproduct" >Add Product</button>}
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="price">Price :</label>
+                    <input id="price" type="text" name="price" />
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="category">Category :</label>
+                    <select
+                      value={selecaddcategory}
+                      id="category"
+                      name="category"
+                      onChange={addCategory}
                     >
-                    </DataTable>
+                      <option disabled={true} value="">
+                        {" "}
+                        Category
+                      </option>
+                      {props.categories.map((category) => (
+                        <option name="option" key={category.id}>
+                          {" "}
+                          {category.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="brand">Brand :</label>
+                    <select
+                      value={selectaddbrand}
+                      id="brand"
+                      name="brand"
+                      onChange={addBrand}
+                    >
+                      <option disabled={true} value="">
+                        {" "}
+                        Brand
+                      </option>
+                      {props.brands.map((brand) => (
+                        <option name="option" key={brand.id}>
+                          {" "}
+                          {brand.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="desc">Description :</label>
+                    <textarea id="desc" type="text" name="desc" />
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="image">Image :</label>
+                    <input id="image" type="file" name="image" />
+                  </div>
                 </div>
-                {/* Add Item Modal */}
-                <div className="modal fade" id="addproduct" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-lg">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h3 className="modal-title" id="exampleModalLabel">Add Item To Stock</h3>
-                            <span type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </span>
-                        </div>
-                        <div className="modal-body">
-                            <div className="roo">
-                                <label htmlFor="name">Name:</label>
-                                <input id="name" type="text" name="name"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="ref">Ref :</label> 
-                                <input id="ref" type="text" name="ref"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="quantity">Quantity :</label> 
-                                <input id="quantity" type="number" min={0} max={30} name="quantity"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="price">Price :</label> 
-                                <input id="price" type="text" name="price"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="category">Category :</label> 
-                                <select value= {selecaddcategory} id="category" name="category"  onChange={addCategory}>
-                                <option disabled={true} value=""> Category</option>
-                                    {props.categories.map((category)=>(
-                                        <option name='option' key={category.id}> {category.name}</option>
-                                    ))}
-                                </select>                              
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="brand">Brand :</label>
-                                <select value= {selectaddbrand} id="brand" name="brand" onChange={addBrand}>
-                                <option disabled={true} value=""> Brand</option>
-                                    {props.brands.map((brand)=>(
-                                        <option name='option' key={brand.id}> {brand.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="desc">Description :</label> 
-                                <textarea id="desc" type="text"  name="desc"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="image">Image :</label> 
-                                <input id="image" type="file"  name="image" />
-                            </div>
-                        </div>
-                        
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" className="btn btn-primary" onClick={HandellAddItem}>Add Item</button>
-                        </div>
-                        </div>
-                    </div>
+
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={HandellAddItem}
+                  >
+                    Add Item
+                  </button>
                 </div>
-                {/* Update Item Modal */}
-                <div className="modal fade" id="update" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-lg">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h3 className="modal-title" id="exampleModalLabel">Update Item</h3>
-                            <span type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </span>
-                        </div>
-                        <div className="modal-body">
-                            <div className="roo">
-                                <label htmlFor="upname">Name:</label>
-                                <input id="upname" type="text" name="upname"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="upref">Ref :</label> 
-                                <input id="upref" type="text" name="upref"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="upquantity">Quantity :</label> 
-                                <input id="upquantity" type="number" min={0} max={30} name="upquantity"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="upprice">Price :</label> 
-                                <input id="upprice" type="text" name="upprice"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="upcategory">Category :</label> 
-                                <select  id="upcategory" name="upcategory" >
-                                <option disabled={true} value=""> Category</option>
-                                    {props.categories.map((category)=>(
-                                        <option name='option' key={category.id}> {category.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="upbrand">Brand :</label>
-                                <select id="upbrand" name="upbrand" >
-                                <option disabled={true} value=""> Brand</option>
-                                    {props.brands.map((brand)=>(
-                                        <option name='option' key={brand.id}> {brand.name}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="updesc">Description :</label> 
-                                <textarea id="updesc" type="text"  name="updesc"/>
-                            </div>
-                            <div className="roo">
-                                <label htmlFor="image">Image :</label> 
-                                <input id="upimage" type="file"  name="image" />
-                            </div>
-                        </div>
-                        
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" className="btn btn-primary" onClick={hundeleUpdate}>Update Item</button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                {/* View Item Modal */}
-                <div className="modal fade " id="viewproduct" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-lg view">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <h3 className="modal-title" id="exampleModalLabel">Product Details</h3>
-                            <span type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </span>
-                        </div>
-                        <div className="modal-body">
-                            <div className="row">
-                                <div className=' left col-auto col-sm-6 col-md-6 col-lg-6'>
-                                        <div className='lines'>
-                                            <span className='detail ' >Reference:</span><span  id='detailRef' className='leftR text-primary'> </span>
-                                        </div>
-                                        <div className='lines'>
-                                            <span className='detail'  >Name:</span><span id='detailName' className='leftR'>  </span>
-                                        </div>
-                                        <div className='lines'>
-                                            <span className='detail'  >Quantity:</span>
-                                            <span id='detailQuantity' className='leftR' style={{color : (equivalent.quantity === 0)? 'red': 'black'}} > </span>
-                                        </div>
-                                        <div className='lines'>
-                                            <span className='detail'  >Description:</span><span id='detailDescription' className='leftR'>  </span>
-                                        </div>
-                                        <div className='lines'>
-                                            <span className='detail'  >Category:</span><span id='detailCategory' className='leftR'>  </span>
-                                        </div>
-                                        <div className='lines'>
-                                            <span className='detail'  >Brand:</span><span id='detailBrand' className='leftR'>  </span>
-                                        </div>
-                                        <div className='lines'>
-                                            <span className='detail'  >Equivalents:</span>
-                                            <span id='detailBrand' className='leftR'> 
-                                                {props.products.map((product)=>(
-                                                    (product.category_name === equivalent.category && product.product_ref !== equivalent.ref)?
-                                                    <span className='text-success'> {product.product_ref}, </span> : ''
-                                                ))}
-                                            </span>
-                                        </div>
-                                </div>
-                                <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
-                                    <div className='productImage'> <img id='prodImg' src= '' alt='product'/> </div>
-                                    <div className=''>
-                                        <span className='text-primary'>Price : </span><span id='detailPrice'  className='price'> </span>
-                                    </div>
-                                </div>
-                            </div>                  
-                        </div>
-                        <div className="modal-footer">
-                           <h3 className='text-dark equivalet'>Equivalents:</h3> 
-                            <div className='equivals'>
-                                {props.products.map((product)=>(
-                                    (product.category_name === equivalent.category && product.product_ref !== equivalent.ref)?(
-                                    <div className="card border-primary mb-3" style={{maxWidth: '9.2rem'}}>
-                                        <div className="card-body text-primary infor ">
-                                            <div className='lines'>
-                                                <span className='detail'>Reference:</span ><span className='result'> {product.product_ref} </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'>Name:</span><span className='result'> {product.product_name} </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'>Brand:</span><span className='result'> {product.brand_name} </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'>Quantity:</span><span className='result'  style={{color : (product.product_stock === 0)? 'red': 'black'}}> {product.product_stock} </span>
-                                            </div>
-                                            <div className='lines'>
-                                                <span className='detail'>Price :</span><span className='result text-danger'> {product.product_price}DH </span>
-                                            </div>
-                                        </div>
-                                        <div className=" c-footer">
-                                            <button className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShowinsideView()}>
-                                                <i className="bi bi-eye-fill"></i>
-                                            </button>
-                                        </div>
-                                    </div>): ''
-                                ))}
-                            </div>
-                        </div>
-                        
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
+          {/* Update Item Modal */}
+          <div
+            className="modal fade"
+            id="update"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog modal-lg">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h3 className="modal-title" id="exampleModalLabel">
+                    Update Item
+                  </h3>
+                  <span
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </span>
+                </div>
+                <div className="modal-body">
+                  <div className="roo">
+                    <label htmlFor="upname">Name:</label>
+                    <input id="upname" type="text" name="upname" />
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="upref">Ref :</label>
+                    <input id="upref" type="text" name="upref" />
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="upquantity">Quantity :</label>
+                    <input
+                      id="upquantity"
+                      type="number"
+                      min={0}
+                      max={30}
+                      name="upquantity"
+                    />
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="upprice">Price :</label>
+                    <input id="upprice" type="text" name="upprice" />
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="upcategory">Category :</label>
+                    <select id="upcategory" name="upcategory">
+                      <option disabled={true} value="">
+                        {" "}
+                        Category
+                      </option>
+                      {props.categories.map((category) => (
+                        <option name="option" key={category.id}>
+                          {" "}
+                          {category.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="upbrand">Brand :</label>
+                    <select id="upbrand" name="upbrand">
+                      <option disabled={true} value="">
+                        {" "}
+                        Brand
+                      </option>
+                      {props.brands.map((brand) => (
+                        <option name="option" key={brand.id}>
+                          {" "}
+                          {brand.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="updesc">Description :</label>
+                    <textarea id="updesc" type="text" name="updesc" />
+                  </div>
+                  <div className="roo">
+                    <label htmlFor="image">Image :</label>
+                    <input id="upimage" type="file" name="image" />
+                  </div>
+                </div>
+
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={hundeleUpdate}
+                  >
+                    Update Item
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* View Item Modal */}
+          <div
+            className="modal fade "
+            id="viewproduct"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog modal-lg view">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h3 className="modal-title" id="exampleModalLabel">
+                    Product Details
+                  </h3>
+                  <span
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </span>
+                </div>
+                <div className="modal-body">
+                  <div className="row">
+                    <div className=" left col-auto col-sm-6 col-md-6 col-lg-6">
+                      <div className="lines">
+                        <span className="detail ">Reference:</span>
+                        <span id="detailRef" className="leftR text-primary">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Name:</span>
+                        <span id="detailName" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Quantity:</span>
+                        <span
+                          id="detailQuantity"
+                          className="leftR"
+                          style={{
+                            color: equivalent.quantity === 0 ? "red" : "black",
+                          }}
+                        >
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Description:</span>
+                        <span id="detailDescription" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Category:</span>
+                        <span id="detailCategory" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Brand:</span>
+                        <span id="detailBrand" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Equivalents:</span>
+                        <span id="detailBrand" className="leftR">
+                          {props.products.map((product) =>
+                            product.category_name === equivalent.category &&
+                            product.product_ref !== equivalent.ref ? (
+                              <span className="text-success">
+                                {" "}
+                                {product.product_ref},{" "}
+                              </span>
+                            ) : (
+                              ""
+                            )
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className=" right col-auto col-sm-6 col-md-6 col-lg-6">
+                      <div className="productImage">
+                        {" "}
+                        <img id="prodImg" src="" alt="product" />{" "}
+                      </div>
+                      <div className="">
+                        <span className="text-primary">Price : </span>
+                        <span id="detailPrice" className="price">
+                          {" "}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <h3 className="text-dark equivalet">Equivalents:</h3>
+                  <div className="equivals">
+                    {props.products.map((product) =>
+                      product.category_name === equivalent.category &&
+                      product.product_ref !== equivalent.ref ? (
+                        <div
+                          className="card border-primary mb-3"
+                          style={{ maxWidth: "9.2rem" }}
+                        >
+                          <div className="card-body text-primary infor ">
+                            <div className="lines">
+                              <span className="detail">Reference:</span>
+                              <span className="result">
+                                {" "}
+                                {product.product_ref}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Name:</span>
+                              <span className="result">
+                                {" "}
+                                {product.product_name}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Brand:</span>
+                              <span className="result">
+                                {" "}
+                                {product.brand_name}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Quantity:</span>
+                              <span
+                                className="result"
+                                style={{
+                                  color:
+                                    product.product_stock === 0
+                                      ? "red"
+                                      : "black",
+                                }}
+                              >
+                                {" "}
+                                {product.product_stock}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Price :</span>
+                              <span className="result text-danger">
+                                {" "}
+                                {product.product_price}DH{" "}
+                              </span>
+                            </div>
+                          </div>
+                          <div className=" c-footer">
+                            <button
+                              className="btn text-primary"
+                              data-toggle="modal"
+                              data-target="#viewproduct"
+                              onClick={() => handleShowinsideView()}
+                            >
+                              <i className="bi bi-eye-fill"></i>
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    )
+      </div>
+    );
 }
 
 const mapStateToProps =(state)=>{
