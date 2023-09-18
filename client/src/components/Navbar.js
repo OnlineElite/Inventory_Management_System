@@ -7,7 +7,7 @@ import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk,addToFavoriesTh
 import prodimg from '../images/Inventory-Management.png'
 import jsPDF from 'jspdf'
 import logo from '../images/top.png'
-function Navbar(props, callActions){
+function Navbar(props){
 
     const [showAlert, setShowAlert] = useState(false);
     const [totalItem, setTotalItem] = useState(null);
@@ -96,7 +96,8 @@ function Navbar(props, callActions){
         } 
     }
     // handel Total Item & Total Amount
-   const HandelTotalItem_TotalAmount=()=>{
+     const HandelTotalItem_TotalAmount=()=>{
+
         let Total = props.products.filter((product)=>{
             return product.product_incart === true
         })
@@ -125,8 +126,7 @@ function Navbar(props, callActions){
         doc.setFont('courier');
         doc.text(20,30,`The total items is : ${Item}`);
         doc.text(20,40,`The total Amount is : ${Amount}`);
-        doc.save('Facture.pdf')
-        return callActions
+       return doc.save('Facture.pdf')
     }
 
 

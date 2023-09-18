@@ -9,13 +9,13 @@ import Footer from '../components/Footer'
 import  '../styles/UserInterface.css'
 
 function UserInterface(props){
-
-    useEffect(()=>{
+  useEffect(()=>{
       props.getProducts()
       props.getCategories()
       props.getBrands()
       props.getUsers()
     }, [])
+
     const [records, setRecords] = useState(props.products)
     const [equivalent, setEquivalent] = useState('')
     const [addToCart, setAddToCart] = useState('')
@@ -133,7 +133,8 @@ function UserInterface(props){
   
     return(
         <div className='userInterface'>
-            <Navbar/>
+        <Navbar/>
+
             <div id='proods'>
               <div className='row px-3'>
                 <div className=' col-12 col-sm-3 col-md-2 col-l-2 col-xl-2'>
