@@ -120,7 +120,7 @@
 .user{
     background-color: transparent;
     border-radius: 8px;
-    color: yellow;
+    color: white;
     padding-inline: 5px;
     display: flex;
     align-items: center;
@@ -131,7 +131,7 @@
 
 .user i{
     font-size: 2rem;
-    color: yellow;
+    color: white;
     margin-right: 0.3rem;
 }
 

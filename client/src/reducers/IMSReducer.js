@@ -61,7 +61,7 @@ const userReducer = (state, action)=>{
                     element.product_date = new Date().toISOString();
                     element.product_incart = false;
                     element.product_liked = false;
-                    element.product_image = null;
+                    //element.product_image = null;
                     element.category_name = updatedProduct.categoryName;
                     element.brand_name = updatedProduct.brandName;
                     return element;
