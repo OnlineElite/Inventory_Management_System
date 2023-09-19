@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DatePicker } from 'antd';
 import {connect} from 'react-redux'
 import {bringBrandsThunk, addBrandThunk, updateBrandThunk, deleteBrandThunk} from '../actions/IMSAction'
@@ -12,6 +11,7 @@ function Brands(props){
     const [showAlert, setShowAlert] = useState(false);
     const [records, setRecords] = useState(props.brands)
     const [condition, setCondition] = useState(null)
+    const [selectedRange, setSelectedRange] = useState(null);
     
     useEffect(()=>{
         props.getBrands()
@@ -32,11 +32,11 @@ function Brands(props){
             selector : row => row.updated_date,
             sortable : true
         },
-        {
+        /*{
             name : 'Deleted At',
             selector : row => row.deleted_date,
             sortable : true
-        },
+        },*/
         {
             name: 'Actions',
             cell: (row) => (
@@ -122,7 +122,10 @@ function Brands(props){
         inputs.forEach((inp)=> {
             switch(inp.id){
                 case 'filterName': inp.value = ''; break;
-                case 'filterDate': inp.value = []; break;
+                case 'filterDate': 
+                    setSelectedRange(null);
+                    setRecords(props.brands);; 
+                    break;
                 default: inp.value = ''
             }
         })
@@ -134,7 +137,8 @@ function Brands(props){
             <h1 className='mx-3'>Brands Manager</h1>
             <div className='filters'>
                 <div className='dates mt-3 mx-3'>
-                <RangePicker
+                    <RangePicker
+                        value={selectedRange}
                         id = 'filterDate'
                         onChange={(values) =>{
                             if (values && values.length === 2) {
@@ -151,14 +155,16 @@ function Brands(props){
                                     return (startDate <= formattedDate && formattedDate<= endDate)
                                 })
                                 setRecords(theRest)
+                                setSelectedRange(values);
                             }else {
                                 setRecords(props.brands)
+                                setSelectedRange(null);
                             }
                         }}
                     />
                 </div>
                 <input id='filterName' className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                <span className='refresh py-2 ' onClick={handeleReset}><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
+                <span className="btn btn-outline-primary mx-3 py-2 mt-3" onClick={handeleReset}>Reset</span>
             </div>
             <div className='container mt-3'>
                 { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}

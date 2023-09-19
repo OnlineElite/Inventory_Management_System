@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import prodimg from '../images/Default.png'
 import DataTable from 'react-data-table-component'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {connect} from 'react-redux'
 import { addProductThunk, deleteProductThunk, updateProductThunk} from '../actions/IMSAction'
 import { DatePicker } from 'antd';
@@ -373,55 +372,25 @@ function ViewStock(props){
         }
     }
 
-    const handeleReset = (e) => {
-      e.preventDefault();
-      const ids = [
-        "filterName",
-        "filterRef",
-        "filterCategory",
-        "filterBrand",
-        "filterDate",
-      ];
-      const inputs = ids.map((id) => document.getElementById(id));
-      inputs.forEach((inp) => {
-        switch (inp.id) {
-          case "filterName":
-            inp.value = "";
-            break;
-          case "filterRef":
-            inp.value = "";
-            break;
-          case "filterCategory":
-            inp.selectedIndex = 0;
-            break;
-          case "filterBrand":
-            inp.selectedIndex = 0;
-            break;
-          //case 'filterDate': inp.value = []; break;
-          default:
-            inp.value = "";
-        }
-      });
-
-      setSelectedRange(null);
-      setRecords(props.products);
-    };
-
-    useEffect(() => {
-      if (selectedRange) {
-        const [startDate, endDate] = selectedRange;
-
-        const theRest = props.products.filter((row) => {
-          const productDate = new Date(row.product_date);
-
-          return startDate <= productDate && productDate <= endDate;
-        });
-        setRecords(theRest);
-      } else {
-        console.log("No date range selected.");
-        setRecords(props.products);
-      }
-    },[]);
+    const handeleReset =(e)=>{
+      e.preventDefault()
+      const ids = ['filterName', 'filterRef', 'filterCategory', 'filterBrand', 'filterDate']
+      const inputs = ids.map((id)=> document.getElementById(id))
+      inputs.forEach((inp)=> {
+          switch(inp.id){
+              case 'filterName': inp.value = ''; break;
+              case 'filterRef': inp.value = ''; break;
+              case 'filterCategory': inp.selectedIndex = 0; break;
+              case 'filterBrand': inp.selectedIndex = 0; break;
+              case 'filterDate': 
+                  setSelectedRange(null);
+                  setRecords(props.products);; 
+                  break;
+              default: inp.value = ''
+          }
+      })
+      setRecords(props.products)
+    }
 
     return (
       <div className="products bg-light" id="stock">
@@ -453,16 +422,29 @@ function ViewStock(props){
               </div>
             )}
             <RangePicker
-              id="filterDate"
               value={selectedRange}
-              onChange={(value) => setSelectedRange(value)}
+              id='filterDate'
+              onChange={(values) =>{
+                  if (values && values.length === 2) {
+                      let startDate = values[0].format('YYYY-MM-DD')
+                      let endDate = values[1].format('YYYY-MM-DD')
+                      const theRest = props.products.filter((row)=>{
+                        const date = new Date(row.product_date);
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const formattedDate = `${year}-${month}-${day}`;
+                        return (startDate <= formattedDate && formattedDate<= endDate)
+                      })
+                      setRecords(theRest)
+                      setSelectedRange(values);
+                  }else {
+                      setRecords(props.products)
+                      setSelectedRange(null);
+                  }
+              }}
             />
-            <span className="refresh py-2  px-3" onClick={handeleReset}>
-              <FontAwesomeIcon
-                className="reload"
-                icon="fa-solid fa-rotate-right"
-              />
-            </span>
+            <span className="btn btn-outline-primary mx-3 py-2" onClick={handeleReset}>Reset</span>
           </div>
           <div className="filters">
             <input

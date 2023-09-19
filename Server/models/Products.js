@@ -16,19 +16,20 @@ class Product {
       brands.name as brand_name
       from products
       inner join categories on categories.id = products.category_id
-      inner join brands on brands.id = products.brand_id`;
+      inner join brands on brands.id = products.brand_id
+      where products.deleted_date is null`;
       const result = await pool.query(query);
       return result.rows;
     }
 
     static async importCategories() {
-      const query = `select * from categories`;
+      const query = `select * from categories where deleted_date is null`;
       const result = await pool.query(query);
       return result.rows;
     }
 
     static async importBrands() {
-      const query = `select * from brands`;
+      const query = `select * from brands where deleted_date is null`;
       const result = await pool.query(query);
       return result.rows;
     }
@@ -47,7 +48,8 @@ class ProductAction {
   }
 
   static async deleteProduct(product_ref){
-    const query = `delete from products where ref = '${product_ref}'`
+    //const query = `delete from products where ref = '${product_ref}'`
+    const query = `update products set deleted_date = CURRENT_TIMESTAMP  where ref = '${product_ref}'`
 
     const result = await pool.query(query);
     return result.rows;
@@ -56,7 +58,7 @@ class ProductAction {
   static async updateProduct(product){
     const query = `update products set name = '${product.name}',ref = '${product.ref}',
      stock = ${product.quantity}, price = ${product.price}, Description =  '${product.desc}', category_id = ${product.category},
-    brand_id = ${product.brand}, image = '${product.image}' where ref = '${product.condition}'`
+    brand_id = ${product.brand}, image = '${product.image}', updated_date = CURRENT_TIMESTAMP where ref = '${product.condition}'`
 
     const result = await pool.query(query);
     return result.rows;
@@ -99,14 +101,17 @@ class ProductAction {
   }
 
   static async updateCategory(category){
-    const query = `update categories set name = '${category.newValue}' where name = '${category.condition}'`
+    
+    //const query = `update categories set name = '${category.newValue}' where name = '${category.condition}'`
+    const query = `update categories set name = '${category.newValue}', updated_date = CURRENT_TIMESTAMP where name = '${category.condition}'`
 
     const result = await pool.query(query);
     return result.rows;
   }
 
   static async deleteCategory(categName){
-    const query = `delete from categories where name = '${categName}'`
+    //const query = `delete from categories where name = '${categName}'`
+    const query = `update categories set deleted_date = CURRENT_TIMESTAMP where name = '${categName}'`
 
     const result = await pool.query(query);
     return result.rows;
@@ -120,15 +125,16 @@ class ProductAction {
     return result.rows;
   }
 
-  static async updateBrand(category){
-    const query = `update brands set name = '${category.newValue}' where name = '${category.condition}'`
+  static async updateBrand(brand){
+    const query = `update brands set name = '${brand.newValue}', updated_date = CURRENT_TIMESTAMP where name = '${brand.condition}'`
 
     const result = await pool.query(query);
     return result.rows;
   }
 
-  static async deleteBrand(categName){
-    const query = `delete from brands where name = '${categName}'`
+  static async deleteBrand(brandName){
+    //const query = `delete from brands where name = '${brandName}'`
+    const query = `update brands set deleted_date = CURRENT_TIMESTAMP where name = '${brandName}'`
 
     const result = await pool.query(query);
     return result.rows;

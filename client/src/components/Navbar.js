@@ -119,13 +119,11 @@ function Navbar(props){
 
     const handelCheckout =(e)=>{
         e.preventDefault()
-        let Amount = (totalAmount === null)? 0 : totalAmount
-        let Item = (totalItem === null)? 0 : totalItem
         var doc = new jsPDF()
         doc.text(20,20, 'this the default text');
         doc.setFont('courier');
-        doc.text(20,30,`The total items is : ${Item}`);
-        doc.text(20,40,`The total Amount is : ${Amount}`);
+        doc.text(20,30,`The total items is : 0`);
+        doc.text(20,40,`The total Amount is : 0`);
         return doc.save('Facture.pdf')
     }
 
