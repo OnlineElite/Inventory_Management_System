@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {connect} from 'react-redux'
 import prodimg from '../images/Default.png'
 import '../styles/Products.css'
@@ -108,7 +107,7 @@ function Products(props){
       <div className="ProductsWindow" id="products">
         <div className="container bg-light">
           <h1>Manage products</h1>
-          <div className="filters">
+          <div className="filters px-3">
             <input
               id="filterName"
               className="filterinp"
@@ -157,12 +156,7 @@ function Products(props){
                 </option>
               ))}
             </select>
-            <span className="refresh py-2 " onClick={handeleReset}>
-              <FontAwesomeIcon
-                className="reload"
-                icon="fa-solid fa-rotate-right"
-              />
-            </span>
+            <span className="btn btn-outline-primary mx-3" onClick={handeleReset}>Reset</span>
           </div>
           <div className="prod bg-light">
             {records.map(

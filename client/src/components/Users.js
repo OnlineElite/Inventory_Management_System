@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {connect} from 'react-redux'
 import { DatePicker } from 'antd';
 import {updateUserThunk, deleteUserThunk} from '../actions/IMSAction'
@@ -13,6 +12,7 @@ function Users(props){
     const [showAlert, setShowAlert] = useState(false);
     const [records, setRecords] = useState(props.users)
     const [condition, setCondition] = useState(null)
+    const [selectedRange, setSelectedRange] = useState(null);
 
     const columns = [
         {
@@ -192,7 +192,10 @@ function Users(props){
                 case 'filterName': inp.value = ''; break;
                 case 'filterEmail': inp.value = ''; break;
                 case 'filterUsername': inp.value = ''; break;
-                case 'filterDate': inp.value = []; break;
+                case 'filterDate': 
+                    setSelectedRange(null);
+                    setRecords(props.users);; 
+                    break;
                 default: inp.value = ''
             }
         })
@@ -205,6 +208,7 @@ function Users(props){
             <div className='filters'>
                 <div className='dates mt-3'>
                     <RangePicker
+                        value={selectedRange}
                         id = 'filterDate'
                         onChange={(values) =>{
                             if (values && values.length === 2) {
@@ -221,8 +225,10 @@ function Users(props){
                                     return (startDate <= formattedDate && formattedDate<= endDate)
                                 })
                                 setRecords(theRest)
+                                setSelectedRange(values);
                             }else {
                                 setRecords(props.users)
+                                setSelectedRange(null);
                             }
                         }}
                     />
@@ -230,7 +236,7 @@ function Users(props){
                 <input id='filterName' className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
                 <input id='filterUsername' className='filterinp py-2' type='text' placeholder='Filter by Usename' onChange={filterByUsername}/>
                 <input id='filterEmail' className='filterinp py-2' type='text' placeholder='Filter by email' onChange={filterByemail} />
-                <span className='refresh py-2 ' onClick={handeleReset}><FontAwesomeIcon className='reload' icon="fa-solid fa-rotate-right" /></span>
+                <span className="btn btn-outline-primary mx-3 mt-3 py-2" onClick={handeleReset}>Reset</span>
             </div>
             <div className='container mt-3'>
                 { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
