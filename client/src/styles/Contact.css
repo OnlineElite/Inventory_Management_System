@@ -1,0 +1,60 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#contact{
+    background-image: url('../images/contactBody.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+#contact .contactInfo{
+    background-color: rgb(48, 94, 112);
+    border-radius: 4px;
+    width: fit-content;
+    height: 100%;
+    padding: 0.5rem;
+}
+
+#contact #contForm{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+#contact input, #contact textarea, #contact button{
+    width: 90%;
+   padding-block: 7px;
+   border: none;
+   outline: none;
+   margin-block: 5px;
+   border-radius: 4px;
+}
+
+#contact textarea {
+    height: 12rem;
+}
+
+
+#contact button{
+    padding-block: 5px;
+    margin-top: 0.2rem;
+}
+
+#contact h5{
+    color: yellow;
+}
+
+#contact ul li{
+    color: white;
+
+}
+
+#contact .bi{
+    color: white;
+    font-size: 1.5rem;
+    margin-inline: 0.5rem;
+}

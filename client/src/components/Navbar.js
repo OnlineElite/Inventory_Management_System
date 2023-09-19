@@ -3,7 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
-import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk,addToFavoriesThunk, deleteFromFavoriesThunk} from '../actions/IMSAction'
+import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk,
+    addToFavoriesThunk, deleteFromFavoriesThunk} from '../actions/IMSAction'
 import prodimg from '../images/Inventory-Management.png'
 import jsPDF from 'jspdf'
 import logo from '../images/top.png'
@@ -117,14 +118,13 @@ function Navbar(props){
         HandelTotalItem_TotalAmount()
     }, [])
 
-    const handelCheckout =(e)=>{
-        e.preventDefault()
+    const handelCheckout =()=>{
         var doc = new jsPDF()
         doc.text(20,20, 'this the default text');
         doc.setFont('courier');
-        doc.text(20,30,`The total items is : 0`);
-        doc.text(20,40,`The total Amount is : 0`);
-        return doc.save('Facture.pdf')
+        doc.text(20,30,`The total items is : ${totalItem === null? 0 : totalItem}`);
+        doc.text(20,40,`The total Amount is : ${totalAmount === null? 0 : totalAmount}`);
+        doc.save('Facture.pdf')
     }
 
 
@@ -135,13 +135,13 @@ function Navbar(props){
                 <div className="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul className='navs'>
                         <li>
-                            <Link className='Link'  to= {props.isAuthenticated? '/userInterface' : '/' } > Home </Link>
+                            <Link className='Link'  to= '/userInterface'> Home </Link>
                         </li>
                         <li>
-                            <Link className='Link' to='/' > About </Link> 
+                            <Link className='Link' to='/about' > About </Link> 
                         </li>
                         <li>
-                            <Link className='Link' to='/' > Contact </Link>
+                            <Link className='Link' to='/contact' > Contact </Link>
                         </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0 ">

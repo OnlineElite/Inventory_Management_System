@@ -7,6 +7,8 @@ import Dashboard from "./components/Dashbord";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from './components/LoginForm'
 import UserInterface from './components/UserInterface'
+import Contact from "./components/Contact";
+import About from "./components/About";
 import { connect } from "react-redux";
 import './App.css';
 import { Routes, Route, Navigate} from 'react-router-dom'
@@ -24,6 +26,8 @@ function App(props) {
           <Route path='/register' element={<RegisterForm/>} />
           <Route path='/login' element={<LoginForm/>} />
           <Route path="/userInterface" element={<UserInterface/>} />
+          <Route path='/contact' element={<Contact/>} />
+          <Route path='/about' element={<About/>} />
           <Route path="/dashboard/*"
             element={<PrivateRoute element={<Dashboard/>} 
               isAuthenticated={props.isAuthenticated} isAdmin={props.isAdmin}
