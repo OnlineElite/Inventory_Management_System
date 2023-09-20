@@ -18,7 +18,9 @@ const {
   addingProductToCart,
   deletingProductFromCart,
   deletingProductFromFavories,
-  addingProductToFavories
+  addingProductToFavories,
+  getIncart,
+  getInfavories
 } = require("../controlers/ProductsControler");
 
 const router = express.Router();
@@ -39,16 +41,20 @@ router.get("/products", upload.any(), getProducts);
 router.post("/addProduct", upload.single("image"), AddingProduct);
 router.post('/deleteProduct', DeletingProduct)
 router.post('/updateProduct',upload.single("image"), UpdatingProduct)
+
+router.get('/categories',getCategories)
 router.post('/addTocart', addingProductToCart)
 router.post('/deleteFromCart', deletingProductFromCart)
+
+router.post('/incart',getIncart)
 router.post('/addToFavories', addingProductToFavories)
 router.post('/deleteFromFavories', deletingProductFromFavories)
 // Categories Routers
-router.get('/categories',getCategories)
+router.post('/infavories',getInfavories)
 router.post('/addCategory', AddingCategory)
 router.post('/updateCategory', UpdatingCategory)
 router.post('/deleteCategory', DeletingCategory)
-//Brands Routers
+// Brands Routers
 router.get('/brands',getBrands)
 router.post('/addBrand', AddingBrand)
 router.post('/updateBrand', UpdatingBrand)

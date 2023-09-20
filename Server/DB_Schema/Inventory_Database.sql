@@ -81,14 +81,30 @@ values ('Smart TV 32"', 'STV32LED', 4,2200.00,'32 inch Intelligent Network TV Ul
 ('Lenovo Tab ',	'P112023',19,1500.00,'Lenovo Tab P11 Tablet Global Xiaoxin Pad P12 2022 Pad128GB 64GB 10.6 Screen Snapdragon 680 Octa Core 7700mAh',7,3),
 ('Samsung Tab', 'A8LTE2023',12,	2700.00, 'Samsung GALAXY TAB A8 LTE - 10.5" - 4G RAM + 64G ROM - Pink Gold',7,1)
 
+create table infavories(
+	id serial primary key,
+	user_id int,
+	product_id int,
+	added_at timestamp DEFAULT current_timestamp,
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+)
+
+create table incart(
+	id serial primary key,
+	user_id int,
+	product_id int,
+	added_at timestamp DEFAULT current_timestamp,
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+)
+
 select * from users
 select * from products
 select * from categories
 select * from brands
-
-
-
-
+select * from infavories
+select * from incart
 
 
 

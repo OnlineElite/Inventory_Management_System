@@ -3,8 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
-import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk,
-    addToFavoriesThunk, deleteFromFavoriesThunk} from '../actions/IMSAction'
+import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk, addToFavoriesThunk,
+     deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk} from '../actions/IMSAction'
 import prodimg from '../images/Inventory-Management.png'
 import jsPDF from 'jspdf'
 import logo from '../images/top.png'
@@ -13,6 +13,15 @@ function Navbar(props){
     const [showAlert, setShowAlert] = useState(false);
     const [totalItem, setTotalItem] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
+
+    let bringsData =()=>{
+        props.getIncart(props.userfullName[2])
+        props.getInfavories(props.userfullName[2])
+    }
+
+    useEffect(()=>{
+       return bringsData() 
+    }, [])
 
     const hundellSubmit =(e)=>{
         e.preventDefault()
@@ -49,8 +58,8 @@ function Navbar(props){
         props.logoutset()
     }
 
-    const handledeleteFromCart =(ref)=>{
-        props.deleteFromCart(ref)
+    const handledeleteFromCart =(id)=>{
+        props.deleteFromCart({product_id : id, user_id : props.userfullName[2] })
         if (props.deleteMsg) {
             setShowAlert(true);
             setTimeout(() => {
@@ -59,16 +68,8 @@ function Navbar(props){
         }
     }
 
-    const HandeleAddToCart =(ref)=>{
-        let allreadyInCart = props.products.filter((product)=> product.product_incart === true)
-        allreadyInCart.map((product)=>{
-            if(product.product_ref === ref){
-                alert('Allready added to cart!')
-            }else{
-                alert('Added to cart successfully')
-            }
-        })
-        props.addToCart(ref)
+    const HandeleAddToCart =(id)=>{
+        props.addToCart({product_id : id, user_id : props.userfullName[2] })
         if (props.updateMsg) {
             setShowAlert(true);
             setTimeout(() => {
@@ -77,8 +78,8 @@ function Navbar(props){
           } 
     }
 
-    const handledeleteFromFavories =(ref)=>{
-        props.deleteFromFavories(ref)
+    const handledeleteFromFavories =(id)=>{
+        props.deleteFromFavories({product_id : id, user_id : props.userfullName[2] })
         if (props.deleteMsg) {
             setShowAlert(true);
             setTimeout(() => {
@@ -87,8 +88,8 @@ function Navbar(props){
         }
     }
 
-    const handeleAddToFavories =(ref)=>{
-        props.addToFavories(ref)
+    const handeleAddToFavories =(id)=>{
+        props.addToFavories({product_id : id, user_id : props.userfullName[2] })
         if (props.updateMsg) {
           setShowAlert(true);
           setTimeout(() => {
@@ -193,43 +194,43 @@ function Navbar(props){
                                         <div className="modal-body " id='cart_modal_body'>
                                             <div className='row'>
                                                 <div className=' prods col-12 col-sm-5 col-md-7 col-lg-7 col-xl-8'>
-                                                    {props.products.map((product)=>(
-                                                       (product.product_incart === true)? 
-                                                        (
-                                                            <div key={product.product_ref}>
-                                                                <div className='product_row' id="cart-page">
-                                                                    <div className='prodInfo'>
-                                                                        <div className='prodimg'>
-                                                                            <div className='imag'> 
-                                                                                <img src={product.product_image != null
-                                                                                    ? `http://localhost:3005/uploads/${product.product_image}`
-                                                                                    : prodimg} alt='prodimage'/>
-                                                                            </div>
-                                                                            <div className='imgBotom'>
-                                                                                <button onClick={()=>handledeleteFromCart(product.product_ref)} className='text-danger px-2'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
-                                                                                <i onClick={()=>handeleAddToFavories(product.product_ref)} className=" mx-2 bi bi-heart-fill" style={{color : product.product_liked === true? 'red' : 'black'}}></i>
-                                                                            </div>
+                                                    {props.incart?
+                                                    props.incart.map((product)=>(                                                      
+                                                        <div key={product.product_ref}>
+                                                            <div className='product_row' id="cart-page">
+                                                                <div className='prodInfo'>
+                                                                    <div className='prodimg'>
+                                                                        <div className='imag'> 
+                                                                            <img src={product.product_image != null
+                                                                                ? `http://localhost:3005/uploads/${product.product_image}`
+                                                                                : prodimg} alt='prodimage'/>
                                                                         </div>
-                                                                        <div className='prodName'>
-                                                                            <p className=' descrip text-black'> {product.product_desc} </p>
-                                                                            <p className='text-warning'> {product.product_name} </p>
-                                                                            <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
+                                                                        <div className='imgBotom'>
+                                                                            <button onClick={()=>handledeleteFromCart(product.product_id)} className='text-danger px-2'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
+                                                                            <i onClick={()=>handeleAddToFavories(product.product_id)} className=" mx-2 bi bi-heart-fill" style={{color : product.product_liked === true? 'red' : 'black'}}></i>
                                                                         </div>
                                                                     </div>
-                                                                    <div className='prodPrice'>
-                                                                        <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
-                                                                        <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
-                                                                        <div className='buttns'>
-                                                                            <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' >+</button>
-                                                                            <span id='count'> 1</span>
-                                                                            <button  type='submit' onClick={hundellSubmit} data-btn = 'decrease'>–</button>
-                                                                        </div>
+                                                                    <div className='prodName'>
+                                                                        <p className=' descrip text-black'> {product.product_desc} </p>
+                                                                        <p className='text-warning'> {product.product_name} </p>
+                                                                        <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
                                                                     </div>
-                                                                </div> 
-                                                                <hr/>
-                                                            </div>
-                                                        ) : '' 
-                                                    ))}
+                                                                </div>
+                                                                <div className='prodPrice'>
+                                                                    <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
+                                                                    <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
+                                                                    <div className='buttns'>
+                                                                        <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' >+</button>
+                                                                        <span id='count'> 1</span>
+                                                                        <button  type='submit' onClick={hundellSubmit} data-btn = 'decrease'>–</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+                                                            <hr/>
+                                                        </div>
+                                                    ))
+                                                    :''
+                                                }
                                                     
                                                 </div>
                                                 <div className=' total col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
@@ -264,41 +265,41 @@ function Navbar(props){
                                         <div className="modal-body " id='cart_modal_body'>
                                             <div className='rows'>
                                                 <div className=' prods'>
-                                                    {props.products.map((product)=>(
-                                                       (product.product_liked === true)? 
-                                                        (
-                                                            <div key={product.product_ref} >
-                                                                <div className='product_row' id="cart-page">
-                                                                    <div className='prodInfo'>
-                                                                        <div className='prodimg h-100'>
-                                                                            <div className='imag h-100'> 
-                                                                                <img src={product.product_image != null
-                                                                                    ? `http://localhost:3005/uploads/${product.product_image}`
-                                                                                    : prodimg} alt='prodimage'/>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className='prodName'>
-                                                                            <p className=' descrip text-black'> {product.product_desc} </p>
-                                                                            <p className='text-warning'> {product.product_name} </p>
-                                                                            <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
-                                                                            {product.product_stock !== 0?
-                                                                                <button onClick={()=>HandeleAddToCart(product.product_ref)} className='text-white my-2 bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
-                                                                                :<button  className='text-white my-2' style={{backgroundColor: "gray" }} disabled ><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
-                                                                            }
+                                                    {props.infavories?
+                                                    props.infavories.map((product)=>(
+                                                        <div key={product.product_ref} >
+                                                            <div className='product_row' id="cart-page">
+                                                                <div className='prodInfo'>
+                                                                    <div className='prodimg h-100'>
+                                                                        <div className='imag h-100'> 
+                                                                            <img src={product.product_image != null
+                                                                                ? `http://localhost:3005/uploads/${product.product_image}`
+                                                                                : prodimg} alt='prodimage'/>
                                                                         </div>
                                                                     </div>
-                                                                    <div className='prodPrice'>
-                                                                        <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
-                                                                        <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
-                                                                        <div className='buttns'>
-                                                                            <button onClick={()=>handledeleteFromFavories(product.product_ref)} className='text-white bg-danger'><i className="text-white bi bi-trash-fill"></i>DELETE</button>
-                                                                        </div>
+                                                                    <div className='prodName'>
+                                                                        <p className=' descrip text-black'> {product.product_desc} </p>
+                                                                        <p className='text-warning'> {product.product_name} </p>
+                                                                        <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
+                                                                        {product.product_stock !== 0?
+                                                                            <button onClick={()=>HandeleAddToCart(product.product_id)} className='text-white my-2 bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
+                                                                            :<button  className='text-white my-2' style={{backgroundColor: "gray" }} disabled ><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
+                                                                        }
                                                                     </div>
-                                                                </div> 
-                                                                <hr/>
-                                                            </div>
-                                                        ) : '' 
-                                                    ))}
+                                                                </div>
+                                                                <div className='prodPrice'>
+                                                                    <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
+                                                                    <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
+                                                                    <div className='buttns'>
+                                                                        <button onClick={()=>handledeleteFromFavories(product.product_id)} className='text-white bg-danger'><i className="text-white bi bi-trash-fill"></i>DELETE</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+                                                            <hr/>
+                                                        </div>
+                                                    ))
+                                                    : ''
+                                                }
                                                     
                                                 </div>
                                             </div>
@@ -338,7 +339,9 @@ const mapStateToProps =(state)=>{
         products : state.products,
         deleteMsg : state.deleteMsg,
         updateMsg : state.updateMsg,
-        userfullName : state.userfullName
+        userfullName : state.userfullName,
+        incart : state.incart,
+        infavories : state.infavories
     }
 }
 
@@ -361,6 +364,12 @@ const mapDispatchToProps =(dispatch)=>{
         },
         addToFavories : (ref)=>{
           dispatch(addToFavoriesThunk(ref))
+        },
+        getIncart : (user_id)=>{
+            dispatch(bringIncartThunk(user_id))
+        },
+        getInfavories : (user_id)=>{
+            dispatch(bringInfavoriesThunk(user_id))
         }
     }
 }
