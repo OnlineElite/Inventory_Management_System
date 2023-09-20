@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import prodimg from '../images/Default.png'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
@@ -10,7 +10,7 @@ const { RangePicker } = DatePicker;
 
 function ViewStock(props){
 
-    const [records, setRecords] = useState(props.products)
+    const [records, setRecords] = useState(props.products);
     const [selecaddcategory, setSelecaddcategory] = useState('');
     const [selectfilterCategory, setSelectfilterCategory] = useState('');
     const [selectaddbrand, setSelectaddbrand] = useState('');
@@ -20,6 +20,13 @@ function ViewStock(props){
     const [equivalent, setEquivalent] = useState('')
     const [extentionMsg, setExtentionMsg] = useState( '')
     const [selectedRange, setSelectedRange] = useState(null);
+
+
+    useEffect(() => {
+      setRecords(props.products);
+    });
+
+
     const columns = [
         {
             name : 'Name',
