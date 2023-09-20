@@ -68,7 +68,7 @@ async function login(req, res) {
       token: token,
       isAdmin: user.admin,
       userEmail: user.email,
-      fullName: [user.first_name, user.last_name],
+      fullName: [user.first_name, user.last_name, user.user_id],
     });
   } catch (error) {
     console.error(error);

@@ -27,8 +27,8 @@ function UserInterface(props){
     const handleShow=(ref)=>{
         let row = props.products.filter((product)=> product.product_ref === ref)
          setIsLiked(row[0].product_liked)
-        setAddToCart(row[0].product_ref)
-        setAddToFavories(row[0].product_ref)
+        setAddToCart(row[0].product_id)
+        setAddToFavories(row[0].product_id)
         setEquivalent({category : row[0].category_name, ref : row[0].product_ref, quantity : row[0].product_stock})
         const ids = [ 'detailQuantity', 'detailPrice','detailDescription', 'prodImage','detailOldPrice']
         const spans = ids.map((id) => document.getElementById(id))
@@ -57,9 +57,9 @@ function UserInterface(props){
         })
     }
 
-    const HandeleAddToCart =(ref)=>{
-      props.addToCart(ref)
-      if (props.updateMsg) {
+    const HandeleAddToCart =(id)=>{
+      props.addToCart({product_id : id, user_id : props.userfullName[2] })
+      if (props.response || props.updateMsg) {
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
@@ -67,9 +67,9 @@ function UserInterface(props){
       }      
     }
 
-    const handeleAddToFavories =(ref)=>{
-      props.addToFavories(ref)
-      if (props.updateMsg) {
+    const handeleAddToFavories =(id)=>{
+      props.addToFavories({product_id : id, user_id : props.userfullName[2] })
+      if (props.response || props.updateMsg ) {
         setShowAlert(true);
         setTimeout(() => {
             setShowAlert(false);
@@ -374,7 +374,8 @@ const mapStateToProps =(state)=>{
         brands : state.brands,
         addMsg : state.addMsg,
         deleteMsg : state.deleteMsg,
-        updateMsg : state.updateMsg
+        updateMsg : state.updateMsg,
+        userfullName : state.userfullName
     }
 }
 
