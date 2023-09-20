@@ -19,14 +19,15 @@ async function getProducts(req, res) {
 async function AddingProduct(req, res) {
   try {
 
-    console.log("image ################ ", req.file);
-
     if (req.file){
       req.body.image = req.file.filename;
     }
     
     await ProductAction.addProduct(req.body);
-    res.status(201).json({ message: "Product added successfully" });
+
+    res
+      .status(201)
+      .json({ message: "Product added successfully", product: req.body });
   } catch (error) {
     console.error(error);
 

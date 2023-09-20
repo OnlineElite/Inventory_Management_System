@@ -49,8 +49,32 @@ const userReducer = (state, action)=>{
       case "BRANDS":
         return { ...state, brands: action.payload };
 
-      case "ADD_PRODUCT":
-        return { ...state, addMsg: action.payload };
+      case "ADD_MESSAGE":
+        return { ...state, addMsg: action.payload };      
+        
+        case "ADD_PRODUCT":
+
+        const newProducts = action.payload.product;
+        const products = state.products;
+
+        const addedProduct = {
+            product_name: newProducts.name,
+            product_ref: newProducts.ref,
+            product_stock: newProducts.quantity,
+            product_price: newProducts.price,
+            product_desc: newProducts.desc,
+            category_name: newProducts.categoryName,
+            brand_name: newProducts.brandName,
+            product_image: newProducts.product_image,
+        };
+        
+        products.push(addedProduct);
+
+        return {
+          ...state,
+          addMsg: action.payload.message,
+          products: products,
+        };
 
       case "DELETE_PRODUCT":
         const productRef = action.payload.product_ref;

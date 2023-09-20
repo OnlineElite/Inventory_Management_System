@@ -79,8 +79,15 @@ const handelBrands = (brand)=>{
 
 const addMessage = (message)=>{
     return {
+      type: "ADD_MESSAGE",
+      payload: message,
+    };
+}
+
+const addProduct = (message, product)=>{
+    return {
         type : 'ADD_PRODUCT',
-        payload : message
+        payload : {message, product}
     }
 }
 
@@ -265,8 +272,13 @@ const addProductThunk = (product) => async (dispatch)=>{
         });
 
         const datarecived = await response.json();
+
         console.log('data add item recived', datarecived.message )
-        dispatch(addMessage(datarecived.message))
+
+        product.append("product_image", datarecived.product.image);
+
+        const updatedProductJson = formDataToJson(product);
+        dispatch(addProduct(datarecived.message, updatedProductJson));
     }catch(err){
         console.error(err)
         dispatch(handellError(err))

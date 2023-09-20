@@ -303,16 +303,21 @@ function ViewStock(props){
         const ids = ['name', 'ref', 'quantity', 'price', 'desc', 'category', 'brand', 'image'];
         const inputs = ids.map((id) => document.getElementById(id));
 
+        let catName, brandName;
+
         inputs.forEach((inp) => {
         if (inp.id === 'category') {
             const category = props.categories.find((item) => item.name === inp.value);
             if (category) {
             values.push(category.id);
+            catName = category.name;
             }
+            
         } else if (inp.id === 'brand') {
             const brand = props.brands.find((item) => item.name === inp.value);
             if (brand) {
             values.push(brand.id);
+            brandName = brand.name;
             }
         } else if (inp.id === 'image' && inp.files.length > 0) {
             values.push(inp.files[0].name);
@@ -329,7 +334,9 @@ function ViewStock(props){
         formData.append('desc', values[4]);
         formData.append('category', values[5]);
         formData.append('brand', values[6]);
-
+        formData.append("categoryName", catName);
+        formData.append("brandName", brandName);
+        
         if (inputs[7].type === "file" && inputs[7].files.length > 0) {
             formData.append("image", inputs[7].files[0]);
         }
