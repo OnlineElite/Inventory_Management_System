@@ -84,12 +84,12 @@ const addMessage = (message)=>{
     }
 }
 
-const deleteMessage = (message)=>{
-    return {
-        type : 'DELETE_PRODUCT',
-        payload : message
-    }
-}
+const deleteMessage = (message, productRef) => {
+  return {
+    type: "SHOW_MESSAGE",
+    payload: { message, productRef },
+  };
+};
 
 const updateMessage = (message)=>{
     return {
@@ -102,6 +102,13 @@ const updateProduct = (product) => {
   return {
     type: "UPDATE_PRODUCT",
     payload: product,
+  };
+};
+
+const deleteProduct = (message, product_ref) => {
+  return {
+    type: "DELETE_PRODUCT",
+    payload: { message, product_ref },
   };
 };
 
@@ -281,7 +288,8 @@ const deleteProductThunk = (productRef) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         console.log('data delete item recived', datarecived.message )
-        dispatch(deleteMessage(datarecived.message))
+        dispatch(deleteProduct(datarecived.message, productRef));
+        //dispatch(deleteMessage(datarecived.message, productRef));
     }catch(err){
         console.error(err)
         dispatch(handellError(err))

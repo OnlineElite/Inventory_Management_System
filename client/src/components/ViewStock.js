@@ -423,28 +423,35 @@ function ViewStock(props){
             )}
             <RangePicker
               value={selectedRange}
-              id='filterDate'
-              onChange={(values) =>{
-                  if (values && values.length === 2) {
-                      let startDate = values[0].format('YYYY-MM-DD')
-                      let endDate = values[1].format('YYYY-MM-DD')
-                      const theRest = props.products.filter((row)=>{
-                        const date = new Date(row.product_date);
-                        const year = date.getFullYear();
-                        const month = String(date.getMonth() + 1).padStart(2, '0');
-                        const day = String(date.getDate()).padStart(2, '0');
-                        const formattedDate = `${year}-${month}-${day}`;
-                        return (startDate <= formattedDate && formattedDate<= endDate)
-                      })
-                      setRecords(theRest)
-                      setSelectedRange(values);
-                  }else {
-                      setRecords(props.products)
-                      setSelectedRange(null);
-                  }
+              id="filterDate"
+              onChange={(values) => {
+                if (values && values.length === 2) {
+                  let startDate = values[0].format("YYYY-MM-DD");
+                  let endDate = values[1].format("YYYY-MM-DD");
+                  const theRest = props.products.filter((row) => {
+                    const date = new Date(row.product_date);
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, "0");
+                    const day = String(date.getDate()).padStart(2, "0");
+                    const formattedDate = `${year}-${month}-${day}`;
+                    return (
+                      startDate <= formattedDate && formattedDate <= endDate
+                    );
+                  });
+                  setRecords(theRest);
+                  setSelectedRange(values);
+                } else {
+                  setRecords(props.products);
+                  setSelectedRange(null);
+                }
               }}
             />
-            <span className="btn btn-outline-primary mx-3 py-2" onClick={handeleReset}>Reset</span>
+            <span
+              className="btn btn-outline-primary mx-3 py-2"
+              onClick={handeleReset}
+            >
+              Reset
+            </span>
           </div>
           <div className="filters">
             <input
@@ -741,91 +748,180 @@ function ViewStock(props){
             </div>
           </div>
           {/* View Item Modal */}
-          <div className="modal fade " id="viewproduct" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog modal-lg view">
-                  <div className="modal-content">
-                  <div className="modal-header">
-                      <h3 className="modal-title" id="exampleModalLabel">Product Details</h3>
-                      <span type="button" className="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </span>
-                  </div>
-                  <div className="modal-body">
-                      <div className="row">
-                          <div className=' left col-auto col-sm-6 col-md-6 col-lg-6'>
-                                  <div className='lines'>
-                                      <span className='detail ' >Reference:</span><span  id='detailRef' className='leftR text-primary'> </span>
-                                  </div>
-                                  <div className='lines'>
-                                      <span className='detail'  >Name:</span><span id='detailName' className='leftR'>  </span>
-                                  </div>
-                                  <div className='lines'>
-                                      <span className='detail'  >Quantity:</span>
-                                      <span id='detailQuantity' className='leftR' style={{color : (equivalent.quantity === 0)? 'red': 'black'}} > </span>
-                                  </div>
-                                  <div className='lines'>
-                                      <span className='detail'  >Description:</span><span id='detailDescription' className='leftR'>  </span>
-                                  </div>
-                                  <div className='lines'>
-                                      <span className='detail'  >Category:</span><span id='detailCategory' className='leftR'>  </span>
-                                  </div>
-                                  <div className='lines'>
-                                      <span className='detail'  >Brand:</span><span id='detailBrand' className='leftR'>  </span>
-                                  </div>
-                                  <div className='lines'>
-                                      <span className='detail'  >Equivalents:</span>
-                                      <span id='detailBrand' className='leftR'> 
-                                          {props.products.map((product)=>(
-                                              (product.category_name === equivalent.category && product.product_ref !== equivalent.ref)?
-                                              <span className='text-success'> {product.product_ref}, </span> : ''
-                                          ))}
-                                      </span>
-                                  </div>
-                          </div>
-                          <div className=' right col-auto col-sm-6 col-md-6 col-lg-6'>
-                              <div className='productImage'> <img id='prodImg' src= '' alt='product'/> </div>
-                              <div className=''>
-                                  <span className='text-primary'>Price : </span><span id='detailPrice'  className='price'> </span>
-                              </div>
-                          </div>
-                      </div>                  
-                  </div>
-                  <div className="modal-footer">
-                      <h3 className='text-dark equivalet'>Equivalents:</h3> 
-                      <div className='equivals'>
-                          {props.products.map((product)=>(
-                              (product.category_name === equivalent.category && product.product_ref !== equivalent.ref)?(
-                              <div className="card border-primary mb-3" style={{maxWidth: '9.2rem'}}>
-                                  <div className="card-body text-primary infor ">
-                                      <div className='lines'>
-                                          <span className='detail'>Reference:</span ><span className='result'> {product.product_ref} </span>
-                                      </div>
-                                      <div className='lines'>
-                                          <span className='detail'>Name:</span><span className='result'> {product.product_name} </span>
-                                      </div>
-                                      <div className='lines'>
-                                          <span className='detail'>Brand:</span><span className='result'> {product.brand_name} </span>
-                                      </div>
-                                      <div className='lines'>
-                                          <span className='detail'>Quantity:</span><span className='result'  style={{color : (product.product_stock === 0)? 'red': 'black'}}> {product.product_stock} </span>
-                                      </div>
-                                      <div className='lines'>
-                                          <span className='detail'>Price :</span><span className='result text-danger'> {product.product_price}DH </span>
-                                      </div>
-                                  </div>
-                                  <div className=" c-footer">
-                                      <button className='btn text-primary' data-toggle="modal" data-target="#viewproduct" onClick={() => handleShow(product)}>
-                                          <i className="bi bi-eye-fill"></i>
-                                      </button>
-                                  </div>
-                              </div>): ''
-                          ))}
+          <div
+            className="modal fade "
+            id="viewproduct"
+            tabIndex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog modal-lg view">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h3 className="modal-title" id="exampleModalLabel">
+                    Product Details
+                  </h3>
+                  <span
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </span>
+                </div>
+                <div className="modal-body">
+                  <div className="row">
+                    <div className=" left col-auto col-sm-6 col-md-6 col-lg-6">
+                      <div className="lines">
+                        <span className="detail ">Reference:</span>
+                        <span id="detailRef" className="leftR text-primary">
+                          {" "}
+                        </span>
                       </div>
+                      <div className="lines">
+                        <span className="detail">Name:</span>
+                        <span id="detailName" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Quantity:</span>
+                        <span
+                          id="detailQuantity"
+                          className="leftR"
+                          style={{
+                            color: equivalent.quantity === 0 ? "red" : "black",
+                          }}
+                        >
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Description:</span>
+                        <span id="detailDescription" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Category:</span>
+                        <span id="detailCategory" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Brand:</span>
+                        <span id="detailBrand" className="leftR">
+                          {" "}
+                        </span>
+                      </div>
+                      <div className="lines">
+                        <span className="detail">Equivalents:</span>
+                        <span id="detailBrand" className="leftR">
+                          {props.products.map((product) =>
+                            (
+                              product.category_name === equivalent.category &&
+                                product.product_ref !== equivalent.ref
+                            ) ? (
+                              <span className="text-success">
+                                {" "}
+                                {product.product_ref},{" "}
+                              </span>
+                            ) : (
+                              ""
+                            )
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                    <div className=" right col-auto col-sm-6 col-md-6 col-lg-6">
+                      <div className="productImage">
+                        {" "}
+                        <img id="prodImg" src="" alt="product" />{" "}
+                      </div>
+                      <div className="">
+                        <span className="text-primary">Price : </span>
+                        <span id="detailPrice" className="price">
+                          {" "}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  
+                </div>
+                <div className="modal-footer">
+                  <h3 className="text-dark equivalet">Equivalents:</h3>
+                  <div className="equivals">
+                    {props.products.map((product) =>
+                      product.category_name === equivalent.category &&
+                      product.product_ref !== equivalent.ref ? (
+                        <div
+                          className="card border-primary mb-3"
+                          style={{ maxWidth: "9.2rem" }}
+                        >
+                          <div className="card-body text-primary infor ">
+                            <div className="lines">
+                              <span className="detail">Reference:</span>
+                              <span className="result">
+                                {" "}
+                                {product.product_ref}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Name:</span>
+                              <span className="result">
+                                {" "}
+                                {product.product_name}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Brand:</span>
+                              <span className="result">
+                                {" "}
+                                {product.brand_name}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Quantity:</span>
+                              <span
+                                className="result"
+                                style={{
+                                  color:
+                                    product.product_stock === 0
+                                      ? "red"
+                                      : "black",
+                                }}
+                              >
+                                {" "}
+                                {product.product_stock}{" "}
+                              </span>
+                            </div>
+                            <div className="lines">
+                              <span className="detail">Price :</span>
+                              <span className="result text-danger">
+                                {" "}
+                                {product.product_price}DH{" "}
+                              </span>
+                            </div>
+                          </div>
+                          <div className=" c-footer">
+                            <button
+                              className="btn text-primary"
+                              data-toggle="modal"
+                              data-target="#viewproduct"
+                              onClick={() => handleShow(product)}
+                            >
+                              <i className="bi bi-eye-fill"></i>
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )
+                    )}
                   </div>
+                </div>
               </div>
-
+            </div>
           </div>
         </div>
       </div>
