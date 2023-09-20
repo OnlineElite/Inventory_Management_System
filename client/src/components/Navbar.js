@@ -20,28 +20,30 @@ function Navbar(props){
         let count = e.target.parentElement.children[1]
         let currentCounter = e.target.parentElement.children[1].textContent
 
-        switch(btnType){
-            case 'increase':
-                if(currentCounter >= 10){
-                    count.textContent = currentCounter;
-                    //e.target.style.backgroundColor = 'gray';
-                }else{
-                    count.textContent = Number(currentCounter)+1;
-                    //e.target.style.backgroundColor = '#DC3545';
-                }
-                break;
-            case 'decrease':
-                if(currentCounter <= 1){
-                    count.textContent = 1;
-                    //e.target.style.backgroundColor = 'gray';
-                }else{
-                    count.textContent = Number(currentCounter)-1;
-                    //e.target.style.backgroundColor = '#DC3545';
-                }
-                break;
-            default:
-                console.log("wrong button");
+        switch (btnType) {
+          case "increase":
+            if (currentCounter >= 10) {
+              count.textContent = currentCounter;
+              //e.target.style.backgroundColor = 'gray';
+            } else {
+              count.textContent = Number(currentCounter) + 1;
+              //e.target.style.backgroundColor = '#DC3545';
+            }
+            break;
+          case "decrease":
+            if (currentCounter <= 1) {
+              count.textContent = 1;
+              //e.target.style.backgroundColor = 'gray';
+            } else {
+              count.textContent = Number(currentCounter) - 1;
+              //e.target.style.backgroundColor = '#DC3545';
+            }
+            break;
+          default:
+            console.log("wrong button");
         }
+
+         HandelTotalItem_TotalAmount();
     }
 
     const handleLogout =(e)=>{
@@ -98,22 +100,27 @@ function Navbar(props){
     }
     // handel Total Item & Total Amount
      const HandelTotalItem_TotalAmount=()=>{
+        const cardDivs = document.getElementsByClassName("product-carts");
 
-        let Total = props.products.filter((product)=>{
-            return product.product_incart === true
-        })
-        let TotalItem = Total.length
-        setTotalItem(TotalItem)
-        
-        let total = 0;
-        props.products.forEach(product => {
-            if(product.product_incart === true){
-                total = total + Number(product.product_price) ;
+        var total = 0;
+
+        for (var item of cardDivs) {
+        const count = document.getElementById(`count-${item.dataset.ref}`);
+
+        let qualtity = count.textContent;
+
+        props.products.forEach((product) => {
+            if (product.product_ref === item.dataset.ref) {
+            total = total + Number(qualtity) * Number(product.product_price);
+            console.log(total);
             }
         });
-        let TotalAmount = ((total)-(total)*20/100).toFixed(2);
-        setTotalAmount(TotalAmount)
+
+        let TotalAmount = (total - (total * 20) / 100).toFixed(2);
+        setTotalAmount(TotalAmount);
+}
     }
+
     useEffect(()=>{
         HandelTotalItem_TotalAmount()
     }, [])
@@ -152,7 +159,7 @@ function Navbar(props){
                                 <button className="btn  my-2 my-sm-0" type="submit">Search</button>
                                 <ul className='rightInfo mx-3'>
                                     <li className='mx-3'>
-                                        <span className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
+                                        <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
                                             <i className="bi bi-cart-fill text-white mx-1"></i> Cart
                                         </span>
                                     </li>
@@ -197,7 +204,7 @@ function Navbar(props){
                                                        (product.product_incart === true)? 
                                                         (
                                                             <div key={product.product_ref}>
-                                                                <div className='product_row' id="cart-page">
+                                                                <div className='product_row product-carts' id="cart-page" data-ref={product.product_ref}>
                                                                     <div className='prodInfo'>
                                                                         <div className='prodimg'>
                                                                             <div className='imag'> 
@@ -221,7 +228,7 @@ function Navbar(props){
                                                                         <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
                                                                         <div className='buttns'>
                                                                             <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' >+</button>
-                                                                            <span id='count'> 1</span>
+                                                                            <span id={`count-${product.product_ref}`}>1</span>
                                                                             <button  type='submit' onClick={hundellSubmit} data-btn = 'decrease'>–</button>
                                                                         </div>
                                                                     </div>
