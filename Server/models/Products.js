@@ -23,6 +23,26 @@ class Product {
       return result.rows;
     }
 
+    static async importStatus() {
+      const query = `select
+      count(distinct products.id) as total_products,
+      sum(products.price) as total_values,
+      count(distinct categories.id) as total_categories,
+      count(distinct users.username) as total_users,
+      count(distinct brands.id) as total_brands,
+      sum(case when products.stock = 0 then 1 else 0 end) as total_outOfStock
+      from products
+      inner join categories on categories.id = products.category_id
+      inner join brands on brands.id = products.brand_id
+      left join users on true
+      where products.deleted_date is null
+      and users.deleted_date IS null 
+      and categories.deleted_date is null
+      and brands.deleted_date is null;`;
+      const result = await pool.query(query);
+      return result.rows;
+    }
+
     static async importCategories() {
       const query = `select * from categories where deleted_date is null`;
       const result = await pool.query(query);
@@ -41,6 +61,7 @@ class Product {
       products.name as product_name, 
       products.ref as product_ref, 
       products.stock as product_stock,
+      incart.quantity as incart_quantity,
       products.price as product_price,
       products.Description as product_desc,
       products.created_date as product_date,
@@ -132,6 +153,13 @@ class ProductAction {
 
   static async DeleteProductFromCart(info){
     const query = `delete from incart where user_id = ${info.user_id} and product_id = ${info.product_id}`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async UpdateProductFromCart(info){
+    const query = `update incart set quantity = ${info.newValue} where user_id = ${info.user_id} and product_id = ${info.product_id}`
 
     const result = await pool.query(query);
     return result.rows;

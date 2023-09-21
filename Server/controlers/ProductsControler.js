@@ -16,6 +16,16 @@ async function getProducts(req, res) {
   }
 }
 
+async function getStatus(req, res) {
+  try {
+    const state = await Product.importStatus();
+    res.status(201).json({ states: state });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 async function AddingProduct(req, res) {
   try {
 
@@ -111,6 +121,16 @@ async function deletingProductFromCart(req, res) {
   }
 }
 
+async function updatingProductFromCart(req, res) {
+  
+  try{
+    await ProductAction.UpdateProductFromCart(req.body.info)
+    res.status(201).json({ message: "Product updated incart successfully" })
+  }catch(error){
+    console.error(error)
+    res.status(500).json({error: "Internal server error"})
+  }
+}
 // Favories action
 async function getInfavories(req, res) {
   try {
@@ -254,5 +274,7 @@ module.exports = {
   addingProductToFavories,
   deletingProductFromFavories,
   getInfavories,
-  getIncart
+  getIncart,
+  updatingProductFromCart,
+  getStatus
 };

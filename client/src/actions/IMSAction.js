@@ -139,7 +139,12 @@ const handelUsers = (user)=>{
     }
 }
 
-
+const handelStates = (states)=>{
+    return {
+        type : 'STATES',
+        payload : states
+    }
+}
 
 const registerThunk = (user) => async (dispatch)=>{
     try{
@@ -569,6 +574,27 @@ const addToCartThunk = (info) => async (dispatch)=>{
     }
 }
 
+const updateInCartThunk = (info) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/updateincart`;
+        const data = {info : info}
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        console.log('data update in cart recived', datarecived.message )
+        dispatch(updateMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
 const deleteFromCartThunk = (info) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_PROD_URL;  
@@ -687,6 +713,20 @@ const bringInfavoriesThunk = (user_id) => async (dispatch)=>{
     }
 }
 
+const bringStatesThunk = () => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/States`;
+        
+        const response = await fetch(url);
+        const datarecived = await response.json();
+        dispatch(handelStates(datarecived.states))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
 export {
     registerThunk, 
     loginThunk, 
@@ -712,6 +752,8 @@ export {
     addToFavoriesThunk,
     deleteFromFavoriesThunk,
     bringIncartThunk,
-    bringInfavoriesThunk
+    bringInfavoriesThunk,
+    updateInCartThunk,
+    bringStatesThunk
 }
 

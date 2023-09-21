@@ -20,7 +20,9 @@ const {
   deletingProductFromFavories,
   addingProductToFavories,
   getIncart,
-  getInfavories
+  getInfavories,
+  updatingProductFromCart,
+  getStatus
 } = require("../controlers/ProductsControler");
 
 const router = express.Router();
@@ -35,22 +37,25 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
+// Product Routers
+router.get('/States',getStatus)
 // Product Routers
 router.get("/products", upload.any(), getProducts);
 router.post("/addProduct", upload.single("image"), AddingProduct);
 router.post('/deleteProduct', DeletingProduct)
 router.post('/updateProduct',upload.single("image"), UpdatingProduct)
 
-router.get('/categories',getCategories)
+// incart Routers
+router.post('/incart',getIncart)
 router.post('/addTocart', addingProductToCart)
 router.post('/deleteFromCart', deletingProductFromCart)
-
-router.post('/incart',getIncart)
+router.post('/updateincart', updatingProductFromCart)
+// Favories Routers
+router.post('/infavories',getInfavories)
 router.post('/addToFavories', addingProductToFavories)
 router.post('/deleteFromFavories', deletingProductFromFavories)
 // Categories Routers
-router.post('/infavories',getInfavories)
+router.get('/categories',getCategories)
 router.post('/addCategory', AddingCategory)
 router.post('/updateCategory', UpdatingCategory)
 router.post('/deleteCategory', DeletingCategory)

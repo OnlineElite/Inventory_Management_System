@@ -18,7 +18,8 @@ const initialState = {
     updateMsg : null,
     users : [],
     incart : [],
-    infavories :[]
+    infavories :[],
+    states :[]
 }
 
 export  const store = createStore(userReducer, initialState, applyMiddleware(thunk))

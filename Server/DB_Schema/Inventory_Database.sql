@@ -94,6 +94,7 @@ create table incart(
 	id serial primary key,
 	user_id int,
 	product_id int,
+	quantity int DEFAULT 1,
 	added_at timestamp DEFAULT current_timestamp,
 	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
@@ -106,5 +107,8 @@ select * from brands
 select * from infavories
 select * from incart
 
+	  
 
 
+
+      

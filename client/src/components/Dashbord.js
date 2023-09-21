@@ -12,7 +12,7 @@ import Settings from './Settings';
 import Users from './Users'
 import Brands from './Brands'
 import {connect} from 'react-redux'
-import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, bringUsersThunk} from '../actions/IMSAction'
+import { bringStatesThunk} from '../actions/IMSAction'
 
 
 function Dashboard(props){
@@ -23,15 +23,9 @@ function Dashboard(props){
       setToggle(!toggle)
     }
 
-    const callActions =()=>{
-        props.getProducts()
-        props.getCategories()
-        props.getBrands()
-        props.getUsers()
-    }
     useEffect(()=>{
-        callActions()
-    }, [])
+        props.getStates()
+    }, [props])
     
 
     return(
@@ -70,30 +64,14 @@ const mapStateToProps =(state)=>{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
         isAdmin : state.isAdmin,
-        products : state.products,
-        categories : state.categories,
-        users : state.users,
-        brands : state.brands,
-        addMsg : state.addMsg,
-        deleteMsg : state.deleteMsg,
-        updateMsg : state.updateMsg
-
+        states : state.states
     }
 }
 
 const mapDispatchToProps =(dispatch)=>{
     return{
-        getProducts : ()=>{
-            dispatch(bringProductsThunk())
-        },
-        getUsers : ()=>{
-            dispatch(bringUsersThunk())
-        },
-        getCategories : ()=>{
-            dispatch(bringCategoriesThunk())
-        },
-        getBrands : ()=>{
-            dispatch(bringBrandsThunk())
+        getStates : ()=>{
+            dispatch(bringStatesThunk())
         }
     }
     

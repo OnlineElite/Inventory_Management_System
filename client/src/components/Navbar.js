@@ -4,7 +4,7 @@ import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
 import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk, addToFavoriesThunk,
-     deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk} from '../actions/IMSAction'
+     deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk, updateInCartThunk} from '../actions/IMSAction'
 import prodimg from '../images/Inventory-Management.png'
 import jsPDF from 'jspdf'
 import logo from '../images/top.png'
@@ -15,8 +15,10 @@ function Navbar(props){
     const [totalAmount, setTotalAmount] = useState(null);
 
     let bringsData =()=>{
-        props.getIncart(props.userfullName[2])
-        props.getInfavories(props.userfullName[2])
+        if(!props.isAdmin){
+            props.getIncart(props.userfullName[2])
+            props.getInfavories(props.userfullName[2])
+        }
     }
 
     useEffect(()=>{
@@ -26,33 +28,30 @@ function Navbar(props){
     const hundellSubmit =(e)=>{
         e.preventDefault()
         let btnType = e.target.dataset.btn;
+        let id =e.target.dataset.id
         let count = e.target.parentElement.children[1]
         let currentCounter = e.target.parentElement.children[1].textContent
-
         switch (btnType) {
-          case "increase":
-            if (currentCounter >= 10) {
-              count.textContent = currentCounter;
-              //e.target.style.backgroundColor = 'gray';
-            } else {
-              count.textContent = Number(currentCounter) + 1;
-              //e.target.style.backgroundColor = '#DC3545';
-            }
-            break;
-          case "decrease":
-            if (currentCounter <= 1) {
-              count.textContent = 1;
-              //e.target.style.backgroundColor = 'gray';
-            } else {
-              count.textContent = Number(currentCounter) - 1;
-              //e.target.style.backgroundColor = '#DC3545';
-            }
-            break;
-          default:
+            case "increase":
+                if (currentCounter >= 20) {
+                    count.textContent = currentCounter;
+                } else {
+                    count.textContent = Number(currentCounter) + 1;
+                    props.updateIncart({product_id : id, user_id : props.userfullName[2], newValue :Number(currentCounter) + 1 })
+                }
+                break;
+            case "decrease":
+                if (currentCounter <= 1) {
+                    count.textContent = 1;
+                } else {
+                    count.textContent = Number(currentCounter) - 1;
+                    props.updateIncart({product_id : id, user_id : props.userfullName[2], newValue : Number(currentCounter) - 1 })
+                }
+                break;
+            default:
             console.log("wrong button");
         }
-
-         HandelTotalItem_TotalAmount();
+        HandelTotalItem_TotalAmount();
     }
 
     const handleLogout =(e)=>{
@@ -100,26 +99,34 @@ function Navbar(props){
         } 
     }
     // handel Total Item & Total Amount
-     const HandelTotalItem_TotalAmount=()=>{
-        const cardDivs = document.getElementsByClassName("product-carts");
+    const HandelTotalItem_TotalAmount=()=>{
+        if(props.incart){
+            var total = 0;
+            props.incart.forEach((product)=>{
+                const count = document.getElementById(`count-${product.product_ref}`)
+                let quantity = props.isAuthenticated? count.textContent: ''
+                total = total + Number(quantity) * Number(product.product_price);
+            })
+            let TotalAmount = (total - (total * 20) / 100).toFixed(2);
+            setTotalAmount(TotalAmount)
+            setTotalItem(props.incart.length)
+        }
 
+        /*const cardDivs = document.getElementsByClassName("product-carts");
         var total = 0;
-
         for (var item of cardDivs) {
-        const count = document.getElementById(`count-${item.dataset.ref}`);
-
-        let qualtity = count.textContent;
-
-        props.products.forEach((product) => {
-            if (product.product_ref === item.dataset.ref) {
-            total = total + Number(qualtity) * Number(product.product_price);
-            console.log(total);
-            }
-        });
-
-        let TotalAmount = (total - (total * 20) / 100).toFixed(2);
-        setTotalAmount(TotalAmount);
-}
+            const count = document.getElementById(`count-${item.dataset.ref}`);
+            let qualtity = count.textContent;
+            props.products.forEach((product) => {
+                if (product.product_ref === item.dataset.ref) {
+                total = total + Number(qualtity) * Number(product.product_price);
+                    console.log(total);
+                }
+            });
+            let TotalAmount = (total - (total * 20) / 100).toFixed(2);
+            setTotalAmount(TotalAmount);
+            setTotalItem(cardDivs.length)
+        }*/
     }
 
     useEffect(()=>{
@@ -204,7 +211,7 @@ function Navbar(props){
                                                     {props.incart?
                                                     props.incart.map((product)=>(                                                      
                                                         <div key={product.product_ref}>
-                                                            <div className='product_row product-carts' id="cart-page data-ref={product.product_ref}">
+                                                            <div className='product_row product-carts' id="cart-page " data-ref={product.product_ref}>
                                                                 <div className='prodInfo'>
                                                                     <div className='prodimg'>
                                                                         <div className='imag'> 
@@ -228,12 +235,12 @@ function Navbar(props){
                                                                     <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
                                                                     <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
                                                                     <div className='buttns'>
-                                                                        <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' >+</button>
-                                                                        <span id={`count-${product.product_ref}`}> 1</span>
-                                                                        <button  type='submit' onClick={hundellSubmit} data-btn = 'decrease'>–</button>
+                                                                        <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' data-id = {product.product_id} >+</button>
+                                                                        <span id={`count-${product.product_ref}`}> {product.incart_quantity} </span>
+                                                                        <button  type='submit' onClick={hundellSubmit} data-btn = 'decrease' data-id = {product.product_id}>–</button>
                                                                     </div>
                                                                 </div>
-                                                            </div> 
+                                                            </div>
                                                             <hr/>
                                                         </div>
                                                     ))
@@ -378,6 +385,9 @@ const mapDispatchToProps =(dispatch)=>{
         },
         getInfavories : (user_id)=>{
             dispatch(bringInfavoriesThunk(user_id))
+        },
+        updateIncart : (info)=>{
+            dispatch(updateInCartThunk(info))
         }
     }
 }

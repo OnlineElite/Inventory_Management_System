@@ -115,6 +115,9 @@ const userReducer = (state, action)=>{
       case "USERS":
         return { ...state, users: action.payload };
 
+      case "STATES":
+        return { ...state, states: action.payload };
+
       case "INCART":
       return { ...state, incart: action.payload };
 
