@@ -80,7 +80,7 @@ const userReducer = (state, action)=>{
         const productRef = action.payload.product_ref;
 
         const result = state.products.filter(
-          (element) => element.product_ref != productRef
+          (element) => element.product_ref !== productRef
         );
 
         return { ...state, deleteMsg: action.payload.message, products: result };
@@ -114,6 +114,12 @@ const userReducer = (state, action)=>{
 
       case "USERS":
         return { ...state, users: action.payload };
+
+      case "INCART":
+      return { ...state, incart: action.payload };
+
+      case "INFAVORIES":
+      return { ...state, infavories: action.payload };
 
       default:
         return state;

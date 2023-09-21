@@ -77,6 +77,19 @@ const handelBrands = (brand)=>{
     }
 }
 
+const handelIncart = (products)=>{
+    return {
+        type : 'INCART',
+        payload : products
+    }
+}
+const handelInfavories = (products)=>{
+    return {
+        type : 'INFAVORIES',
+        payload : products
+    }
+}
+
 const addMessage = (message)=>{
     return {
       type: "ADD_MESSAGE",
@@ -535,11 +548,11 @@ const deleteUserThunk = (condition) => async (dispatch)=>{
     }
 }
 
-const addToCartThunk = (ref) => async (dispatch)=>{
+const addToCartThunk = (info) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_PROD_URL;  
         const url = `${baseURL}/addTocart`;
-        const data = {prod_ref : ref}
+        const data = {info : info}
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
@@ -556,11 +569,11 @@ const addToCartThunk = (ref) => async (dispatch)=>{
     }
 }
 
-const deleteFromCartThunk = (ref) => async (dispatch)=>{
+const deleteFromCartThunk = (info) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_PROD_URL;  
         const url = `${baseURL}/deleteFromCart`;
-        const data = {prod_ref : ref}
+        const data = {info : info}
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
@@ -577,11 +590,11 @@ const deleteFromCartThunk = (ref) => async (dispatch)=>{
     }
 }
 
-const addToFavoriesThunk = (ref) => async (dispatch)=>{
+const addToFavoriesThunk = (info) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_PROD_URL;  
         const url = `${baseURL}/addToFavories`;
-        const data = {prod_ref : ref}
+        const data = {info : info}
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
@@ -598,11 +611,11 @@ const addToFavoriesThunk = (ref) => async (dispatch)=>{
     }
 }
 
-const deleteFromFavoriesThunk = (ref) => async (dispatch)=>{
+const deleteFromFavoriesThunk = (info) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_PROD_URL;  
         const url = `${baseURL}/deleteFromFavories`;
-        const data = {prod_ref : ref}
+        const data = {info : info}
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
@@ -619,7 +632,6 @@ const deleteFromFavoriesThunk = (ref) => async (dispatch)=>{
     }
 }
 
-
 const formDataToJson = (formData) => {
   const jsonObject = {};
 
@@ -632,6 +644,48 @@ const formDataToJson = (formData) => {
 
   return jsonObject;
 };
+
+const bringIncartThunk = (user_id) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/incart`;
+        const data = {user_id : user_id}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+
+        const response = await fetch(url, header);
+        const datarecived = await response.json();
+        dispatch(handelIncart(datarecived.products))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const bringInfavoriesThunk = (user_id) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/infavories`;
+        const data = {user_id : user_id}
+    
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+
+        const response = await fetch(url, header);
+        const datarecived = await response.json();
+        dispatch(handelInfavories(datarecived.products))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
 
 export {
     registerThunk, 
@@ -656,6 +710,8 @@ export {
     addToCartThunk,
     deleteFromCartThunk,
     addToFavoriesThunk,
-    deleteFromFavoriesThunk
+    deleteFromFavoriesThunk,
+    bringIncartThunk,
+    bringInfavoriesThunk
 }
 

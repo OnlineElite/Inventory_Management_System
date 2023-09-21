@@ -3,6 +3,7 @@ const pool = require("../config/db");
 class Product {
     static async importProducts() {
       const query = `select 
+      products.id as product_id,
       products.name as product_name, 
       products.ref as product_ref, 
       products.stock as product_stock,
@@ -33,7 +34,65 @@ class Product {
       const result = await pool.query(query);
       return result.rows;
     }
+
+    static async importIncart(user_id) {
+      const query = `select 
+      products.id as product_id,
+      products.name as product_name, 
+      products.ref as product_ref, 
+      products.stock as product_stock,
+      products.price as product_price,
+      products.Description as product_desc,
+      products.created_date as product_date,
+      products.image as product_image,
+      categories.name as category_name, 
+      brands.name as brand_name
+      from products
+      inner join categories on categories.id = products.category_id
+      inner join brands on brands.id = products.brand_id
+      inner join incart on incart.product_id =  products.id
+      inner join users on incart.user_id = users.user_id
+      where users.user_id = ${user_id}`;
+      const result = await pool.query(query);
+      return result.rows;
+    }
+
+    static async importInfavories(user_id) {
+      const query = `select 
+      products.id as product_id,
+      products.name as product_name, 
+      products.ref as product_ref, 
+      products.stock as product_stock,
+      products.price as product_price,
+      products.Description as product_desc,
+      products.created_date as product_date,
+      products.image as product_image,
+      categories.name as category_name, 
+      brands.name as brand_name
+      from products
+      inner join categories on categories.id = products.category_id
+      inner join brands on brands.id = products.brand_id
+      inner join infavories on infavories.product_id =  products.id
+      inner join users on infavories.user_id = users.user_id
+      where users.user_id = ${user_id}`;
+      const result = await pool.query(query);
+      return result.rows;
+    }
+
+    static async checkIfExistInCart(info) {
+      const query = `SELECT * FROM incart WHERE user_id = ${info.user_id} and product_id = ${info.product_id}`;
+      const result = await pool.query(query);
+      return result.rows[0];
+    }
+
+    static async checkIfExistInFavories(info) {
+      const query = `SELECT * FROM infavories WHERE user_id = ${info.user_id} and product_id = ${info.product_id}`;
+      const result = await pool.query(query);
+      return result.rows[0];
+    }
   }
+
+  
 
 class ProductAction {
 
@@ -64,29 +123,29 @@ class ProductAction {
     return result.rows;
   }
 
-  static async addProductToCart(ref){
-    const query = `update products set inCart = true where ref = '${ref}'`
+  static async addProductToCart(info){
+    const query = `insert into incart (user_id, product_id) values ( ${info.user_id}, ${info.product_id}) `
 
     const result = await pool.query(query);
     return result.rows;
   }
 
-  static async DeleteProductFromCart(ref){
-    const query = `update products set inCart = false where ref = '${ref}'`
+  static async DeleteProductFromCart(info){
+    const query = `delete from incart where user_id = ${info.user_id} and product_id = ${info.product_id}`
 
     const result = await pool.query(query);
     return result.rows;
   }
 
-  static async addProductToFavories(ref){
-    const query = `update products set liked = true where ref = '${ref}'`
+  static async addProductToFavories(info){
+    const query = `insert into infavories (user_id, product_id) values ( ${info.user_id}, ${info.product_id})`
 
     const result = await pool.query(query);
     return result.rows;
   }
 
-  static async DeleteProductFromFavories(ref){
-    const query = `update products set liked = false where ref = '${ref}'`
+  static async DeleteProductFromFavories(info){
+    const query = `delete from infavories where user_id = ${info.user_id} and product_id = ${info.product_id}`
 
     const result = await pool.query(query);
     return result.rows;

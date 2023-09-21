@@ -73,10 +73,26 @@ async function UpdatingProduct(req, res) {
 }
 
 // Cart action
+async function getIncart(req, res) {
+  try {
+    const Prods = await Product.importIncart(req.body.user_id);
+
+    res.status(201).json({ products: Prods });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 async function addingProductToCart(req, res) {
   
   try{
-    await ProductAction.addProductToCart(req.body.prod_ref)
+    const isAllreadyExist = await Product.checkIfExistInCart(req.body.info);
+    if (isAllreadyExist) {
+      return res.status(409).json({ message: "Product already exists" });
+    }
+
+    await ProductAction.addProductToCart(req.body.info)
     res.status(201).json({ message: "Product added to cart successfully" })
   }catch(error){
     console.error(error)
@@ -87,7 +103,7 @@ async function addingProductToCart(req, res) {
 async function deletingProductFromCart(req, res) {
   
   try{
-    await ProductAction.DeleteProductFromCart(req.body.prod_ref)
+    await ProductAction.DeleteProductFromCart(req.body.info)
     res.status(201).json({ message: "Product deleted from cart successfully" })
   }catch(error){
     console.error(error)
@@ -96,10 +112,27 @@ async function deletingProductFromCart(req, res) {
 }
 
 // Favories action
+async function getInfavories(req, res) {
+  try {
+
+    const Prods = await Product.importInfavories(req.body.user_id);
+
+    res.status(201).json({ products: Prods });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 async function addingProductToFavories(req, res) {
   
   try{
-    await ProductAction.addProductToFavories(req.body.prod_ref)
+    const isAllreadyExist = await Product.checkIfExistInFavories(req.body.info);
+    if (isAllreadyExist) {
+      return res.status(409).json({ message: "Product already exists" });
+    }
+
+    await ProductAction.addProductToFavories(req.body.info)
     res.status(201).json({ message: "Product added to Favories successfully" })
   }catch(error){
     console.error(error)
@@ -110,7 +143,7 @@ async function addingProductToFavories(req, res) {
 async function deletingProductFromFavories(req, res) {
   
   try{
-    await ProductAction.DeleteProductFromFavories(req.body.prod_ref)
+    await ProductAction.DeleteProductFromFavories(req.body.info)
     res.status(201).json({ message: "Product deleted from Favories successfully" })
   }catch(error){
     console.error(error)
@@ -219,5 +252,7 @@ module.exports = {
   addingProductToCart,
   deletingProductFromCart,
   addingProductToFavories,
-  deletingProductFromFavories
+  deletingProductFromFavories,
+  getInfavories,
+  getIncart
 };

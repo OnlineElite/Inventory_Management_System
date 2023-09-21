@@ -7,7 +7,6 @@ function Home(props){
     const [totalCategories, setTotalCategories] = useState(null)
 
     useEffect(()=>{
-        console.log(props.products);
         setTotalCategories(props.categories.length)
         setTotalProducts(props.products.length)
         const total = props.products.reduce((accumulator, product) => {
@@ -21,6 +20,7 @@ function Home(props){
         setOutOfStock(outOfStock.length)
         
     },[props])
+
     return(
         <div className=' home p-3 bg-light'>
             <h2 className=' px-3 '>Inventory State</h2>

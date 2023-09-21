@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
 import { DatePicker } from 'antd';
-import {updateUserThunk, deleteUserThunk} from '../actions/IMSAction'
+import {updateUserThunk, deleteUserThunk, bringUsersThunk} from '../actions/IMSAction'
 import userimg from '../images/Default.png'
 import '../styles/Users.css'
 
@@ -13,6 +13,10 @@ function Users(props){
     const [records, setRecords] = useState(props.users)
     const [condition, setCondition] = useState(null)
     const [selectedRange, setSelectedRange] = useState(null);
+
+    useEffect(()=>{
+        props.getUsers()
+    }, [props])
 
     const columns = [
         {
@@ -359,6 +363,9 @@ const mapStateToProps =(state)=>{
 
 const mapDispatchToProps =(dispatch)=>{
     return{
+        getUsers : ()=>{
+            dispatch(bringUsersThunk())
+        },
         deleteUser : (condition)=>{
             dispatch(deleteUserThunk(condition))
         },
