@@ -16,6 +16,7 @@ function Users(props){
 
     useEffect(()=>{
         props.getUsers()
+        setRecords(props.users)
     }, [props])
 
     const columns = [

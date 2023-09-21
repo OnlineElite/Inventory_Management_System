@@ -15,6 +15,7 @@ function Brands(props){
     
     useEffect(()=>{
         props.getBrands()
+        setRecords(props.brands)
     }, [props])
     
     const columns = [

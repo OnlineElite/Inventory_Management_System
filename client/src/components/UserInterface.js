@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import prodimg from '../images/Default.png'
 import {connect} from 'react-redux'
-import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, bringUsersThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
+import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
 import Footer from '../components/Footer'
 import  '../styles/UserInterface.css'
 
@@ -13,7 +13,6 @@ function UserInterface(props){
       props.getProducts()
       props.getCategories()
       props.getBrands()
-      props.getUsers()
     }, [])
 
     const [records, setRecords] = useState(props.products)
@@ -383,9 +382,6 @@ const mapDispatchToProps =(dispatch)=>{
     return{
         getProducts : ()=>{
             dispatch(bringProductsThunk())
-        },
-        getUsers : ()=>{
-            dispatch(bringUsersThunk())
         },
         getCategories : ()=>{
             dispatch(bringCategoriesThunk())

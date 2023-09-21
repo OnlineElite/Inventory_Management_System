@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import prodimg from '../images/Default.png'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
-import { addProductThunk, deleteProductThunk, updateProductThunk} from '../actions/IMSAction'
+import { addProductThunk, deleteProductThunk, updateProductThunk, bringProductsThunk} from '../actions/IMSAction'
 import { DatePicker } from 'antd';
 import '../styles/Stock.css'
 
@@ -23,6 +23,7 @@ function ViewStock(props){
 
 
     useEffect(() => {
+      props.getProducts()
       setRecords(props.products);
     });
 
@@ -960,6 +961,9 @@ const mapStateToProps =(state)=>{
 
 const mapDispatchToProps =(dispatch)=>{
     return{
+        getProducts : ()=>{
+          dispatch(bringProductsThunk())
+        },
         addProduct : (product)=>{
             dispatch(addProductThunk(product))
         },

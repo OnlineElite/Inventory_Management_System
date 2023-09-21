@@ -1,12 +1,19 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import prodimg from '../images/Default.png'
+import {bringProductsThunk} from '../actions/IMSAction'
+
 import '../styles/Products.css'
 function Products(props){
     const [records, setRecords] = useState(props.products)
     const [selectfilterBrand, setSelectfilterBrand] = useState('');
     const [selectfilterCategory, setSelectfilterCategory] = useState('');
     const [equivalent, setEquivalent] = useState('')
+
+    useEffect(()=>{
+      props.getProducts()
+      setRecords(props.products)
+    }, [props])
 
     const filterByName =(e)=>{
         const newData = props.products.filter(prod =>{ 
@@ -420,4 +427,13 @@ const mapStateToProps =(state)=>{
 
     }
 }
-export default connect(mapStateToProps)(Products);
+
+const mapDispatchToProps =(dispatch)=>{
+  return{
+      getProducts : ()=>{
+          dispatch(bringProductsThunk())
+      }
+  }
+  
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

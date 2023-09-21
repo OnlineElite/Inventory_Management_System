@@ -15,6 +15,7 @@ function Categories(props){
 
     useEffect(()=>{
         props.getCategories()
+        setRecords(props.categories)
     }, [props])
     const columns = [
         {
