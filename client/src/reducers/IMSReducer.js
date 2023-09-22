@@ -78,12 +78,31 @@ const userReducer = (state, action)=>{
 
       case "DELETE_PRODUCT":
         const productRef = action.payload.product_ref;
-
         const result = state.products.filter(
           (element) => element.product_ref !== productRef
         );
-
         return { ...state, deleteMsg: action.payload.message, products: result };
+
+      case "DELETE_CATEGORY":
+        const categName = action.payload.categName;
+        const catresult = state.categories.filter(
+          (element) => element.name !== categName
+        );
+        return { ...state, deleteMsg: action.payload.message, categories: catresult };
+
+      case "DELETE_BRAND":
+        const brandName = action.payload.brandName;
+        const brandresult = state.brands.filter(
+          (element) => element.name !== brandName
+        );
+        return { ...state, deleteMsg: action.payload.message, brands: brandresult };
+
+      case "DELETE_USER":
+        const userName = action.payload.condition;
+        const userresult = state.users.filter(
+          (element) => element.username !== userName
+        );
+        return { ...state, deleteMsg: action.payload.message, users: userresult };
 
       case "UPDATE_PRODUCT":
         const updatedProduct = action.payload;

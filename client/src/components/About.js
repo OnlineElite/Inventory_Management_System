@@ -33,20 +33,20 @@ function About(){
                                     electronic products to cater to your every need.
                                 </li>
                                 <li>
-                                    <strong>Wide Selection:</strong>
-                                    Competitive Prices: We believe that technology should be 
+                                    <strong>Competitive Prices:</strong>
+                                    We believe that technology should be 
                                     accessible to everyone. That's why we strive to offer 
                                     competitive prices without compromising on quality.
                                 </li>
                                 <li>
-                                    <strong>Wide Selection:</strong>
-                                    Expert Support: Have questions or need assistance? Our 
+                                    <strong>Expert Support:</strong>
+                                    Have questions or need assistance? Our 
                                     knowledgeable customer support team is always ready to 
                                     assist you. We're not just here to sell; we're here to help.
                                 </li>
                                 <li>
-                                    <strong>Wide Selection:</strong>
-                                    Secure Shopping: Your online security is our priority. 
+                                    <strong>Secure Shopping:</strong>
+                                    Your online security is our priority. 
                                     Shop with confidence, knowing that your information is protected.
                                 </li>
 

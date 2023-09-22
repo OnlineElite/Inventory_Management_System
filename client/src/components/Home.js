@@ -7,8 +7,8 @@ function Home(props){
         <div className=' home p-3 bg-light'>
             <h2 className=' px-3 '>Inventory State</h2>
             <div className='container-fluid'>
-                {props.states.map((items)=>(
-                    <>
+                {props.states.map((items, index)=>(
+                    < div key={index}>
                         <div className='row'>
                             <div className=' cart col-md-4 col-12 col-sm-6 col-lg-3 p-3 bg-white ' >
                                 <div className='d-flex justify-content-between align-items-center text-white bg-success p-3 border border-secondary shadow-sm'>
@@ -49,26 +49,26 @@ function Home(props){
                             
                         </div>
                         <div className='row'>
-                        <div className=' cart col-md-4 col-12 col-sm-6 col-lg-3 p-3 bg-white ' >
-                            <div className='d-flex justify-content-between align-items-center text-white bg-dark p-3 border border-secondary shadow-sm'>
-                                <i className="bi bi-flag-fill" style={{fontSize: '2rem'}}></i>
-                                <div className=''>
-                                    <p>Total Brands</p>
-                                    <h2> {items.total_brands} </h2>
+                            <div className=' cart col-md-4 col-12 col-sm-6 col-lg-3 p-3 bg-white ' >
+                                <div className='d-flex justify-content-between align-items-center text-white bg-dark p-3 border border-secondary shadow-sm'>
+                                    <i className="bi bi-flag-fill" style={{fontSize: '2rem'}}></i>
+                                    <div className=''>
+                                        <p>Total Brands</p>
+                                        <h2> {items.total_brands} </h2>
+                                    </div>
                                 </div>
                             </div>
+                            <div className=' cart col-md-4 col-12 col-sm-6 col-lg-3 p-3 bg-white ' >
+                                <div className='d-flex justify-content-between align-items-center text-white bg-info p-3 border border-secondary shadow-sm'>
+                                    <i className="bi bi-people-fill" style={{fontSize: '2rem'}}></i>
+                                    <div className=''>
+                                        <p>Total Users</p>
+                                        <h2>{items.total_users}</h2>
+                                    </div>
+                                </div>
+                            </div> 
                         </div>
-                        <div className=' cart col-md-4 col-12 col-sm-6 col-lg-3 p-3 bg-white ' >
-                            <div className='d-flex justify-content-between align-items-center text-white bg-info p-3 border border-secondary shadow-sm'>
-                                <i className="bi bi-people-fill" style={{fontSize: '2rem'}}></i>
-                                <div className=''>
-                                    <p>Total Users</p>
-                                    <h2>{items.total_users}</h2>
-                                </div>
-                            </div>
-                        </div> 
-                    </div>
-                    </>
+                    </ div>
                     
                 ))}
             </div>
