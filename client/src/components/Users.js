@@ -15,10 +15,8 @@ function Users(props){
     const [selectedRange, setSelectedRange] = useState(null);
 
     useEffect(()=>{
-        if (props.users !== records) {
-            props.getUsers()
-            setRecords(props.users);
-        }
+        props.getUsers()
+        setRecords(props.users);
     }, [props.users])
 
     const columns = [

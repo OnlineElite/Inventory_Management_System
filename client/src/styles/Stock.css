@@ -194,3 +194,21 @@
     margin-bottom: 0.3rem;
 }
 
+#stock .selectimg{
+    height: fit-content;
+}
+
+#stock .img_roo{
+    width: 80%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+#stock .img_roo img{
+    width: 50%;
+    height: 9rem;
+    margin-left: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}

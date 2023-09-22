@@ -20,6 +20,8 @@ function ViewStock(props){
     const [equivalent, setEquivalent] = useState('')
     const [extentionMsg, setExtentionMsg] = useState( '')
     const [selectedRange, setSelectedRange] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState(null);
 
 
     useEffect(() => {
@@ -86,6 +88,15 @@ function ViewStock(props){
         }
     ];
 
+    const handleImageChange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        setSelectedImage(file);
+        setImageUrl(imageUrl);
+      }
+    };
+    
     function handleCloseModal(){ 
            
         document.getElementById("addproduct").classList.remove("show", "d-block");
@@ -170,6 +181,7 @@ function ViewStock(props){
                     inp.src = row.product_image != null
                           ? `http://localhost:3005/uploads/${row.product_image}`
                           : prodimg
+                          
                     break;
                 default :
                     inp.value = ''
@@ -636,7 +648,16 @@ function ViewStock(props){
                   </div>
                   <div className="roo">
                     <label htmlFor="image">Image :</label>
-                    <input id="image" type="file" name="image" />
+                    {selectedImage? (
+                      <div className="img_roo ">
+                        <input className="selectimg" id="image" type="file" name="image" accept="image/*" onChange={handleImageChange} />
+                        <img  src={imageUrl} alt="Selected" />  
+                      </div>
+                    ):
+                    (
+                      <input id="image" type="file" name="image" accept="image/*" onChange={handleImageChange} />
+                    )
+                  }
                   </div>
                 </div>
 
@@ -740,8 +761,17 @@ function ViewStock(props){
                     <textarea id="updesc" type="text" name="updesc" />
                   </div>
                   <div className="roo">
-                    <label htmlFor="image">Image :</label>
-                    <input id="upimage" type="file" name="image" />
+                    <label htmlFor="upimage">Image :</label>
+                    {selectedImage? (
+                      <div className="img_roo ">
+                      <input id="upimage" type="file" name="upimage" accept="image/*" onChange={handleImageChange} />
+                          <img id="selecImg"  src={imageUrl} alt="Selected" />  
+                        </div>
+                      ):
+                      (
+                        <input id="upimage" type="file" name="upimage" accept="image/*" onChange={handleImageChange} />
+                      )
+                    }
                   </div>
                 </div>
 
