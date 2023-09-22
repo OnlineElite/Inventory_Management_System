@@ -12,7 +12,7 @@ import Settings from './Settings';
 import Users from './Users'
 import Brands from './Brands'
 import {connect} from 'react-redux'
-import { bringStatesThunk} from '../actions/IMSAction'
+import {bringCategoriesThunk, bringBrandsThunk, bringStatesThunk} from '../actions/IMSAction'
 
 
 function Dashboard(props){
@@ -24,6 +24,8 @@ function Dashboard(props){
     }
 
     useEffect(()=>{
+        props.getCategories()
+        props.getBrands()
         props.getStates()
     }, [props])
     
@@ -72,6 +74,11 @@ const mapDispatchToProps =(dispatch)=>{
     return{
         getStates : ()=>{
             dispatch(bringStatesThunk())
+        },
+        getCategories : ()=>{
+            dispatch(bringCategoriesThunk())
+        },getBrands : ()=>{
+            dispatch(bringBrandsThunk())
         }
     }
     

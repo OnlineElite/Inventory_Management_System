@@ -64,6 +64,7 @@ const handelProducts = (products)=>{
     }
 }
 
+
 const handelCategories = (category)=>{
     return {
         type : 'CATEGORIES',
@@ -130,6 +131,27 @@ const deleteProduct = (message, product_ref) => {
     type: "DELETE_PRODUCT",
     payload: { message, product_ref },
   };
+};
+
+const deleteCategory = (message, categName) => {
+    return {
+      type: "DELETE_CATEGORY",
+      payload: { message, categName },
+    };
+};
+
+const deleteBrand = (message, brandName) => {
+    return {
+      type: "DELETE_BRAND",
+      payload: { message, brandName },
+    };
+};
+
+const deleteUser = (message, condition) => {
+    return {
+      type: "DELETE_USER",
+      payload: { message, condition },
+    };
 };
 
 const handelUsers = (user)=>{
@@ -480,7 +502,7 @@ const deleteCategoryThunk = (categName) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         console.log('data delete category recived', datarecived.message )
-        dispatch(deleteMessage(datarecived.message))
+        dispatch(deleteCategory(datarecived.message, categName));
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -502,7 +524,7 @@ const deleteBrandThunk = (brandName) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         console.log('data delete brand recived', datarecived.message )
-        dispatch(deleteMessage(datarecived.message))
+        dispatch(deleteBrand(datarecived.message, brandName));
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -546,7 +568,7 @@ const deleteUserThunk = (condition) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         console.log('data delete user recived', datarecived.message )
-        dispatch(deleteMessage(datarecived.message))
+        dispatch(deleteUser(datarecived.message, condition));
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
