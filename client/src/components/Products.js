@@ -10,10 +10,12 @@ function Products(props){
     const [selectfilterCategory, setSelectfilterCategory] = useState('');
     const [equivalent, setEquivalent] = useState('')
 
-    useEffect(()=>{
-      props.getProducts()
-      setRecords(props.products)
-    }, [props])
+    useEffect(() => {
+      if (props.products !== records) {
+        props.getProducts()
+        setRecords(props.products)
+      }
+    }, [props.products]);
 
     const filterByName =(e)=>{
         const newData = props.products.filter(prod =>{ 

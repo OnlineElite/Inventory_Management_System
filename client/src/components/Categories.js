@@ -14,9 +14,12 @@ function Categories(props){
     const [selectedRange, setSelectedRange] = useState(null);
 
     useEffect(()=>{
-        props.getCategories()
-        setRecords(props.categories)
-    }, [props])
+        if (props.categories !== records) {
+            props.getCategories()
+            setRecords(props.categories);
+        }
+    }, [props.categories])
+
     const columns = [
         {
             name : 'Name',
@@ -73,8 +76,13 @@ function Categories(props){
         let newCategory = document.getElementById('name').value
         props.addCategory(newCategory)
         handleCloseModal()
-        props.getCategories()
-        setRecords(props.categories)
+        if (props.addMsg) {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000);
+            setRecords(props.categories)
+        } 
     }
 
     const clickUpdateButton=(row)=>{
@@ -86,7 +94,12 @@ function Categories(props){
         let newCategory = document.getElementById('upname')
         props.updateCategory({newValue: newCategory.value, condition : condition})
         handleCloseModal()
-        props.getCategories()
+        if (props.updateMsg) {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000);
+        } 
         setRecords(props.categories)
     }
     
@@ -97,7 +110,6 @@ function Categories(props){
             setTimeout(() => {
                 setShowAlert(false);
             }, 3000);
-            props.getCategories()
             setRecords(props.categories)
         }  
     }

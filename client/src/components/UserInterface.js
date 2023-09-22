@@ -13,6 +13,7 @@ function UserInterface(props){
       props.getProducts()
       props.getCategories()
       props.getBrands()
+      setRecords(props.products)
     }, [])
 
     const [records, setRecords] = useState(props.products)

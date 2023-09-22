@@ -154,6 +154,13 @@ const deleteUser = (message, condition) => {
     };
 };
 
+const updateCategory = (message, category) => {
+    return {
+      type: "UPDATE_CATEGORY",
+      payload: { message, category },
+    };
+};
+
 const handelUsers = (user)=>{
     return {
         type : 'USERS',
@@ -350,19 +357,14 @@ const deleteProductThunk = (productRef) => async (dispatch)=>{
 
 const updateProductThunk = (product) => async (dispatch)=>{
     try{
-
         for (var pair of product.entries()) {
             console.log(pair[0] + ", " + pair[1]);
         }
-    
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/updateProduct`;
-        //const data = { product }
-    
         /*const headers = {
             "Content-Type": `multipart/form-data;`,
         };*/
-
         const response = await fetch(url, {
             method: "POST",
             //headers,
@@ -456,9 +458,12 @@ const updateCategoryThunk = (category) => async (dispatch)=>{
         };
         
         const response = await fetch(url ,header );
-        const datarecived = await response.json();
-        console.log('data update category recived', datarecived.message )
-        dispatch(updateMessage(datarecived.message))
+        if(response.status === 201){
+            const datarecived = await response.json();
+            dispatch(updateMessage(datarecived.message))
+            dispatch(updateCategory(datarecived.message, category))
+            //console.log('data update category recived', datarecived.message )
+        }
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -501,8 +506,10 @@ const deleteCategoryThunk = (categName) => async (dispatch)=>{
         
         const response = await fetch(url ,header );
         const datarecived = await response.json();
-        console.log('data delete category recived', datarecived.message )
-        dispatch(deleteCategory(datarecived.message, categName));
+        if(datarecived.message === "Category deleted successfully"){
+            console.log('data delete category recived', datarecived.message )
+            dispatch(deleteCategory(datarecived.message, categName));
+        }
     }catch(err){
         console.error(err)
         dispatch(handellError(err))

@@ -150,7 +150,7 @@ function Navbar(props){
                 <div className="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul className='navs'>
                         <li>
-                            <Link className='Link'  to= '/userInterface'> Home </Link>
+                            <Link className='Link'  to= {props.isAuthenticated ? '/userInterface' : '/'}> Home </Link>
                         </li>
                         <li>
                             <Link className='Link' to='/about' > About </Link> 
