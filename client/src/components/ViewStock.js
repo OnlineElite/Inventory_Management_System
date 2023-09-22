@@ -23,9 +23,11 @@ function ViewStock(props){
 
 
     useEffect(() => {
-      props.getProducts()
-      setRecords(props.products);
-    });
+      if (props.products !== records) {
+        props.getProducts()
+        setRecords(props.products)
+      }
+    }, [props.products]);
 
 
     const columns = [

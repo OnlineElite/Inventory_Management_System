@@ -14,9 +14,11 @@ function Brands(props){
     const [selectedRange, setSelectedRange] = useState(null);
     
     useEffect(()=>{
-        props.getBrands()
-        setRecords(props.brands)
-    }, [props])
+        if (props.brands !== records) {
+            props.getBrands()
+            setRecords(props.brands);
+        }
+    }, [props.brands])
     
     const columns = [
         {
@@ -72,6 +74,12 @@ function Brands(props){
         let newBrand = document.getElementById('name').value
         props.addBrand(newBrand)
         handleCloseModal()     
+        if (props.addMsg) {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000);
+        }  
         setRecords(props.brands)
     }
 
@@ -84,6 +92,12 @@ function Brands(props){
         let newBrand = document.getElementById('upname')
         props.updateBrand({newValue: newBrand.value, condition : condition})
         handleCloseModal()
+        if (props.updateMsg) {
+            setShowAlert(true);
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 3000);
+        }  
         setRecords(props.brands)
     }
     

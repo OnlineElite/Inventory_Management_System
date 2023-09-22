@@ -104,6 +104,21 @@ const userReducer = (state, action)=>{
         );
         return { ...state, deleteMsg: action.payload.message, users: userresult };
 
+      case "UPDATE_CATEGORY":
+        const newName = action.payload.category.newValue;
+        const oldname = action.payload.category.condition;
+        const updateCategories = state.categories.map((element) =>{
+          if(element.name === oldname){
+            element.name = newName;
+            element.updated_date = new Date().toISOString();
+            return element
+          }else{
+            return element
+          }
+        });
+        console.log('newList', updateCategories)
+        return { ...state, categories: updateCategories }; 
+
       case "UPDATE_PRODUCT":
         const updatedProduct = action.payload;
 
