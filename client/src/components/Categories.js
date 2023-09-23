@@ -12,11 +12,15 @@ function Categories(props){
     const [records, setRecords] = useState(props.categories)
     const [condition, setCondition] = useState(null)
     const [selectedRange, setSelectedRange] = useState(null);
+    const [isfiltred, setIsfiltred] = useState(false);
 
     useEffect(()=>{
         if (props.categories !== records) {
             props.getCategories()
-            setRecords(props.categories);
+            if(!isfiltred){
+                setRecords(props.categories);
+                setIsfiltred(false)
+            }
         }
     }, [props.categories])
 
@@ -69,6 +73,7 @@ function Categories(props){
             return row.name.toLowerCase().includes(e.target.value.toLowerCase()) 
         })
         setRecords(newData)
+        setIsfiltred(true)
     }
 
     const HandellAddCategory =(e)=>{

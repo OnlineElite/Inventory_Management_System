@@ -26,13 +26,13 @@ function ViewStock(props){
     const [isfiltred, setIsfiltred] = useState(false);
 
     useEffect(() => {
-      //if (props.products !== records) {
+      if (props.products !== records) {
         props.getProducts()
         if(!isfiltred){
           setRecords(props.products)
           setIsfiltred(false)
         }
-      //}
+      }
     }, [props.products]);
 
 
@@ -114,6 +114,7 @@ function ViewStock(props){
             return row.product_name.toLowerCase().includes(e.target.value.toLowerCase())
         })
         setRecords(newData)
+        setIsfiltred(true)
     }
 
     const filterByRef =(e)=>{
@@ -121,6 +122,7 @@ function ViewStock(props){
             return row.product_ref.toLowerCase().includes(e.target.value.toLowerCase())
         })
         setRecords(newData)
+        setIsfiltred(true)
     }
 
     const filterByCategory =(e)=>{
@@ -146,7 +148,8 @@ function ViewStock(props){
             }
         })
         setRecords(newData)
-        setSelectfilterBrand(e.target.value)  
+        setSelectfilterBrand(e.target.value)
+        setIsfiltred(true)
     }
 
     const addCategory =(e)=>{
@@ -787,24 +790,17 @@ function ViewStock(props){
                   </div>
                   <div className="roo">
                     <label htmlFor="upimage">Image :</label>
-                    {//selectedImage? (
-                      <div className="img_roo ">
-
-                        <div id="img-preview">
+                      <div className="img_roo">
+                        <div className="">
+                          <label for="upimage" className="bg-primary text-white p-1 border rounded">Choose File</label>
+                          <input className="p-0 w-25" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
+                        </div>
+                        <div id="img-preview" className="selecImg">
                           <img id="selecImg"  src={imageUrl} alt="Selected" />  
                         </div>
-                        
-                        <input className="p-0" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
-                        <label for="upimage">Choose File</label>
                       </div>
-                      /*):
-                      (
-                        <input id="upimage" type="file" name="upimage" accept="image/*" onChange={handleImageChange} />
-                      )*/
-                    }
                   </div>
                 </div>
-
                 <div className="modal-footer">
                   <button
                     type="button"

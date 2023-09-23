@@ -12,11 +12,15 @@ function Brands(props){
     const [records, setRecords] = useState(props.brands)
     const [condition, setCondition] = useState(null)
     const [selectedRange, setSelectedRange] = useState(null);
+    const [isfiltred, setIsfiltred] = useState(false);
     
     useEffect(()=>{
         if (props.brands !== records) {
             props.getBrands()
-            setRecords(props.brands);
+            if(!isfiltred){
+                setRecords(props.brands);
+                setIsfiltred(false)
+            }
         }
     }, [props.brands])
     
@@ -67,6 +71,7 @@ function Brands(props){
             return row.name.toLowerCase().includes(e.target.value.toLowerCase()) 
         })
         setRecords(newData)
+        setIsfiltred(true)
     }
 
     const HandellAddBrand =(e)=>{

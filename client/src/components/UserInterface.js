@@ -13,11 +13,14 @@ function UserInterface(props){
       props.getProducts()
       props.getCategories()
       props.getBrands()
-      setRecords(props.products)
+      if(!isfiltred){
+        setRecords(props.products)
+        setIsfiltred(false)
+      }
+    
     }, [props.products])
 
-    
-
+    const [isfiltred, setIsfiltred] = useState(false);
     const [records, setRecords] = useState(props.products)
     const [equivalent, setEquivalent] = useState('')
     const [addToCart, setAddToCart] = useState('')
@@ -104,7 +107,12 @@ function UserInterface(props){
         return inpChecked.includes(product.category_name)
       })
       console.log('toDisplay', NewData);
-      (inputs.some((inp)=> inp.checked))? setRecords(NewData) : setRecords(props.products);
+      if(inputs.some((inp)=> inp.checked)){
+        setRecords(NewData)
+        setIsfiltred(true)
+      }else{
+        setRecords(props.products);
+      }
     }
 
     const filterByBrand = () => {
@@ -131,8 +139,13 @@ function UserInterface(props){
         return inpChecked.includes(product.brand_name)
       })
       console.log('toDisplay', NewData);
-      (inputs.some((inp)=> inp.checked))? setRecords(NewData) : setRecords(props.products);
-    };
+      if(inputs.some((inp)=> inp.checked)) {
+        setRecords(NewData)
+        setIsfiltred(true)
+      }else{
+        setRecords(props.products)
+      }
+    }
   
     return(
         <div className='userInterface'>

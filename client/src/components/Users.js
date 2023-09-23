@@ -13,10 +13,16 @@ function Users(props){
     const [records, setRecords] = useState(props.users)
     const [condition, setCondition] = useState(null)
     const [selectedRange, setSelectedRange] = useState(null);
+    const [isfiltred, setIsfiltred] = useState(false);
 
     useEffect(()=>{
         props.getUsers()
-        setRecords(props.users);
+        if (props.users !== records) {
+            if(!isfiltred){
+                setRecords(props.users);
+                setIsfiltred(false)
+            }
+        }
     }, [props.users])
 
     const columns = [
@@ -72,6 +78,7 @@ function Users(props){
             || row.last_name.toLowerCase().includes(e.target.value.toLowerCase())) 
         })
         setRecords(newData)
+        setIsfiltred(true)
     }
 
     const filterByUsername =(e)=>{
@@ -79,6 +86,7 @@ function Users(props){
             return row.username.toLowerCase().includes(e.target.value.toLowerCase())
         })
         setRecords(newData)
+        setIsfiltred(true)
     }
 
     const filterByemail=(e)=>{
@@ -86,6 +94,7 @@ function Users(props){
             return row.email.toLowerCase().includes(e.target.value.toLowerCase())
         })
         setRecords(newData)
+        setIsfiltred(true)
     }
     
     const clickUpdateButton=(row)=>{

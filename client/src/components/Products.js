@@ -9,12 +9,17 @@ function Products(props){
     const [selectfilterBrand, setSelectfilterBrand] = useState('');
     const [selectfilterCategory, setSelectfilterCategory] = useState('');
     const [equivalent, setEquivalent] = useState('')
+    const [isfiltred, setIsfiltred] = useState(false);
 
     useEffect(() => {
-      //if (props.products !== records) {
+      if (props.products !== records) {
         props.getProducts()
-        setRecords(props.products)
-      //}
+        if(!isfiltred){
+          setRecords(props.products)
+          setIsfiltred(false)
+        }
+        
+      }
     }, [props.products]);
 
     const filterByName =(e)=>{
@@ -22,6 +27,7 @@ function Products(props){
             return prod.product_name.toLowerCase().includes(e.target.value.toLowerCase())
         })
         setRecords(newData)
+        setIsfiltred(true)
     }
     
     const filterByRef =(e)=>{
@@ -29,29 +35,32 @@ function Products(props){
             return prod.product_ref.toLowerCase().includes(e.target.value.toLowerCase())
         })
         setRecords(newData)
+        setIsfiltred(true)
     }
 
     const filterByCategory =(e)=>{
         const newData = props.products.filter(prod =>{ 
-            if(e.target.value === 'Category'){
-                return props.products
-            }else{
-                return prod.category_name.toLowerCase() === e.target.value.toLowerCase()
-            }
+          if(e.target.value === 'Category'){
+              return props.products
+          }else{
+              return prod.category_name.toLowerCase() === e.target.value.toLowerCase()
+          }
         })
         setRecords(newData)
+        setIsfiltred(true)
         setSelectfilterCategory(e.target.value)
     }
 
     const filterByBrand =(e)=>{
         const newData = props.products.filter(prod =>{ 
-            if(e.target.value === 'Brand'){
-                return props.products
-            }else{         
-                return prod.brand_name.toLowerCase() === e.target.value.toLowerCase()
-            }
+          if(e.target.value === 'Brand'){
+              return props.products
+          }else{         
+              return prod.brand_name.toLowerCase() === e.target.value.toLowerCase()
+          }
         })
         setRecords(newData)
+        setIsfiltred(true)
         setSelectfilterBrand(e.target.value)
     }
 

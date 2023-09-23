@@ -205,40 +205,32 @@
     justify-content: space-between;
 }
 
+#stock .img_roo .selecImg{
+    width: 35%;
+}
+
 #stock .img_roo img{
-    width: 50%;
+    width: 100%;
     height: 9rem;
-    margin-left: 0.5rem;
     border-radius: 5px;
     border: 1px solid gray;
 }
 
-#img-preview {
-    display: none;
-    width: 155px;
-    border: 2px dashed #333;  
-    margin-bottom: 20px;
-  }
-  #img-preview img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  [type="file"] {
+
+[type="file"] {
     height: 0;  
     width: 0;
     overflow: hidden;
-  }
-  [type="file"] + label {
+}
+[type="file"] + label {
     font-family: sans-serif;
-    background: #f44336;
-    border: 2px solid #f44336;
-    border-radius: 3px;
+    border-radius: 5px;
     color: #fff;
     cursor: pointer;
     transition: all 0.2s;
-  }
-  [type="file"] + label:hover {
+    margin-left: 0;
+}
+[type="file"] + label:hover {
     background-color: #fff;
     color: #f44336;
-  }
+}
