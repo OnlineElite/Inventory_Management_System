@@ -1,5 +1,4 @@
 let formidable = require("formidable");
-let fs = require("fs");
 
 const pool = require("../config/db");
 const { Product, ProductAction } = require("../models/Products.js");
