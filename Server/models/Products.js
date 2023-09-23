@@ -135,10 +135,19 @@ class ProductAction {
     return result.rows;
   }
 
-  static async updateProduct(product){
+  static async updateProductWithImage(product){
     const query = `update products set name = '${product.name}',ref = '${product.ref}',
      stock = ${product.quantity}, price = ${product.price}, Description =  '${product.desc}', category_id = ${product.category},
     brand_id = ${product.brand}, image = '${product.image}', updated_date = CURRENT_TIMESTAMP where ref = '${product.condition}'`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async updateProductWithOutImage(product){
+    const query = `update products set name = '${product.name}',ref = '${product.ref}',
+     stock = ${product.quantity}, price = ${product.price}, Description =  '${product.desc}', category_id = ${product.category},
+    brand_id = ${product.brand}, updated_date = CURRENT_TIMESTAMP where ref = '${product.condition}'`
 
     const result = await pool.query(query);
     return result.rows;

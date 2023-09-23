@@ -67,9 +67,11 @@ async function UpdatingProduct(req, res) {
     if (req.file){
       req.body.image = req.file.filename;
     }
-
-    await ProductAction.updateProduct(req.body);
-
+    if(req.body.image){
+      await ProductAction.updateProductWithImage(req.body);
+    }else{
+      await ProductAction.updateProductWithOutImage(req.body);
+    }
     res.status(201).json({ message: "Product updated successfully" });
   } catch (error) {
     console.error(error);

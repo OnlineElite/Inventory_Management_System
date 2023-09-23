@@ -13,17 +13,36 @@ function Navbar(props){
     const [showAlert, setShowAlert] = useState(false);
     const [totalItem, setTotalItem] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
+    const [favRecords, setFavRecords] = useState(props.infavories)
+    const [cartRecords, setCartRecords] = useState(props.incart)
+    const [isLiked, setIsLiked] = useState(false);
 
     let bringsData =()=>{
-        if(!props.isAdmin){
+        if(!props.isAdmin && props.isAuthenticated){
             props.getIncart(props.userfullName[2])
             props.getInfavories(props.userfullName[2])
+            setFavRecords(props.infavories)
+            setCartRecords(props.incart)
         }
     }
 
     useEffect(()=>{
        return bringsData() 
     }, [])
+
+    useEffect(()=>{
+        if (props.infavories !== favRecords) {
+            props.getInfavories(props.userfullName[2])
+            setFavRecords(props.infavories)
+        }
+    }, [props.infavories])
+
+    useEffect(()=>{
+        if (props.incart !== cartRecords) {
+            props.getIncart(props.userfullName[2])
+            setCartRecords(props.incart)
+        }
+    }, [props.incart])
 
     const hundellSubmit =(e)=>{
         e.preventDefault()
@@ -59,7 +78,8 @@ function Navbar(props){
         props.logoutset()
     }
 
-    const handledeleteFromCart =(id)=>{
+    const handledeleteFromCart =(id,e)=>{
+        e.preventDefault()
         props.deleteFromCart({product_id : id, user_id : props.userfullName[2] })
         if (props.deleteMsg) {
             setShowAlert(true);
@@ -67,6 +87,8 @@ function Navbar(props){
                 setShowAlert(false);
             }, 3000);
         }
+        props.getIncart(props.userfullName[2])
+        setCartRecords(props.incart)
     }
 
     const HandeleAddToCart =(id)=>{
@@ -76,10 +98,12 @@ function Navbar(props){
             setTimeout(() => {
                 setShowAlert(false);
             }, 3000);
-          } 
+        }
+        props.getIncart(props.userfullName[2])
     }
 
-    const handledeleteFromFavories =(id)=>{
+    const handledeleteFromFavories =(id,e)=>{
+        e.preventDefault()
         props.deleteFromFavories({product_id : id, user_id : props.userfullName[2] })
         if (props.deleteMsg) {
             setShowAlert(true);
@@ -87,6 +111,9 @@ function Navbar(props){
                 setShowAlert(false);
             }, 3000);
         }
+        props.getInfavories(props.userfullName[2])
+        setFavRecords(props.infavories)
+        
     }
 
     const handeleAddToFavories =(id)=>{
@@ -96,10 +123,13 @@ function Navbar(props){
           setTimeout(() => {
               setShowAlert(false);
           }, 3000);
-        } 
+        }
+        props.getInfavories(props.userfullName[2])
     }
     // handel Total Item & Total Amount
     const HandelTotalItem_TotalAmount=()=>{
+        
+
         if(props.incart){
             var total = 0;
             props.incart.forEach((product)=>{
@@ -112,28 +142,21 @@ function Navbar(props){
             setTotalItem(props.incart.length)
         }
 
-        /*const cardDivs = document.getElementsByClassName("product-carts");
-        var total = 0;
-        for (var item of cardDivs) {
-            const count = document.getElementById(`count-${item.dataset.ref}`);
-            let qualtity = count.textContent;
-            props.products.forEach((product) => {
-                if (product.product_ref === item.dataset.ref) {
-                total = total + Number(qualtity) * Number(product.product_price);
-                    console.log(total);
-                }
-            });
-            let TotalAmount = (total - (total * 20) / 100).toFixed(2);
-            setTotalAmount(TotalAmount);
-            setTotalItem(cardDivs.length)
-        }*/
     }
 
     useEffect(()=>{
         HandelTotalItem_TotalAmount()
+        /*if(cartRecords.length >0){
+            cartRecords.forEach((product)=>{
+                let isIn = props.infavories.includes(product.product_ref )
+                //let isIn = props.infavories.some(item => item.product_ref === product.product_ref )
+                setIsLiked(isIn)
+            })
+        }*/
     }, [])
 
-    const handelCheckout =()=>{
+    const handelCheckout =(e)=>{
+        e.preventDefault();
         var doc = new jsPDF()
         doc.text(20,20, 'this the default text');
         doc.setFont('courier');
@@ -208,8 +231,8 @@ function Navbar(props){
                                         <div className="modal-body " id='cart_modal_body'>
                                             <div className='row'>
                                                 <div className=' prods col-12 col-sm-5 col-md-7 col-lg-7 col-xl-8'>
-                                                    {props.incart?
-                                                    props.incart.map((product)=>(                                                      
+                                                    {cartRecords?
+                                                    cartRecords.map((product)=>(                                                      
                                                         <div key={product.product_ref}>
                                                             <div className='product_row product-carts' id="cart-page " data-ref={product.product_ref}>
                                                                 <div className='prodInfo'>
@@ -220,8 +243,8 @@ function Navbar(props){
                                                                                 : prodimg} alt='prodimage'/>
                                                                         </div>
                                                                         <div className='imgBotom'>
-                                                                            <button onClick={()=>handledeleteFromCart(product.product_id)} className='text-danger px-2'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
-                                                                            <i onClick={()=>handeleAddToFavories(product.product_id)} className=" mx-2 bi bi-heart-fill" style={{color : product.product_liked === true? 'red' : 'black'}}></i>
+                                                                            <button onClick={(e)=>handledeleteFromCart(product.product_id, e)} className='text-danger px-2'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
+                                                                            <i onClick={()=>handeleAddToFavories(product.product_id)} className=" mx-2 bi bi-heart-fill" style={{color : isLiked? 'red' : 'black'}}></i>
                                                                         </div>
                                                                     </div>
 
@@ -258,7 +281,7 @@ function Navbar(props){
                                                     <hr/>
                                                     <div className='ro '><p id="delievery">Free Delievery abouve</p><span id='delev' >100DH</span></div>
                                                     <hr/>
-                                                    <button className="cart-btn bg-danger" onClick={()=> handelCheckout()}>Checkout</button>
+                                                    <button className="cart-btn bg-danger" onClick={(e)=> handelCheckout(e)}>Checkout</button>
                                                 </div>
                                                 </div>
                                             </div>
@@ -280,8 +303,8 @@ function Navbar(props){
                                         <div className="modal-body " id='cart_modal_body'>
                                             <div className='rows'>
                                                 <div className=' prods'>
-                                                    {props.infavories?
-                                                    props.infavories.map((product)=>(
+                                                    {favRecords?
+                                                    favRecords.map((product)=>(
                                                         <div key={product.product_ref} >
                                                             <div className='product_row' id="cart-page">
                                                                 <div className='prodInfo'>
@@ -306,7 +329,7 @@ function Navbar(props){
                                                                     <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
                                                                     <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
                                                                     <div className='buttns'>
-                                                                        <button onClick={()=>handledeleteFromFavories(product.product_id)} className='text-white bg-danger'><i className="text-white bi bi-trash-fill"></i>DELETE</button>
+                                                                        <button onClick={(e)=>handledeleteFromFavories(product.product_id, e)} className='text-white bg-danger'><i className="text-white bi bi-trash-fill"></i>DELETE</button>
                                                                     </div>
                                                                 </div>
                                                             </div> 
