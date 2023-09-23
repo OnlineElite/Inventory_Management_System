@@ -7,6 +7,7 @@ const pool = new Pool({
   database: "Inventory",
   password: "Elite%159",
   port: 5432,
+  ssl: true,
 });
 
 module.exports = pool
