@@ -23,10 +23,15 @@ function ViewStock(props){
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
+    const [isfiltred, setIsfiltred] = useState(false);
+
     useEffect(() => {
       //if (props.products !== records) {
         props.getProducts()
-        setRecords(props.products)
+        if(!isfiltred){
+          setRecords(props.products)
+          setIsfiltred(false)
+        }
       //}
     }, [props.products]);
 
@@ -127,6 +132,7 @@ function ViewStock(props){
             }
         })
         setRecords(newData)
+        setIsfiltred(true)
         setSelectfilterCategory(e.target.value)
         
     }
@@ -150,9 +156,31 @@ function ViewStock(props){
         setSelectaddbrand(e.target.value);
     }
 
-    const clickUpdateButton=(row)=>{      
-        const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'upimage']
+    const clickUpdateButton=(row)=>{     
+      console.log(row) 
+        const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'selecImg']
         const inputs = ids.map((id) => document.getElementById(id))
+
+        const chooseFile = document.getElementById("upimage");
+        const imgPreview = document.getElementById("img-preview");
+        const selecImg = document.getElementById("selecImg");
+        chooseFile.addEventListener("change", function () {
+          getImgData();
+        });
+    
+        function getImgData() {
+          const files = chooseFile.files[0];
+          if (files) {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(files);
+            fileReader.addEventListener("load", function () {
+              imgPreview.style.display = "block";
+              selecImg.src = this.result;
+            });    
+          }
+        }
+
+        
         inputs.forEach((inp) => { 
             switch(inp.id){
                 case 'upname':
@@ -176,8 +204,12 @@ function ViewStock(props){
                 case 'upbrand':
                     inp.value = row.brand_name
                     break;
-                case 'upimage':
-                    inp.value = row.product_image 
+                case 'selecImg':
+
+                imgPreview.style.display = "block";
+              selecImg.src = `http://localhost:3005/uploads/${row.product_image}`;
+
+                    //inp.src = `http://localhost:3005/uploads/${row.product_image}`
                 default :
                     inp.value = ''
             }
@@ -755,15 +787,20 @@ function ViewStock(props){
                   </div>
                   <div className="roo">
                     <label htmlFor="upimage">Image :</label>
-                    {selectedImage? (
+                    {//selectedImage? (
                       <div className="img_roo ">
-                      <input id="upimage" type="file" name="upimage" accept="image/*" onChange={handleImageChange} />
+
+                        <div id="img-preview">
                           <img id="selecImg"  src={imageUrl} alt="Selected" />  
                         </div>
-                      ):
+                        
+                        <input className="p-0" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
+                        <label for="upimage">Choose File</label>
+                      </div>
+                      /*):
                       (
                         <input id="upimage" type="file" name="upimage" accept="image/*" onChange={handleImageChange} />
-                      )
+                      )*/
                     }
                   </div>
                 </div>
