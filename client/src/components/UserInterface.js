@@ -9,12 +9,14 @@ import Footer from '../components/Footer'
 import  '../styles/UserInterface.css'
 
 function UserInterface(props){
-  useEffect(()=>{
+    useEffect(()=>{
       props.getProducts()
       props.getCategories()
       props.getBrands()
       setRecords(props.products)
-    }, [])
+    }, [props.products])
+
+    
 
     const [records, setRecords] = useState(props.products)
     const [equivalent, setEquivalent] = useState('')
@@ -23,10 +25,11 @@ function UserInterface(props){
     const [showAlert, setShowAlert] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
 
-
     const handleShow=(ref)=>{
         let row = props.products.filter((product)=> product.product_ref === ref)
-         setIsLiked(row[0].product_liked)
+        let isIn = props.infavories.some(item => item.product_ref === ref )
+        setIsLiked(isIn)
+            
         setAddToCart(row[0].product_id)
         setAddToFavories(row[0].product_id)
         setEquivalent({category : row[0].category_name, ref : row[0].product_ref, quantity : row[0].product_stock})
@@ -256,7 +259,8 @@ function UserInterface(props){
                           </div>
                           <div className=' hr'></div>
                           <div className=" likePrices w-100 my-1">
-                            <i onClick={()=>handeleAddToFavories(addToFavories)} className=" mx-2 bi bi-heart-fill" style={{color : isLiked === true? 'red' : 'black'}}></i>
+                            <i onClick={()=>handeleAddToFavories(addToFavories)} className=" mx-2 bi bi-heart-fill" 
+                            style={{color : isLiked? 'red' : 'black'}}></i>
                             <div className='prices'>
                               <span className='remise mx-'>-20%</span>
                               <span id="detailOldPrice" className="Oldprice mx-2">{" "}</span>
@@ -375,7 +379,8 @@ const mapStateToProps =(state)=>{
         addMsg : state.addMsg,
         deleteMsg : state.deleteMsg,
         updateMsg : state.updateMsg,
-        userfullName : state.userfullName
+        userfullName : state.userfullName,
+        infavories : state.infavories
     }
 }
 

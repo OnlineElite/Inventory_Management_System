@@ -65,6 +65,7 @@ const userReducer = (state, action)=>{
             product_desc: newProducts.desc,
             category_name: newProducts.categoryName,
             brand_name: newProducts.brandName,
+            product_date : new Date().toISOString(),
             product_image: newProducts.product_image,
         };
         

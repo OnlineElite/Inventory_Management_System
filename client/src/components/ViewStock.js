@@ -23,12 +23,11 @@ function ViewStock(props){
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
 
-
     useEffect(() => {
-      if (props.products !== records) {
+      //if (props.products !== records) {
         props.getProducts()
         setRecords(props.products)
-      }
+      //}
     }, [props.products]);
 
 
@@ -178,11 +177,7 @@ function ViewStock(props){
                     inp.value = row.brand_name
                     break;
                 case 'upimage':
-                    inp.src = row.product_image != null
-                          ? `http://localhost:3005/uploads/${row.product_image}`
-                          : prodimg
-                          
-                    break;
+                    inp.value = row.product_image 
                 default :
                     inp.value = ''
             }
@@ -200,25 +195,23 @@ function ViewStock(props){
         let catName, brandName;
 
         inputs.forEach((inp) => { 
-
-            if(inp.name === 'upcategory' ) {
-                props.categories.forEach((item)=>{
-                    if(item.name === inp.value)
-                    values.push(item.id);
-
-                    catName = item.name;
-                })
-            }else if(inp.name === 'upbrand'){
-                props.brands.forEach((item)=>{
-                    if(item.name === inp.value) 
-                    values.push(item.id);
-                    brandName = item.name;
-                })
-            }else if (inp.id === 'upimage' && inp.files.length > 0) {
-                values.push(inp.files[0].name);
-            }else{
-                values.push(inp.value);
-            }
+          if(inp.name === 'upcategory' ) {
+              props.categories.forEach((item)=>{
+                  if(item.name === inp.value)
+                  values.push(item.id);
+                  catName = item.name;
+              })
+          }else if(inp.name === 'upbrand'){
+              props.brands.forEach((item)=>{
+                  if(item.name === inp.value) 
+                  values.push(item.id);
+                  brandName = item.name;
+              })
+          }else if (inp.id === 'upimage' && inp.files.length > 0) {
+              values.push(inp.files[0].name);
+          }else{
+              values.push(inp.value);
+          }
         })
         
         const formData = new FormData();
@@ -233,31 +226,31 @@ function ViewStock(props){
         formData.append("brandName", brandName);
         formData.append('condition', deleteCondition);
         if (inputs[7].type === "file" && inputs[7].files.length > 0) {
-            formData.append("image", inputs[7].files[0]);
-        }
-
-        function getExtension(filename) {
+          formData.append("image", inputs[7].files[0]);
+          function getExtension(filename) {
             return filename.split('.').pop()
-        }  
-        let extention = getExtension(inputs[7].files[0].name).toLowerCase()
-        if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
-            
+          }  
+          let extention = getExtension(inputs[7].files[0].name).toLowerCase()
+          if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){ 
             props.updateProduct(formData)
-        }else{
-            
+          }else{  
             setExtentionMsg('File extention not suported plase enter a file with(jpg, png or webp)')
             if (extentionMsg) {
-                setShowAlert(true);
-                setTimeout(() => {
-                    setShowAlert(false);
-                }, 3000);
+              setShowAlert(true);
+              setTimeout(() => {
+                  setShowAlert(false);
+              }, 3000);
             } 
+          }
+        }else{
+          props.updateProduct(formData)
         }
+
         if (props.updateMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
+          setShowAlert(true);
+          setTimeout(() => {
+              setShowAlert(false);
+          }, 3000);
         } 
         handleCloseModal()     
         setRecords(props.products) 
@@ -870,7 +863,7 @@ function ViewStock(props){
                               product.category_name === equivalent.category &&
                                 product.product_ref !== equivalent.ref
                             ) ? (
-                              <span className="text-success">
+                              <span className="text-success" key={product.product_ref}>
                                 {" "}
                                 {product.product_ref},{" "}
                               </span>
@@ -904,6 +897,7 @@ function ViewStock(props){
                         <div
                           className="card border-primary mb-3"
                           style={{ maxWidth: "9.2rem" }}
+                          key={product.product_ref}
                         >
                           <div className="card-body text-primary infor ">
                             <div className="lines">

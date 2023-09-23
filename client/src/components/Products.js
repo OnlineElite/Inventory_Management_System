@@ -11,10 +11,10 @@ function Products(props){
     const [equivalent, setEquivalent] = useState('')
 
     useEffect(() => {
-      if (props.products !== records) {
+      //if (props.products !== records) {
         props.getProducts()
         setRecords(props.products)
-      }
+      //}
     }, [props.products]);
 
     const filterByName =(e)=>{

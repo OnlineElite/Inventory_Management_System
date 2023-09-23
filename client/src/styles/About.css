@@ -4,6 +4,12 @@
     margin: 0;
 }
 
+#about{
+    background-image: url('../images/contactBody.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 #about .container{
     height: fit-content;
 }
@@ -20,4 +26,16 @@
 #about .vidBox{
     width: 100%;
     height: 50%;
+}
+
+#about h3{
+    color:chartreuse;
+}
+
+#about ul li,#about p, #about h1 {
+    color: white;
+}
+
+#about ul li strong{
+    color: yellow;
 }
