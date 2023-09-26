@@ -217,7 +217,7 @@
 }
 
 
-[type="file"] {
+/*[type="file"] {
     height: 0;  
     width: 0;
     overflow: hidden;
@@ -233,4 +233,4 @@
 [type="file"] + label:hover {
     background-color: #fff;
     color: #f44336;
-}
+}*/
