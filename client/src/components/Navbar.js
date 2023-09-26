@@ -16,6 +16,7 @@ function Navbar(props){
     const [favRecords, setFavRecords] = useState(props.infavories)
     const [cartRecords, setCartRecords] = useState(props.incart)
     const [isLiked, setIsLiked] = useState(false);
+    const imagesURL = process.env.REACT_APP_API_IMAGES_URL; 
 
     let bringsData =()=>{
         if(!props.isAdmin && props.isAuthenticated){
@@ -236,7 +237,7 @@ function Navbar(props){
                                                                     <div className='prodimg'>
                                                                         <div className='imag'> 
                                                                             <img src={product.product_image != null
-                                                                                ? `http://localhost:3005/uploads/${product.product_image}`
+                                                                                ? `${imagesURL}/${product.product_image}`
                                                                                 : prodimg} alt='prodimage'/>
                                                                         </div>
                                                                         <div className='imgBotom'>
@@ -308,7 +309,7 @@ function Navbar(props){
                                                                     <div className='prodimg h-100'>
                                                                         <div className='imag h-100'> 
                                                                             <img src={product.product_image != null
-                                                                                ? `http://localhost:3005/uploads/${product.product_image}`
+                                                                                ? `${imagesURL}/${product.product_image}`
                                                                                 : prodimg} alt='prodimage'/>
                                                                         </div>
                                                                     </div>

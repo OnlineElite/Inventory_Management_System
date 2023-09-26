@@ -678,7 +678,7 @@ function ViewStock(props){
                     {selectedImage? (
                       <div className="img_roo ">
                         <input className="selectimg" id="image" type="file" name="image" accept="image/*" onChange={handleImageChange} />
-                        <img  src={imageUrl} alt="Selected" />  
+                        <img id="addimage" src={imageUrl} alt="Selected" />  
                       </div>
                     ):
                     (
