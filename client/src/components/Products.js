@@ -10,6 +10,7 @@ function Products(props){
     const [selectfilterCategory, setSelectfilterCategory] = useState('');
     const [equivalent, setEquivalent] = useState('')
     const [isfiltred, setIsfiltred] = useState(false);
+    const imagesURL = process.env.REACT_APP_API_IMAGES_URL; 
 
     useEffect(() => {
       if (props.products !== records) {
@@ -95,7 +96,7 @@ function Products(props){
                     break;
                   case 'prodImage':
                     sp.src = row[0].product_image != null
-                          ? `http://localhost:3005/uploads/${row[0].product_image}`
+                          ? `${imagesURL}/${row[0].product_image}`
                           : prodimg
                         
                     break;
@@ -190,7 +191,7 @@ function Products(props){
                     <img
                       src={
                         product.product_image != null
-                          ? "http://localhost:3005/uploads/" + product.product_image
+                          ? `${imagesURL}/` + product.product_image
                           : prodimg
                       }
                       className="card-img-top"

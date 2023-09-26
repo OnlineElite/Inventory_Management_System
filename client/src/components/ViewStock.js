@@ -22,8 +22,8 @@ function ViewStock(props){
     const [selectedRange, setSelectedRange] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
-
     const [isfiltred, setIsfiltred] = useState(false);
+    const imagesURL = process.env.REACT_APP_API_IMAGES_URL; 
 
     useEffect(() => {
       if (props.products !== records) {
@@ -210,9 +210,8 @@ function ViewStock(props){
                 case 'selecImg':
 
                 imgPreview.style.display = "block";
-              selecImg.src = `http://localhost:3005/uploads/${row.product_image}`;
+                selecImg.src = `${imagesURL}/${row.product_image}`;
 
-                    //inp.src = `http://localhost:3005/uploads/${row.product_image}`
                 default :
                     inp.value = ''
             }
@@ -331,7 +330,7 @@ function ViewStock(props){
                     break;
                 case 'prodImg':
                     sp.src = row.product_image != null
-                          ? `http://localhost:3005/uploads/${row.product_image}`
+                          ? `${imagesURL}/${row.product_image}`
                           : prodimg
                         break;
                 default :

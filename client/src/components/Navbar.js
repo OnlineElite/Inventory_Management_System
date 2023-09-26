@@ -146,13 +146,10 @@ function Navbar(props){
 
     useEffect(()=>{
         HandelTotalItem_TotalAmount()
-        /*if(cartRecords.length >0){
-            cartRecords.forEach((product)=>{
-                let isIn = props.infavories.includes(product.product_ref )
-                //let isIn = props.infavories.some(item => item.product_ref === product.product_ref )
-                setIsLiked(isIn)
-            })
-        }*/
+        props.infavories.forEach((prod)=>{
+            let isIn = props.incart.some(item => item.product_ref === prod.product_ref )
+            setIsLiked(isIn)
+        })
     }, [])
 
     const handelCheckout =(e)=>{

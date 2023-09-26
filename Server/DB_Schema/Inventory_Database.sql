@@ -22,7 +22,7 @@ CREATE TABLE login (
 
 );
 
-update users set admin = true where email = 'Jamalboujbari@gmail.com'
+update users set admin = true where email = 'admin@gmail.com'
 
 --------Stock---------------*/
 create table categories(
