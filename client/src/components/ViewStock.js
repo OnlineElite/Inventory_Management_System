@@ -787,7 +787,7 @@ function ViewStock(props){
                     <label htmlFor="updesc">Description :</label>
                     <textarea id="updesc" type="text" name="updesc" />
                   </div>
-                  <div className="roo">
+                  <div className="roo" id="up_Image">
                     <label htmlFor="upimage">Image :</label>
                       <div className="img_roo">
                         <div className="">

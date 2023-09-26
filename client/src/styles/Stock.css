@@ -217,12 +217,12 @@
 }
 
 
-/*[type="file"] {
+#stock  #up_Image [type="file"] {
     height: 0;  
     width: 0;
     overflow: hidden;
 }
-[type="file"] + label {
+#stock  #up_Image [type="file"] + label {
     font-family: sans-serif;
     border-radius: 5px;
     color: #fff;
@@ -230,7 +230,7 @@
     transition: all 0.2s;
     margin-left: 0;
 }
-[type="file"] + label:hover {
+#stock  #up_Image [type="file"] + label:hover {
     background-color: #fff;
     color: #f44336;
-}*/
+}
