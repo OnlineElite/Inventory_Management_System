@@ -6,7 +6,7 @@
 
 #about{
     /*background-image: url('../images/contactBody.jpg');*/
-    background-color: lightgrey;
+    background-color: rgb(240, 238, 238);
     background-size: cover;
     background-attachment: fixed;
 }
@@ -30,7 +30,7 @@
 }
 
 #about h3{
-    color:chartreuse;
+    color:rgb(113, 224, 1);
 }
 
 #about ul li,#about p, #about h1 {
