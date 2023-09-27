@@ -202,7 +202,7 @@
     width: 80%;
     display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 #stock .img_roo .selecImg{
