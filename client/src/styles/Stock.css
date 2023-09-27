@@ -221,7 +221,7 @@
     height: 0;  
     width: 0;
     overflow: hidden;
-}*/
+}
 #stock  #up_Image [type="file"] + label {
     font-family: sans-serif;
     border-radius: 5px;
@@ -237,4 +237,4 @@
 #stock #addimage{
     width: 70%;
     margin-left: 1.5rem;
-}
+}*/
