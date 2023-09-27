@@ -5,7 +5,7 @@
 }
 
 #about{
-    background-image: url('../images/contactBody.jpg');
+    /*background-image: url('../images/contactBody.jpg');*/
     background-size: cover;
     background-attachment: fixed;
 }
