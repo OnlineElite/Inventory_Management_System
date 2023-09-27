@@ -217,11 +217,11 @@
 }
 
 
-[type="file"] {
+/*[type="file"] {
     height: 0;  
     width: 0;
     overflow: hidden;
-}
+}*/
 #stock  #up_Image [type="file"] + label {
     font-family: sans-serif;
     border-radius: 5px;
