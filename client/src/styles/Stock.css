@@ -50,6 +50,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 3px;
+    background-color: orange;
 }
 #stock .modal-body .roo label{
     width: fit-content;
@@ -202,7 +203,8 @@
     width: 80%;
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: center;
+    background-color: blue;
 }
 
 #stock .img_roo .selecImg{
