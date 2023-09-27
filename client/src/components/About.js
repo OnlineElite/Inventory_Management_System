@@ -94,7 +94,7 @@ function About(){
                                 <br/>
                                 Sincerely,
                                 <br/>
-                                The [Your Store Name] Team
+                                The <strong>Quality Assurance:</strong> Team
                             </p>
                         </div>
                     </div>

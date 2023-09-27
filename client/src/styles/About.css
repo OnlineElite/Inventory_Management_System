@@ -34,9 +34,12 @@
 }
 
 #about ul li,#about p, #about h1 {
-    color: orange;
+    color: black;
+    
 }
 
-#about ul li strong{
+
+#about ul li strong, #about ul li{
     color: yellow;
+    list-style-type: georgian;
 }
