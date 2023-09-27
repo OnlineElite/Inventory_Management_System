@@ -678,7 +678,7 @@ function ViewStock(props){
                       <div className="img_roo">
                         <div className="">
                           <label for="image" className="bg-primary text-white p-1 border rounded">Choose File</label>
-                          <input className="p-0 w-25" type="file" id="image" name="image" alt="Selected"  onChange={handleImageChange} accept="image/*" />
+                          <input className="p-0 w-25 inpChoose" type="file" id="image" name="image" alt="Selected"  onChange={handleImageChange} accept="image/*" />
                         </div>
                         <div id="img-preview" className="selecImg">
                           <img id="addimage"  src={imageUrl} alt="Selected" />  
@@ -804,7 +804,7 @@ function ViewStock(props){
                       <div className="img_roo">
                         <div className="">
                           <label for="upimage" className="bg-primary text-white p-1 border rounded">Choose File</label>
-                          <input className="p-0 w-25" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
+                          <input className="p-0 w-25 inpChoose" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
                         </div>
                         <div id="img-preview" className="selecImg">
                           <img id="selecImg"  src={imageUrl} alt="Selected" />  

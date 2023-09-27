@@ -208,6 +208,9 @@
 #stock .img_roo .selecImg{
     width: 35%;
 }
+#stock .img_roo .inpChoose{
+    display: none;
+}
 
 #stock .img_roo img{
     width: 100%;
