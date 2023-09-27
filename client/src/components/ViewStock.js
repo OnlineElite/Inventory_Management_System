@@ -673,7 +673,19 @@ function ViewStock(props){
                     <label htmlFor="desc">Description :</label>
                     <textarea id="desc" type="text" name="desc" />
                   </div>
-                  <div className="roo">
+                  <div className="roo" id="up_Image">
+                    <label htmlFor="image">Image :</label>
+                      <div className="img_roo">
+                        <div className="">
+                          <label for="image" className="bg-primary text-white p-1 border rounded">Choose File</label>
+                          <input className="p-0 w-25" type="file" id="image" name="image" alt="Selected"  onChange={handleImageChange} accept="image/*" />
+                        </div>
+                        <div id="img-preview" className="selecImg">
+                          <img id="addimage"  src={imageUrl} alt="Selected" />  
+                        </div>
+                      </div>
+                  </div>
+                  {/*<div className="roo">
                     <label htmlFor="image">Image :</label>
                     {selectedImage? (
                       <div className="img_roo ">
@@ -684,8 +696,8 @@ function ViewStock(props){
                     (
                       <input id="image" type="file" name="image" accept="image/*" onChange={handleImageChange} />
                     )
-                  }
-                  </div>
+                    }
+                  </div>*/}
                 </div>
 
                 <div className="modal-footer">
