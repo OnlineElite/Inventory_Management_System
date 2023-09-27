@@ -11,7 +11,7 @@ function Footer (props){
                         <h5>OUR CATEGORIES:</h5>
                         <ul>
                             {props.categories.map((category)=>(
-                                <li key={category.name}>{category.name}</li>
+                                <li className='text-white' key={category.name}>{category.name}</li>
                             ))}
                         </ul>
                 </div>
@@ -19,25 +19,25 @@ function Footer (props){
                         <h5>TOP BRANDS:</h5>
                         <ul>
                             {props.brands.map((brand)=>(
-                                <li key={brand.name}>{brand.name}</li>
+                                <li className='text-white' key={brand.name}>{brand.name}</li>
                             ))}
                         </ul>
                 </div>
                 <div className='col-12 col-sm-12 col-md-4 col col-lg-4'>
                         <h5>CONTACT US:</h5>
                         <ul>
-                            <li>+212 639 411 280</li>
-                            <li>jamalboujbari@gmail.com</li>
-                            <li>github.com/OnlineElite</li>
-                            <li>linkedin.com/in/jamal-boujbari</li>
-                            <li>facebook.com/jamal.boujbari</li>
+                            <li className='text-white'>+212 639 411 280</li>
+                            <li className='text-white'>jamalboujbari@gmail.com</li>
+                            <li className='text-white'>github.com/OnlineElite</li>
+                            <li className='text-white'>linkedin.com/in/jamal-boujbari</li>
+                            <li className='text-white'>facebook.com/jamal.boujbari</li>
                         </ul>
                         <h5>FOLLOW US ON:</h5>
                         <span className='d-flex justify-content-between w-25'>
-                            <a href='https://www.facebook.com/jamal.boujbari'><i className="bi bi-facebook"></i></a>
-                            <a href='https://linkedin.com/in/jamal-boujbari-937121212'><i className="bi bi-linkedin"></i></a>
-                            <a href='https://github.com/OnlineElite'><i className="bi bi-github"></i></a>
-                            <a href='https://t.me/JML_Elite'><i className="bi bi-telegram"></i></a>
+                            <a href='https://www.facebook.com/jamal.boujbari'><i className="bi bi-facebook text-white"></i></a>
+                            <a href='https://linkedin.com/in/jamal-boujbari-937121212'><i className="bi bi-linkedin text-white"></i></a>
+                            <a href='https://github.com/OnlineElite'><i className="bi bi-github text-white"></i></a>
+                            <a href='https://t.me/JML_Elite'><i className="bi bi-telegram text-white"></i></a>
                         </span>
                 </div>
             </div>

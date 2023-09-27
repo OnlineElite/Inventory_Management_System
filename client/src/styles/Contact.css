@@ -5,7 +5,8 @@
 }
 
 #contact{
-    background-image: url('../images/contactBody.jpg');
+    /*background-image: url('../images/contactBody.jpg');*/
+    background-color: rgb(240, 238, 238);
     background-size: cover;
     background-attachment: fixed;
 }
