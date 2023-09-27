@@ -44,7 +44,7 @@ function Contact(){
             <div className='body'>
                 
                 <div className='container'>
-                    <h1 className='w-100 text-center text-white mt-5'>GET IN TOUCH</h1>
+                    <h1 className='w-100 text-center text-black mt-5'>GET IN TOUCH</h1>
                     <div className='row my-5'>
                         <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
                             <form onSubmit={handleSend} id='contForm'>
