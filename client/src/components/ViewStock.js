@@ -681,23 +681,11 @@ function ViewStock(props){
                           <input className="p-0 w-25 inpChoose" type="file" id="image" name="image" alt="Selected"  onChange={handleImageChange} accept="image/*" />
                         </div>
                         <div id="img-preview" className="selecImg">
-                          <img id="addimage"  src={imageUrl} alt="Selected" />  
+                          {imageUrl? <img id="addimage"  src={imageUrl} alt="Selected" /> : ''}
                         </div>
                       </div>
                   </div>
-                  {/*<div className="roo">
-                    <label htmlFor="image">Image :</label>
-                    {selectedImage? (
-                      <div className="img_roo ">
-                        <input className="selectimg" id="image" type="file" name="image" accept="image/*" onChange={handleImageChange} />
-                        <img id="addimage" src={imageUrl} alt="Selected" />  
-                      </div>
-                    ):
-                    (
-                      <input id="image" type="file" name="image" accept="image/*" onChange={handleImageChange} />
-                    )
-                    }
-                  </div>*/}
+                  
                 </div>
 
                 <div className="modal-footer">
@@ -807,7 +795,8 @@ function ViewStock(props){
                         <input className="p-0 w-25 inpChoose" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
                       </div>
                       <div id="img-preview" className="selecImg">
-                        <img id="selecImg"  src={imageUrl} alt="Selected" />  
+                        {imageUrl? <img id="selecImg"  src={imageUrl} alt="Selected" /> : ''}
+                         
                       </div>
                     </div>
                   </div>
