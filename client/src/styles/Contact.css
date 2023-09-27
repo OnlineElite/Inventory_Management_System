@@ -41,6 +41,9 @@
     height: 12rem;
 }
 
+#contact input::placeholder, #contact textarea::placeholder{
+    color: white;
+}
 
 #contact button{
     padding-block: 5px;
