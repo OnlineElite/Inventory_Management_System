@@ -12,7 +12,7 @@
 }
 
 #contact .contactInfo{
-    background-color: rgba(10, 106, 185, 0.315);
+    background-color: rgb(3, 95, 170);
     border-radius: 4px;
     width: fit-content;
     height: 100%;
@@ -33,6 +33,8 @@
    outline: none;
    margin-block: 5px;
    border-radius: 4px;
+   background-color: rgb(3, 95, 170);
+   color: white;
 }
 
 #contact textarea {
@@ -43,6 +45,10 @@
 #contact button{
     padding-block: 5px;
     margin-top: 0.2rem;
+}
+
+#contact h1{
+    color: black;
 }
 
 #contact h5{
