@@ -217,7 +217,7 @@
 }
 
 
-/*[type="file"] {
+[type="file"] {
     height: 0;  
     width: 0;
     overflow: hidden;
@@ -237,4 +237,4 @@
 #stock #addimage{
     width: 70%;
     margin-left: 1.5rem;
-}*/
+}
