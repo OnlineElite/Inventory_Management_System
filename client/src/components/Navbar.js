@@ -32,16 +32,20 @@ function Navbar(props){
     }, [])
 
     useEffect(()=>{
-        if (props.infavories !== favRecords) {
-            props.getInfavories(props.userfullName[2])
-            setFavRecords(props.infavories)
+        if(!props.isAdmin && props.isAuthenticated){
+            if (props.infavories !== favRecords) {
+                props.getInfavories(props.userfullName[2])
+                setFavRecords(props.infavories)
+            }
         }
     }, [props.infavories])
 
     useEffect(()=>{
-        if (props.incart !== cartRecords) {
-            props.getIncart(props.userfullName[2])
-            setCartRecords(props.incart)
+        if(!props.isAdmin && props.isAuthenticated){         
+            if (props.incart !== cartRecords) {
+                props.getIncart(props.userfullName[2])
+                setCartRecords(props.incart)
+            }
         }
     }, [props.incart])
 
