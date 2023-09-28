@@ -226,7 +226,7 @@ function UserInterface(props){
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
               >
-                <div className="modal-dialog modal-xl view">
+                <div className="modal-dialog modal-lg view">
                   <div className="modal-content">
                     <div className="modal-header">
                       <h3 className="modal-title" id="exampleModalLabel">

@@ -47,7 +47,7 @@
 
 .userInterface .container .card .card-img-top_equivalent{
     border-radius: 6px;
-    height: 8rem;
+    height: 6rem;
     padding: 0.2rem;
 }
 
@@ -112,7 +112,7 @@
 .userInterface .card-body .line_prices_equivalent .prices{
     color:black;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 .userInterface .card-body .line_old_price .old_price {
@@ -181,8 +181,8 @@
 
 .userInterface .equivals .card{
     background-color: rgba(236, 248, 252, 0.979);
-    min-width: 9.2rem;
-    max-height: 12rem;
+    min-width: 9.3rem;
+    max-height: 13rem;
     margin-inline: 0.5rem;
 }
 
