@@ -257,7 +257,7 @@ function UserInterface(props){
                           </div>
                           
                           <div className=" my-1">
-                            <span  id="detailQuantity" className="quant" style={{color: equivalent.quantity === 0 ? "red" : "green" }}>{equivalent.quantity === 0 ? "Available" : "not Available"}</span>
+                            <span  id="detailQuantity" className="quant" style={{color: equivalent.quantity === 0 ? "red" : "green" }}>{equivalent.quantity !== 0 ? "Available" : "not Available"}</span>
                           </div>
                           {equivalent.quantity === 0 ? 
                             <button style={{backgroundColor: "gray" }} disabled ><i className="bi bi-cart-plus-fill mx-2"></i>Add to cart</button> 
