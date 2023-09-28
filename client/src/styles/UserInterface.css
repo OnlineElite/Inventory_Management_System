@@ -39,7 +39,7 @@
     height: fit-content;
 }
 
-.userInterface .container .card img{
+.userInterface .container .card .card-img-top{
     border-radius: 6px;
     height: 10rem;
     padding: 1rem;

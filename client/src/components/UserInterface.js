@@ -37,13 +37,10 @@ function UserInterface(props){
         setAddToCart(row[0].product_id)
         setAddToFavories(row[0].product_id)
         setEquivalent({category : row[0].category_name, ref : row[0].product_ref, quantity : row[0].product_stock})
-        const ids = [ 'detailQuantity', 'detailPrice','detailDescription', 'prodImage','detailOldPrice']
+        const ids = ['detailPrice','detailDescription', 'prodImage','detailOldPrice']
         const spans = ids.map((id) => document.getElementById(id))
         spans.forEach((sp) => {
             switch(sp.id){
-                case 'detailQuantity':
-                    sp.textContent = 'units left '+row[0].product_stock
-                    break;
                 case 'detailPrice':
                     sp.textContent = ((row[0].product_price)-(row[0].product_price)*20/100).toFixed(2)+'DH'
                     break;
@@ -260,7 +257,7 @@ function UserInterface(props){
                           </div>
                           
                           <div className=" my-1">
-                            <span  id="detailQuantity" className="quant" style={{color: equivalent.quantity === 0 ? "gray" : "orange" }}>{" "}</span>
+                            <span  id="detailQuantity" className="quant" style={{color: equivalent.quantity === 0 ? "red" : "green" }}>{equivalent.quantity === 0 ? "Available" : "not Available"}</span>
                           </div>
                           {equivalent.quantity === 0 ? 
                             <button style={{backgroundColor: "gray" }} disabled ><i className="bi bi-cart-plus-fill mx-2"></i>Add to cart</button> 
@@ -297,7 +294,7 @@ function UserInterface(props){
                               />
                               <div className="card-body text-primary infor ">
                                 <div className="line_desc_equivalent">
-                                  {product.product_name} {product.product_desc}
+                                  {product.product_name}
                                 </div>
                                 <div className="line_prices_equivalent ">
                                   <span className='prices'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'Dhs'}</span>
@@ -305,49 +302,6 @@ function UserInterface(props){
                                 <div className="line_old_price">
                                   <span className="old_price"> {" "}{product.product_price}Dhs{" "} </span>
                                 </div>
-                                {/*<div className="lines">
-                                  <span className="detail">Reference:</span>
-                                  <span className="result">
-                                    {" "}
-                                    {product.product_ref}{" "}
-                                  </span>
-                                </div>
-                                <div className="lines">
-                                  <span className="detail">Name:</span>
-                                  <span className="result">
-                                    {" "}
-                                    {product.product_name}{" "}
-                                  </span>
-                                </div>
-                                <div className="lines">
-                                  <span className="detail">Brand:</span>
-                                  <span className="result">
-                                    {" "}
-                                    {product.brand_name}{" "}
-                                  </span>
-                                </div>
-                                <div className="lines">
-                                  <span className="detail">Quantity:</span>
-                                  <span
-                                    className="result"
-                                    style={{
-                                      color:
-                                        product.product_stock === 0
-                                          ? "red"
-                                          : "black",
-                                    }}
-                                  >
-                                    {" "}
-                                    {product.product_stock}{" "}
-                                  </span>
-                                </div>
-                                <div className="lines">
-                                  <span className="detail">Price :</span>
-                                  <span className="result text-danger">
-                                    {" "}
-                                    {product.product_price}DH{" "}
-                                  </span>
-                                </div>*/}
                               </div>
                               <div className=" c-footer">
                                 <button
