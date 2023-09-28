@@ -146,11 +146,11 @@
 }
 
 .userInterface .modal-body .row .right{
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 95%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .userInterface .modal-body .detail{
@@ -190,9 +190,6 @@
 .userInterface .view .modal-body .row{
     width: 100%;
     height: fit-content;
-    /*display: flex;
-    align-items: center;
-    justify-content: space-between;*/
     padding-inline: 1rem;
 }
 .userInterface .modal-body .price{
