@@ -196,6 +196,9 @@ function UserInterface(props){
                             alt="product"
                           />
                           <div className="card-body">
+                            <div className="line_desc">
+                              {product.product_name} {product.product_desc}
+                            </div>
                             <div className="line_prices ">
                               <span className='prices'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'Dhs'}</span>
                             </div>
@@ -203,9 +206,6 @@ function UserInterface(props){
                               <span className="old_price"> {" "}{product.product_price}Dhs{" "} </span>
                             </div>
                           </div>
-                            <div className="line_desc">
-                              {product.product_name} {product.product_desc}
-                            </div>
                           <div className="card-footer">
                             <button className="btn btn-primary showMore">
                               Show Details
