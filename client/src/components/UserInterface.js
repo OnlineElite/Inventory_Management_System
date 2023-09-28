@@ -201,14 +201,14 @@ function UserInterface(props){
                               <span className="result">{product.product_name} {product.product_desc} </span>
                             </div>
                             <div className="lines">
-                              {/*<span className="detail">Name:</span>
-                              <span className="result"> {product.product_name} </span>*/}
-                              <span className="result price"> {" "}{product.product_price}DH{" "} </span>
-                            </div>
-                            <div className="lines">
                               {/*<span className="detail">Brand:</span>
                               <span className="result"> {product.brand_name} </span>*/}
-                              <span className='result oldprice'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</span>
+                              <span className='result text-black font-weight-bold'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</span>
+                            </div>
+                            <div className="lines">
+                              {/*<span className="detail">Name:</span>
+                              <span className="result"> {product.product_name} </span>*/}
+                              <span className="result text-muted"> {" "}{product.product_price}DH{" "} </span>
                             </div>
                            { /*<div className="lines">
                               <span className="detail">Quantity:</span>
