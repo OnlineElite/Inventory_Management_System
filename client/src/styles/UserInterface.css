@@ -83,7 +83,7 @@
 
 .userInterface .card-body .line_desc {
     max-height: 4em;
-    line-height: 0.5em;
+    line-height: 4em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
