@@ -196,39 +196,17 @@ function UserInterface(props){
                             alt="product"
                           />
                           <div className="card-body">
-                            <div className="line_desc">
-                              {/*<span className="detail">Reference:</span>*/}
-                              {product.product_name} {product.product_desc}
-                            </div>
                             <div className="line_prices ">
-                              {/*<span className="detail">Brand:</span>
-                              <span className="result"> {product.brand_name} </span>*/}
-                              <span className='prices '> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</span>
+                              <span className='prices'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</span>
                             </div>
                             <div className="line_old_price">
-                              {/*<span className="detail">Name:</span>
-                              <span className="result"> {product.product_name} </span>*/}
                               <span className="old_price"> {" "}{product.product_price}DH{" "} </span>
                             </div>
-                           { /*<div className="lines">
-                              <span className="detail">Quantity:</span>
-                              <span
-                                className="result"
-                                style={{
-                                  color:
-                                    product.product_stock === 0 ? "red" : "black",
-                                }}
-                              >
-                                {" "}
-                                {product.product_stock}{" "}
-                              </span>
-                            </div>*/}
-                            {/*<div className="lines">
-                              <span className="detail">Price :</span>
-                              <span className="result price"> {" "}{product.product_price}DH{" "} </span>
-                            </div>*/}
                           </div>
-                          <div className="card-footer text-muted">
+                            <div className="line_desc">
+                              {product.product_name} {product.product_desc}
+                            </div>
+                          <div className="card-footer">
                             <button className="btn btn-primary showMore">
                               Show Details
                             </button>

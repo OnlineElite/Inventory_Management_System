@@ -83,18 +83,25 @@
 
 .userInterface .card-body .line_desc {
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Display only two lines of text */
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
-    
-    /*max-height: 4em;
-    line-height: 4em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: rgb(24, 131, 3);
-    background-color: rgb(198, 223, 235);*/
+    text-overflow: ellipsis; 
+}
+
+.userInterface .card-body .line_prices{
+
+}
+
+.userInterface .card-body .line_prices .prices{
+    color:black;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.userInterface .card-body .line_old_price .old_price {
+    color: gray;
+    text-decoration: line-through;
 }
 
 .userInterface .card-footer{
