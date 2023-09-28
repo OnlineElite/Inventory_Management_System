@@ -81,18 +81,17 @@
 }
 
 .userInterface .card-body .line_desc {
-    width: 100%;
-    height: fit-content;
+    background-color: lightskyblue;
 }
 
 .userInterface .card-body .line_desc .desc {
-    width: 100%;
-    max-height: 2em;
-    line-height: 1em; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    white-space: wrap;
+    max-height: 3em;
+    line-height: 1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     color: blue;
+    background-color: orange;
 }
 
 .userInterface .card-footer{
