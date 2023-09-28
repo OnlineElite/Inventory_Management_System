@@ -73,13 +73,23 @@
     padding: 5px;
 }
 
-.userInterface .price{
-    color: rgb(5, 177, 5);
-}
 
 .userInterface .card-body .detail{
     color: blue;
     font-weight: bold;
+}
+
+.userInterface .card-body .line_desc {
+    width: 100%;
+    height: fit-content;
+}
+
+.userInterface .card-body .line_desc .desc {
+    max-height: 2em;
+    line-height: 1em; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
 }
 
 .userInterface .card-footer{
