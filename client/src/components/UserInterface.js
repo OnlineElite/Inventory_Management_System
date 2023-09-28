@@ -241,7 +241,7 @@ function UserInterface(props){
                     </div>
                     <div className="modal-body">
                       <div className="row">
-                        <div className=" information col-12 col-sm-6 col-md-8 col-lg-8 bg-danger">
+                        <div className=" information col-12 col-sm-6 col-md-8 col-lg-8">
                           <div className="  my-1">
                             <span id="detailDescription" className="desc">{" "}</span>
                           </div>
@@ -264,7 +264,7 @@ function UserInterface(props){
                             :<button onClick={()=>HandeleAddToCart(addToCart)} className='bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
                           }
                         </div>
-                        <div className=" right col-12 col-sm-6 col-md-4 col-lg-4 bg-warning">
+                        <div className="col-12 col-sm-6 col-md-4 col-lg-4 bg-warning">
                           <div className="productImage bg-info">
                             {" "}
                             <img id='prodImage' src='' alt="product" />{" "}
