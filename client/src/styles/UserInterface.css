@@ -132,8 +132,8 @@
 /*--------show modal---------*/
 
 .userInterface  .productImage{
-    width: 80%;
-    height: 80%;
+    width: 90%;
+    height: 100%;
     background-color: lightgrey;
     border: 1px solid rgb(185, 183, 183);
     border-radius: 6px;
