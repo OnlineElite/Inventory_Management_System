@@ -39,10 +39,13 @@
     height: fit-content;
 }
 
+.userInterface .container .card img{
+    border-radius: 6px;
+}
+
 .userInterface .card-img-top{
     height: 10rem;
     padding: 1rem;
-    border-radius: 6px;
 }
 
 .userInterface .card-body{
@@ -87,10 +90,6 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis; 
-}
-
-.userInterface .card-body .line_prices{
-
 }
 
 .userInterface .card-body .line_prices .prices{

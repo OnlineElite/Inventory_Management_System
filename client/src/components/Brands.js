@@ -154,7 +154,7 @@ function Brands(props){
     }
 
     return(
-        <div className='Brands' id='Brands'>
+        <div className='Brands bg-light' id='Brands'>
             <h1 className='mx-3'>Brands Manager</h1>
             <div className='filters'>
                 <div className='dates mt-3 mx-3'>

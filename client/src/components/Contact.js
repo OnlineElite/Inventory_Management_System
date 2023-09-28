@@ -39,7 +39,7 @@ function Contact(){
 
 
     return(
-        <div id='contact'>
+        <div id='contact' className='bg-light'>
             <Navbar/>
             <div className='body'>
                 
