@@ -41,11 +41,14 @@
 
 .userInterface .container .card img{
     border-radius: 6px;
-}
-
-.userInterface .card-img-top{
     height: 10rem;
     padding: 1rem;
+}
+
+.userInterface .container .card .card-img-top_equivalent{
+    border-radius: 6px;
+    height: 10rem;
+    padding: 0.2rem;
 }
 
 .userInterface .card-body{
@@ -92,10 +95,24 @@
     text-overflow: ellipsis; 
 }
 
+.userInterface .card-body .line_desc_equivalent{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
 .userInterface .card-body .line_prices .prices{
     color:black;
     font-weight: bold;
     font-size: 1.5rem;
+}
+
+.userInterface .card-body .line_prices_equivalent .prices{
+    color:black;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 .userInterface .card-body .line_old_price .old_price {

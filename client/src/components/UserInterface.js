@@ -292,14 +292,14 @@ function UserInterface(props){
                                     ? `${imagesURL}/` + product.product_image
                                     : prodimg
                                 }
-                                className="card-img-top"
+                                className="card-img-top_equivalent"
                                 alt="product"
                               />
                               <div className="card-body text-primary infor ">
-                                <div className="line_desc">
+                                <div className="line_desc_equivalent">
                                   {product.product_name} {product.product_desc}
                                 </div>
-                                <div className="line_prices ">
+                                <div className="line_prices_equivalent ">
                                   <span className='prices'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'Dhs'}</span>
                                 </div>
                                 <div className="line_old_price">
