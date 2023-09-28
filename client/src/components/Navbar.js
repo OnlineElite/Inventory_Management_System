@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
 import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk, addToFavoriesThunk,
      deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk, updateInCartThunk} from '../actions/IMSAction'
-import prodimg from '../images/Inventory-Management.png'
+import prodimg from '../images/Default.png'
 import jsPDF from 'jspdf'
 import logo from '../images/top.png'
 function Navbar(props){

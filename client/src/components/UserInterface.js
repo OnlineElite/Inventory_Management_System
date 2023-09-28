@@ -286,8 +286,26 @@ function UserInterface(props){
                               key={product.product_ref}
                               style={{ maxWidth: "9.2rem" }}
                             >
+                              <img
+                                src={
+                                  product.product_image != null
+                                    ? `${imagesURL}/` + product.product_image
+                                    : prodimg
+                                }
+                                className="card-img-top"
+                                alt="product"
+                              />
                               <div className="card-body text-primary infor ">
-                                <div className="lines">
+                                <div className="line_desc">
+                                  {product.product_name} {product.product_desc}
+                                </div>
+                                <div className="line_prices ">
+                                  <span className='prices'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'Dhs'}</span>
+                                </div>
+                                <div className="line_old_price">
+                                  <span className="old_price"> {" "}{product.product_price}Dhs{" "} </span>
+                                </div>
+                                {/*<div className="lines">
                                   <span className="detail">Reference:</span>
                                   <span className="result">
                                     {" "}
@@ -329,7 +347,7 @@ function UserInterface(props){
                                     {" "}
                                     {product.product_price}DH{" "}
                                   </span>
-                                </div>
+                                </div>*/}
                               </div>
                               <div className=" c-footer">
                                 <button
