@@ -82,13 +82,19 @@
 
 
 .userInterface .card-body .line_desc {
-    max-height: 4em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Display only two lines of text */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    /*max-height: 4em;
     line-height: 4em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     color: rgb(24, 131, 3);
-    background-color: rgb(198, 223, 235);
+    background-color: rgb(198, 223, 235);*/
 }
 
 .userInterface .card-footer{
