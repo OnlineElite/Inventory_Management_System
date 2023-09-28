@@ -190,6 +190,9 @@
 .userInterface .view .modal-body .row{
     width: 100%;
     height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding-inline: 1rem;
 }
 .userInterface .modal-body .price{
