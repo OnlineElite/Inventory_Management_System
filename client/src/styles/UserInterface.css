@@ -42,6 +42,7 @@
 .userInterface .card-img-top{
     height: 10rem;
     padding: 1rem;
+    border-radius: 6px;
 }
 
 .userInterface .card-body{
@@ -90,6 +91,7 @@
     overflow: hidden; 
     text-overflow: ellipsis; 
     white-space: nowrap;
+    color: blue;
 }
 
 .userInterface .card-footer{
