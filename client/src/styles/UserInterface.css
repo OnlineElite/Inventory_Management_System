@@ -86,11 +86,12 @@
 }
 
 .userInterface .card-body .line_desc .desc {
+    width: 100%;
     max-height: 2em;
     line-height: 1em; 
     overflow: hidden; 
     text-overflow: ellipsis; 
-    white-space: nowrap;
+    white-space: wrap;
     color: blue;
 }
 
