@@ -264,7 +264,7 @@ function UserInterface(props){
                             :<button onClick={()=>HandeleAddToCart(addToCart)} className='bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
                           }
                         </div>
-                        <div className=" right col-12 col-sm-6 col-md-4 col-lg-4 bg-danger">
+                        <div className=" right col-12 col-sm-6 col-md-4 col-lg-4 bg-success">
                           <div className="productImage bg-info">
                             {" "}
                             <img id='prodImage' src='' alt="product" />{" "}
