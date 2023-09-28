@@ -194,7 +194,7 @@ function UserInterface(props){
                           />
                           <div className="card-body">
                             <div className="line_desc">
-                              {product.product_name} {product.product_desc}
+                              {product.product_desc}
                             </div>
                             <div className="line_prices ">
                               <span className='prices'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'Dhs'}</span>
