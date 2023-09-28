@@ -198,7 +198,7 @@ function UserInterface(props){
                           <div className="card-body">
                             <div className="line_desc">
                               {/*<span className="detail">Reference:</span>*/}
-                              <span className="desc">{product.product_name} {product.product_desc} </span>
+                              {product.product_name} {product.product_desc}
                             </div>
                             <div className="line_prices ">
                               {/*<span className="detail">Brand:</span>

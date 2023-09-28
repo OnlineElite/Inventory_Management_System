@@ -80,18 +80,15 @@
     font-weight: bold;
 }
 
-.userInterface .card-body .line_desc {
-    background-color: lightskyblue;
-}
 
-.userInterface .card-body .line_desc .desc {
-    max-height: 3em;
+.userInterface .card-body .line_desc {
+    max-height: 2em;
     line-height: 1em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: blue;
-    background-color: orange;
+    color: rgb(24, 131, 3);
+    background-color: rgb(198, 223, 235);
 }
 
 .userInterface .card-footer{
