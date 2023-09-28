@@ -145,12 +145,11 @@
     border-radius: 6px;
 }
 
-.userInterface .modal-body .row .right{
+/*.userInterface .modal-body .row .right{
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-}
-
+}*/
 
 .userInterface .modal-body .detail{
     font-weight: bold;
