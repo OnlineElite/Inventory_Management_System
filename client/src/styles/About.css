@@ -4,11 +4,6 @@
     margin: 0;
 }
 
-#about{
-    background-size: cover;
-    background-attachment: fixed;
-}
-
 #about .container{
     height: fit-content;
 }

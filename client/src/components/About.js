@@ -8,7 +8,7 @@ function About(){
 
 
     return(
-        <div id='about'>
+        <div id='about' className='bg-light'>
             <Navbar/>
             <div className='container'>
                 <h1 className='w-100 text-center my-5'>ABOUT US</h1>
