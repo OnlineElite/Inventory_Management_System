@@ -41,7 +41,7 @@
 }
 
 .userInterface .container .card:hover{
-    transform: scale(1.1);
+    transform: scale(1);
     box-shadow: 0 5px 8px 0 black, 0 7px 20px 0 gray;
 }
 
