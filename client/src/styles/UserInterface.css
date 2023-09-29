@@ -139,17 +139,8 @@
 
 .userInterface  .productImage img{
     height: 100%;
-    width: 90%;
     border-radius: 7px;
 }
-
-/*.userInterface .modal-body .row .right{
-    width: 80%;
-    height: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}*/
 
 .userInterface .modal-body .detail{
     font-weight: bold;
