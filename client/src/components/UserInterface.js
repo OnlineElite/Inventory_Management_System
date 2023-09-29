@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import Navbar from './Navbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import prodimg from '../images/Default.png'
@@ -175,7 +176,7 @@ function UserInterface(props){
                 </div>
                 <div className='  col-12 col-sm-9 col-md-10 col-l-10 col-xl-10'>
                   <div className='container bg-light prod border rounded' >
-                      {records.map((product)=>(
+                      {records? records.map((product)=>(
                           <div
                           className="card "
                           key={product.product_ref}
@@ -209,7 +210,7 @@ function UserInterface(props){
                             </button>
                           </div>
                         </div>
-                      ))}
+                      )): <div className=''><FontAwesomeIcon icon="fa-solid fa-spinner" /></div>}
                   </div>
                 </div>
               </div>
