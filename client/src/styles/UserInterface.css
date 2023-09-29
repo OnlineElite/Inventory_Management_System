@@ -118,7 +118,7 @@
 .userInterface .card-body .line_old_price .old_price {
     color: gray;
     text-decoration: line-through;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 .userInterface .card-footer{
@@ -132,23 +132,23 @@
 }
 /*--------show modal---------*/
 
-/*.userInterface  .productImage{
+.userInterface  .productImage{
     height: 100%;
-    border: 1px solid rgb(185, 183, 183);
-}*/
+    padding: 0.5rem;
+}
 
-.userInterface  .right img{
+.userInterface  .productImage img{
     height: 100%;
-    width: 80%;
     border-radius: 7px;
 }
 
-.userInterface .modal-body .row .right{
+/*.userInterface .modal-body .row .right{
+    width: 80%;
+    height: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: lightsalmon;
-}
+}*/
 
 .userInterface .modal-body .detail{
     font-weight: bold;
