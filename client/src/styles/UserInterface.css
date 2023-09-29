@@ -37,6 +37,12 @@
     width: 15rem;
     margin-bottom: 1rem;
     height: fit-content;
+    transition: 1s;
+}
+
+.userInterface .container .card:hover{
+    transform: scale(1.1);
+    box-shadow: 0 5px 8px 0 black, 0 7px 20px 0 gray;
 }
 
 .userInterface .container .card .card-img-top{
@@ -174,12 +180,6 @@
     min-width: 9.4rem;
     max-height: 14rem;
     margin-inline: 0.5rem;
-    transition: 1s;
-}
-
-.userInterface .equivals .card:hover{
-    transform: scale(1.1);
-    box-shadow: 0 5px 8px 0 black, 0 7px 20px 0 gray;
 }
 
 .userInterface .view .modal-body .row{

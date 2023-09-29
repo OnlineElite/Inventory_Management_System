@@ -55,6 +55,10 @@
     box-shadow:0 5px 8px 0 black, 0 7px 20px 0 gray;
 }
 
+.logingContainer .row{
+    box-shadow:0 5px 8px 0 black, 0 7px 20px 0 gray;
+}
+
 .registerContainer .row .image, .registerContainer .row .form{
     padding: 0;
     margin: 0;
