@@ -292,7 +292,7 @@ function UserInterface(props){
                                 className="card-img-top_equivalent"
                                 alt="product"
                               />
-                              <div className="card-body text-primary infor ">
+                              <div className="card-body">
                                 <div className="line_desc_equivalent">
                                   {product.product_name}
                                 </div>
