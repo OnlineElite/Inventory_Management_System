@@ -6,7 +6,7 @@ function Footer (props){
 
     return(
         <div id='footer'>
-            <div className='row px-5 py-5'>
+            <div className='row px-5 py-3'>
                 <div className='col-12 col-sm-12 col-md-4 col col-lg-4'>
                         <h5>OUR CATEGORIES:</h5>
                         <ul>

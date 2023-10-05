@@ -208,10 +208,9 @@ function ViewStock(props){
                     inp.value = row.brand_name
                     break;
                 case 'selecImg':
-
-                imgPreview.style.display = "block";
-                selecImg.src = `${imagesURL}/${row.product_image}`;
-
+                    imgPreview.style.display = "block";
+                    selecImg.src = `${imagesURL}/${row.product_image}`;
+                    break;
                 default :
                     inp.value = ''
             }

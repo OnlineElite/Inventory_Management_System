@@ -149,7 +149,6 @@ function UserInterface(props){
     return(
         <div className='userInterface'>
         <Navbar/>
-
             <div id='proods'>
               <div className='row px-3'>
                 <div className=' col-12 col-sm-3 col-md-2 col-l-2 col-xl-2'>
@@ -210,9 +209,29 @@ function UserInterface(props){
                             </button>
                           </div>
                         </div>
-                      )): <div className=''><FontAwesomeIcon icon="fa-solid fa-spinner" /></div>}
+                      )): <div className=''><FontAwesomeIcon icon="fa-solid fa-spinner" />Loading...</div>}
                   </div>
                 </div>
+              </div>
+            </div>
+            <div id='ourBrands' className='caroseel'>
+              <h5 className='caroseel_header'>OUR BEST BRANDS</h5>
+              <div className='boxes bg-light'>
+              {props.brands.map((brand, index)=>(
+                <div className='box' key={index}>
+                  <p className=''>{brand.name}</p>
+                </div>
+              ))}
+              </div>
+            </div>
+            <div id='ourCategories' className='caroseel'>
+              <h5 className='caroseel_header'>Our Categories</h5>
+              <div className='boxes bg-light'>
+              {props.categories.map((categ, index)=>(
+                <div className='box' key={index}>
+                  <p className=''>{categ.name}</p>
+                </div>
+              ))}
               </div>
             </div>
             <div className='container'>            

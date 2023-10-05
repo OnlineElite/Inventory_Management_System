@@ -756,6 +756,28 @@ const bringStatesThunk = () => async (dispatch)=>{
     }
 }
 
+const sendOrderThunk = (order)=> async (dispatch)=>{
+    try{
+        for (var pair of order.entries()) {
+            console.log(pair[0] + ", " + pair[1]);
+        }
+    
+       /* const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/sendOrder`;
+        const response = await fetch(url, {
+            method : 'POST',
+            headers: { 'Content-Type':'application/json'},
+            body : JSON.stringify(order)
+        })
+        const data = await response.json()
+        dispatch(addMessage(data.message))*/
+
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
 export {
     registerThunk, 
     loginThunk, 
@@ -783,6 +805,7 @@ export {
     bringIncartThunk,
     bringInfavoriesThunk,
     updateInCartThunk,
-    bringStatesThunk
+    bringStatesThunk,
+    sendOrderThunk
 }
 

@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashbord";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from './components/LoginForm'
 import UserInterface from './components/UserInterface'
+import Checkout from "./components/Checkout";
 import Contact from "./components/Contact";
 import About from "./components/About";
 import { connect } from "react-redux";
@@ -17,7 +18,7 @@ const PrivateRoute = ({ element, isAuthenticated, isAdmin }) => {
   return  isAuthenticated ?  ( isAdmin ? element : <Navigate to="/userInterface" /> ) : <Navigate to="/login" />;
 };
 
-function App(props) {
+function App(props){
 
   return (
     <div>
@@ -28,6 +29,7 @@ function App(props) {
           <Route path="/userInterface" element={<UserInterface/>} />
           <Route path='/contact' element={<Contact/>} />
           <Route path='/about' element={<About/>} />
+          <Route path='/checkout' element={<Checkout/>} />
           <Route path="/dashboard/*"
             element={<PrivateRoute element={<Dashboard/>} 
               isAuthenticated={props.isAuthenticated} isAdmin={props.isAdmin}
