@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk, addToFavoriesThunk,
      deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk, updateInCartThunk} from '../actions/IMSAction'
 import prodimg from '../images/Default.png'
-import jsPDF from 'jspdf'
+//import jsPDF from 'jspdf'
 import logo from '../images/top.png'
 function Navbar(props){
 
@@ -17,6 +17,12 @@ function Navbar(props){
     const [cartRecords, setCartRecords] = useState(props.incart)
     const [isLiked, setIsLiked] = useState(false);
     const imagesURL = process.env.REACT_APP_API_IMAGES_URL; 
+
+    function handleCloseModal(){    
+        document.getElementById("cartModal").classList.remove("show", "d-block");
+        document.querySelectorAll(".modal-backdrop")
+            .forEach(el => el.classList.remove("modal-backdrop"));
+    }
 
     let bringsData =()=>{
         if(!props.isAdmin && props.isAuthenticated){
@@ -159,12 +165,13 @@ function Navbar(props){
 
     const handelCheckout =(e)=>{
         e.preventDefault();
-        var doc = new jsPDF()
+        handleCloseModal()
+        /*var doc = new jsPDF()
         doc.text(20,20, 'this the default text');
         doc.setFont('courier');
         doc.text(20,30,`The total items is : ${totalItem === null? 0 : totalItem}`);
         doc.text(20,40,`The total Amount is : ${totalAmount === null? 0 : totalAmount}`);
-        doc.save('Facture.pdf')
+        doc.save('Facture.pdf')*/
     }
 
 
@@ -185,11 +192,12 @@ function Navbar(props){
                         </li>
                     </ul>
                     <form className="form-inline my-2 my-lg-0 ">
+                        
                         {props.isAuthenticated ? 
                         (
                             <>
-                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                                <button className="btn  my-2 my-sm-0" type="submit">Search</button>
+                                {/*<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                                <button className="btn  my-2 my-sm-0" type="submit">Search</button>*/}
                                 <ul className='rightInfo mx-3'>
                                     <li className='mx-3'>
                                         <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
@@ -232,7 +240,7 @@ function Navbar(props){
                                         </div>
                                         <div className="modal-body " id='cart_modal_body'>
                                             <div className='row'>
-                                                <div className=' prods col-12 col-sm-5 col-md-7 col-lg-7 col-xl-8'>
+                                                <div className=' prods col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9 my-2'>
                                                     {cartRecords?
                                                     cartRecords.map((product)=>(                                                      
                                                         <div key={product.product_ref}>
@@ -273,7 +281,7 @@ function Navbar(props){
                                                 }
                                                     
                                                 </div>
-                                                <div className=' total col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
+                                                <div className=' total col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3 my-2'>
                                                 <div id="checkout" >
                                                     <div className='ro title '>CART SUMMARY</div>
                                                     <hr/>
@@ -283,7 +291,9 @@ function Navbar(props){
                                                     <hr/>
                                                     <div className='ro '><p id="delievery">Free Delievery abouve</p><span id='delev' >100DH</span></div>
                                                     <hr/>
-                                                    <button className="cart-btn bg-danger" onClick={(e)=> handelCheckout(e)}>Checkout</button>
+                                                    <button className="cart-btn bg-danger" onClick={(e)=> handelCheckout(e)}>
+                                                        <Link className='Link' to='/checkout' >Checkout</Link>
+                                                    </button> 
                                                 </div>
                                                 </div>
                                             </div>

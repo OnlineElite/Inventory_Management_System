@@ -30,7 +30,7 @@ function LoginForm(props){
                 login.style.color = 'grey';
             } else {
                 login.disabled = false;
-                login.style.backgroundColor = 'rgb(1, 1, 70)';
+                login.style.backgroundColor = '#00afdb';
                 login.style.color = 'white';
                 const values = ids.map(id => document.getElementById(id).value);
                 setInfo({

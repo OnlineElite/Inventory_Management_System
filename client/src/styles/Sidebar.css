@@ -10,14 +10,14 @@
     min-height: 100vh;
     /*overflow-y: scroll;*/
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-    background-color: rgb(1, 1, 70);
+    background-color: #00afdb;
 }
 
 .userInfo{
     width: 240px;
     height: 60px;
     display: flex;
-    background-color:rgb(1, 1, 70);
+    background-color:#00afdb;
     padding: 1rem;
     padding-block: 2rem;
     display: flex;
@@ -100,7 +100,7 @@
 }
 
 .active{
-    background-color: rgb(15, 129, 223);
+    background-color: rgb(3, 86, 155);
 }
 
 .sidebar ul{

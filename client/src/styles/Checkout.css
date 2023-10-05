@@ -1,0 +1,215 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+
+#check  .container{
+    margin-top: 1rem;
+}
+#check .form, #check .total{
+    margin-inline: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    height: fit-content;
+}
+
+#check #checkout{
+    width: 100%;
+    height: 100%;
+    padding-block: 0.5rem;
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px 0 rgb(59, 59, 59);
+    background-color: white;
+}
+
+#check #checkout .ro{
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-inline: 0.7rem;
+}
+#check #checkout .title{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-weight: bold;
+}
+#check #checkout .ro p, #checkout .ro span{
+    padding: 0;
+    margin: 0;
+}
+
+#check #checkout .ro span{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#check #checkout .ro p{
+    color: gray;
+}
+
+#check #checkout hr{
+    padding: 0.2rem;
+    margin: 0.2rem;
+}
+
+#check #total-price, #total-item{
+    font-size: 20px;
+    color: rgb(1, 1, 70);
+}
+
+#check #checkout .ro #delievery, #delev{
+    font-size: 20px;
+    color: limegreen;
+}
+
+/* adress form*/
+#check #address_form .input-container {
+    position: relative;
+    margin: 20px;
+    width: 100%;
+}
+
+#check #address_form   input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 0.6rem;
+}
+
+#check #address_form   label {
+    position: absolute;
+    left: 10px;
+    pointer-events: none;
+    background-color: white;
+    padding-inline: 0.5em;
+    top: -11px;
+    font-size: 13px;
+    color: gray;
+}
+
+#check #address_form   label span{
+    color: orangered;
+    font-size: 18px;
+}
+
+#check #address_form  input:focus + label, #check #address_form  select:focus + label {
+    color: orange;
+}
+
+#check #address_form  input:focus, #check #address_form  select:focus {
+    border: 2px solid orange;
+}
+
+#check #customer_details .collapse{
+    box-shadow: 0 4px 8px 0 rgb(59, 59, 59);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#check .collap{
+    border-radius: 5px;
+    padding: 0.3rem;
+    box-shadow: 0 4px 8px 0 rgb(59, 59, 59);
+    cursor: pointer;
+    width: 100%;
+    text-align: start;
+    border: none;
+}
+
+
+#check .selects select {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+
+#check #address_form button, #deliveryDetails button, #paymentMethod button{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
+    border: 2px solid white;
+    background-color: orange;
+    color: white;
+    
+}
+
+#check #deliveryDetails form label span{
+    font-weight: bold;
+}
+
+/******prods********/
+
+#check #deliveryDetails .prodInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.3rem;
+}
+
+#check #deliveryDetails .prodInfo .prodimg{
+    width: 10%;
+    height: 60%;
+    margin-right: 1rem;
+}
+
+#check #deliveryDetails .prodInfo .prodimg img{
+    width: 100%;
+    height: 100%;
+}
+
+#check #deliveryDetails .prodInfo .prodName{
+    width: 90%;
+}
+
+#check #deliveryDetails .prodInfo .prodName .discrip{
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+#check #deliveryDetails .delevinfos p + span{
+    font-size: 14px;
+}
+
+#check #deliveryDetails form input, #paymentMethod form input{
+    width: 1.1rem;
+    height: 1.1rem;
+}
+ 
+#check #paymentMethod form .title{
+    color: rgb(46, 46, 46);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#check #paymentMethod form a{
+    cursor: pointer;
+}
+
+#check #paymentMethod form label{
+    font-weight:500;
+    color: rgb(31, 30, 30);
+}
+
+#check #paymentMethod .cont{
+    margin-bottom: 2rem;
+}
+
+#check #send{
+    background-color: gray;
+
+}

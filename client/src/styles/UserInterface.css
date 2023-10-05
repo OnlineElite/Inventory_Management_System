@@ -11,12 +11,14 @@
     padding-top: 0.3rem;
     padding-left: 2rem;
     width: 97%;
+    box-shadow: 0 4px 8px 0 rgb(59, 59, 59);
 }
 
 .userInterface .sideFilter{
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
+    box-shadow: 0 4px 8px 0 rgb(59, 59, 59);
 }
 
 .userInterface .sideFilter input:hover, .userInterface .sideFilter label :hover{
@@ -95,7 +97,7 @@
 
 .userInterface .card-body .line_desc {
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis; 
@@ -265,4 +267,60 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+/***********************/
+
+.userInterface .caroseel_header{
+    background-color: rgb(1, 1, 70);
+    color: white;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    padding: 0.5rem;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+.userInterface .caroseel{
+    background-color: white;
+    border-radius: 6px;
+    margin-inline: 1rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 8px 0 black;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.userInterface .boxes{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 1rem;
+    margin-top: 0;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.userInterface .boxes .box{
+    box-shadow: 0 4px 8px 0 black;
+    color: white;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 1s;
+    background-image: linear-gradient(rgb(0, 38, 255), rgb(234, 0, 255));
+    
+}
+
+.userInterface .boxes .box:hover{
+    transform:scale(1.1)
+}
+
+.userInterface .boxes .box p{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.5rem;
 }

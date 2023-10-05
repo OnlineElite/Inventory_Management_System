@@ -29,7 +29,7 @@ const RegisterForm = (props) => {
                 register.style.color = 'grey';
             } else {
                 register.disabled = false;
-                register.style.backgroundColor = 'rgb(1, 1, 70)';
+                register.style.backgroundColor = '#00afdb';
                 register.style.color = 'white';
                 const values = ids.map(id => document.getElementById(id).value);
                 setInfo({
