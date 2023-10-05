@@ -230,7 +230,7 @@ function Checkout(props){
                         <div className="collapse show" id="customerAdress">
                             <div className="card card-body bg-white text-black">
                                 <h6>ADD A NEW ADDRESS</h6>
-                                <form onSubmit={handeleSaveAddress} id='address_form'>
+                                <form id='address_form'>
                                     <div className='form_row d-flex align-items-center justify-content-between' >
                                         <div className="input-container">
                                             <input type="text" name='fname' id="fname" required/>
@@ -290,7 +290,7 @@ function Checkout(props){
                                     <hr/>
                                     <div className='d-flex align-items-center justify-content-end'>
                                         <button onClick={handeleCancelAddress} className='btn bg-secondary'> Cancel</button>
-                                        <button type='submit' className='btn mx-1'>Save</button> 
+                                        <button type='submit' className='btn mx-1' onClick={handeleSaveAddress}>Save</button> 
                                     </div>
                                 </form>
                             </div>
