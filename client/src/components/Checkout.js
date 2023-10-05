@@ -38,7 +38,7 @@ function Checkout(props){
         if(!props.isAdmin && props.isAuthenticated){         
             props.getIncart(props.userfullName[2])
         }
-    }, [props.incart, props])
+    }, [])
 
     useEffect(()=>{
         HandelTotalItem_TotalAmount()
