@@ -110,23 +110,22 @@ function Checkout(props){
             inputs.forEach((inp)=> {
                 ((inp.id === 'sphone' || inp.id === 'info') && inp.value === '')? formData1.append(`${inp.name}`, null): formData1.append(`${inp.name}`, inp.value)
             })
-            inputs.forEach((inp)=>{
-                if(inp.id !== 'sphone' && inp.id !== 'info'){
-                    if(inp.value !== ''){
-                        const adressCheck = document.getElementById('adressCheck')
-                        const deliv = document.getElementById('deliv')
-                        adressCheck.disabled = false;
-                        deliv.disabled = false;
-                        adressCheck.checked = true;
-                        document.getElementById("customerAdress").classList.remove('show')
-                        document.getElementById("customerAdress").classList.add('hide')
-                        document.getElementById("deliveryDetails").classList.add('show')
-                    }
-                }
-            })
         }else{
             console.log('not valid form')
         }
+        const requiredIds =['fname', 'lname', 'fphone', 'address', 'country', 'city']
+        const requiredInputs = requiredIds.map((id)=> document.getElementById(id))
+        let isAnyFieldEmpty = requiredInputs.some((inp)=> inp.value === '')
+        if(!isAnyFieldEmpty){
+            const adressCheck = document.getElementById('adressCheck')
+            const deliv = document.getElementById('deliv')
+            adressCheck.disabled = false;
+            deliv.disabled = false;
+            adressCheck.checked = true;
+            document.getElementById("customerAdress").classList.remove('show')
+            document.getElementById("customerAdress").classList.add('hide')
+            document.getElementById("deliveryDetails").classList.add('show')
+        } 
         return formData1;
     }
 
