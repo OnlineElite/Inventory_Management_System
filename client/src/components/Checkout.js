@@ -110,15 +110,20 @@ function Checkout(props){
             inputs.forEach((inp)=> {
                 ((inp.id === 'sphone' || inp.id === 'info') && inp.value === '')? formData1.append(`${inp.name}`, null): formData1.append(`${inp.name}`, inp.value)
             })
-            
-            const adressCheck = document.getElementById('adressCheck')
-            const deliv = document.getElementById('deliv')
-            adressCheck.disabled = false;
-            deliv.disabled = false;
-            adressCheck.checked = true;
-            document.getElementById("customerAdress").classList.remove('show')
-            document.getElementById("customerAdress").classList.add('hide')
-            document.getElementById("deliveryDetails").classList.add('show')
+            inputs.forEach((inp)=>{
+                if(inp.id !== 'sphone' && inp.id !== 'info'){
+                    if(inp.value !== ''){
+                        const adressCheck = document.getElementById('adressCheck')
+                        const deliv = document.getElementById('deliv')
+                        adressCheck.disabled = false;
+                        deliv.disabled = false;
+                        adressCheck.checked = true;
+                        document.getElementById("customerAdress").classList.remove('show')
+                        document.getElementById("customerAdress").classList.add('hide')
+                        document.getElementById("deliveryDetails").classList.add('show')
+                    }
+                }
+            })
         }else{
             console.log('not valid form')
         }
@@ -135,15 +140,18 @@ function Checkout(props){
                 (inp.id === 'toHome')? formData2.append(`${inp.name}`, 'Home Delivery') : formData2.append(`${inp.name}`, 'Agency Delivery')
             }
         })
-        
-        const deliveryCheck = document.getElementById('deliveryCheck')
-        const pay = document.getElementById('pay')
-        pay.disabled = false;
-        deliveryCheck.disabled = false;
-        deliveryCheck.checked = true;
-        document.getElementById("deliveryDetails").classList.remove('show')
-        document.getElementById("deliveryDetails").classList.add('hide')
-        document.getElementById("paymentMethod").classList.add('show')
+
+        let isAnyFieldChecked = inputs.some((inp)=> inp.checked === true)
+        if(isAnyFieldChecked){   
+            const deliveryCheck = document.getElementById('deliveryCheck')
+            const pay = document.getElementById('pay')
+            pay.disabled = false;
+            deliveryCheck.disabled = false;
+            deliveryCheck.checked = true;
+            document.getElementById("deliveryDetails").classList.remove('show')
+            document.getElementById("deliveryDetails").classList.add('hide')
+            document.getElementById("paymentMethod").classList.add('show')
+        }
         return formData2;
     }
 
@@ -157,14 +165,16 @@ function Checkout(props){
                 (inp.id === 'cash')? formData3.append(`${inp.name}`, 'Cash on delivery') : formData3.append(`${inp.name}`, 'Payment by card')
             }
         })
-
-        const paymentCheck = document.getElementById('paymentCheck')
-        paymentCheck.disabled = false;
-        paymentCheck.checked = true;
-        document.getElementById("paymentMethod").classList.remove('show')
-        document.getElementById("paymentMethod").classList.add('hide')
-        const send = document.getElementById('send')
-        send.classList.add('bg-danger')
+        let isAnyFieldChecked = inputs.some((inp)=> inp.checked === true)
+        if(isAnyFieldChecked){
+            const paymentCheck = document.getElementById('paymentCheck')
+            paymentCheck.disabled = false;
+            paymentCheck.checked = true;
+            document.getElementById("paymentMethod").classList.remove('show')
+            document.getElementById("paymentMethod").classList.add('hide')
+            const send = document.getElementById('send')
+            send.classList.add('bg-danger')
+        }
         //send.disabled = false;
         return formData3;
     }
