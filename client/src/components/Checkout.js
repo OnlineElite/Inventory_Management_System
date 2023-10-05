@@ -34,13 +34,14 @@ function Checkout(props){
         }
     }, [props.isAuthenticated, props.isAdmin ])
 
-    useEffect(()=>{
+    const bringInCart =()=>{
         if(!props.isAdmin && props.isAuthenticated){         
             props.getIncart(props.userfullName[2])
         }
-    }, [])
+    }
 
     useEffect(()=>{
+        bringInCart()
         HandelTotalItem_TotalAmount()
     }, [])
 
