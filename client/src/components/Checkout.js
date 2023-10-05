@@ -100,8 +100,8 @@ function Checkout(props){
         document.getElementById('cart').checked = false;
     }
 
-    const handeleSaveAddress =()=>{
-        
+    const handeleSaveAddress =(e)=>{
+        e.preventDefault()
         const formData1  = new FormData();
         if(isPhoneNumbersValidate()){
             const ids = ['fname', 'lname', 'fphone', 'sphone', 'address', 'info', 'country', 'city']
@@ -124,8 +124,8 @@ function Checkout(props){
         return formData1;
     }
 
-    const handeleSaveDelivery =()=>{
-        
+    const handeleSaveDelivery =(e)=>{
+        e.preventDefault()
         const formData2  = new FormData();
         const ids = ['toHome', 'toAgency']
         const inputs = ids.map((id)=> document.getElementById(id))
@@ -146,8 +146,8 @@ function Checkout(props){
         return formData2;
     }
 
-    const handeleSavePayment =()=>{
-        
+    const handeleSavePayment =(e)=>{
+        e.preventDefault()
         const formData3  = new FormData();
         const ids = ['cash', 'cart']
         const inputs = ids.map((id)=> document.getElementById(id))
@@ -197,9 +197,9 @@ function Checkout(props){
 
     const handeleSendOrder =(e)=>{
         e.preventDefault();
-        let formData1 = handeleSaveAddress();
-        let formData2 = handeleSaveDelivery();
-        let formData3 = handeleSavePayment();
+        let formData1 = handeleSaveAddress(e);
+        let formData2 = handeleSaveDelivery(e);
+        let formData3 = handeleSavePayment(e);
         const allData = new FormData();
         for (var x of formData1.entries()) {
             allData.append(x[0], x[1]);
