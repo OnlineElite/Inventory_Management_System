@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import prodimg from '../images/Default.png'
 import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
@@ -15,7 +17,6 @@ function ViewStock(props){
     const [selectfilterCategory, setSelectfilterCategory] = useState('');
     const [selectaddbrand, setSelectaddbrand] = useState('');
     const [selectfilterBrand, setSelectfilterBrand] = useState('');
-    const [showAlert, setShowAlert] = useState(false);
     const [deleteCondition, setDeleteCondition] = useState(null)
     const [equivalent, setEquivalent] = useState('')
     const [extentionMsg, setExtentionMsg] = useState( '')
@@ -183,7 +184,6 @@ function ViewStock(props){
           }
         }
 
-        
         inputs.forEach((inp) => { 
             switch(inp.id){
                 case 'upname':
@@ -268,36 +268,22 @@ function ViewStock(props){
             props.updateProduct(formData)
           }else{  
             setExtentionMsg('File extention not suported plase enter a file with(jpg, png or webp)')
-            if (extentionMsg) {
-              setShowAlert(true);
-              setTimeout(() => {
-                  setShowAlert(false);
-              }, 3000);
-            } 
+            extentionMsg? toast.success(`${extentionMsg}`) :  console.log(''); 
           }
         }else{
           props.updateProduct(formData)
         }
-
-        if (props.updateMsg) {
-          setShowAlert(true);
-          setTimeout(() => {
-              setShowAlert(false);
-          }, 3000);
-        } 
+        props.updateMsg? toast.success(`${props.updateMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log('');
         handleCloseModal()     
         setRecords(props.products) 
     }
 
     const handleDelete=(row)=>{
-        props.deleteProduct(row.product_ref)
-        if (props.deleteMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        }  
-        setRecords(props.products)
+      props.deleteProduct(row.product_ref)
+      props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
+      props.response? toast.error(`${props.response}`) :  console.log(''); 
+      setRecords(props.products)
     }
 
     const handleShow=(row)=>{
@@ -379,31 +365,21 @@ function ViewStock(props){
         formData.append("brandName", brandName);
         
         if (inputs[7].type === "file" && inputs[7].files.length > 0) {
-            formData.append("image", inputs[7].files[0]);
+          formData.append("image", inputs[7].files[0]);
         }
 
         function getExtension(filename) {
-            return filename.split('.').pop()
+          return filename.split('.').pop()
         }  
         let extention = getExtension(inputs[7].files[0].name).toLowerCase()
         if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
-            props.addProduct(formData)
+          props.addProduct(formData)
         }else{
-            setExtentionMsg('File extention not suported plase enter a file with(jpg, png or webp)')
-            if (extentionMsg) {
-                setShowAlert(true);
-                setTimeout(() => {
-                    setShowAlert(false);
-                }, 3000);
-            } 
+          setExtentionMsg('File extention not suported plase enter a file with(jpg, png or webp)')
+          extentionMsg? toast.success(`${extentionMsg}`) :  console.log('');
         }
-    
-        if (props.addMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        } 
+        props.addMsg? toast.success(`${props.addMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log(''); 
         handleCloseModal()     
         setRecords(props.products)
     }
@@ -451,31 +427,7 @@ function ViewStock(props){
       <div className="products bg-light" id="stock">
         <div className="container">
           <h2>Stock Manager</h2>
-          <div className="dates mt-5">
-            {showAlert && props.addMsgMsg && (
-              <div className="alert alert-success" role="alert">
-                {" "}
-                {props.addMsgMsg}{" "}
-              </div>
-            )}
-            {showAlert && extentionMsg && (
-              <div className="alert alert-danger" role="alert">
-                {" "}
-                {extentionMsg}{" "}
-              </div>
-            )}
-            {showAlert && props.updateMsg && (
-              <div className="alert alert-success" role="alert">
-                {" "}
-                {props.updateMsg}{" "}
-              </div>
-            )}
-            {showAlert && props.deleteMsg && (
-              <div className="alert alert-success" role="alert">
-                {" "}
-                {props.deleteMsg}{" "}
-              </div>
-            )}
+          <div className="dates mt-5">                           
             <RangePicker
               value={selectedRange}
               id="filterDate"
@@ -997,6 +949,18 @@ function ViewStock(props){
             </div>
           </div>
         </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </div>
     );
 }

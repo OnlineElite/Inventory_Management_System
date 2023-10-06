@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
@@ -10,7 +12,6 @@ import prodimg from '../images/Default.png'
 import logo from '../images/top.png'
 function Navbar(props){
 
-    const [showAlert, setShowAlert] = useState(false);
     const [totalItem, setTotalItem] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
     const [favRecords, setFavRecords] = useState(props.infavories)
@@ -92,50 +93,36 @@ function Navbar(props){
     const handledeleteFromCart =(id,e)=>{
         e.preventDefault()
         props.deleteFromCart({product_id : id, user_id : props.userfullName[2] })
-        if (props.deleteMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        }
+        props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log('');
         props.getIncart(props.userfullName[2])
         setCartRecords(props.incart)
     }
 
-    const HandeleAddToCart =(id)=>{
+    const HandeleAddToCart =(id,e)=>{
+        e.preventDefault()
         props.addToCart({product_id : id, user_id : props.userfullName[2] })
-        if (props.updateMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        }
+        props.updateMsg? toast.success(`${props.updateMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log('');
         props.getIncart(props.userfullName[2])
     }
 
     const handledeleteFromFavories =(id,e)=>{
         e.preventDefault()
         props.deleteFromFavories({product_id : id, user_id : props.userfullName[2] })
-        if (props.deleteMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        }
+        props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log('');
         props.getInfavories(props.userfullName[2])
         setFavRecords(props.infavories)
         
     }
 
-    const handeleAddToFavories =(id)=>{
+    const handeleAddToFavories =(id, e)=>{
         props.addToFavories({product_id : id, user_id : props.userfullName[2] })
-        if (props.updateMsg) {
-          setShowAlert(true);
-          setTimeout(() => {
-              setShowAlert(false);
-          }, 3000);
-        }
+        props.updateMsg? toast.success(`${props.updateMsg}`) : console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log('');
         props.getInfavories(props.userfullName[2])
+        e.target.style.color = 'red'
     }
     // handel Total Item & Total Amount
     const HandelTotalItem_TotalAmount=()=>{
@@ -232,8 +219,6 @@ function Navbar(props){
                                         <div className="modal-content">
                                         <div className="modal-header">
                                             <h5 className="modal-title  text-primary m-auto" id="exampleModalLabel">Shopping Cart</h5>
-                                            {showAlert && props.deleteMsg &&( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> )}
-                                            {showAlert && props.updateMsg && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )}
                                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                                 <span  aria-hidden="true ">&times;</span>
                                             </button>
@@ -254,7 +239,7 @@ function Navbar(props){
                                                                         </div>
                                                                         <div className='imgBotom'>
                                                                             <button onClick={(e)=>handledeleteFromCart(product.product_id, e)} className='text-danger px-2'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
-                                                                            <i onClick={()=>handeleAddToFavories(product.product_id)} className=" mx-2 bi bi-heart-fill" style={{color : isLiked? 'red' : 'black'}}></i>
+                                                                            <i onClick={(e)=>handeleAddToFavories(product.product_id, e)} className=" mx-2 bi bi-heart-fill" style={{color : isLiked? 'red' : 'black'}}></i>
                                                                         </div>
                                                                     </div>
 
@@ -307,7 +292,6 @@ function Navbar(props){
                                         <div className="modal-content">
                                         <div className="modal-header">
                                             <h3 className="modal-title  text-primary m-auto" id="exampleModalLabel">Favories</h3>
-                                            {showAlert && props.deleteMsg &&( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> )}
                                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                                 <span  aria-hidden="true ">&times;</span>
                                             </button>
@@ -332,7 +316,7 @@ function Navbar(props){
                                                                         <p className='text-warning'> {product.product_name} </p>
                                                                         <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
                                                                         {product.product_stock !== 0?
-                                                                            <button onClick={()=>HandeleAddToCart(product.product_id)} className='text-white my-2 bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
+                                                                            <button onClick={(e)=>HandeleAddToCart(product.product_id, e)} className='text-white my-2 bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
                                                                             :<button  className='text-white my-2' style={{backgroundColor: "gray" }} disabled ><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
                                                                         }
                                                                     </div>
@@ -375,6 +359,18 @@ function Navbar(props){
                     </form>
                 </div>
             </nav>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
     )
 }

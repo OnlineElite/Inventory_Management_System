@@ -107,8 +107,15 @@ select * from brands
 select * from infavories
 select * from incart
 
-	  
-
+create table orders (
+	order_id serial PRIMARY KEY,
+    customer_id integer,
+    order_date date,
+    total_amount numeric(10, 2),
+	customer_address varchar(300),
+	FOREIGN KEY (customer_id) REFERENCES users(user_id) ON DELETE CASCADE,
+)
+ 
 
 
       

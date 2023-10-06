@@ -18,7 +18,6 @@ function Sidebar(props){
       <div className=" sidebar d-flex justify-content-between flex-column text-white">
         <div className="userInfo ">
           <img src= {logo} alt='logo'/>
-          {/*<p>(admin)</p>*/}
         </div>
 
         <ul className="mainlinks">
