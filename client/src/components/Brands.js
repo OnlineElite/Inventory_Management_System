@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { DatePicker } from 'antd';
 import {connect} from 'react-redux'
 import {bringBrandsThunk, addBrandThunk, updateBrandThunk, deleteBrandThunk} from '../actions/IMSAction'
@@ -8,7 +10,7 @@ import '../styles/Brands.css'
 const { RangePicker } = DatePicker;
 
 function Brands(props){
-    const [showAlert, setShowAlert] = useState(false);
+
     const [records, setRecords] = useState(props.brands)
     const [condition, setCondition] = useState(null)
     const [selectedRange, setSelectedRange] = useState(null);
@@ -78,13 +80,9 @@ function Brands(props){
         e.preventDefault()
         let newBrand = document.getElementById('name').value
         props.addBrand(newBrand)
-        handleCloseModal()     
-        if (props.addMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        }  
+        handleCloseModal()
+        props.addMsg? toast.success(`${props.addMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log('');     
         setRecords(props.brands)
     }
 
@@ -97,23 +95,15 @@ function Brands(props){
         let newBrand = document.getElementById('upname')
         props.updateBrand({newValue: newBrand.value, condition : condition})
         handleCloseModal()
-        if (props.updateMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        }  
+        props.updateMsg? toast.success(`${props.updateMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log(''); 
         setRecords(props.brands)
     }
     
     const handleDelete=(row)=>{
         props.deleteBrand(row.name)
-        if (props.deleteMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        }  
+        props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log('');  
         setRecords(props.brands)
     }
 
@@ -188,7 +178,6 @@ function Brands(props){
                 <span className="btn btn-outline-primary mx-3 py-2 mt-3" onClick={handeleReset}>Reset</span>
             </div>
             <div className='container mt-3'>
-                { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
                 <DataTable 
                     title = {'Manage brands'}
                     columns ={columns}
@@ -208,7 +197,6 @@ function Brands(props){
             <div className="modal fade" id="addBrand" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-sm">
                     <div className="modal-content">
-                    {showAlert && ( <div className="alert alert-success" role="alert"> {props.addMsgMsg} </div> )} 
                     <div className="modal-header">
                         <h3 className="modal-title" id="exampleModalLabel">Add New Brand</h3>
                         <span type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -233,7 +221,6 @@ function Brands(props){
             <div className="modal fade" id="updateBrand" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-sm">
                     <div className="modal-content">
-                    {showAlert && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )} 
                     <div className="modal-header">
                         <h3 className="modal-title" id="exampleModalLabel">Update Brand</h3>
                         <span type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -254,6 +241,18 @@ function Brands(props){
                     </div>
                 </div>
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
     )
 }

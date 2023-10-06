@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 function Home(props){
-
 
     return(
         <div className=' home p-3 bg-light'>
@@ -68,8 +67,7 @@ function Home(props){
                                 </div>
                             </div> 
                         </div>
-                    </ div>
-                    
+                    </ div>                   
                 ))}
             </div>
         </div>

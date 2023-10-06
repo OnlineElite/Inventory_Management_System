@@ -40,9 +40,7 @@ function Dashboard(props){
                     <Sidebar/>
                 </div>
                 <div className="col overflow-auto">
-                    <Header Toggle={Toggle}/>
-                    
-                    
+                    <Header Toggle={Toggle}/> 
                     <Routes>
                         <Route path="/" element={<Home/>} />
                         <Route path="/products" element={<Products/>} />
@@ -52,13 +50,11 @@ function Dashboard(props){
                         <Route path="/brands" element={<Brands/>} />
                         <Route path="/settings" element={<Settings/>} />
                     </Routes>
-                </div>
-                
+                </div>               
             </div>
         </div>
     )
 }
-
 
 const mapStateToProps =(state)=>{
     

@@ -1,5 +1,7 @@
 import React, {useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {connect} from 'react-redux'
 import { DatePicker } from 'antd';
 import {updateUserThunk, deleteUserThunk, bringUsersThunk} from '../actions/IMSAction'
@@ -9,7 +11,7 @@ import '../styles/Users.css'
 const { RangePicker } = DatePicker;
 
 function Users(props){
-    const [showAlert, setShowAlert] = useState(false);
+    
     const [records, setRecords] = useState(props.users)
     const [condition, setCondition] = useState(null)
     const [selectedRange, setSelectedRange] = useState(null);
@@ -140,12 +142,8 @@ function Users(props){
             condition : condition
         }
         props.updateUser(itemInfo)
-        if (props.updateMsg) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        }
+        props.updateMsg? toast.success(`${props.updateMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log('');
         handleCloseModal()     
         setRecords(props.users)
     }
@@ -153,6 +151,8 @@ function Users(props){
     const handleDelete=(row)=>{
         console.log('condition', row.username)
         props.deleteUser(row.username)
+        props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log('');
     }
 
     const handleShow=(row)=>{
@@ -253,7 +253,6 @@ function Users(props){
                 <span className="btn btn-outline-primary mx-3 mt-3 py-2" onClick={handeleReset}>Reset</span>
             </div>
             <div className='container mt-3'>
-                { showAlert? ( <div className="alert alert-success" role="alert"> {props.deleteMsg} </div> ):''}
                 <DataTable 
                     title = {'Manage Users'}
                     columns ={columns}
@@ -272,7 +271,6 @@ function Users(props){
             <div className="modal fade" id="updateUser" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
-                        {showAlert && ( <div className="alert alert-success" role="alert"> {props.updateMsg} </div> )} 
                         <div className="modal-header">
                             <h3 className="modal-title" id="exampleModalLabel">Update User</h3>
                             <span type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -355,6 +353,18 @@ function Users(props){
                     </div>
                 </div>
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
     )
 }
