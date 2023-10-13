@@ -34,10 +34,10 @@ function Footer (props){
                         </ul>
                         <h5>FOLLOW US ON:</h5>
                         <span className='d-flex justify-content-between w-25'>
-                            <a href='https://www.facebook.com/jamal.boujbari'><i className="bi bi-facebook text-white"></i></a>
-                            <a href='https://linkedin.com/in/jamal-boujbari-937121212'><i className="bi bi-linkedin text-white"></i></a>
-                            <a href='https://github.com/OnlineElite'><i className="bi bi-github text-white"></i></a>
-                            <a href='https://t.me/JML_Elite'><i className="bi bi-telegram text-white"></i></a>
+                            <a href='https://www.facebook.com/jamal.boujbari' target='_blank'><i className="bi bi-facebook text-white"></i></a>
+                            <a href='https://linkedin.com/in/jamal-boujbari-937121212' target='_blank'><i className="bi bi-linkedin text-white"></i></a>
+                            <a href='https://github.com/OnlineElite' target='_blank'><i className="bi bi-github text-white"></i></a>
+                            <a href='https://t.me/JML_Elite' target='_blank'><i className="bi bi-telegram text-white"></i></a>
                         </span>
                 </div>
             </div>

@@ -22,7 +22,8 @@ const {
   getIncart,
   getInfavories,
   updatingProductFromCart,
-  getStatus
+  getStatus,
+  contactMessage
 } = require("../controlers/ProductsControler");
 
 const router = express.Router();
@@ -39,6 +40,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 // Product Routers
 router.get('/States',getStatus)
+router.post('/sendMessage', contactMessage)
 // Product Routers
 router.get("/products", upload.any(), getProducts);
 router.post("/addProduct", upload.single("image"), AddingProduct);

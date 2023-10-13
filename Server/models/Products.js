@@ -24,21 +24,13 @@ class Product {
     }
 
     static async importStatus() {
-      const query = `select
-      count(distinct products.id) as total_products,
-      sum(products.price) as total_values,
-      count(distinct categories.id) as total_categories,
-      count(distinct users.username) as total_users,
-      count(distinct brands.id) as total_brands,
-      sum(case when products.stock = 0 then 1 else 0 end) as total_outOfStock
-      from products
-      inner join categories on categories.id = products.category_id
-      inner join brands on brands.id = products.brand_id
-      left join users on true
-      where products.deleted_date is null
-      and users.deleted_date IS null 
-      and categories.deleted_date is null
-      and brands.deleted_date is null;`;
+      const query = `SELECT
+      (SELECT COUNT(*) FROM users WHERE deleted_date IS NULL) AS total_users,
+      (SELECT COUNT(*) FROM categories WHERE deleted_date IS NULL) AS total_categories,
+      (SELECT COUNT(*) FROM brands WHERE deleted_date IS NULL) AS total_brands,
+      (SELECT COUNT(*) FROM products WHERE deleted_date IS NULL) AS total_products,
+      (SELECT COUNT(*) FROM products WHERE deleted_date IS NULL AND stock = 0) AS total_outOfStock,
+      (SELECT SUM(price) FROM products WHERE deleted_date IS NULL) AS total_values;`;
       const result = await pool.query(query);
       return result.rows;
     }

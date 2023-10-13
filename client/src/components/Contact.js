@@ -2,17 +2,18 @@ import React, {useState} from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import '../styles/Contact.css'
-function Contact(){
+import { connect } from 'react-redux'
+import {contactMessageThunk} from '../actions/IMSAction'
+import { ToastContainer, toast } from 'react-toastify';
+function Contact(props){
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phoneNumber: '',
-        message: '',
+        userName: '',
+        userEmail: '',
+        userPhoneNumber: '',
+        userMessage: '',
     });
 
-    const [errors, setErrors] = useState({
-        phoneNumber: '',
-    });
+    const [errors, setErrors] = useState(false);
 
     const handleinputsChange = (e) => {
         const { name, value } = e.target;
@@ -26,17 +27,19 @@ function Contact(){
     
     const handleSend = (e) => {
         e.preventDefault();
-        const phoneNumberIsValid = validatePhoneNumber(formData.phoneNumber);
-    
+        const phoneNumberIsValid = validatePhoneNumber(formData.userPhoneNumber);
         if (!phoneNumberIsValid) {
-          setErrors({ phoneNumber: 'Please enter a valid phone number.'});
-          return;
+            setErrors(true);
+            document.getElementById('userPhoneNumber').style.border = '2px solid red'
+            errors? toast.error('Please enter a valid phone number.') :  console.log('');
+            return 
         }
-        console.log(formData);
-        setFormData({ name: '',  email: '', phoneNumber: '',message: '' });
-        setErrors({ phoneNumber: ''});
+        document.getElementById('userPhoneNumber').style.border = 'none'
+        setErrors(false);
+        props.sendMessage(formData)
+        props.addMsg? toast.success(`${props.addMsg}`) :  console.log('');
+        setFormData({ userName: '',  userEmail: '', userPhoneNumber: '',userMessage: '' });
     };
-
 
     return(
         <div id='contact' className='bg-light'>
@@ -48,12 +51,11 @@ function Contact(){
                     <div className='row my-5'>
                         <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
                             <form onSubmit={handleSend} id='contForm'>
-                                <input onChange={handleinputsChange} className='px-2 ' type="text" required value={formData.name} id="name" name="name"  placeholder='Full Name *'/>
-                                <input onChange={handleinputsChange} className='px-2 ' type='email' required value={formData.email} id='email' name='email' placeholder='Email *'/>
-                                <input onChange={handleinputsChange} className='px-2 ' type='text' required value={formData.phoneNumber} id='phoneNumber' name='phoneNumber' placeholder='Phone Number *'/>
-                                {errors.phoneNumber && (<p className="error-message">{errors.phoneNumber}</p>)}
-                                <textarea onChange={handleinputsChange} className='px-2' required value={formData.message} id="message" name="message" placeholder='Message *'/>
-                                <button className='btn btn-primary ' type='submit'>Send</button>
+                                <input onChange={handleinputsChange} className='px-2 ' type="text" required value={formData.userName} id="userName" name="userName"  placeholder='Full Name *'/>
+                                <input onChange={handleinputsChange} className='px-2 ' type='email' required value={formData.userEmail} id='userEmail' name='userEmail' placeholder='Email *'/>
+                                <input onChange={handleinputsChange} className='px-2 ' type='text' required value={formData.userPhoneNumber} id='userPhoneNumber' name='userPhoneNumber' placeholder='Phone Number *'/>
+                                <textarea onChange={handleinputsChange} className='px-2' required value={formData.userMessage} id="userMessage" name="userMessage" placeholder='Message *'/>
+                                <button className='btn btn-danger ' type='submit'>Send</button>
                             </form>
                         </div>
                         <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
@@ -69,19 +71,51 @@ function Contact(){
                                 </ul>
                                 <h5>CONTACT US ON:</h5>
                                 <span className='d-flex justify-content-between w-25'>
-                                    <a href='https://www.facebook.com/jamal.boujbari'><i className="bi bi-facebook"></i></a>
-                                    <a href='https://linkedin.com/in/jamal-boujbari-937121212'><i className="bi bi-linkedin"></i></a>
-                                    <a href='https://github.com/OnlineElite'><i className="bi bi-github"></i></a>
-                                    <a href='https://t.me/JML_Elite'><i className="bi bi-telegram"></i></a>
+                                    <a href='https://www.facebook.com/jamal.boujbari' target='_blank'><i className="bi bi-facebook"></i></a>
+                                    <a href='https://linkedin.com/in/jamal-boujbari-937121212' target='_blank'><i className="bi bi-linkedin"></i></a>
+                                    <a href='https://github.com/OnlineElite' target='_blank'><i className="bi bi-github"></i></a>
+                                    <a href='https://t.me/JML_Elite' target='_blank'><i className="bi bi-telegram"></i></a>
                                 </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
             <Footer/>
         </div>
     )
 }
 
-export default Contact;
+const mapStateToProps =(state)=>{
+    
+    return{
+        response : state.error,
+        isAuthenticated : state.isAuthenticated,
+        isAdmin : state.isAdmin,
+        userEmail : state.userEmail,
+        addMsg : state.addMsg, 
+    }
+}
+
+const mapDispatchToProps =(dispatch)=>{
+    return{
+        sendMessage : (message)=>{
+            dispatch(contactMessageThunk(message))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (Contact);
+

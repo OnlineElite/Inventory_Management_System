@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import logo from '../images/top.png'
+//import logo from '../images/top.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/Sidebar.css'
 import {Link} from 'react-router-dom'
@@ -7,6 +8,7 @@ import { connect } from 'react-redux';
 import {LogOutThunk, logout} from '../actions/IMSAction'
 function Sidebar(props){
     const [active, setActive] = useState("dashboard");
+    const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;
 
     const handelLogout =(e)=>{
       e.preventDefault()
@@ -17,7 +19,8 @@ function Sidebar(props){
     return (
       <div className=" sidebar d-flex justify-content-between flex-column text-white">
         <div className="userInfo ">
-          <img src= {logo} alt='logo'/>
+          <FontAwesomeIcon className='logo mx-2' icon="fa-solid fa-microchip" />
+          <span > {ProjectName} </span>
         </div>
 
         <ul className="mainlinks">

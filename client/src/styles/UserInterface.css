@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
 }
+
 .userInterface .prod{
     display: flex;
     flex-wrap: wrap;
@@ -129,6 +130,12 @@
     font-size: 1rem;
 }
 
+.userInterface .card-body .line_old_price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .userInterface .card-footer{
     display: flex;
     justify-content: center;
@@ -235,7 +242,7 @@
     text-decoration: line-through;
 }
 
-.userInterface .information .remise{
+.userInterface  .remise{
     background-color: rgb(177, 248, 177);
     color: rgb(4, 156, 4);
     margin-left: 0.5rem;
@@ -322,5 +329,15 @@
 .userInterface .boxes .box p{
     text-transform: uppercase;
     font-weight: bold;
+    font-size: 1.5rem;
+}
+
+
+.loadind{
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.5rem;
 }

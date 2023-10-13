@@ -13,6 +13,7 @@ import '../styles/Checkout.css'
 
 function Checkout(props){
 
+    const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;
     const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
     const [totalItem, setTotalItem] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
@@ -93,12 +94,18 @@ function Checkout(props){
         e.preventDefault();
         document.getElementById('toAgency').checked = false;
         document.getElementById('toHome').checked = false;
+        const deliveryCheck = document.getElementById('deliveryCheck')
+        deliveryCheck.disabled = true;
+        deliveryCheck.checked = false;
     }
 
     const handeleCancelPayment =(e)=>{
         e.preventDefault();
         document.getElementById('cash').checked = false;
         document.getElementById('cart').checked = false;
+        const paymentCheck = document.getElementById('paymentCheck')
+        paymentCheck.disabled = true;
+        paymentCheck.checked = false;
     }
 
     const handeleSaveAddress =(e)=>{
@@ -223,6 +230,9 @@ function Checkout(props){
             allData.append(z[0], z[1]);
         }
         props.sendOrder(allData)
+        handeleCancelAddress(e);
+        handeleCancelDelivery(e);
+        handeleCancelPayment(e);
     }
 
     return(
@@ -322,7 +332,7 @@ function Checkout(props){
                                     <label className='mx-1' htmlFor='toHome'><span>Home Delivery </span>(from 25Dhs)</label>
                                     <div className='d-flex align-items-center justify-content-between'>
                                         <span className='text-secondary px-3'>Order delivered :</span>
-                                        <span className='text-secondary'><i className="bi bi-truck text-danger"></i> Dispatched by IM System</span>
+                                        <span className='text-secondary'><i className="bi bi-truck text-danger"></i> Dispatched by {ProjectName} </span>
                                     </div>
                                     <div className='border border-secondary rounded my-2 px-2'>
                                         {props.incart.map((product)=>(                          
@@ -370,10 +380,10 @@ function Checkout(props){
                                         <label>Payment by credit card</label>
                                         <p  className='text-secondary px-3'>Easy, secure and avoids any contact with coins or notes</p>
                                         <div className='border text-secondary border-secondary rounded my-2 p-2'>
-                                            You will be redirected to our <span className='text-dark'>IM System</span> payment platform to 
+                                            You will be redirected to our <span className='text-dark'>{ProjectName}</span> payment platform to 
                                             complete your purchase. Make sure your payment details are
                                             up to date and that you have the necessary funds.
-                                            Continue paying for your orders with <span className='text-dark'>IM System</span>
+                                            Continue paying for your orders with <span className='text-dark'>{ProjectName}</span>
                                             <Link className='mx-1 text-primary'><span>details</span></Link>
                                         </div>
                                     </div>
