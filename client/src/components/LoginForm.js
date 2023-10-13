@@ -6,13 +6,12 @@ import loginimg from '../images/Inventory-Management.png'
 import '../styles/LogReg.css'
 import {loginThunk} from '../actions/IMSAction'
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 function LoginForm(props){
 
     const navigate = useNavigate();
-
     const [info, setInfo] = useState({})
-    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         const ids = ['email', 'password'];
@@ -58,27 +57,17 @@ function LoginForm(props){
         const ids = ['email', 'password'];
         const inputs = ids.map(id => document.getElementById(id));
         inputs.forEach((inp) => { inp.value =""})
-       if (props.response) {
-            setShowAlert(true);
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        } 
+        props.response? toast.error(`${props.response}`) :  console.log(''); 
     }
-
-
     useEffect(()=>{
         if (props.isAuthenticated) {
             navigate(`/dashboard`);
         } 
-    })
-                        
+    })                   
     return(
         <div className='logincomp'>
             <Navbar/>
-            
             <div className="logingContainer">
-            {showAlert && ( <div className="alert alert-success" role="alert"> {props.response} </div> )}  
                 <div className="row">
                     <h1>Login</h1>
                     <div className=" image col-12 col-md-6 col-sm-6 col-lg-6">
@@ -94,6 +83,18 @@ function LoginForm(props){
                     </div>
                 </div>   
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
     )
 }

@@ -22,7 +22,7 @@ function Home(props){
                                 <div className='d-flex justify-content-between align-items-center text-white bg-warning p-3 border border-secondary shadow-sm'>
                                     <i className="bi bi-coin" style={{fontSize: '2rem'}}></i>
                                     <div className=''>
-                                        <p>Total Stock Values</p>
+                                        <p>Total Stock Amount</p>
                                         {items.total_values? <h2 style={{fontSize : '30px'}}>{items.total_values} $</h2>: <h2></h2>}
                                     </div>
                                 </div>
@@ -31,7 +31,7 @@ function Home(props){
                                 <div className='d-flex justify-content-between align-items-center text-white bg-danger p-3 border border-secondary shadow-sm'>
                                     <i className="bi bi-cart-x-fill" style={{fontSize: '2rem'}}></i>
                                     <div className=''>
-                                        <p>Out Of Stock</p>
+                                        <p>Total Out Of Stock</p>
                                         <h2> {items.total_outofstock} </h2>
                                     </div>
                                 </div>
@@ -40,7 +40,7 @@ function Home(props){
                                 <div className='d-flex justify-content-between align-items-center text-white bg-primary p-3 border border-secondary shadow-sm'>
                                     <i className="bi bi-tags " style={{fontSize: '2rem'}}></i>
                                     <div className=''>
-                                        <p>All Categories</p>
+                                        <p>Total Categories</p>
                                         <h2> {items.total_categories} </h2>
                                     </div>
                                 </div>

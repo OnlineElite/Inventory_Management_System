@@ -5,8 +5,9 @@
 }
 /*--------------------------Navbar section-----------------------------*/
 .Navbarr .navbar{
-    background-color: #00afdb;
-    height: 4rem;
+    background-color: #2784fc;
+    margin: 0;
+    padding: 0;
 }
 .Navbarr .navbar, .Navbarr .collapse{
     padding-inline: 5px;
@@ -16,21 +17,7 @@
 }
 
 .Navbarr .navbar .logo{
-    width: 340px;
-    height: 60px;
-    display: flex;
-    padding-block: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    position: relative;
-    padding-block: 0;
-
-}
-
-.Navbarr .navbar .logo img{
-    width: 60%;
-    height: fit-content;
+    font-size: 2rem;
 }
 
 .Navbarr .navs{
@@ -71,7 +58,7 @@
 .Navbarr ul{
     width: 20%;
 }
-.Navbarr .form-inline input{
+.Navbarr .form-inline #searsh input{
     width: 100%;
 }
 
@@ -84,7 +71,7 @@
     border-radius: 8px;
     border: 1px solid white;
 }
-.Navbarr .form-inline input{
+.Navbarr .form-inline #searsh input{
     margin-right: 0.3rem;
 }
 
@@ -156,6 +143,32 @@
 
 .Navbarr .form-inline .rightInfo li{
     list-style: none;
+}
+.Navbarr #searsh input{
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    color: white;
+
+}.Navbarr #searsh input::placeholder{
+    color: white;
+    
+}
+.Navbarr #searsh input:focus{
+    border: none;
+    outline: none;
+}
+.Navbarr #searsh{
+    display: flex;
+    align-items: center;
+    border: 2px solid white;
+}
+
+.Navbarr #searsh{
+    width: 100%;
+    height: 2.5rem;
+    padding-left: 0.5rem;
 }
 
 /*---cart modal---*/

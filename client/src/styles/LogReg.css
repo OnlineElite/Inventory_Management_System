@@ -26,8 +26,8 @@
     background-color: rgb(248, 246, 246);
     border-bottom-right-radius: 10px;
     border: 2px solid white;
-    border-bottom: 2px solid #00afdb;
-    border-right:2px solid #00afdb ;
+    border-bottom: 2px solid #2784fc;
+    border-right:2px solid #2784fc ;
     margin-left: 0;
     padding-inline: 0;
 }
@@ -39,8 +39,8 @@
     padding-inline: 0;
     border-bottom-left-radius: 10px;
     padding-top: 2px;
-    border-left: 2px solid #00afdb;
-    border-bottom: 2px solid #00afdb;
+    border-left: 2px solid #2784fc;
+    border-bottom: 2px solid #2784fc;
 }
 
 .registerContainer .col-12, .registerContainer  .col-md-6, .registerContainer .col-sm-6, .registerContainer .col-lg-6{
@@ -74,7 +74,7 @@
     font-size: 18px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: lightyellow;
-    border: 2px solid #00afdb;
+    border: 2px solid #2784fc;
 }
 
 .registerContainer button, .logingContainer button{
@@ -88,7 +88,7 @@
     margin-left: 20px;
     font-size: 18px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: 2px solid #00afdb;
+    border: 2px solid #2784fc;
 }
 
 .ro{
@@ -113,7 +113,7 @@
 }
 .registerContainer h1, .logingContainer h1{
     width: 100%;
-    background-color: #00afdb;
+    background-color: #2784fc;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     text-align: center;

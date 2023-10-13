@@ -6,6 +6,7 @@ import '../styles/About.css'
 
 function About(){
 
+    const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;
 
     return(
         <div id='about' className='bg-light'>
@@ -13,7 +14,7 @@ function About(){
             <div className='container'>
                 <h1 className='w-100 text-center my-5'>ABOUT US</h1>
                 <div className='row mb-5'>
-                    <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                    <div className='col-12 col-sm-12 col-md-6 col-lg-6 '>
                         <div className='vidBox'>
                             <video className='h-100' src= {aboutVid} autoPlay />
                         </div>
@@ -55,16 +56,16 @@ function About(){
                     </div>
                     <div className=' col-12 col-sm-12 col-md-6 col-lg-6 px-4'>
                         <div>
-                            <h3>About I M System</h3>
+                            <h3>About {ProjectName} </h3>
                             <p>
-                                Welcome to <strong>I M System</strong>, your premier destination for all things
+                                Welcome to <strong>{ProjectName}</strong>, your premier destination for all things
                                 electronic! Founded with a passion for cutting-edge technology and 
                                 a commitment to delivering top-quality products, we've become your
                                 trusted partner in the world of electronics.
                             </p>
                             <h3>Our Story</h3>
                             <p>
-                                At <strong>I M System</strong>, our story is rooted in innovation and a deep 
+                                At <strong> {ProjectName} </strong>, our story is rooted in innovation and a deep 
                                 appreciation for the impact of electronics on our daily lives. 
                                 It all began when a group of tech enthusiasts decided to share 
                                 their love for the latest gadgets, gizmos, and gear with the world. 
@@ -85,7 +86,7 @@ function About(){
                                 We invite you to explore our online store and discover the world 
                                 of possibilities that technology has to offer. Whether you're 
                                 upgrading your existing setup, seeking the latest innovations, 
-                                or looking for the perfect gift, <strong>I M System</strong> is your go-to 
+                                or looking for the perfect gift, <strong> {ProjectName} </strong> is your go-to 
                                 destination.
                                 <br/>
                                 Thank you for choosing us as your trusted source for electronic 
@@ -94,7 +95,7 @@ function About(){
                                 <br/>
                                 Sincerely,
                                 <br/>
-                                The <strong>Quality Assurance:</strong> Team
+                                The <strong> {ProjectName} </strong> Team
                             </p>
                         </div>
                     </div>

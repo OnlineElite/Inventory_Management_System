@@ -116,6 +116,3 @@ create table orders (
 	FOREIGN KEY (customer_id) REFERENCES users(user_id) ON DELETE CASCADE,
 )
  
-
-
-      

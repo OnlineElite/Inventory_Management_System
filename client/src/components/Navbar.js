@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
@@ -9,7 +10,7 @@ import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk, addToFavoriesT
      deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk, updateInCartThunk} from '../actions/IMSAction'
 import prodimg from '../images/Default.png'
 //import jsPDF from 'jspdf'
-import logo from '../images/top.png'
+//import logo from '../images/top.png'
 function Navbar(props){
 
     const [totalItem, setTotalItem] = useState(null);
@@ -17,7 +18,8 @@ function Navbar(props){
     const [favRecords, setFavRecords] = useState(props.infavories)
     const [cartRecords, setCartRecords] = useState(props.incart)
     const [isLiked, setIsLiked] = useState(false);
-    const imagesURL = process.env.REACT_APP_API_IMAGES_URL; 
+    const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
+    const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;
 
     function handleCloseModal(){    
         document.getElementById("cartModal").classList.remove("show", "d-block");
@@ -161,11 +163,22 @@ function Navbar(props){
         doc.save('Facture.pdf')*/
     }
 
+    const showSearsh =(e)=>{
+        let value = e.target.parentElement.firstChild.value;
+        props.navSearch(value)
+        e.target.parentElement.firstChild.value  = ''
+    }
+    
 
     return(
         <div className='Navbarr ' id='navbar'>
-            <nav className="navbar navbar-expand-lg navbar-light ">
-                <div className='logo '> <Link className='Link_logo' to= '/'> <img src= {logo} alt='logos'/> </Link></div>
+            <nav className="navbar navbar-expand-lg navbar-light d-flex align-items-baseline justify-content-baseline">
+                <div className='logo '>
+                    <Link className='Link_logo' to= '/'> 
+                        <FontAwesomeIcon className='logo' icon="fa-solid fa-microchip" />
+                        <span > {ProjectName} </span>
+                    </Link>
+                </div>
                 <div className="collapse navbar-collapse " id="navbarSupportedContent">
                     <ul className='navs'>
                         <li>
@@ -178,14 +191,17 @@ function Navbar(props){
                             <Link className='Link' to='/contact' > Contact </Link>
                         </li>
                     </ul>
-                    <form className="form-inline my-2 my-lg-0 ">
+                    <form className="form-inline px-2 d-flex align-items-baseline justify-content-baseline my-2 my-lg-0 ">
                         
+                        <div id='searsh' className="nav-item  rounded mx-2">
+                            <input  placeholder='Search' type='text' name='HeaderSearsh' />
+                            <i onClick={showSearsh} className='bi bi-search mx-0 my-0 px-2 text-primary d-flex align-items-center justify-content-center h-100 bg-white'/>
+                        </div>
                         {props.isAuthenticated ? 
                         (
                             <>
-                                {/*<input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                                <button className="btn  my-2 my-sm-0" type="submit">Search</button>*/}
                                 <ul className='rightInfo mx-3'>
+                                    
                                     <li className='mx-3'>
                                         <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
                                             <i className="bi bi-cart-fill text-white mx-1"></i> Cart
@@ -277,7 +293,7 @@ function Navbar(props){
                                                     <div className='ro '><p id="delievery">Free Delievery abouve</p><span id='delev' >100DH</span></div>
                                                     <hr/>
                                                     <button className="cart-btn bg-danger" onClick={(e)=> handelCheckout(e)}>
-                                                        <Link className='Link' to='/checkout' >Checkout</Link>
+                                                        <Link className='Link text-decoration-none text-white' to='/checkout' >Checkout</Link>
                                                     </button> 
                                                 </div>
                                                 </div>
