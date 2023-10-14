@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import loggo from '../images/TechWave.png'
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
@@ -9,10 +9,20 @@ import { connect } from 'react-redux';
 import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk, addToFavoriesThunk,
      deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk, updateInCartThunk} from '../actions/IMSAction'
 import prodimg from '../images/Default.png'
+//import {useQuery} from '@tanstack/react-query'
+//import axios from 'axios'
 //import jsPDF from 'jspdf'
-//import logo from '../images/top.png'
-function Navbar(props){
 
+function Navbar(props){
+    //const baseURL = process.env.REACT_APP_API_PROD_URL;
+
+    /*const {data : incart, isLoading, isError, refetch} = useQuery(['incart'], ()=>{
+        const url = `${baseURL}/incart`;
+        if(!props.isAdmin && props.isAuthenticated)
+        return axios.post(url, {user_id : props.userfullName[2]}).then((res)=> res.data) 
+    })*/
+
+    //console.log('incart', incart.products)
     const [totalItem, setTotalItem] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
     const [favRecords, setFavRecords] = useState(props.infavories)
@@ -51,7 +61,7 @@ function Navbar(props){
 
     useEffect(()=>{
         if(!props.isAdmin && props.isAuthenticated){         
-            if (props.incart !== cartRecords) {
+            if (props.incart !== cartRecords){
                 props.getIncart(props.userfullName[2])
                 setCartRecords(props.incart)
             }
@@ -98,7 +108,7 @@ function Navbar(props){
         props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
         props.response? toast.error(`${props.response}`) :  console.log('');
         props.getIncart(props.userfullName[2])
-        setCartRecords(props.incart)
+       //return refetch
     }
 
     const HandeleAddToCart =(id,e)=>{
@@ -107,6 +117,7 @@ function Navbar(props){
         props.updateMsg? toast.success(`${props.updateMsg}`) :  console.log('');
         props.response? toast.error(`${props.response}`) :  console.log('');
         props.getIncart(props.userfullName[2])
+        //return refetch
     }
 
     const handledeleteFromFavories =(id,e)=>{
@@ -169,17 +180,18 @@ function Navbar(props){
         e.target.parentElement.firstChild.value  = ''
     }
     
-
     return(
         <div className='Navbarr ' id='navbar'>
             <nav className="navbar navbar-expand-lg navbar-light d-flex align-items-baseline justify-content-baseline">
-                <div className='logo '>
-                    <Link className='Link_logo' to= '/'> 
-                        <FontAwesomeIcon className='logo' icon="fa-solid fa-microchip" />
-                        <span > {ProjectName} </span>
-                    </Link>
-                </div>
-                <div className="collapse navbar-collapse " id="navbarSupportedContent">
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className='logo navs'>
+                        <li className='navs  d-flex align-items-center justify-content-start'>
+                            <Link className='Link_logo' to= '/'> 
+                                <img className='mx-2' src= {loggo}/>
+                                <span> {ProjectName} </span>
+                            </Link>
+                        </li>
+                    </ul>
                     <ul className='navs'>
                         <li>
                             <Link className='Link'  to= {props.isAuthenticated ? '/userInterface' : '/'}> Home </Link>

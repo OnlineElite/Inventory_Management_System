@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import '../styles/Footer.css'
 function Footer (props){
 
-
+    const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;
     return(
         <div id='footer'>
             <div className='row px-5 py-3'>
@@ -41,7 +41,7 @@ function Footer (props){
                         </span>
                 </div>
             </div>
-            <div className='rights py-2'>Consumers - User Information Legal Enquiry Guide ©️2023-2024 L.M.System. All rights reserved</div>
+            <div className='rights py-2'>Consumers - User Information Legal Enquiry Guide ©️2023-2024 {ProjectName}. All rights reserved</div>
         </div>
     )
     

@@ -13,6 +13,15 @@ import About from "./components/About";
 import { connect } from "react-redux";
 import './App.css';
 import { Routes, Route, Navigate} from 'react-router-dom'
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
+
+const client = new QueryClient( {
+  defaultOptions :{
+    queries : {
+      refetchOnWindowFocus : true  // if you don't want to refresh data when you change between tabs
+    }
+  }
+})
 
 const PrivateRoute = ({ element, isAuthenticated, isAdmin }) => {
   return  isAuthenticated ?  ( isAdmin ? element : <Navigate to="/userInterface" /> ) : <Navigate to="/login" />;
@@ -22,6 +31,7 @@ function App(props){
 
   return (
     <div>
+      <QueryClientProvider client={client}>
         <Routes>
           <Route exact path='/' element={<UserInterface/>} />
           <Route path='/register' element={<RegisterForm/>} />
@@ -36,6 +46,7 @@ function App(props){
             />}
           />
         </Routes>
+      </QueryClientProvider>
     </div>
   );
 }
