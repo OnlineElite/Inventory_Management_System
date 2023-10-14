@@ -24,11 +24,11 @@ function Products(props){
     }, [props.products]);
 
     const filterByName =(e)=>{
-        const newData = props.products.filter(prod =>{ 
-            return prod.product_name.toLowerCase().includes(e.target.value.toLowerCase())
-        })
-        setRecords(newData)
-        setIsfiltred(true)
+      const newData = props.products.filter(prod =>{ 
+          return prod.product_name.toLowerCase().includes(e.target.value.toLowerCase())
+      })
+      setRecords(newData)
+      setIsfiltred(true)
     }
     
     const filterByRef =(e)=>{

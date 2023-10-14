@@ -8,20 +8,25 @@
     background-color: #2784fc;
     margin: 0;
     padding: 0;
+    
 }
 .Navbarr .navbar, .Navbarr .collapse{
     padding-inline: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 
 .Navbarr .navbar .logo{
     font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .Navbarr .navs{
-    width: 30%;
+    width: fit-content;
 }
 .Navbarr .collapse{
     justify-content: center;
@@ -98,6 +103,14 @@
     padding-inline: 3rem;
     font-size: 2rem;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: baseline;
+}
+
+.Navbarr .logo img{
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .Navbarr .icon{

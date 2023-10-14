@@ -15,23 +15,22 @@ import  '../styles/UserInterface.css'
 function UserInterface(props){
 
   const [isfiltred, setIsfiltred] = useState(false);
-  const [records, setRecords] = useState(null)
+  const [records, setRecords] = useState(props.products)
   const [equivalent, setEquivalent] = useState('')
   const [addToCart, setAddToCart] = useState('')
   const [addToFavories, setAddToFavories] = useState('')
   const [isLiked, setIsLiked] = useState(false);
   const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
-
- 
   useEffect(()=>{
     props.getProducts()
     props.getCategories()
     props.getBrands()
     if(!isfiltred){
       setRecords(props.products)
-    }
+    } 
   }, [])
+  console.log('records', records)
 
   const handleShow=(ref)=>{
       let row = props.products.filter((product)=> product.product_ref === ref)
@@ -183,7 +182,7 @@ function UserInterface(props){
             </div>
             <div className='  col-12 col-sm-9 col-md-10 col-l-10 col-xl-10'>
               <div className='container bg-light prod border rounded' >
-                  {(records? records : props.products).map((product)=>(
+                  {( (records.length === 0)? props.products :records ).map((product)=>(
                       <div
                       className="card "
                       key={product.product_ref}
