@@ -30,7 +30,7 @@ function UserInterface(props){
       setRecords(props.products)
     } 
   }, [])
-  console.log('records', records)
+  
 
   const handleShow=(ref)=>{
       let row = props.products.filter((product)=> product.product_ref === ref)
