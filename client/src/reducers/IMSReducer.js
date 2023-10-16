@@ -4,9 +4,6 @@ const userReducer = (state, action)=>{
       case "REGISTER_USER":
         return { ...state, RegisterRespond: action.payload };
 
-      case "IS_LOADING":
-        return { ...state, isLoading: action.payload };
-
       case "SET_TOKEN":
         localStorage.setItem("token", action.payload);
         return { ...state, token: action.payload };

@@ -6,6 +6,7 @@ import DataTable from 'react-data-table-component'
 import {connect} from 'react-redux'
 import { addProductThunk, deleteProductThunk, updateProductThunk, bringProductsThunk} from '../actions/IMSAction'
 import { DatePicker } from 'antd';
+import ClipLoader from "react-spinners/ClipLoader";
 import '../styles/Stock.css'
 
 const { RangePicker } = DatePicker;
@@ -21,22 +22,26 @@ function ViewStock(props){
   const [equivalent, setEquivalent] = useState('')
   const [extentionMsg, setExtentionMsg] = useState( '')
   const [selectedRange, setSelectedRange] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  //const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [isfiltred, setIsfiltred] = useState(false);
+  const [isLoading, setIsLoading] = useState(true)
   const imagesURL = process.env.REACT_APP_API_IMAGES_URL; 
 
   useEffect(() => {
-    if (props.products !== records) {
+    if (props.products.length === 0 || props.products !== records) {
       props.getProducts()
       if(!isfiltred){
         setRecords(props.products)
         setIsfiltred(false)
       }
     }
+
+    if(props.products.length !== 0){
+      setIsLoading(false)
+    }
   }, [props.products]);
-
-
+  
   const columns = [
     {
       name : 'Name',
@@ -96,10 +101,11 @@ function ViewStock(props){
     const file = e.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(file);
       setImageUrl(imageUrl);
     }
   };
+
+  
   
   function handleCloseModal(){ 
           
@@ -110,11 +116,11 @@ function ViewStock(props){
   }
   
   const filterByName =(e)=>{
-      const newData = props.products.filter(row =>{ 
-          return row.product_name.toLowerCase().includes(e.target.value.toLowerCase())
-      })
-      setRecords(newData)
-      setIsfiltred(true)
+    const newData = props.products.filter(row =>{ 
+        return row.product_name.toLowerCase().includes(e.target.value.toLowerCase())
+    })
+    setRecords(newData)
+    setIsfiltred(true)
   }
 
   const filterByRef =(e)=>{
@@ -510,6 +516,7 @@ function ViewStock(props){
             ))}
           </select>
         </div>
+        {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
         <div className="container mt-3">
           <DataTable
             title={"Manage Stock"}
@@ -533,7 +540,7 @@ function ViewStock(props){
               </button>
             }
           ></DataTable>
-        </div>
+        </div>}
         {/* Add Item Modal */}
         <div
           className="modal fade"
@@ -628,7 +635,7 @@ function ViewStock(props){
                   <label htmlFor="image">Image :</label>
                     <div className="img_roo">
                       <div className="">
-                        <label for="image" className="bg-primary text-white p-1 border rounded">Choose File</label>
+                        <label htmlFor="image" className="bg-primary text-white p-1 border rounded">Choose File</label>
                         <input className="p-0 w-25 inpChoose" type="file" id="image" name="image" alt="Selected"  onChange={handleImageChange} accept="image/*" />
                       </div>
                       <div id="img-preview" className="selecImg">
@@ -742,7 +749,7 @@ function ViewStock(props){
                   <label htmlFor="upimage">Image :</label>
                   <div className="img_roo">
                     <div className="">
-                      <label for="upimage" className="bg-primary text-white p-1 border rounded">Choose File</label>
+                      <label htmlFor="upimage" className="bg-primary text-white p-1 border rounded">Choose File</label>
                       <input className="p-0 w-25 inpChoose" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
                     </div>
                     <div id="img-preview" className="selecImg">

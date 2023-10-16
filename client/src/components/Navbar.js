@@ -37,17 +37,13 @@ function Navbar(props){
             .forEach(el => el.classList.remove("modal-backdrop"));
     }
 
-    let bringsData =()=>{
+    useEffect(()=>{
         if(!props.isAdmin && props.isAuthenticated){
             props.getIncart(props.userfullName[2])
             props.getInfavories(props.userfullName[2])
             setFavRecords(props.infavories)
-            setCartRecords(props.incart)
+            setCartRecords(props.incart) 
         }
-    }
-
-    useEffect(()=>{
-       return bringsData() 
     }, [])
 
     useEffect(()=>{
@@ -187,7 +183,7 @@ function Navbar(props){
                     <ul className='logo navs'>
                         <li className='navs  d-flex align-items-center justify-content-start'>
                             <Link className='Link_logo' to= '/'> 
-                                <img className='mx-2' src= {loggo}/>
+                                <img className='mx-2' src= {loggo} alt='logos'/>
                                 <span> {ProjectName} </span>
                             </Link>
                         </li>
@@ -373,12 +369,17 @@ function Navbar(props){
                         ):
                         (   <>
                                 <ul className='rightInfo'>
+                                    <div className='mx-3'>
+                                        <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
+                                            <i className="bi bi-cart-fill text-white mx-1"></i> Cart
+                                        </span>
+                                    </div>
                                     <div className='buttons '>                            
                                         <Link className='Link' to='/login' >
-                                            <button className='btn btn-primary'>Login</button> 
+                                            <button className='btn bg-warning text-white'>Login</button> 
                                         </Link>
                                         <Link className='Link' to='/register' >
-                                            <button className='btn btn-primary'>Register</button>
+                                            <button className='btn bg-warning text-white'>Register</button>
                                         </Link>
                                     </div>
                                 </ul>
@@ -404,7 +405,7 @@ function Navbar(props){
 }
 
 const mapStateToProps =(state)=>{
-    
+    console.log('incart', state.incart)
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,

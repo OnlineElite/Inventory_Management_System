@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-//import logo from '../images/top.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/Sidebar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
+import loggo from '../images/TechWave.png'
 import {LogOutThunk, logout} from '../actions/IMSAction'
 function Sidebar(props){
     const [active, setActive] = useState("dashboard");
@@ -19,8 +18,8 @@ function Sidebar(props){
     return (
       <div className=" sidebar d-flex justify-content-between flex-column text-white">
         <div className="userInfo ">
-          <FontAwesomeIcon className='logo mx-2' icon="fa-solid fa-microchip" />
-          <span > {ProjectName} </span>
+           <img className='mx-2' src= {loggo} alt='logos'/>
+           <span > {ProjectName} </span>
         </div>
 
         <ul className="mainlinks">

@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import { DatePicker } from 'antd';
 import {updateUserThunk, deleteUserThunk, bringUsersThunk} from '../actions/IMSAction'
 import userimg from '../images/Default.png'
+import ClipLoader from "react-spinners/ClipLoader";
 import '../styles/Users.css'
 
 const { RangePicker } = DatePicker;
@@ -16,6 +17,7 @@ function Users(props){
     const [condition, setCondition] = useState(null)
     const [selectedRange, setSelectedRange] = useState(null);
     const [isfiltred, setIsfiltred] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(()=>{
         props.getUsers()
@@ -24,6 +26,10 @@ function Users(props){
                 setRecords(props.users);
                 setIsfiltred(false)
             }
+        }
+
+        if(props.users.length !== 0){
+            setIsLoading(false)
         }
     }, [props.users])
 
@@ -252,6 +258,7 @@ function Users(props){
                 <input id='filterEmail' className='filterinp py-2' type='text' placeholder='Filter by email' onChange={filterByemail} />
                 <span className="btn btn-outline-primary mx-3 mt-3 py-2" onClick={handeleReset}>Reset</span>
             </div>
+            {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
             <div className='container mt-3'>
                 <DataTable 
                     title = {'Manage Users'}
@@ -266,7 +273,7 @@ function Users(props){
                     customStyles={tableCustomStyles}
                 >
                 </DataTable>
-            </div>
+            </div>}
             {/* Update user Modal */}
             <div className="modal fade" id="updateUser" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-lg">

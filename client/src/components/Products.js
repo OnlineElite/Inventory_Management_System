@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import prodimg from '../images/Default.png'
 import {bringProductsThunk} from '../actions/IMSAction'
-
+import ClipLoader from "react-spinners/ClipLoader";
 import '../styles/Products.css'
 function Products(props){
     const [records, setRecords] = useState(props.products)
@@ -10,7 +10,8 @@ function Products(props){
     const [selectfilterCategory, setSelectfilterCategory] = useState('');
     const [equivalent, setEquivalent] = useState('')
     const [isfiltred, setIsfiltred] = useState(false);
-    const imagesURL = process.env.REACT_APP_API_IMAGES_URL; 
+    const [isLoading, setIsLoading] = useState(true)
+    const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
     useEffect(() => {
       if (props.products !== records) {
@@ -18,8 +19,11 @@ function Products(props){
         if(!isfiltred){
           setRecords(props.products)
           setIsfiltred(false)
-        }
-        
+        } 
+      }
+
+      if(props.products.length !== 0){
+        setIsLoading(false)
       }
     }, [props.products]);
 
@@ -177,9 +181,9 @@ function Products(props){
             </select>
             <span className="btn btn-outline-primary mx-3" onClick={handeleReset}>Reset</span>
           </div>
+          {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
           <div className="prod bg-light">
-            {records.map(
-              (product) => (
+            {( (records.length === 0)? props.products :records ).map((product) => (
                 (
                   <div
                     className="card"
@@ -240,7 +244,7 @@ function Products(props){
                 )
               )
             )}
-          </div>
+          </div>}
           {/* View Item Modal */}
           <div
             className="modal fade "
