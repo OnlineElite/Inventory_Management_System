@@ -7,13 +7,6 @@ const registerUser = (answer)=>{
     }
 }
 
-const isLoading =(state)=>{
-    return{
-        type : 'IS_LOADING',
-        payload : state
-    }
-}
-
 const setAuthenticated = (isAuthenticated) =>{
     return {
         type: "SET_AUTHENTICATED",
@@ -255,17 +248,14 @@ const LogOutThunk = (useremail) => async (dispatch)=>{
 
 const bringProductsThunk = () => async (dispatch)=>{
     try{
-        dispatch(isLoading(true))
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/products`;
         const response = await fetch(url);
         const datarecived = await response.json();
-        if(datarecived.products){ dispatch(isLoading(false))}
         dispatch(handelProducts(datarecived.products))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
-        dispatch(isLoading(false))
     }
 }
 
@@ -700,16 +690,15 @@ const bringIncartThunk = (user_id) => async (dispatch)=>{
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/incart`;
         const data = {user_id : user_id}
-    
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
           body: JSON.stringify(data)
         };
-
         const response = await fetch(url, header);
         const datarecived = await response.json();
         dispatch(handelIncart(datarecived.products))
+        console.log('incartfetched', datarecived.products)
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -721,16 +710,15 @@ const bringInfavoriesThunk = (user_id) => async (dispatch)=>{
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/infavories`;
         const data = {user_id : user_id}
-    
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
           body: JSON.stringify(data)
         };
-
         const response = await fetch(url, header);
         const datarecived = await response.json();
         dispatch(handelInfavories(datarecived.products))
+        console.log('infavoriesfetched', datarecived.products)
     }catch(err){
         console.error(err)
         dispatch(handellError(err))

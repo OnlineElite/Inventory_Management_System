@@ -16,10 +16,18 @@
 .userInfo{
     width: 100%;
     height: 9%;
+    color: white;
+    padding-inline: 2rem;
+    font-size: 2rem;
+    text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: baseline;
+}
 
+.userInfo img{
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .userInfo .logo{

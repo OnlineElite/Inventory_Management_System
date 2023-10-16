@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import prodimg from '../images/Default.png'
 import {connect} from 'react-redux'
-import {bringProductsThunk, bringCategoriesThunk, bringBrandsThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
+import {bringProductsThunk, bringInfavoriesThunk, bringIncartThunk, bringCategoriesThunk, bringBrandsThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
 import Footer from '../components/Footer'
 import { ToastContainer, toast } from 'react-toastify';
 import ClipLoader from "react-spinners/ClipLoader";
@@ -26,6 +26,13 @@ function UserInterface(props){
     props.getProducts()
     props.getCategories()
     props.getBrands()
+   /* if(!props.isAdmin && props.isAuthenticated){
+      if(props.incart.length===0 || props.infavories.length===0){
+        props.getIncart()
+        props.getInfavories()
+      }
+    }*/
+
     if(!isfiltred){
       setRecords(props.products)
     } 
@@ -377,14 +384,13 @@ const mapStateToProps =(state)=>{
     isAdmin : state.isAdmin,
     products : state.products,
     categories : state.categories,
-    users : state.users,
     brands : state.brands,
     addMsg : state.addMsg,
     deleteMsg : state.deleteMsg,
     updateMsg : state.updateMsg,
     userfullName : state.userfullName,
-    infavories : state.infavories,
-    isLoading : state.isLoading
+    incart : state.incart,
+    infavories : state.infavories
   }
 }
 
@@ -404,7 +410,13 @@ const mapDispatchToProps =(dispatch)=>{
     },
     addToFavories : (ref)=>{
       dispatch(addToFavoriesThunk(ref))
-    }
+    },
+    getIncart : (user_id)=>{
+      dispatch(bringIncartThunk(user_id))
+    },
+    getInfavories : (user_id)=>{
+        dispatch(bringInfavoriesThunk(user_id))
+    },
   }  
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserInterface);

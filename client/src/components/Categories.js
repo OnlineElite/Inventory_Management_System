@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { DatePicker } from 'antd';
 import {connect} from 'react-redux'
+import ClipLoader from "react-spinners/ClipLoader";
 import {bringCategoriesThunk, addCategoryThunk, updateCategoryThunk, deleteCategoryThunk} from '../actions/IMSAction'
 //import 'antd/dist/antd.css';
 import '../styles/Categories.css'
@@ -15,6 +16,7 @@ function Categories(props){
     const [condition, setCondition] = useState(null)
     const [selectedRange, setSelectedRange] = useState(null);
     const [isfiltred, setIsfiltred] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(()=>{
         if (props.categories !== records) {
@@ -23,6 +25,10 @@ function Categories(props){
                 setRecords(props.categories);
                 setIsfiltred(false)
             }
+        }
+
+        if(props.categories.length !== 0){
+            setIsLoading(false)
         }
     }, [props.categories])
 
@@ -173,12 +179,12 @@ function Categories(props){
                                 setSelectedRange(null);
                             }
                         }}
-                    />
-                    
+                    />  
                 </div>
                 <input id='filterName' className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
                 <span className="btn btn-outline-primary mx-3 py-2 mt-3" onClick={handeleReset}>Reset</span>
             </div>
+            {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
             <div className='container mt-3'>
                 <DataTable 
                     title = {'Manage categories'}
@@ -194,8 +200,7 @@ function Categories(props){
                     actions ={<button type="button" className="btn btn-info" data-toggle="modal" data-target="#addCategory" >Add Category</button>}
                 >
                 </DataTable>
-                
-            </div>
+            </div>}
             {/* Add category Modal */}
             <div className="modal fade" id="addCategory" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-sm">
