@@ -42,6 +42,14 @@ const isAdmin =(value)=>{
     }
 }
 
+const isLoading =(value)=>{
+
+    return{
+        type: 'IS_LOADING',
+        payload: value
+    }
+}
+
 const userFallName =(faullName)=>{
 
     return{
@@ -253,9 +261,11 @@ const bringProductsThunk = () => async (dispatch)=>{
         const response = await fetch(url);
         const datarecived = await response.json();
         dispatch(handelProducts(datarecived.products))
+        if(datarecived.products){return dispatch(isLoading(false))}
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
+        isLoading(false)
     }
 }
 

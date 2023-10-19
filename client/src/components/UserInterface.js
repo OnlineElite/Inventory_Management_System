@@ -26,16 +26,9 @@ function UserInterface(props){
     props.getProducts()
     props.getCategories()
     props.getBrands()
-   /* if(!props.isAdmin && props.isAuthenticated){
-      if(props.incart.length===0 || props.infavories.length===0){
-        props.getIncart()
-        props.getInfavories()
-      }
-    }*/
-
     if(!isfiltred){
       setRecords(props.products)
-    } 
+    }
   }, [])
   
 
@@ -307,7 +300,7 @@ function UserInterface(props){
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <h3 className="text-dark equivalet">Equivalents:</h3>
+                  <h3 className="text-dark equivalet">Recommended:</h3>
                   <div className="equivals">
                     {props.products.map((product) =>
                       product.category_name === equivalent.category &&
@@ -390,7 +383,8 @@ const mapStateToProps =(state)=>{
     updateMsg : state.updateMsg,
     userfullName : state.userfullName,
     incart : state.incart,
-    infavories : state.infavories
+    infavories : state.infavories,
+    isLoading : state.isLoading
   }
 }
 
