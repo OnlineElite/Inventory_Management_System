@@ -33,7 +33,7 @@ function Checkout(props){
                 console.error(error);
             });
         }
-    }, [props.isAuthenticated, props.isAdmin ])
+    }, [ ])
 
     const bringInCart =()=>{
         if(!props.isAdmin && props.isAuthenticated){         

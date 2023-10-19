@@ -440,3 +440,15 @@
 #navbar  .imgBotom button i{
     font-size: 1rem;
 }
+
+#navbar  .bi-cart-fill {
+    position: relative;
+}
+
+#navbar  .badge{
+    position: absolute;
+    background-color: red;
+    font-size: 0.6rem;
+    left: 0;
+    top: 0;
+}

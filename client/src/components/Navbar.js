@@ -212,7 +212,9 @@ function Navbar(props){
                                     
                                     <li className='mx-3'>
                                         <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
-                                            <i className="bi bi-cart-fill text-white mx-1"></i> Cart
+                                            <i className="bi bi-cart-fill text-white mx-1">
+                                                <span className="badge badge-danger">{props.incart.length !== 0 && props.isAuthenticated? props.incart.length : 0}</span>
+                                            </i> Cart
                                         </span>
                                     </li>
                                     <li>
@@ -371,7 +373,9 @@ function Navbar(props){
                                 <ul className='rightInfo'>
                                     <div className='mx-3'>
                                         <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
-                                            <i className="bi bi-cart-fill text-white mx-1"></i> Cart
+                                            <i className="bi bi-cart-fill text-white mx-1">
+                                                <span className="badge badge-danger">{props.incart.length !== 0 && props.isAuthenticated? props.incart.length : 0}</span>
+                                            </i> Cart
                                         </span>
                                     </div>
                                     <div className='buttons '>                            
@@ -405,7 +409,7 @@ function Navbar(props){
 }
 
 const mapStateToProps =(state)=>{
-    console.log('incart', state.incart)
+    //console.log('incart', state.incart)
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
