@@ -11,6 +11,9 @@ const userReducer = (state, action)=>{
       case "SET_AUTHENTICATED":
         return { ...state, isAuthenticated: action.payload };
 
+      case "IS_LOADING":
+        return { ...state, isLoading: action.payload };
+
       case "ERROR_MESSAGE":
         return { ...state, error: action.payload };
 

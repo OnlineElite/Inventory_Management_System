@@ -375,11 +375,11 @@ function Navbar(props){
                                         </span>
                                     </div>
                                     <div className='buttons '>                            
-                                        <Link className='Link' to='/login' >
-                                            <button className='btn bg-warning text-white'>Login</button> 
+                                        <Link className='' to='/login' >
+                                            <button className=' text-white'>Login</button> 
                                         </Link>
-                                        <Link className='Link' to='/register' >
-                                            <button className='btn bg-warning text-white'>Register</button>
+                                        <Link className='' to='/register' >
+                                            <button className=' text-white'>Register</button>
                                         </Link>
                                     </div>
                                 </ul>

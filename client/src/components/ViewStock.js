@@ -847,7 +847,7 @@ function ViewStock(props){
                       </span>
                     </div>
                     <div className="lines">
-                      <span className="detail">Equivalents:</span>
+                      <span className="detail">Recommended:</span>
                       <span id="detailBrand" className="leftR">
                         {props.products.map((product) =>
                           (
@@ -880,7 +880,7 @@ function ViewStock(props){
                 </div>
               </div>
               <div className="modal-footer">
-                <h3 className="text-dark equivalet">Equivalents:</h3>
+                <h3 className="text-dark equivalet">Recommended:</h3>
                 <div className="equivals">
                   {props.products.map((product) =>
                     product.category_name === equivalent.category &&
