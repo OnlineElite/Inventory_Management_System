@@ -380,10 +380,10 @@ function Navbar(props){
                                     </div>
                                     <div className='buttons '>                            
                                         <Link className='' to='/login' >
-                                            <button className=' text-white'>Login</button> 
+                                            <button className='rounded-0 border-0 text-white'>Login</button> 
                                         </Link>
                                         <Link className='' to='/register' >
-                                            <button className=' text-white'>Register</button>
+                                            <button className='rounded-0 border-0 text-white'>Register</button>
                                         </Link>
                                     </div>
                                 </ul>
