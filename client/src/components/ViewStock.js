@@ -381,7 +381,7 @@ function ViewStock(props){
       if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
         props.addProduct(formData)
       }else{
-        setExtentionMsg('File extention not suported plase enter a file with(jpg, png or webp)')
+        setExtentionMsg('File extention not suported plase enter a file with(.jpg, .png or .webp)')
         extentionMsg? toast.success(`${extentionMsg}`) :  console.log('');
       }
       props.addMsg? toast.success(`${props.addMsg}`) :  console.log('');
@@ -753,7 +753,7 @@ function ViewStock(props){
                       <input className="p-0 w-25 inpChoose" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
                     </div>
                     <div id="img-preview" className="selecImg">
-                      {imageUrl? <img id="selecImg"  src={imageUrl} alt="Selected" /> : ''}
+                      {imageUrl? <img id="selecImg"  src={imageUrl} alt="Selected" /> : <span id="selecImg"></span>}
                         
                     </div>
                   </div>
