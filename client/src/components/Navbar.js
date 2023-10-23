@@ -37,6 +37,7 @@ function Navbar(props){
             .forEach(el => el.classList.remove("modal-backdrop"));
     }
 
+
     useEffect(()=>{
         if(!props.isAdmin && props.isAuthenticated){
             props.getIncart(props.userfullName[2])
