@@ -1,0 +1,63 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#Category .loadind{
+    width: 100%;
+    height: 50vh;
+    text-align: center;
+    padding-top: 3rem;
+}
+#Category  .filters{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-block: 1rem;
+    padding-left: 2rem;
+}
+
+#Category  .filters .refresh{
+    margin-inline: 0.5rem;
+    margin-top: 1rem;
+}
+
+#Category  .filters .refresh .reload{
+    font-size: 1.5rem;
+}
+
+#Category .filterinp{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px;
+    height: fit-content;
+    align-self: flex-end;
+}
+
+
+#Category .dates input, #Category .modal-body input{
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    border: 1px solid lightgray;
+    margin-inline: 0.3rem;   
+}
+
+#Category .date input{
+    width: 100%;
+}
+
+#Category .dates label{
+    font-weight: bold;
+    font-size: 18px;
+    width: 3rem;
+}
+#Category .date{
+    margin-top: 0.5rem;
+    margin-right: 1rem;
+}
+
+#Category .modal-body input{
+    width: 75%;
+}

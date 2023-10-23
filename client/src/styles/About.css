@@ -1,0 +1,36 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#about .container{
+    height: fit-content;
+}
+
+#about .row {
+    height: 100%;
+}
+
+#about video{
+    width: 100%;
+    height: fit-content;
+}
+
+#about .vidBox{
+    width: 100%;
+    height: 50%;
+}
+
+#about h3{
+    color:rgb(113, 224, 1);
+}
+
+#about ul li,#about p, #about h1 {
+    color: black;
+}
+
+
+#about ul li strong{
+    color: rgb(194, 194, 9);
+}

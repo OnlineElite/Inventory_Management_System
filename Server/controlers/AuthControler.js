@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
 const pool = require("../config/db");
@@ -11,7 +12,7 @@ async function register(req, res) {
     // Check if username is already taken
     const existingUser = await User.findByemail(email);
     if (existingUser) {
-      return res.status(409).json({ error: "Email already exists" });
+      return res.status(409).json({ message: "Email already exists" });
     }
 
     // Hash the password
@@ -48,17 +49,47 @@ async function login(req, res) {
 
     const secretKey = process.env.SECRET_KEY;
 
+    // Generate a unique session ID
+    const sessionId = crypto.randomBytes(16).toString("hex");
+
     // Generate and return a JWT
-    const token = jwt.sign({ id: user.user_id }, secretKey, { expiresIn: "1h", });  //mybe you should change user.id by user.user_id
+    const token = jwt.sign(
+      { id: user.user_id },
+      secretKey,
+      {
+        expiresIn: "3h",
+      }
+    ); //mybe you should change user.id by user.user_id
 
     // Insert the user into the login table
-    const query = "INSERT INTO login (email, password_hash, user_id) VALUES ($1, $2, $3)";
-    await pool.query(query, [email, user.password_hash, user.user_id]);
-    res.json({ token });
+    //const query = "INSERT INTO login (email, password_hash, user_id) VALUES ($1, $2, $3)";
+    //await pool.query(query, [email, user.password_hash, user.user_id]);
+    res.json({
+      token: token,
+      isAdmin: user.admin,
+      userEmail: user.email,
+      fullName: [user.first_name, user.last_name, user.user_id],
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 }
 
-module.exports = { register, login };
+async function logout(req, res) {
+  const { email } = req.body;
+
+  try {
+    // delete the user from the login table
+    const query = "delete from login where email = $1";
+    await pool.query(query, [email]);
+
+    res.status(201).json({ message: "User loged out successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+module.exports = { register, login, logout };
+

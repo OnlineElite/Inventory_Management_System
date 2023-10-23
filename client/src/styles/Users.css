@@ -1,0 +1,139 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#users .loadind{
+    width: 100%;
+    height: 50vh;
+    text-align: center;
+    padding-top: 3rem;
+}
+
+#users  .filters{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-block: 1rem;
+    padding-left: 2rem;
+}
+
+#users  .filters .refresh{
+    margin-inline: 0.5rem;
+    margin-top: 1rem;
+}
+
+#users  .filters .refresh .reload{
+    font-size: 1.5rem;
+}
+
+#users .filterinp{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px;
+    height: fit-content;
+    align-self: flex-end;
+    margin-inline: 0.5rem;
+}
+
+
+#users .dates input, #Category .modal-body input{
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    border: 1px solid lightgray;
+    margin-inline: 0.3rem;   
+}
+
+#users .date input{
+    width: 100%;
+}
+
+#users .dates label{
+    font-weight: bold;
+    font-size: 18px;
+    width: 3rem;
+}
+#users .date{
+    margin-top: 0.5rem;
+    margin-right: 1rem;
+}
+
+#users .modal-body input{
+    width: 75%;
+}
+
+/*--------modal-----------*/
+#users .modal h3{
+    width: 100%;
+    text-align: center;
+    color:blue ;
+}
+#users .modal-content{
+    background-color: white;
+    border-radius: 8px;
+}
+#users .modal-body{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+ 
+}
+#users  .modal-body .roo{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+#users .modal-body .roo label{
+    width: fit-content;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+}
+#users .modal-body .roo input, .modal-body .roo select, .modal-body .roo textarea{
+    background-color: rgb(208, 255, 208);
+    width: 80%;
+    font-size: 18px;
+    color: black ;
+    border-radius: 8px;
+    border:none;
+    padding: 5px;
+    
+}
+
+#users .close{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: black;
+}
+
+#users .modal-body .row{
+    width: 100%;
+}
+
+#users .lines{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+#users .right{
+    text-align: right;
+}
+#users .lines .detail{
+    color: gray;
+}
+
+#users .right img{
+    border-radius: 50%;
+    width: 70%;
+    height: 70%;
+}
+

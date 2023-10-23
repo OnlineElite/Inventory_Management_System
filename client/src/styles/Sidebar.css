@@ -6,29 +6,36 @@
 
 .sidebar{
     padding: 0;
-    max-height: 100vh;
-    min-height: 100vh;
+    height: 100vh;
+    min-width: 14vw;
     /*overflow-y: scroll;*/
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+    background-color: #2784fc;
 }
 
 .userInfo{
-    display: flex;
-    background-color:black;
-    padding: 1rem;
-    padding-block: 2rem;
-}
-
-.userInfo .userImage{
-    width: 60px;  /* width 50%*/
-    height: 60px;  /* height 50%*/
-    border-radius: 50%;
-    border: 2px solid white;
+    width: 100%;
+    height: 9%;
+    color: white;
+    padding-inline: 2rem;
+    font-size: 2rem;
+    text-decoration: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color:lightgrey;
-    margin-right: 0.5rem;
+    justify-content: baseline;
+}
+
+.userInfo img{
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.userInfo .logo{
+    font-size: 2rem;
+}
+
+.userInfo span{
+    font-size: 1.7rem;
 }
 
 .link {
@@ -45,26 +52,22 @@
     flex-direction: column;
 }
 
+.userInfo .username h4{
+    color: yellow;
+}
+
 .mainlinks li a i{
     font-weight: bold;
 }
-/*.lines{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 5px;
-    color: yellow;
-    margin-block: 1rem;
-}
 
-.lines .line{
-    width: 38%;
-    height: 1px;
-    background-color: lightgrey;
-}*/
 
 .mainlinks{
     width: 100%;
+
+}
+
+.mainlinks a{
+    text-decoration: none;
 }
 
 .mainlinks .link{
@@ -75,11 +78,19 @@
     padding-left: 1rem;
 }
 
+.mainlinks .logout{
+    padding-left: 1rem;
+    text-decoration: none;
+    color: white;
+}
+
 .active{
-    background-color: gray;
+    background-color: rgba(4, 29, 255, 0.568);
 }
 
 .sidebar ul{
     margin-left: 0;
     padding-left: 0;
 }
+
+

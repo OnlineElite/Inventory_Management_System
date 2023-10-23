@@ -2,13 +2,16 @@ import React from 'react'
 import Navbar from './Navbar'
 import { useState, useEffect } from 'react';
 import {connect} from 'react-redux'
+import loginimg from '../images/Inventory-Management.png'
 import '../styles/LogReg.css'
 import {loginThunk} from '../actions/IMSAction'
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 function LoginForm(props){
 
+    const navigate = useNavigate();
     const [info, setInfo] = useState({})
-    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         const ids = ['email', 'password'];
@@ -26,7 +29,7 @@ function LoginForm(props){
                 login.style.color = 'grey';
             } else {
                 login.disabled = false;
-                login.style.backgroundColor = 'rgb(1, 1, 70)';
+                login.style.backgroundColor = '#00afdb';
                 login.style.color = 'white';
                 const values = ids.map(id => document.getElementById(id).value);
                 setInfo({
@@ -54,55 +57,53 @@ function LoginForm(props){
         const ids = ['email', 'password'];
         const inputs = ids.map(id => document.getElementById(id));
         inputs.forEach((inp) => { inp.value =""})
-        
+        props.response? toast.error(`${props.response}`) :  console.log(''); 
     }
-
-    useEffect(() => {
-        if (props.response) {
-            setShowAlert(true);
-            const timeoutId = setTimeout(() => {
-                setShowAlert(false);
-            }, 3000);
-        
-            if(props.admission === true){
-                console.log('to dashbord page')
-                if(props.isAdmin === true){
-                    window.location.href = 'http://localhost:3000/dashbord';
-                }else{
-                    window.location.href = 'http://localhost:3000/userInterface';
-                }                 
-            }
-            else{
-                console.log('wrong information')
-            }
-            return () => {
-                clearTimeout(timeoutId);
-            };
-        }
-    }, [props.response, props.admission]);
-
+    useEffect(()=>{
+        if (props.isAuthenticated) {
+            navigate(`/dashboard`);
+        } 
+    })                   
     return(
         <div className='logincomp'>
             <Navbar/>
-            {showAlert && ( <div className="alert alert-success" role="alert"> {props.response} {props.useremail} </div> )}
             <div className="logingContainer">
-                <form className="LoginForm" onSubmit={HandelSubmit} >
-                    <h1>Login :</h1>
-                    <div className="ro"><label htmlFor="email">Email : </label><input type="email" id="email" name="email"/></div>
-                    <div className="ro"><label htmlFor="password">Password : </label><input type="password" id="password" name="password"/></div>
-                    <hr/>
-                    <button  id="login" type="submit" disabled>Login</button>
-                </form>
+                <div className="row">
+                    <h1>Login</h1>
+                    <div className=" image col-12 col-md-6 col-sm-6 col-lg-6">
+                        <img src={loginimg} alt="login and register"/>
+                    </div>
+                    <div className=" form col-12 col-md-6 col-sm-6 col-lg-6">
+                        <form className="LoginForm" onSubmit={HandelSubmit} >
+                            <div className="ro"><label htmlFor="email">Email : </label><input type="email" id="email" name="email"/></div>
+                            <div className="ro"><label htmlFor="password">Password : </label><input type="password" id="password" name="password"/></div>
+                            <hr/>
+                            <button  id="login" type="submit" disabled>Login</button>
+                        </form>                      
+                    </div>
+                </div>   
             </div>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
     )
 }
 
 const mapStateToProps =(state)=>{
+    
     return{
-        response : state.LoginRespond,
-        admission : state.admission,
-        useremail : state.userEmail,
+        response : state.error,
+        isAuthenticated : state.isAuthenticated,
         isAdmin : state.isAdmin
     }
 }

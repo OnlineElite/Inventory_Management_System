@@ -1,0 +1,249 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+#stock  .loadind{
+    width: 100%;
+    height: 50vh;
+    text-align: center;
+    padding-top: 3rem;
+}
+
+#stock  .filters{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-block: 1rem;
+}
+
+#stock  .filters .refresh{
+    margin-inline: 0.5rem;
+    margin-top: 1rem;
+    
+}
+
+#stock   .refresh .reload{
+    font-size: 1.5rem;
+}
+
+#stock .products .filters input, .products .filters select{
+    width: 20%;
+}
+/*----------modal---------*/
+#stock .modal h3{
+    width: 100%;
+    text-align: center;
+    color:blue ;
+}
+#stock .modal-content{
+    background-color: white;
+    border-radius: 8px;
+}
+#stock .modal-body{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+ 
+}
+#stock  .modal-body .roo{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3px;
+}
+#stock .modal-body .roo label{
+    width: fit-content;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+}
+#stock .modal-body .roo input, .modal-body .roo select, .modal-body .roo textarea{
+    background-color: rgb(208, 255, 208);
+    width: 80%;
+    font-size: 18px;
+    color: black ;
+    border-radius: 8px;
+    border:none;
+    padding: 5px;
+    
+}
+
+
+#stock .close{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: black;
+}
+
+
+#stock  .productImage{
+    width: 50%;
+    height: 200px;
+    background-color: lightgrey;
+    border: 1px solid rgb(185, 183, 183);
+    border-radius: 6px;
+    
+}
+
+#stock  .productImage img{
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+}
+
+#stock .modal-body .row .right{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+
+#stock .modal-body .detail{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#stock .equivals{
+    width: 100%;
+    display: flex;
+    flex-wrap:wrap;
+    align-items: center;
+}
+
+#stock .card-body .lines span{
+    font-size: 12px;
+    
+}
+
+#stock .card-body .lines{
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 25px;
+}
+
+#stock .card-body .detail{
+    color: black;
+}
+
+#stock .equivals .card{
+    background-color: rgba(236, 248, 252, 0.979);
+    min-width: 9.2rem;
+    max-height: 12rem;
+    margin-inline: 0.5rem;
+}
+
+#stock .view .modal-body .row{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1rem;
+}
+#stock .modal-body .price{
+    color: crimson;
+    font-weight: bold;
+    padding-right: 2.5rem;
+}
+
+#stock .modal-body .leftR{
+    float: right;
+    margin-right: 1.5rem;
+}
+
+#stock .modal-footer .equivalet{
+    width: 100%;
+    text-align: left;
+}
+
+#stock .filters .filterinp{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px;
+}
+
+#stock .equivals .c-footer {
+    border-top: 1px solid rgb(173, 172, 172);
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+#stock .dates{
+    width: 100%;
+    margin-left: 2rem;
+}
+
+
+#stock .dates input{
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+    border: 1px solid lightgray;
+    width: 20%;
+    margin-inline: 0.5rem;
+    
+}
+
+#stock .dates label{
+    font-weight: bold;
+    font-size: 18px;
+    width: 3rem;
+}
+#stock .date{
+    margin-bottom: 0.3rem;
+}
+
+#stock .selectimg{
+    height: fit-content;
+}
+
+#stock .img_roo{
+    width: 80%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+#stock .img_roo .selecImg{
+    width: 35%;
+}
+#stock .img_roo .inpChoose{
+    display: none;
+}
+
+#stock .img_roo img{
+    width: 100%;
+    height: 9rem;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+
+[type="file"] {
+    height: 0;  
+    width: 0;
+    overflow: hidden;
+}
+#stock  #up_Image [type="file"] + label {
+    font-family: sans-serif;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 0;
+}
+#stock  #up_Image [type="file"] + label:hover {
+    background-color: #fff;
+    color: #f44336;
+}
+/*#stock #addimage{
+    width: 100%;
+    margin-left: 1.5rem;
+}*/
