@@ -1,7 +1,7 @@
-//let formidable = require("formidable");
+let formidable = require("formidable");
 const nodemailer = require('nodemailer')
-//const Mailgen = require('mailgen')
-//const pool = require("../config/db");
+const Mailgen = require('mailgen')
+const pool = require("../config/db");
 const { Product, ProductAction } = require("../models/Products.js");
 
 
