@@ -708,7 +708,7 @@ const bringIncartThunk = (user_id) => async (dispatch)=>{
         const response = await fetch(url, header);
         const datarecived = await response.json();
         dispatch(handelIncart(datarecived.products))
-        console.log('incartfetched', datarecived.products)
+        //console.log('incartfetched', datarecived.products)
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -728,7 +728,7 @@ const bringInfavoriesThunk = (user_id) => async (dispatch)=>{
         const response = await fetch(url, header);
         const datarecived = await response.json();
         dispatch(handelInfavories(datarecived.products))
-        console.log('infavoriesfetched', datarecived.products)
+        //console.log('infavoriesfetched', datarecived.products)
     }catch(err){
         console.error(err)
         dispatch(handellError(err))

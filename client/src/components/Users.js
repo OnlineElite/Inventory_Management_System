@@ -20,8 +20,8 @@ function Users(props){
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(()=>{
-        props.getUsers()
         if (props.users !== records) {
+            props.getUsers()
             if(!isfiltred){
                 setRecords(props.users);
                 setIsfiltred(false)
