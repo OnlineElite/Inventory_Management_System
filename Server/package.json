@@ -5,10 +5,10 @@
   "main": "App.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "App.js"
+    "start": "node App.js"
   },
   "engines": {
-    "node": ">=20.2.0"
+    "node": "18.x"
   },
   "author": "",
   "license": "ISC",
