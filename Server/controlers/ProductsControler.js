@@ -1,7 +1,7 @@
-let formidable = require("formidable");
+//let formidable = require("formidable");
 const nodemailer = require('nodemailer')
-const Mailgen = require('mailgen')
-const pool = require("../config/db");
+//const Mailgen = require('mailgen')
+//const pool = require("../config/db");
 const { Product, ProductAction } = require("../models/Products.js");
 
 
@@ -19,39 +19,30 @@ async function contactMessage (req, res){
       }
     }
     let transporter = nodemailer.createTransport(config);
-    let MailGenerateur = new Mailgen({
-      theme : 'default',
-      product :{
-        name : userName,
-        link : 'https://mailgen.js'
-      }
-    })
+    // Define the email content
+    const emailContent = `
+    Name: ${userName}
+    Email: ${userEmail}
+    Phone Number: ${userPhoneNumber}
 
-    let response = {
-      body : {
-        name: 'TechWave',
-        intro : 'This is a new contact message',
-        table :{
-          data : [
-            {
-              Name : userName,
-              phone_Number : userPhoneNumber,
-              Message : userMessage
-            }
-          ]
-        },
-        outro : 'Thank you in advance'
-      }
-    }
+    Message:
+    ${userMessage}
 
-    let mail = MailGenerateur.generate(response);
-    let message = {
-      from : userEmail,
-      to : myEmail,
-      subject : 'TechWave Customer Message',
-      html : mail
-    }
-    transporter.sendMail(message).then(()=>{
+    ---
+
+    This is a new contact message. Thank you in advance. `;
+
+    // Set the email subject
+    const emailSubject = 'New TechWave Message';
+
+    // Send the email
+    let email = {
+        text: emailContent,
+        subject: emailSubject,
+        to: myEmail,
+    };
+
+    transporter.sendMail(email).then(()=>{
       return res.status(201).json({message : 'Your message has been sent successfully'})
     }).catch((error)=>{
       return res.status(500).json({error})
