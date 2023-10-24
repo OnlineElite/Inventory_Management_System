@@ -28,7 +28,7 @@ const {
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
   destination: 'public/uploads',
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
@@ -37,7 +37,11 @@ const storage = multer.diskStorage({
   },
 });
 
+const upload = multer({ storage });*/
+
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
+
 // Product Routers
 router.get('/States',getStatus)
 router.post('/sendMessage', contactMessage)
