@@ -14,8 +14,10 @@ function Products(props){
     const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
     useEffect(() => {
+        console.log("boucle");
+
       if (props.products !== records) {
-        props.getProducts()
+        //props.getProducts()
         if(!isfiltred){
           setRecords(props.products)
           setIsfiltred(false)
