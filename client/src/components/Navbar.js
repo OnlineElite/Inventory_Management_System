@@ -45,7 +45,7 @@ function Navbar(props){
             setFavRecords(props.infavories)
             setCartRecords(props.incart) 
         }
-    }, [])
+    }, [props.isAdmin, props.isAuthenticated])
 
     useEffect(()=>{
         if(!props.isAdmin && props.isAuthenticated){
@@ -54,7 +54,7 @@ function Navbar(props){
                 setFavRecords(props.infavories)
             }
         }
-    }, [props.infavories])
+    }, [props.infavories, favRecords, props.getInfavories])
 
     useEffect(()=>{
         if(!props.isAdmin && props.isAuthenticated){         
@@ -63,7 +63,7 @@ function Navbar(props){
                 setCartRecords(props.incart)
             }
         }
-    }, [props.incart])
+    }, [props.incart, cartRecords, props.getIncart])
 
     const hundellSubmit =(e)=>{
         e.preventDefault()

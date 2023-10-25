@@ -30,7 +30,7 @@ function ViewStock(props){
 
   useEffect(() => {
     if (props.products.length === 0 || props.products !== records) {
-      //props.getProducts()
+      props.getProducts()
       if(!isfiltred){
         setRecords(props.products)
         setIsfiltred(false)
