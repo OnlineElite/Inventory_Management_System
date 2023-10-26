@@ -254,20 +254,6 @@ const LogOutThunk = (useremail) => async (dispatch)=>{
     }
 }
 
-const bringProductsThunk = () => async (dispatch)=>{
-    try{
-        const baseURL = process.env.REACT_APP_API_PROD_URL; 
-        const url = `${baseURL}/products`;
-        const response = await fetch(url);
-        const datarecived = await response.json();
-        dispatch(handelProducts(datarecived.products))
-        if(datarecived.products){return dispatch(isLoading(false))}
-    }catch(err){
-        console.error(err)
-        dispatch(handellError(err))
-        isLoading(false)
-    }
-}
 
 const bringCategoriesThunk = () => async (dispatch)=>{
     try{
@@ -294,6 +280,21 @@ const bringBrandsThunk = () => async (dispatch)=>{
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
+    }
+}
+
+const bringProductsThunk = () => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/products`;
+        const response = await fetch(url);
+        const datarecived = await response.json();
+        dispatch(handelProducts(datarecived.products))
+        if(datarecived.products){return dispatch(isLoading(false))}
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+        isLoading(false)
     }
 }
 
