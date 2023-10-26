@@ -1,6 +1,7 @@
 const express = require("express");
 const verifyToken = require("../middleware/AuthMiddleware");
 const path = require('path')
+const multer =require('multer')
 const router = express.Router();
 const {
   getProducts, 
@@ -25,19 +26,6 @@ const {
   getStatus,
   contactMessage
 } = require("../controlers/ProductsControler");
-
-/************** Firebase**************/
-
-require('dotenv').config();
-const fireb =require('../config/firebase')
-const {initializeApp}= require('firebase/app')
-const multer =require('multer')
-const {getStorage, ref, getDownloadURL, uploadBytesResumable}=require('firebase/storage');
-const {signInWithEmailAndPassword, createUserWithEmailAndPassword}=require('firebase/auth');
-
-initializeApp(fireb.firebaseConfig)
-const storage = getStorage()
-const upload = multer({storage: multer.memoryStorage()})
 
 /*const storage = multer.diskStorage({
   destination: 'public/uploads',

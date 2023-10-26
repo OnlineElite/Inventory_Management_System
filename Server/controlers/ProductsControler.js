@@ -56,21 +56,21 @@ async function contactMessage (req, res){
 
 
 // Product Action
-async function getProducts(req, res) {
+async function getStatus(req, res) {
   try {
-    const Prods = await Product.importProducts();
-
-    res.status(201).json({ products: Prods });
+    const state = await Product.importStatus();
+    res.status(201).json({ states: state });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 }
 
-async function getStatus(req, res) {
+async function getProducts(req, res) {
   try {
-    const state = await Product.importStatus();
-    res.status(201).json({ states: state });
+    const Prods = await Product.importProducts();
+
+    res.status(201).json({ products: Prods });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
