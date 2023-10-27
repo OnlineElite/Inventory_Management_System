@@ -38,8 +38,8 @@ const {
 
 const upload = multer({ storage });*/
 
-//const storage = multer.memoryStorage();
-//const upload = multer({ storage });
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 // Product Routers
 router.get('/States',getStatus)
