@@ -26,7 +26,7 @@ function ViewStock(props){
   const [imageUrl, setImageUrl] = useState(null);
   const [isfiltred, setIsfiltred] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
-  const imagesURL = process.env.REACT_APP_API_IMAGES_URL; 
+  const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
   useEffect(() => {
     if (props.products.length === 0 || props.products !== records) {

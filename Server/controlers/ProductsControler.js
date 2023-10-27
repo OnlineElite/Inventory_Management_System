@@ -4,14 +4,27 @@ const Mailgen = require('mailgen')
 const pool = require("../config/db");
 const { Product, ProductAction } = require("../models/Products.js");
 
-const bucket = require("../routes/ProductRoutes").bucket;
+require("dotenv").config();
+
+const googleStorage = require("@google-cloud/storage");
+var serviceAccount = require("../config/ServiceAccountKey.json");
+
+var admin = require("firebase-admin");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: process.env.BUCKET_URL,
+});
+
+var bucket = admin.storage().bucket();
+
 
 async function contactMessage (req, res){
   try{
     const {userName, userEmail ,userPhoneNumber, userMessage} = req.body
     let myEmail = process.env.EMAIL;
     let myPassword = process.env.PASSWORD;
-    
+
     let config = {
       service : 'gmail',
       auth : {
@@ -80,7 +93,9 @@ async function getProducts(req, res) {
 
 async function AddingProduct(req, res) {
   try {
+
     if (req.file) {
+
       // Generate a unique filename for the image (e.g., use a UUID or other logic)
       const uniqueFilename = `${Date.now()}_${req.file.originalname}`;
 
@@ -95,7 +110,7 @@ async function AddingProduct(req, res) {
       });
 
       // Pipe the uploaded image data to Firebase Storage
-      req.file.buffer.pipe(fileStream);
+      fileStream.end(req.file.buffer);
 
       fileStream.on("error", (err) => {
         console.error("Error uploading image:", err);
@@ -104,7 +119,7 @@ async function AddingProduct(req, res) {
 
       fileStream.on("finish", async () => {
         // Set the image property to the URL of the uploaded image in Firebase Storage
-        req.body.image = `https://storage.googleapis.com/${process.env.BUCKET_URL}/${uniqueFilename}`;
+        req.body.image = `v0/b/${process.env.BUCKET_URL}/o/${uniqueFilename}?alt=media`;
 
         try {
           // Add the product with the Firebase Storage URL
