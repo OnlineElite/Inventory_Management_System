@@ -3,6 +3,12 @@ const verifyToken = require("../middleware/AuthMiddleware");
 const path = require('path')
 const multer =require('multer')
 const router = express.Router();
+
+const googleStorage = require("@google-cloud/storage");
+var serviceAccount = require("../config/ServiceAccountKey.json");
+
+var admin = require("firebase-admin");
+
 const {
   getProducts, 
   getCategories, 
@@ -38,6 +44,15 @@ const {
 
 const upload = multer({ storage });*/
 
+
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: process.env.BUCKET_URL,
+});
+
+var bucket = admin.storage().bucket();
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
@@ -46,7 +61,7 @@ router.get('/States',getStatus)
 router.post('/sendMessage', contactMessage)
 // Product Routers
 router.get("/products", upload.any(), getProducts);
-router.post("/addProduct", upload.single("image"), AddingProduct);
+router.post("/addProduct", AddingProduct);
 router.post('/deleteProduct', DeletingProduct)
 router.post('/updateProduct',upload.single("image"), UpdatingProduct)
 

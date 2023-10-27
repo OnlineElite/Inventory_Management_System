@@ -4,6 +4,7 @@ const Mailgen = require('mailgen')
 const pool = require("../config/db");
 const { Product, ProductAction } = require("../models/Products.js");
 
+const bucket = require("../routes/ProductRoutes").bucket;
 
 async function contactMessage (req, res){
   try{
@@ -79,16 +80,52 @@ async function getProducts(req, res) {
 
 async function AddingProduct(req, res) {
   try {
+    if (req.file) {
+      // Generate a unique filename for the image (e.g., use a UUID or other logic)
+      const uniqueFilename = `${Date.now()}_${req.file.originalname}`;
 
-    if (req.file){
-      req.body.image = req.file.filename;
+      // Define the destination in Firebase Storage
+      const file = bucket.file(uniqueFilename);
+
+      // Create a write stream to Firebase Storage
+      const fileStream = file.createWriteStream({
+        metadata: {
+          contentType: req.file.mimetype,
+        },
+      });
+
+      // Pipe the uploaded image data to Firebase Storage
+      req.file.buffer.pipe(fileStream);
+
+      fileStream.on("error", (err) => {
+        console.error("Error uploading image:", err);
+        res.status(500).json({ message: "Error uploading image" });
+      });
+
+      fileStream.on("finish", async () => {
+        // Set the image property to the URL of the uploaded image in Firebase Storage
+        req.body.image = `https://storage.googleapis.com/${process.env.BUCKET_URL}/${uniqueFilename}`;
+
+        try {
+          // Add the product with the Firebase Storage URL
+          await ProductAction.addProduct(req.body);
+
+          res
+            .status(201)
+            .json({ message: "Product added successfully", product: req.body });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+    } else {
+      // If no file was uploaded, simply add the product without an image
+      await ProductAction.addProduct(req.body);
+
+      res
+        .status(201)
+        .json({ message: "Product added successfully", product: req.body });
     }
-    
-    await ProductAction.addProduct(req.body);
-
-    res
-      .status(201)
-      .json({ message: "Product added successfully", product: req.body });
   } catch (error) {
     console.error(error);
 
