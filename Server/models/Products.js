@@ -119,6 +119,15 @@ class ProductAction {
     return result.rows;
   }
 
+  static async addProductWithoutImage(product){
+    const query = `insert into products (name , ref, stock, price, Description, category_id, brand_id)
+    values ('${product.name}', '${product.ref}', ${product.quantity}, 
+    ${product.price}, '${product.desc}', ${product.category}, ${product.brand})`;
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
   static async deleteProduct(product_ref){
     //const query = `delete from products where ref = '${product_ref}'`
     const query = `update products set deleted_date = CURRENT_TIMESTAMP  where ref = '${product_ref}'`

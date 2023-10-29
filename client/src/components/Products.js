@@ -14,8 +14,6 @@ function Products(props){
     const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
     useEffect(() => {
-        console.log("boucle");
-
       if (props.products !== records) {
         //props.getProducts()
         if(!isfiltred){
@@ -73,7 +71,7 @@ function Products(props){
 
     const handleShow=(ref)=>{
         let row = props.products.filter((product)=> product.product_ref === ref)
-        console.log('row', row)
+        //console.log('row', row)
         setEquivalent({category : row[0].category_name, ref : row[0].product_ref, quantity : row[0].product_stock})
         const ids = ['detailName', 'detailRef', 'detailQuantity', 'detailPrice','detailDescription', 'detailCategory', 'detailBrand', 'prodImage']
         const spans = ids.map((id) => document.getElementById(id))
@@ -101,10 +99,9 @@ function Products(props){
                     sp.textContent = row[0].brand_name
                     break;
                   case 'prodImage':
-                    sp.src = row[0].product_image != null
-                          ? `${imagesURL}/${row[0].product_image}`
-                          : prodimg
-                        
+                    sp.src = row[0].product_image === ""
+                          ? prodimg 
+                          : `${imagesURL}/${row[0].product_image}`
                     break;
                 default :
                     sp.textContent = ''
@@ -196,9 +193,9 @@ function Products(props){
                   >
                     <img
                       src={
-                        product.product_image != null
-                          ? `${imagesURL}/` + product.product_image
-                          : prodimg
+                        product.product_image === ""
+                          ? prodimg 
+                          : `${imagesURL}/` + product.product_image
                       }
                       className="card-img-top"
                       alt="product"

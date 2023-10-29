@@ -330,12 +330,16 @@ const addProductThunk = (product) => async (dispatch)=>{
     }
 }
 
-const deleteProductThunk = (productRef) => async (dispatch)=>{
+const deleteProductThunk = ({product_ref, image_src}) => async (dispatch)=>{
     try{
+        console.log(image_src)
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/deleteProduct`;
-        const data = {product_ref : productRef}
-    
+        const data = {
+            product_ref : product_ref,
+            image_src : image_src
+        }
+        
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
@@ -344,8 +348,8 @@ const deleteProductThunk = (productRef) => async (dispatch)=>{
         
         const response = await fetch(url ,header );
         const datarecived = await response.json();
-        dispatch(deleteProduct(datarecived.message, productRef));
-        //dispatch(deleteMessage(datarecived.message, productRef));
+        dispatch(deleteProduct(datarecived.message, product_ref));
+        //dispatch(deleteMessage(datarecived.message, product_ref));
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
