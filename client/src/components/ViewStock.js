@@ -167,61 +167,61 @@ function ViewStock(props){
 
   const clickUpdateButton=(row)=>{     
     console.log(row) 
-      const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'selecImg']
-      const inputs = ids.map((id) => document.getElementById(id))
+    const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'selecImg']
+    const inputs = ids.map((id) => document.getElementById(id))
 
-      const chooseFile = document.getElementById("upimage");
-      const imgPreview = document.getElementById("img-preview");
-      const selecImg = document.getElementById("selecImg");
-      chooseFile.addEventListener("change", function () {
-        getImgData();
-      });
-  
-      function getImgData() {
-        const files = chooseFile.files[0];
-        if (files) {
-          const fileReader = new FileReader();
-          fileReader.readAsDataURL(files);
-          fileReader.addEventListener("load", function () {
-            imgPreview.style.display = "block";
-            selecImg.src = this.result;
-          });    
-        }
+    const chooseFile = document.getElementById("upimage");
+    const imgPreview = document.getElementById("img-preview");
+    const selecImg = document.getElementById("selecImg");
+    chooseFile.addEventListener("change", function () {
+      getImgData();
+    });
+    console.log('choose file', chooseFile)
+    console.log('file', chooseFile.files[0])
+    function getImgData() {
+      const files = chooseFile.files[0];
+      if (files) {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(files);
+        fileReader.addEventListener("load", function () {
+          imgPreview.style.display = "block";
+          selecImg.src = this.result;
+        });    
       }
+    }
 
-      inputs.forEach((inp) => { 
-          switch(inp.id){
-              case 'upname':
-                  inp.value = row.product_name
-                  break;
-              case 'upref':
-                  inp.value = row.product_ref 
-                  break;
-              case 'upquantity':
-                  inp.value = row.product_stock
-                  break;
-              case 'upprice':
-                  inp.value = row.product_price
-                  break;
-              case 'updesc':
-                  inp.value = row.product_desc
-                  break;
-              case 'upcategory':
-                  inp.value = row.category_name
-                  break;
-              case 'upbrand':
-                  inp.value = row.brand_name
-                  break;
-              case 'selecImg':
-                  imgPreview.style.display = "block";
-                  selecImg.src = `${imagesURL}/${row.product_image}`;
-                  break;
-              default :
-                  inp.value = ''
-          }
-      })
-      setDeleteCondition(row.product_ref)
-      
+    inputs.forEach((inp) => { 
+      switch(inp.id){
+        case 'upname':
+          inp.value = row.product_name
+          break;
+        case 'upref':
+          inp.value = row.product_ref 
+          break;
+        case 'upquantity':
+          inp.value = row.product_stock
+          break;
+        case 'upprice':
+          inp.value = row.product_price
+          break;
+        case 'updesc':
+          inp.value = row.product_desc
+          break;
+        case 'upcategory':
+          inp.value = row.category_name
+          break;
+        case 'upbrand':
+          inp.value = row.brand_name
+          break;
+        case 'selecImg':
+          imgPreview.style.display = "block";
+          selecImg.src = `${imagesURL}/${row.product_image}`;
+          break;
+        default :
+          inp.value = ''
+    }
+    })
+      setDeleteCondition(row.product_ref) 
   }
 
   const hundeleUpdate =(e)=>{
@@ -285,7 +285,10 @@ function ViewStock(props){
   }
 
   const handleDelete=(row)=>{
-    props.deleteProduct(row.product_ref)
+    props.deleteProduct({
+      product_ref:row.product_ref,
+      image_src: `${imagesURL}/${row.product_image}`
+    })
     props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
     props.response? toast.error(`${props.response}`) :  console.log(''); 
     setRecords(props.products)
@@ -331,75 +334,76 @@ function ViewStock(props){
   }
   
   const HandellAddItem = (e)=>{
-      e.preventDefault()
-      const values = [];
-      const ids = ['name', 'ref', 'quantity', 'price', 'desc', 'category', 'brand', 'image'];
-      const inputs = ids.map((id) => document.getElementById(id));
+    e.preventDefault()
+    const values = [];
+    const ids = ['name', 'ref', 'quantity', 'price', 'desc', 'category', 'brand', 'image'];
+    const inputs = ids.map((id) => document.getElementById(id));
 
-      let catName, brandName;
+    let catName, brandName;
 
-      inputs.forEach((inp) => {
-      if (inp.id === 'category') {
-          const category = props.categories.find((item) => item.name === inp.value);
-          if (category) {
-          values.push(category.id);
-          catName = category.name;
-          }
-          
-      } else if (inp.id === 'brand') {
-          const brand = props.brands.find((item) => item.name === inp.value);
-          if (brand) {
-          values.push(brand.id);
-          brandName = brand.name;
-          }
-      } else if (inp.id === 'image' && inp.files.length > 0) {
-          values.push(inp.files[0].name);
-      } else {
-          values.push(inp.value);
+    inputs.forEach((inp) => {
+    if (inp.id === 'category') {
+      const category = props.categories.find((item) => item.name === inp.value);
+      if (category){
+        values.push(category.id);
+        catName = category.name;
       }
-      });
-
-      const formData = new FormData();
-      formData.append('name', values[0]);
-      formData.append('ref', values[1]);
-      formData.append('quantity', values[2]); 
-      formData.append('price', values[3]);
-      formData.append('desc', values[4]);
-      formData.append('category', values[5]);
-      formData.append('brand', values[6]);
-      formData.append("categoryName", catName);
-      formData.append("brandName", brandName);
-      
-      if (inputs[7].type === "file" && inputs[7].files.length > 0) {
-        formData.append("image", inputs[7].files[0]);
+        
+    } else if (inp.id === 'brand') {
+      const brand = props.brands.find((item) => item.name === inp.value);
+      if (brand){
+        values.push(brand.id);
+        brandName = brand.name;
       }
+    } else if (inp.id === 'image' && inp.files.length > 0) {
+      values.push(inp.files[0].name);
+    } else {
+      values.push(inp.value);
+    }
+    });
 
-      function getExtension(filename) {
-        return filename.split('.').pop()
-      }  
-      let extention = getExtension(inputs[7].files[0].name).toLowerCase()
-      if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
-        props.addProduct(formData)
-      }else{
-        setExtentionMsg('File extention not suported plase enter a file with(.jpg, .png or .webp)')
-        extentionMsg? toast.success(`${extentionMsg}`) :  console.log('');
-      }
-      props.addMsg? toast.success(`${props.addMsg}`) :  console.log('');
-      props.response? toast.error(`${props.response}`) :  console.log(''); 
-      handleCloseModal()     
-      setRecords(props.products)
+    const formData = new FormData();
+    formData.append('name', values[0]);
+    formData.append('ref', values[1]);
+    formData.append('quantity', values[2]); 
+    formData.append('price', values[3]);
+    formData.append('desc', values[4]);
+    formData.append('category', values[5]);
+    formData.append('brand', values[6]);
+    formData.append("categoryName", catName);
+    formData.append("brandName", brandName);
+    
+    if (inputs[7].type === "file" && inputs[7].files.length > 0) {
+      formData.append("image", inputs[7].files[0]);
+    }
+
+    function getExtension(filename) {
+      return filename.split('.').pop()
+    }  
+    let extention = getExtension(inputs[7].files[0].name).toLowerCase()
+    if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
+      props.addProduct(formData)
+    }else{
+      setExtentionMsg('File extention not suported plase enter a file with(.jpg, .png or .webp)')
+      extentionMsg? toast.success(`${extentionMsg}`) :  console.log('');
+    }
+    props.addMsg? toast.success(`${props.addMsg}`) :  console.log('');
+    props.response? toast.error(`${props.response}`) :  console.log(''); 
+    handleCloseModal()     
+    setRecords(props.products)
   }
 
   const tableCustomStyles = {
       headRow: {
         style: {
           color:'#223336',
-          backgroundColor: 'lightBlue'
+          backgroundColor: 'lightBlue',
         },
       },
       rows: {
         style: {
           color: "STRIPEDCOLOR",
+          paddingRight: '0.8rem',
           backgroundColor: "STRIPEDCOLOR"
         },
         stripedStyle: {
@@ -753,8 +757,7 @@ function ViewStock(props){
                       <input className="p-0 w-25 inpChoose" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
                     </div>
                     <div id="img-preview" className="selecImg">
-                      {imageUrl? <img id="selecImg"  src={imageUrl} alt="Selected" /> : <span id="selecImg"></span>}
-                        
+                      {imageUrl? <img id="selecImg"  src={imageUrl} alt="Selected" /> : <img src="" id="selecImg" alt="Product image"></img>}
                     </div>
                   </div>
                 </div>

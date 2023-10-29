@@ -5,7 +5,7 @@ const pool = require("../config/db");
 const { Product, ProductAction } = require("../models/Products.js");
 
 require("dotenv").config();
-
+// Initialize Firebase in Node.js script:
 const googleStorage = require("@google-cloud/storage");
 var serviceAccount = require("../config/ServiceAccountKey.json");
 
@@ -18,7 +18,7 @@ admin.initializeApp({
 
 var bucket = admin.storage().bucket();
 
-
+// End initialize
 async function contactMessage (req, res){
   try{
     const {userName, userEmail ,userPhoneNumber, userMessage} = req.body
@@ -68,7 +68,6 @@ async function contactMessage (req, res){
   }
 }
 
-
 // Product Action
 async function getStatus(req, res) {
   try {
@@ -93,22 +92,18 @@ async function getProducts(req, res) {
 
 async function AddingProduct(req, res) {
   try {
-
+    console.log('hellow backend')
     if (req.file) {
-
       // Generate a unique filename for the image (e.g., use a UUID or other logic)
       const uniqueFilename = `${Date.now()}_${req.file.originalname}`;
-
       // Define the destination in Firebase Storage
       const file = bucket.file(uniqueFilename);
-
       // Create a write stream to Firebase Storage
       const fileStream = file.createWriteStream({
         metadata: {
           contentType: req.file.mimetype,
         },
       });
-
       // Pipe the uploaded image data to Firebase Storage
       fileStream.end(req.file.buffer);
 
@@ -120,7 +115,6 @@ async function AddingProduct(req, res) {
       fileStream.on("finish", async () => {
         // Set the image property to the URL of the uploaded image in Firebase Storage
         req.body.image = `v0/b/${process.env.BUCKET_URL}/o/${uniqueFilename}?alt=media`;
-
         try {
           // Add the product with the Firebase Storage URL
           await ProductAction.addProduct(req.body);
@@ -134,8 +128,8 @@ async function AddingProduct(req, res) {
         }
       });
     } else {
-      // If no file was uploaded, simply add the product without an image
-      await ProductAction.addProduct(req.body);
+      // If no file was uploaded, add the product without an image
+      await ProductAction.addProductWithoutImage(req.body);
 
       res
         .status(201)
@@ -155,6 +149,17 @@ async function AddingProduct(req, res) {
 
 async function DeletingProduct(req, res) {
   try {
+    // Delete old image from firebase
+    const oldImagePath = req.body.image_src;
+    await bucket.file(oldImagePath).delete()
+    .then(() => {
+      console.log('Old image deleted successfully');
+    })
+    .catch((error) => {
+      console.error('Error deleting old image:', error);
+    });
+
+    // Delete product from postgresql database
     await ProductAction.deleteProduct(req.body.product_ref);
     res.status(201).json({ message: "Product deleted successfully" });
   } catch (error) {
@@ -163,19 +168,53 @@ async function DeletingProduct(req, res) {
   }
 }
 
-async function UpdatingProduct(req, res) {
+async function UpdatingProduct(req, res){
   try {
-    console.log("image ################ ", req.file);
-
     if (req.file){
-      req.body.image = req.file.filename;
-    }
-    if(req.body.image){
-      await ProductAction.updateProductWithImage(req.body);
+      // Delete old image
+      const oldImagePath = 'path/to/old-image.jpg';
+      storage.bucket().file(oldImagePath).delete()
+      
+      // Add new image
+      // Generate a unique filename for the image (e.g., use a UUID or other logic)
+      const uniqueFilename = `${Date.now()}_${req.file.originalname}`;
+      // Define the destination in Firebase Storage
+      const file = bucket.file(uniqueFilename);
+      // Create a write stream to Firebase Storage
+      const fileStream = file.createWriteStream({
+        metadata: {
+          contentType: req.file.mimetype,
+        },
+      });
+      // Pipe the uploaded image data to Firebase Storage
+      fileStream.end(req.file.buffer);
+
+      fileStream.on("error", (err) => {
+        console.error("Error uploading image:", err);
+        res.status(500).json({ message: "Error uploading image" });
+      });
+
+      fileStream.on("finish", async () => {
+        // Set the image property to the URL of the uploaded image in Firebase Storage
+        req.body.image = `v0/b/${process.env.BUCKET_URL}/o/${uniqueFilename}?alt=media`;
+
+        try {
+          // update the product with the Firebase Storage URL
+          await ProductAction.updateProductWithImage(req.body);
+          res.status(201).json({ message: "Product added successfully", product: req.body });
+
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: "Internal server error" });
+        }
+      });
+
+
     }else{
+      // If no file was uploaded, update the product without an image
       await ProductAction.updateProductWithOutImage(req.body);
+      res.status(201).json({ message: "Product updated successfully" });
     }
-    res.status(201).json({ message: "Product updated successfully" });
   } catch (error) {
     console.error(error);
     if (error.code == "LIMIT_FILE_SIZE") {
