@@ -331,8 +331,8 @@ function Navbar(props){
                                                         <div key={product.product_ref} >
                                                             <div className='product_row' id="cart-page">
                                                                 <div className='prodInfo'>
-                                                                    <div className='prodimg h-100'>
-                                                                        <div className='imag h-100'> 
+                                                                    <div className='prodimg h-100 w-25'>
+                                                                        <div className='imag h-100 w-100'> 
                                                                             <img src={product.product_image != null
                                                                                 ? `${imagesURL}/${product.product_image}`
                                                                                 : prodimg} alt='prodimage'/>

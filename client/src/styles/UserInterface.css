@@ -15,6 +15,43 @@
     box-shadow: 0 4px 8px 0 rgb(59, 59, 59);
 }
 
+.userInterface #proods .row .main{
+
+}
+
+.userInterface .pagination{
+    width: 100%;
+    padding: 0.5rem;
+    background-color: light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 1rem;
+}
+
+.userInterface .pagination button{
+    padding-block: 0.5rem;
+    padding-inline: 1.5rem;
+    background-color: lightgrey;
+    color: black;
+    font-size: 1.1rem;
+    border: 1px solid black;
+    margin-left: 0.5rem;
+    border-radius: 0.3rem;
+}
+
+
+.userInterface .pagination button a{
+    text-decoration: none;
+    color:black;
+}
+
+.userInterface .pagination button:hover  a , .userInterface .pagination button:hover {
+    background-color: green;
+    color: white;
+}
 .userInterface .sideFilter{
     display: flex;
     flex-direction: column;

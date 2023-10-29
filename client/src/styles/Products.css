@@ -16,7 +16,36 @@
     flex-wrap: wrap;
     align-items: center;
     margin-top: 1rem;
+    margin-bottom: 0;
     padding-left: 1rem;
+}
+
+.ProductsWindow .pagination{
+    width: 100%;
+    padding: 0.5rem;
+    background-color: light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    margin: 1rem;
+}
+
+.ProductsWindow .pagination button{
+    padding-block: 0.5rem;
+    padding-inline: 1.5rem;
+    background-color: lightgrey;
+    color: black;
+    font-size: 1.1rem;
+    border: 1px solid black;
+    margin-left: 0.5rem;
+    border-radius: 0.3rem;
+}
+
+.ProductsWindow .pagination button:hover {
+    background-color: green;
+    color: white;
 }
 
 .ProductsWindow .container .card{

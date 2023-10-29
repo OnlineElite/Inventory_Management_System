@@ -166,7 +166,7 @@ function ViewStock(props){
   }
 
   const clickUpdateButton=(row)=>{     
-    console.log(row) 
+    //console.log(row) 
     const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'selecImg']
     const inputs = ids.map((id) => document.getElementById(id))
 
@@ -176,8 +176,7 @@ function ViewStock(props){
     chooseFile.addEventListener("change", function () {
       getImgData();
     });
-    console.log('choose file', chooseFile)
-    console.log('file', chooseFile.files[0])
+    
     function getImgData() {
       const files = chooseFile.files[0];
       if (files) {
@@ -391,6 +390,16 @@ function ViewStock(props){
     props.response? toast.error(`${props.response}`) :  console.log(''); 
     handleCloseModal()     
     setRecords(props.products)
+    //reset all fields
+    const addImg = document.getElementById("addimage");
+    inputs.forEach((inp) => {
+      switch(inp.id){
+        case 'category': inp.selectedIndex = 0; break;
+        case 'brand': inp.selectedIndex = 0; break;
+        case 'image': addImg.src = ''; break;
+        default: inp.value = ''; break;
+      }
+    });
   }
 
   const tableCustomStyles = {
@@ -418,17 +427,17 @@ function ViewStock(props){
     const ids = ['filterName', 'filterRef', 'filterCategory', 'filterBrand', 'filterDate']
     const inputs = ids.map((id)=> document.getElementById(id))
     inputs.forEach((inp)=> {
-        switch(inp.id){
-            case 'filterName': inp.value = ''; break;
-            case 'filterRef': inp.value = ''; break;
-            case 'filterCategory': inp.selectedIndex = 0; break;
-            case 'filterBrand': inp.selectedIndex = 0; break;
-            case 'filterDate': 
-                setSelectedRange(null);
-                setRecords(props.products);; 
-                break;
-            default: inp.value = ''
-        }
+      switch(inp.id){
+        case 'filterName': inp.value = ''; break;
+        case 'filterRef': inp.value = ''; break;
+        case 'filterCategory': inp.selectedIndex = 0; break;
+        case 'filterBrand': inp.selectedIndex = 0; break;
+        case 'filterDate': 
+          setSelectedRange(null);
+          setRecords(props.products);; 
+          break;
+        default: inp.value = ''
+      }
     })
     setRecords(props.products)
   }
