@@ -22,6 +22,11 @@ function UserInterface(props){
   const [isLiked, setIsLiked] = useState(false);
   const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 12;
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+
   useEffect(()=>{
     props.getProducts()
     props.getCategories()
@@ -31,6 +36,19 @@ function UserInterface(props){
     }
   }, [])
   
+  const currentProducts = ((records.length === 0)? props.products :records ).slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const nextPage = () => {
+    if (currentPage < Math.ceil(((records.length === 0)? props.products :records ).length / productsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   const handleShow=(ref)=>{
       let row = props.products.filter((product)=> product.product_ref === ref)
@@ -180,9 +198,9 @@ function UserInterface(props){
                 </ul>
               </div>
             </div>
-            <div className='  col-12 col-sm-9 col-md-10 col-l-10 col-xl-10'>
+            <div className=' main  col-12 col-sm-9 col-md-10 col-l-10 col-xl-10'>
               <div className='container bg-light prod border rounded' >
-                  {( (records.length === 0)? props.products :records ).map((product)=>(
+                  {currentProducts.map((product)=>(
                       <div
                       className="card "
                       key={product.product_ref}
@@ -218,6 +236,15 @@ function UserInterface(props){
                       </div>
                     </div>
                   ))}
+              </div>
+               {/* Pagination controls */}
+              <div className='pagination'>
+                <button onClick={prevPage} disabled={currentPage === 1}>
+                  <a href='#proods'>Previous</a>  
+                </button>
+                <button onClick={nextPage} disabled={currentPage === Math.ceil(((records.length === 0)? props.products :records ).length / productsPerPage)}>
+                  <a href='#proods'>Next</a>
+                </button>
               </div>
             </div>
           </div>

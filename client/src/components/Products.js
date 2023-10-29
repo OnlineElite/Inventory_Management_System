@@ -13,6 +13,11 @@ function Products(props){
     const [isLoading, setIsLoading] = useState(true)
     const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 12;
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+
     useEffect(() => {
       if (props.products !== records) {
         //props.getProducts()
@@ -26,6 +31,20 @@ function Products(props){
         setIsLoading(false)
       }
     }, [props.products]);
+ 
+    const currentProducts = ((records.length === 0)? props.products :records ).slice(indexOfFirstProduct, indexOfLastProduct);
+
+    const nextPage = () => {
+      if (currentPage < Math.ceil(((records.length === 0)? props.products :records ).length / productsPerPage)) {
+        setCurrentPage(currentPage + 1);
+      }
+    };
+  
+    const prevPage = () => {
+      if (currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      }
+    };
 
     const filterByName =(e)=>{
       const newData = props.products.filter(prod =>{ 
@@ -127,7 +146,7 @@ function Products(props){
 
     return (
       <div className="ProductsWindow" id="products">
-        <div className="container bg-light">
+        <div className="container bg-light ">
           <h1>Manage products</h1>
           <div className="filters px-3">
             <input
@@ -182,7 +201,7 @@ function Products(props){
           </div>
           {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
           <div className="prod bg-light">
-            {( (records.length === 0)? props.products :records ).map((product) => (
+            {currentProducts.map((product) => (
                 (
                   <div
                     className="card"
@@ -244,6 +263,15 @@ function Products(props){
               )
             )}
           </div>}
+          {/* Pagination controls */}
+          <div className='pagination'>
+            <button onClick={prevPage} disabled={currentPage === 1}>
+              Previous
+            </button>
+            <button onClick={nextPage} disabled={currentPage === Math.ceil(((records.length === 0)? props.products :records ).length / productsPerPage)}>
+              Next
+            </button>
+          </div>
           {/* View Item Modal */}
           <div
             className="modal fade "
