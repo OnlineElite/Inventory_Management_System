@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/Sidebar.css'
 import {Link} from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux';
 import loggo from '../images/TechWave.png'
 import {LogOutThunk, logout} from '../actions/IMSAction'
@@ -71,12 +72,12 @@ function Sidebar(props){
               <i className="bi bi-flag-fill mx-2"></i> Brands
             </li>
           </Link>
-          <Link to="/dashboard/settings">
+          <Link to="/dashboard/orders">
             <li
-              className={active === "settings" ? "active link" : "link"}
-              onClick={(e) => setActive("settings")}
+              className={active === "orders" ? "active link" : "link"}
+              onClick={(e) => setActive("orders")}
             >
-              <i className="bi bi-gear-wide-connected mx-2"></i> Settings
+              <FontAwesomeIcon className="i mx-2" icon="fa-solid fa-cubes" /> Orders
             </li>
           </Link>
         </ul>

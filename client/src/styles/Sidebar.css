@@ -56,7 +56,7 @@
     color: yellow;
 }
 
-.mainlinks li a i{
+.mainlinks li a i, .mainlinks li  .i{
     font-weight: bold;
 }
 

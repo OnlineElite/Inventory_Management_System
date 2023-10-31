@@ -8,7 +8,7 @@ import Home from "./Home";
 import Products from './Products'
 import Categories from "./Categories";
 import ViewStock from './ViewStock'
-import Settings from './Settings';
+import Settings from './Orders';
 import Users from './Users'
 import Brands from './Brands'
 import {connect} from 'react-redux'
@@ -50,7 +50,7 @@ function Dashboard(props){
                         <Route path="/stock" element={<ViewStock/>} />
                         <Route path="/users" element={<Users/>} />
                         <Route path="/brands" element={<Brands/>} />
-                        <Route path="/settings" element={<Settings/>} />
+                        <Route path="/orders" element={<Settings/>} />
                     </Routes>
                 </div>               
             </div>

@@ -7,6 +7,7 @@ import prodimg from '../images/Default.png'
 import {connect} from 'react-redux'
 import {bringProductsThunk, bringInfavoriesThunk, bringIncartThunk, bringCategoriesThunk, bringBrandsThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
 import Footer from '../components/Footer'
+import MiniSlider from '../components/MiniSlider'
 import { ToastContainer, toast } from 'react-toastify';
 import ClipLoader from "react-spinners/ClipLoader";
 import Slider from './Slider';
@@ -172,6 +173,7 @@ function UserInterface(props){
     <div className='userInterface'>
       <Navbar navSearch = {filterByDiscription} />
       <Slider/>
+      <MiniSlider/>
       {props.isLoading? <div className='loadind'><ClipLoader color={'#36d7b7'} loading={props.isLoading} size={60} />Loading... </div>:
       <>
         <div id='proods'>
