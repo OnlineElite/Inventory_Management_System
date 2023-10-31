@@ -1,14 +1,14 @@
 import React from 'react';
 
 
-function Settings(){
+function Orders(){
     
     return(
         <div className='w-100 text-center'>
-            <h1>Welcome in Settings</h1>
+            <h1>Welcome in Orders</h1>
         </div>
     )
 }
 
-export default Settings;
+export default Orders;
 
