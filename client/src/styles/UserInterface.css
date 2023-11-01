@@ -15,8 +15,9 @@
     box-shadow: 0 4px 8px 0 rgb(59, 59, 59);
 }
 
-.userInterface #proods .row .main{
 
+.userInterface #proods .row{
+    padding-left: 1.5rem;
 }
 
 .userInterface .pagination{

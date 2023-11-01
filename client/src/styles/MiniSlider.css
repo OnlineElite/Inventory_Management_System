@@ -65,6 +65,7 @@
 
 .miniSlide img:hover{
     transform: translateZ(20px);
+    font-weight: bold;
 }
 
 

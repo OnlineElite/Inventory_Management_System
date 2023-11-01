@@ -19,8 +19,8 @@ function Categories(props){
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(()=>{
+        props.getCategories()
         if (props.categories !== records) {
-            props.getCategories()
             if(!isfiltred){
                 setRecords(props.categories);
                 setIsfiltred(false)
