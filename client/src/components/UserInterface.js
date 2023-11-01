@@ -177,7 +177,7 @@ function UserInterface(props){
       {props.isLoading? <div className='loadind'><ClipLoader color={'#36d7b7'} loading={props.isLoading} size={60} />Loading... </div>:
       <>
         <div id='proods'>
-          <div className='row px-3'>
+          <div className='row'>
             <div className=' col-12 col-sm-3 col-md-2 col-l-2 col-xl-2'>
               <div className=' container sideFilter px-2 border bg-light rounded'>
                 <h5 className='w-100 text-dark '>Filter by category</h5>

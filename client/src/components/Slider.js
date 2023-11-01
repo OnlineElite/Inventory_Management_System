@@ -6,6 +6,8 @@ import slide10 from '../images/slider10.jpg'
 import slide11 from '../images/slider11.jpg'
 import slide12 from '../images/slider12.jpg'
 import slide13 from '../images/slider13.jpg'
+import slide14 from '../images/slider14.jpg'
+import slide15 from '../images/slider15.jpg'
 import '../styles/Silder.css'
 
 function Slider(){
@@ -25,7 +27,15 @@ function Slider(){
         },
         {
             url: ` ${slide13}`,
-            caption: 'Slide 3'
+            caption: 'Slide 4'
+        },
+        {
+            url: ` ${slide14}`,
+            caption: 'Slide 5'
+        },
+        {
+            url: ` ${slide15}`,
+            caption: 'Slide 6'
         }
     ];
 

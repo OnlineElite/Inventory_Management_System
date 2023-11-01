@@ -120,8 +120,23 @@ const userReducer = (state, action)=>{
             return element
           }
         });
-        console.log('newList', updateCategories)
+        //console.log('newList', updateCategories)
         return { ...state, categories: updateCategories }; 
+
+      case "UPDATE_BRAND":
+        const newBrandName = action.payload.brand.newValue;
+        const oldBrandname = action.payload.brand.condition;
+        const updateBrand = state.brands.map((element) =>{
+          if(element.name === oldBrandname){
+            element.name = newBrandName;
+            element.updated_date = new Date().toISOString();
+            return element
+          }else{
+            return element
+          }
+        });
+        //console.log('newList', updateBrand)
+        return { ...state, brands: updateBrand }; 
 
       case "UPDATE_PRODUCT":
         const updatedProduct = action.payload;

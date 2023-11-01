@@ -168,6 +168,13 @@ const updateCategory = (message, category) => {
     };
 };
 
+const updateBrand = (message, brand) => {
+    return {
+      type: "UPDATE_BRAND",
+      payload: { message, brand },
+    };
+};
+
 const handelUsers = (user)=>{
     return {
         type : 'USERS',
@@ -483,9 +490,11 @@ const updateBrandThunk = (brand) => async (dispatch)=>{
         };
         
         const response = await fetch(url ,header );
-        const datarecived = await response.json();
-        
-        dispatch(updateMessage(datarecived.message))
+        if(response.status === 201){
+            const datarecived = await response.json();
+            dispatch(updateMessage(datarecived.message))
+            dispatch(updateBrand(datarecived.message, brand)) 
+        }
     }catch(err){
         console.error(err)
         dispatch(handellError(err))

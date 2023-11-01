@@ -19,8 +19,8 @@ function Brands(props){
     const [isLoading, setIsLoading] = useState(true)
     
     useEffect(()=>{
+        props.getBrands()
         if (props.brands !== records) {
-            props.getBrands()
             if(!isfiltred){
                 setRecords(props.brands);
                 setIsfiltred(false)
