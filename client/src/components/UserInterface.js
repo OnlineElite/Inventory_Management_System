@@ -176,10 +176,10 @@ function UserInterface(props){
       <MiniSlider/>
       {props.isLoading? <div className='loadind'><ClipLoader color={'#36d7b7'} loading={props.isLoading} size={60} />Loading... </div>:
       <>
-        <div id='proods'>
-          <div className='row'>
+        <div id='proods' className='bg-primary'>
+          <div className='row m-auto w-100'>
             <div className=' col-12 col-sm-3 col-md-2 col-l-2 col-xl-2'>
-              <div className=' container sideFilter px-2 border bg-light rounded'>
+              <div className=' container sideFilter px-2 border  rounded'>
                 <h5 className='w-100 text-dark '>Filter by category</h5>
                 <ul className='categs'>
                   {props.categories.map((categ, index)=>(
@@ -201,7 +201,7 @@ function UserInterface(props){
               </div>
             </div>
             <div className=' main  col-12 col-sm-9 col-md-10 col-l-10 col-xl-10'>
-              <div className='container bg-light prod border rounded' >
+              <div className='container  prod border rounded' >
                   {currentProducts.map((product)=>(
                       <div
                       className="card "

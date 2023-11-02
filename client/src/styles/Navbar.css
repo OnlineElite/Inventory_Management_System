@@ -5,7 +5,8 @@
 }
 /*--------------------------Navbar section-----------------------------*/
 .Navbarr .navbar{
-    background-color: #2784fc;
+    /*background-color: #2784fc;*/
+    background-image: linear-gradient(rgb(0, 23, 56), rgb(2, 42, 97));
     margin: 0;
     padding: 0;
     
@@ -163,10 +164,10 @@
     height: 100%;
     background-color: transparent;
     border: none;
-    color: white;
+    color: black;
 
 }.Navbarr #searsh input::placeholder{
-    color: white;
+    color: rgb(0, 23, 56);
     
 }
 .Navbarr #searsh input:focus{
@@ -176,13 +177,25 @@
 .Navbarr #searsh{
     display: flex;
     align-items: center;
-    border: 2px solid white;
+    border: none;
+    background-color: white;
+    width: 100%;
+    height: 2.2rem;
+    padding-left: 0.5rem;
 }
 
-.Navbarr #searsh{
-    width: 100%;
-    height: 2.5rem;
-    padding-left: 0.5rem;
+.Navbarr #searsh .bi-search{
+    margin: 0;
+    padding-inline: 1rem;
+    color: black;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: transparent;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 /*---cart modal---*/

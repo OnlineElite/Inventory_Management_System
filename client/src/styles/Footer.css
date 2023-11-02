@@ -5,7 +5,8 @@
 }
 
 #footer{
-    background-color: #2784fc;
+    /*background-color: #2784fc;*/
+    background-image: linear-gradient(rgb(0, 23, 56), rgb(2, 42, 97));
     width: 100%;
     height: fit-content;
     margin-top: 2rem;
@@ -29,5 +30,6 @@
     width: 100%;
     text-align: center;
     color: white;
-    background-color: rgb(3, 88, 216);
+    /*background-color: rgb(3, 88, 216);*/
+    background-image: linear-gradient(rgb(0, 16, 39), rgb(0, 27, 65));
 }

@@ -5,7 +5,7 @@ function Footer (props){
 
     const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;
     return(
-        <div id='footer'>
+        <div id='footer' >
             <div className='row px-5 py-3'>
                 <div className='col-12 col-sm-12 col-md-4 col col-lg-4'>
                         <h5>OUR CATEGORIES:</h5>
