@@ -10,7 +10,8 @@
     min-width: 14vw;
     /*overflow-y: scroll;*/
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
-    background-color: #2784fc;
+    /*background-color: #2784fc;*/
+    background-image: linear-gradient(rgb(0, 23, 56), rgb(2, 42, 97));
 }
 
 .userInfo{

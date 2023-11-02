@@ -204,7 +204,7 @@ function Navbar(props){
                         
                         <div id='searsh' className="nav-item  rounded mx-2">
                             <input  placeholder='Search' type='text' name='HeaderSearsh' />
-                            <i onClick={showSearsh} className='bi bi-search mx-0 my-0 px-2 text-primary d-flex align-items-center justify-content-center h-100 bg-white'/>
+                            <i onClick={showSearsh} className='bi bi-search'/>
                         </div>
                         {props.isAuthenticated ? 
                         (
