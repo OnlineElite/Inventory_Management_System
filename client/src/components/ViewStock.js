@@ -22,7 +22,7 @@ function ViewStock(props){
   const [equivalent, setEquivalent] = useState('')
   const [extentionMsg, setExtentionMsg] = useState( '')
   const [selectedRange, setSelectedRange] = useState(null);
-  //const [selectedImage, setSelectedImage] = useState(null);
+  const [imagetoUpdate, setImagetoUpdate] = useState(null); // old image path to update
   const [imageUrl, setImageUrl] = useState(null);
   const [isfiltred, setIsfiltred] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
@@ -169,7 +169,7 @@ function ViewStock(props){
     //console.log(row) 
     const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'selecImg']
     const inputs = ids.map((id) => document.getElementById(id))
-
+    setImagetoUpdate(imagesURL+'/'+row.product_image)
     const chooseFile = document.getElementById("upimage");
     const imgPreview = document.getElementById("img-preview");
     const selecImg = document.getElementById("selecImg");
@@ -264,6 +264,7 @@ function ViewStock(props){
       formData.append('condition', deleteCondition);
       if (inputs[7].type === "file" && inputs[7].files.length > 0) {
         formData.append("image", inputs[7].files[0]);
+        formData.append("oldImageUrl", imagetoUpdate)
         function getExtension(filename) {
           return filename.split('.').pop()
         }  
@@ -286,7 +287,7 @@ function ViewStock(props){
   const handleDelete=(row)=>{
     props.deleteProduct({
       product_ref:row.product_ref,
-      image_src: `${imagesURL}/${row.product_image}`
+      image_src: imagesURL+'/'+row.product_image,
     })
     props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
     props.response? toast.error(`${props.response}`) :  console.log(''); 

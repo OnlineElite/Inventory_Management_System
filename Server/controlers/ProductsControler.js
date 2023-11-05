@@ -150,8 +150,9 @@ async function AddingProduct(req, res) {
 async function DeletingProduct(req, res) {
   try {
     // Delete old image from firebase
-    const oldImagePath = req.body.image_src;
-    await bucket.file(oldImagePath).delete()
+    console.log('body', req.body)
+    const oldImageSrc = req.body.image_src;
+    await bucket.file(`${oldImageSrc}`).delete()
     .then(() => {
       console.log('Old image deleted successfully');
     })
@@ -172,11 +173,11 @@ async function UpdatingProduct(req, res){
   try {
     if (req.file){
       // Delete old image
-      const oldImagePath = 'path/to/old-image.jpg';
-      storage.bucket().file(oldImagePath).delete()
+      const oldImagePath = req.body.oldImageUrl;
+      bucket.file(oldImagePath).delete()
       
       // Add new image
-      // Generate a unique filename for the image (e.g., use a UUID or other logic)
+      // Generate a unique filename for the image
       const uniqueFilename = `${Date.now()}_${req.file.originalname}`;
       // Define the destination in Firebase Storage
       const file = bucket.file(uniqueFilename);
@@ -188,7 +189,7 @@ async function UpdatingProduct(req, res){
       });
       // Pipe the uploaded image data to Firebase Storage
       fileStream.end(req.file.buffer);
-
+      
       fileStream.on("error", (err) => {
         console.error("Error uploading image:", err);
         res.status(500).json({ message: "Error uploading image" });
@@ -197,19 +198,15 @@ async function UpdatingProduct(req, res){
       fileStream.on("finish", async () => {
         // Set the image property to the URL of the uploaded image in Firebase Storage
         req.body.image = `v0/b/${process.env.BUCKET_URL}/o/${uniqueFilename}?alt=media`;
-
         try {
           // update the product with the Firebase Storage URL
           await ProductAction.updateProductWithImage(req.body);
           res.status(201).json({ message: "Product added successfully", product: req.body });
-
         } catch (error) {
           console.error(error);
           res.status(500).json({ error: "Internal server error" });
         }
       });
-
-
     }else{
       // If no file was uploaded, update the product without an image
       await ProductAction.updateProductWithOutImage(req.body);
