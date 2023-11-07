@@ -286,9 +286,9 @@ function ViewStock(props){
 
   const handleDelete=(row)=>{
     props.deleteProduct({
-      product_ref:row.product_ref,
-      image_src: imagesURL+'/'+row.product_image,
-    })
+      product_ref: row.product_ref,
+      image_src: row.product_image, //imagesURL+'/'+row.product_image,
+    });
     props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
     props.response? toast.error(`${props.response}`) :  console.log(''); 
     setRecords(props.products)

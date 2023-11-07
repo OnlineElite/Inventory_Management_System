@@ -152,13 +152,22 @@ async function DeletingProduct(req, res) {
     // Delete old image from firebase
     console.log('body', req.body)
     const oldImageSrc = req.body.image_src;
-    await bucket.file(`${oldImageSrc}`).delete()
-    .then(() => {
-      console.log('Old image deleted successfully');
-    })
-    .catch((error) => {
-      console.error('Error deleting old image:', error);
-    });
+
+    const parts = oldImageSrc.split("/");
+    const fullImageName = parts.pop();
+
+    const imageParts = fullImageName.split("?");
+    const imageName = imageParts[0];
+
+    await bucket
+      .file(`${imageName}`)
+      .delete()
+      .then(() => {
+        console.log("Old image deleted successfully");
+      })
+      .catch((error) => {
+        console.error("Error deleting old image:", error);
+      });
 
     // Delete product from postgresql database
     await ProductAction.deleteProduct(req.body.product_ref);
