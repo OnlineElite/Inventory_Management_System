@@ -169,7 +169,7 @@ function ViewStock(props){
     //console.log(row) 
     const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'selecImg']
     const inputs = ids.map((id) => document.getElementById(id))
-    setImagetoUpdate(imagesURL+'/'+row.product_image)
+    setImagetoUpdate(row.product_image)
     const chooseFile = document.getElementById("upimage");
     const imgPreview = document.getElementById("img-preview");
     const selecImg = document.getElementById("selecImg");
@@ -177,7 +177,7 @@ function ViewStock(props){
       getImgData();
     });
     
-    function getImgData() {
+    function getImgData(){
       const files = chooseFile.files[0];
       if (files) {
         const fileReader = new FileReader();
@@ -287,7 +287,7 @@ function ViewStock(props){
   const handleDelete=(row)=>{
     props.deleteProduct({
       product_ref: row.product_ref,
-      image_src: row.product_image, //imagesURL+'/'+row.product_image,
+      image_src: row.product_image,
     });
     props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
     props.response? toast.error(`${props.response}`) :  console.log(''); 

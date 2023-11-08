@@ -246,27 +246,24 @@ const LogOutThunk = (useremail) => async (dispatch)=>{
         const baseURL = process.env.REACT_APP_API_URL; 
         const url = `${baseURL}/logout`;
         const data = {email : useremail}
-    
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
           body: JSON.stringify(data)
         };
-        
         const response = await fetch(url ,header );
         const datarecived = await response.json();
+        //console.log(datarecived)
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
     }
 }
 
-
 const bringCategoriesThunk = () => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/categories`;
-        
         const response = await fetch(url);
         const datarecived = await response.json();
         dispatch(handelCategories(datarecived.categories))
@@ -339,7 +336,6 @@ const addProductThunk = (product) => async (dispatch)=>{
 
 const deleteProductThunk = ({product_ref, image_src}) => async (dispatch)=>{
     try{
-        console.log(image_src)
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/deleteProduct`;
         const data = {
