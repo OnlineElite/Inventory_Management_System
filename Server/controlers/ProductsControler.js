@@ -92,7 +92,6 @@ async function getProducts(req, res) {
 
 async function AddingProduct(req, res) {
   try {
-    console.log('hellow backend')
     if (req.file) {
       // Generate a unique filename for the image (e.g., use a UUID or other logic)
       const uniqueFilename = `${Date.now()}_${req.file.originalname}`;
@@ -163,10 +162,10 @@ async function DeletingProduct(req, res) {
       .file(`${imageName}`)
       .delete()
       .then(() => {
-        console.log("Old image deleted successfully");
+        console.log("image deleted successfully");
       })
       .catch((error) => {
-        console.error("Error deleting old image:", error);
+        console.error("Error deleting image:", error);
       });
 
     // Delete product from postgresql database
@@ -183,8 +182,22 @@ async function UpdatingProduct(req, res){
     if (req.file){
       // Delete old image
       const oldImagePath = req.body.oldImageUrl;
-      bucket.file(oldImagePath).delete()
-      
+      const parts = oldImagePath.split("/");
+      const fullImageName = parts.pop();
+
+      const imageParts = fullImageName.split("?");
+      const imageName = imageParts[0];
+
+      await bucket
+        .file(`${imageName}`)
+        .delete()
+        .then(() => {
+          console.log("Old image deleted successfully");
+        })
+        .catch((error) => {
+          console.error("Error deleting old image:", error);
+        });
+        
       // Add new image
       // Generate a unique filename for the image
       const uniqueFilename = `${Date.now()}_${req.file.originalname}`;

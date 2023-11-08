@@ -56,13 +56,15 @@ const RegisterForm = (props) => {
     const HandelSubmit = (e)=>{
         e.preventDefault() 
         props.next(info)
+        if(props.response === 'User registered successfully'){
+           return toast.success(`${props.response}`)
+        }
+        else if(props.response === 'Email already exists'){
+           return toast.error(`${props.response}`)
+        }
         const ids = ['firstname', 'lastname', 'email', 'username', 'password'];
         const inputs = ids.map(id => document.getElementById(id));
         inputs.forEach((inp) =>  inp.value ="")
-        if(props.response === 'User registered successfully')
-        toast.success(`${props.response}`)
-        else if(props.response === 'Email already exists') 
-        toast.error(`${props.response}`)
     }
 
     return (
