@@ -179,220 +179,223 @@ function Navbar(props){
     
     return(
         <div className='Navbarr ' id='navbar'>
-            <nav className="navbar navbar-expand-lg navbar-light d-flex align-items-baseline justify-content-baseline">
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className='logo navs'>
-                        <li className='navs  d-flex align-items-center justify-content-start'>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid px-4">
+                    <ul className='logo'>
+                        <li className=''>
                             <Link className='Link_logo' to= '/'> 
                                 <img className='mx-2' src= {loggo} alt='logos'/>
                                 <span> {ProjectName} </span>
                             </Link>
                         </li>
                     </ul>
-                    <ul className='navs'>
-                        <li>
-                            <Link className='Link'  to= {props.isAuthenticated ? '/userInterface' : '/'}> Home </Link>
-                        </li>
-                        <li>
-                            <Link className='Link' to='/about' > About </Link> 
-                        </li>
-                        <li>
-                            <Link className='Link' to='/contact' > Contact </Link>
-                        </li>
-                    </ul>
-                    <form className="form-inline px-2 d-flex align-items-baseline justify-content-baseline my-2 my-lg-0 ">
-                        
-                        <div id='searsh' className="nav-item  rounded mx-2">
-                            <input  placeholder='Search' type='text' name='HeaderSearsh' />
-                            <i onClick={showSearsh} className='bi bi-search'/>
+                    <div className='nav_body'>
+                        <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class=" navs navbar-nav me-auto mb-2 mb-lg-0">
+                                <li>
+                                    <Link className='Link'  to= {props.isAuthenticated ? '/userInterface' : '/'}> Home </Link>
+                                </li>
+                                <li>
+                                    <Link className='Link' to='/about' > About </Link> 
+                                </li>
+                                <li>
+                                    <Link className='Link' to='/contact' > Contact </Link>
+                                </li>
+                            </ul>
+                            <form class="d-flex w-100" role="search">
+                                <input class="form-control mx-1 " laceholder='Search' type='text' name='HeaderSearsh' aria-label="Search"/>
+                                
+                                <i onClick={showSearsh} className='bi bi-search btn btn-outline-light'/>
+                                
+                            </form>
                         </div>
                         {props.isAuthenticated ? 
-                        (
-                            <>
-                                <ul className='rightInfo mx-3'>
-                                    
-                                    <li className='mx-3'>
-                                        <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
-                                            <i className="bi bi-cart-fill text-white mx-1">
-                                                <span className="badge badge-danger">{props.incart.length !== 0 && props.isAuthenticated? props.incart.length : 0}</span>
-                                            </i> Cart
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <div className='user dropdown-toggle ' role="button" data-toggle="dropdown" aria-expanded="false">
-                                            <i className="bi bi-person-circle"></i>
-                                            {props.userfullName[0] } {props.userfullName[1] }
-                                        </div>
-                                        <div className="dropdown-menu">
-                                            <Link className='userLink d-block' >
-                                                <i className="bi bi-person-lines-fill text-black mx-2"></i>
-                                                <span className="text-black" >You profile</span>
-                                            </Link>
-                                            <Link className='userLink d-block' >
-                                                <i className="bi bi-heart-fill text-black mx-2"></i>
-                                                <span className="text-black"  data-toggle="modal" data-target="#FavoriesModal">You Favories</span>
-                                            </Link>
-                                            <div className="dropdown-divider"></div>
-                                            <Link className='userLink' to='/login' >
-                                                <i className="bi bi-box-arrow-right mx-2 text-black"></i>
-                                                <span className=' text-black' onClick={handleLogout}>Logout</span> 
-                                            </Link>
-                                        </div>
-                                    </li>
-                                </ul>
-                                {/* cart Modal */}
-                                <div className="modal fade " id="cartModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div className="modal-dialog modal-xl">
-                                        <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title  text-primary m-auto" id="exampleModalLabel">Shopping Cart</h5>
-                                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                                <span  aria-hidden="true ">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div className="modal-body " id='cart_modal_body'>
-                                            <div className='row'>
-                                                <div className=' prods col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9 my-2'>
-                                                    {cartRecords?
-                                                    cartRecords.map((product)=>(                                                      
-                                                        <div key={product.product_ref}>
-                                                            <div className='product_row product-carts' id="cart-page " data-ref={product.product_ref}>
-                                                                <div className='prodInfo'>
-                                                                    <div className='prodimg'>
-                                                                        <div className='imag'> 
-                                                                            <img src={product.product_image != null
-                                                                                ? `${imagesURL}/${product.product_image}`
-                                                                                : prodimg} alt='prodimage'/>
-                                                                        </div>
-                                                                        <div className='imgBotom'>
-                                                                            <button onClick={(e)=>handledeleteFromCart(product.product_id, e)} className='text-danger px-2'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
-                                                                            <i onClick={(e)=>handeleAddToFavories(product.product_id, e)} className=" mx-2 bi bi-heart-fill" style={{color : isLiked? 'red' : 'black'}}></i>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div className='prodName'>
-                                                                        <p className=' descrip text-black'> {product.product_desc} </p>
-                                                                        <p className='text-warning'> {product.product_name} </p>
-                                                                        <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
-                                                                    </div>
-                                                                </div>
-                                                                <div className='prodPrice'>
-                                                                    <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
-                                                                    <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
-                                                                    <div className='buttns'>
-                                                                        <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' data-id = {product.product_id} >+</button>
-                                                                        <span id={`count-${product.product_ref}`}> {product.incart_quantity} </span>
-                                                                        <button  type='submit' onClick={hundellSubmit} data-btn = 'decrease' data-id = {product.product_id}>–</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <hr/>
-                                                        </div>
-                                                    ))
-                                                    :''
-                                                }
-                                                    
-                                                </div>
-                                                <div className=' total col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3 my-2'>
-                                                <div id="checkout" >
-                                                    <div className='ro title '>CART SUMMARY</div>
-                                                    <hr/>
-                                                    <div className='ro'><p id="total-item">Total item :</p><span> {totalItem === null? 0 : totalItem} </span></div>
-                                                    <hr/>
-                                                    <div className='ro'><p id="total-price">Total Amount :</p><span> {totalAmount === null? 0 : totalAmount}DH</span></div>
-                                                    <hr/>
-                                                    <div className='ro '><p id="delievery">Free Delievery abouve</p><span id='delev' >100DH</span></div>
-                                                    <hr/>
-                                                    <button className="cart-btn bg-danger" onClick={(e)=> handelCheckout(e)}>
-                                                        <Link className='Link text-decoration-none text-white' to='/checkout' >Checkout</Link>
-                                                    </button> 
-                                                </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
+                        (<>
+                            <ul className='rightInfo mx-3'>                            
+                                <li className='mx-3'>
+                                    <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
+                                        <i className="bi bi-cart-fill text-white mx-1">
+                                            <span className="badge badge-danger">{props.incart.length !== 0 && props.isAuthenticated? props.incart.length : 0}</span>
+                                        </i> Cart
+                                    </span>
+                                </li>
+                                <li>
+                                    <div className='user dropdown-toggle ' role="button" data-toggle="dropdown" aria-expanded="false">
+                                        <i className="bi bi-person-circle"></i>
+                                        {props.userfullName[0] } {props.userfullName[1] }
                                     </div>
-                                </div>
-                                {/* favories Modal */}
-                                <div className="modal fade " id="FavoriesModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div className="modal-dialog modal-xl">
-                                        <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h3 className="modal-title  text-primary m-auto" id="exampleModalLabel">Favories</h3>
-                                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                                <span  aria-hidden="true ">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div className="modal-body " id='cart_modal_body'>
-                                            <div className='rows'>
-                                                <div className=' prods'>
-                                                    {favRecords?
-                                                    favRecords.map((product)=>(
-                                                        <div key={product.product_ref} >
-                                                            <div className='product_row' id="cart-page">
-                                                                <div className='prodInfo'>
-                                                                    <div className='prodimg h-100 w-25'>
-                                                                        <div className='imag h-100 w-100'> 
-                                                                            <img src={product.product_image != null
-                                                                                ? `${imagesURL}/${product.product_image}`
-                                                                                : prodimg} alt='prodimage'/>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className='prodName'>
-                                                                        <p className=' descrip text-black'> {product.product_desc} </p>
-                                                                        <p className='text-warning'> {product.product_name} </p>
-                                                                        <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
-                                                                        {product.product_stock !== 0?
-                                                                            <button onClick={(e)=>HandeleAddToCart(product.product_id, e)} className='text-white my-2 bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
-                                                                            :<button  className='text-white my-2' style={{backgroundColor: "gray" }} disabled ><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
-                                                                        }
-                                                                    </div>
-                                                                </div>
-                                                                <div className='prodPrice'>
-                                                                    <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
-                                                                    <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
-                                                                    <div className='buttns'>
-                                                                        <button onClick={(e)=>handledeleteFromFavories(product.product_id, e)} className='text-white bg-danger'><i className="text-white bi bi-trash-fill"></i>DELETE</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div> 
-                                                            <hr/>
-                                                        </div>
-                                                    ))
-                                                    : ''
-                                                }
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        ):
-                        (   <>
-                                <ul className='rightInfo'>
-                                    <div className='mx-3'>
-                                        <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
-                                            <i className="bi bi-cart-fill text-white mx-1">
-                                                <span className="badge badge-danger">{props.incart.length !== 0 && props.isAuthenticated? props.incart.length : 0}</span>
-                                            </i> Cart
-                                        </span>
-                                    </div>
-                                    <div className='buttons '>                            
-                                        <Link className='' to='/login' >
-                                            <button className='rounded-0 border-0 text-white'>Login</button> 
+                                    <div className="dropdown-menu">
+                                        <Link className='userLink d-block' >
+                                            <i className="bi bi-person-lines-fill text-black mx-2"></i>
+                                            <span className="text-black" >You profile</span>
                                         </Link>
-                                        <Link className='' to='/register' >
-                                            <button className='rounded-0 border-0 text-white'>Register</button>
+                                        <Link className='userLink d-block' >
+                                            <i className="bi bi-heart-fill text-black mx-2"></i>
+                                            <span className="text-black"  data-toggle="modal" data-target="#FavoriesModal">You Favories</span>
+                                        </Link>
+                                        <div className="dropdown-divider"></div>
+                                        <Link className='userLink' to='/login' >
+                                            <i className="bi bi-box-arrow-right mx-2 text-black"></i>
+                                            <span className=' text-black' onClick={handleLogout}>Logout</span> 
                                         </Link>
                                     </div>
-                                </ul>
-                            </>
-                        )}
-                    </form>
+                                </li>
+                            </ul>
+                        </>):
+                        (<>
+                            <ul className='rightInfo'>
+                                <li className='mx-3'>
+                                    <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
+                                        <i className="bi bi-cart-fill text-white mx-1">
+                                            <span className="badge badge-danger">{props.incart.length !== 0 && props.isAuthenticated? props.incart.length : 0}</span>
+                                        </i> Cart
+                                    </span>
+                                </li>
+                                <li className='buttons '>                            
+                                    <Link className='' to='/login' >
+                                        <button className='rounded-0 border-0 text-white'>Login</button> 
+                                    </Link>
+                                    <Link className='' to='/register' >
+                                        <button className='rounded-0 border-0 text-white'>Register</button>
+                                    </Link>
+                                </li>
+                            </ul>
+                        </>)}
+                    </div>
                 </div>
             </nav>
+            {/***********************/}
+            {/* cart Modal */}
+            <div className="modal fade " id="cartModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-xl">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title  text-primary m-auto" id="exampleModalLabel">Shopping Cart</h5>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span  aria-hidden="true ">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body " id='cart_modal_body'>
+                        <div className='row'>
+                            <div className=' prods col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9 my-2'>
+                                {cartRecords?
+                                cartRecords.map((product)=>(                                                      
+                                    <div key={product.product_ref}>
+                                        <div className='product_row product-carts' id="cart-page " data-ref={product.product_ref}>
+                                            <div className='prodInfo'>
+                                                <div className='prodimg'>
+                                                    <div className='imag'> 
+                                                        <img src={product.product_image !== null || product.product_image !== undefined || product.product_image !== ''
+                                                            ? `${imagesURL}/${product.product_image}`
+                                                            : prodimg} alt='prodimage'/>
+                                                    </div>
+                                                    <div className='imgBotom'>
+                                                        <button onClick={(e)=>handledeleteFromCart(product.product_id, e)} className='text-danger px-2'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
+                                                        <i onClick={(e)=>handeleAddToFavories(product.product_id, e)} className=" mx-2 bi bi-heart-fill" style={{color : isLiked? 'red' : 'black'}}></i>
+                                                    </div>
+                                                </div>
+
+                                                <div className='prodName'>
+                                                    <p className=' descrip text-black'> {product.product_desc} </p>
+                                                    <p className='text-warning'> {product.product_name} </p>
+                                                    <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
+                                                </div>
+                                            </div>
+                                            <div className='prodPrice'>
+                                                <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
+                                                <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
+                                                <div className='buttns'>
+                                                    <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' data-id = {product.product_id} >+</button>
+                                                    <span id={`count-${product.product_ref}`}> {product.incart_quantity} </span>
+                                                    <button  type='submit' onClick={hundellSubmit} data-btn = 'decrease' data-id = {product.product_id}>–</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                    </div>
+                                ))
+                                :''
+                            }
+                                
+                            </div>
+                            <div className=' total col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3 my-2'>
+                            <div id="checkout" >
+                                <div className='ro title '>CART SUMMARY</div>
+                                <hr/>
+                                <div className='ro'><p id="total-item">Total item :</p><span> {totalItem === null? 0 : totalItem} </span></div>
+                                <hr/>
+                                <div className='ro'><p id="total-price">Total Amount :</p><span> {totalAmount === null? 0 : totalAmount}DH</span></div>
+                                <hr/>
+                                <div className='ro '><p id="delievery">Free Delievery abouve</p><span id='delev' >100DH</span></div>
+                                <hr/>
+                                <button className="cart-btn bg-danger" onClick={(e)=> handelCheckout(e)}>
+                                    <Link className='Link text-decoration-none text-white' to='/checkout' >Checkout</Link>
+                                </button> 
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            {/* favories Modal */}
+            <div className="modal fade " id="FavoriesModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-xl">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h3 className="modal-title  text-primary m-auto" id="exampleModalLabel">Favories</h3>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span  aria-hidden="true ">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body " id='cart_modal_body'>
+                        <div className='rows'>
+                            <div className=' prods'>
+                                {favRecords?
+                                favRecords.map((product)=>(
+                                    <div key={product.product_ref} >
+                                        <div className='product_row' id="cart-page">
+                                            <div className='prodInfo'>
+                                                <div className='prodimg h-100 w-25'>
+                                                    <div className='imag h-100 w-100'> 
+                                                        <img src={product.product_image !== null || product.product_image !== undefined || product.product_image !== ''
+                                                            ? `${imagesURL}/${product.product_image}`
+                                                            : prodimg} alt='prodimage'/>
+                                                    </div>
+                                                </div>
+                                                <div className='prodName'>
+                                                    <p className=' descrip text-black'> {product.product_desc} </p>
+                                                    <p className='text-warning'> {product.product_name} </p>
+                                                    <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
+                                                    {product.product_stock !== 0?
+                                                        <button onClick={(e)=>HandeleAddToCart(product.product_id, e)} className='text-white my-2 bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
+                                                        :<button  className='text-white my-2' style={{backgroundColor: "gray" }} disabled ><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div className='prodPrice'>
+                                                <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
+                                                <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
+                                                <div className='buttns'>
+                                                    <button onClick={(e)=>handledeleteFromFavories(product.product_id, e)} className='text-white bg-danger'><i className="text-white bi bi-trash-fill"></i>DELETE</button>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <hr/>
+                                    </div>
+                                ))
+                                : ''
+                            }
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
             <ToastContainer
                 position="top-center"
                 autoClose={2000}
