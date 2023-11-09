@@ -212,7 +212,7 @@ function Products(props){
                   >
                     <img
                       src={
-                        product.product_image === ""
+                        product.product_image === "" || product.product_image === undefined || product.product_image === ''
                           ? prodimg 
                           : `${imagesURL}/` + product.product_image
                       }

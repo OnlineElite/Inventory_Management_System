@@ -9,102 +9,26 @@
     background-image: linear-gradient(rgb(0, 23, 56), rgb(2, 42, 97));
     margin: 0;
     padding: 0;
-    
 }
-.Navbarr .navbar, .Navbarr .collapse{
-    padding-inline: 5px;
+
+#navbar .nav_body{
     display: flex;
     align-items: center;
     justify-content: center;
-    
-}
-
-.Navbarr .navbar .logo{
-    font-size: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.Navbarr .navs{
-    width: fit-content;
-}
-.Navbarr .collapse{
-    justify-content: center;
-}
-
-.Navbarr .buttons{
-    margin-left: 5rem;
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-
-.Navbarr .buttons button{
-    background-color: transparent;
-    color: black;
-    margin-inline: 0.2rem;
-    padding: 5px;
-    font-size: 18px;
-    border: none;
-    outline: none;
-    border-radius: none;
-}
-
-.Navbarr ul{ 
-    padding-inline: 5px;
-    display: flex;
-}
-.Navbarr .form-inline{
-    display: flex;
-    align-items: center;
-    width: 80%;
-}
-.Navbarr ul{
-    width: 20%;
-}
-.Navbarr .form-inline #searsh input{
     width: 100%;
-}
-
-.Navbarr .form-inline button{
-    
-    color: black;
-    width: fit-content;
-    padding-inline: 5px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: 1px solid white;
-}
-.Navbarr .form-inline #searsh input{
-    margin-right: 0.3rem;
-}
-
-.Navbarr .collapse ul li .Link , .userLink{
-    color: white;
-    text-decoration: none;
-}
-
-.Navbarr .collapse .navs li{
-    list-style: none;
-    margin-inline: 1.2rem;
-}
-
-.Navbarr .collapse ul li .Link:hover{
-    color: rgb(5, 5, 255);
-    background-color: white;
-    border-radius: 8px;
-    padding: 3px;
-    font-weight: bold;
+    padding-left: 0.5rem;
 }
 
 .Navbarr .Link_logo{
     color: white;
-    padding-inline: 3rem;
     font-size: 2rem;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: baseline;
+}
+
+.Navbarr .logo{
     display: flex;
     align-items: center;
     justify-content: baseline;
@@ -141,8 +65,11 @@
     font-size: 1.5rem;
 }
 
-.Navbarr .form-inline .rightInfo, .buttons{
-    width: 100%;
+.Navbarr .rightInfo .cart{
+    cursor: pointer;
+}
+
+.Navbarr .rightInfo, .buttons{
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -152,51 +79,50 @@
     font-weight: bold;
 }
 
-.Navbarr .form-inline .rightInfo .cart{
-    cursor: pointer;
-}
-
-.Navbarr .form-inline .rightInfo li{
+.Navbarr  .rightInfo li{
     list-style: none;
 }
-.Navbarr #searsh input{
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    border: none;
-    color: black;
 
-}.Navbarr #searsh input::placeholder{
-    color: rgb(0, 23, 56);
-    
-}
-.Navbarr #searsh input:focus{
-    border: none;
-    outline: none;
-}
-.Navbarr #searsh{
-    display: flex;
-    align-items: center;
-    border: none;
-    background-color: white;
-    width: 100%;
-    height: 2.2rem;
-    padding-left: 0.5rem;
-}
-
-.Navbarr #searsh .bi-search{
-    margin: 0;
-    padding-inline: 1rem;
-    color: black;
-    font-size: 18px;
+.Navbarr .buttons{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    background-color: transparent;
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
+
 }
+
+.Navbarr .buttons button{
+    background-color: transparent;
+    color: black;
+    margin-inline: 0.2rem;
+    padding: 5px;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    border-radius: none;
+}
+
+.Navbarr .collapse ul li .Link , .userLink{
+    color: white;
+    text-decoration: none;
+}
+
+.Navbarr .collapse .navs li, .logo li{
+    list-style: none;
+    margin-inline: 1.2rem;
+}
+
+.Navbarr .collapse ul li .Link:hover{
+    color: rgb(5, 5, 255);
+    background-color: white;
+    border-radius: 8px;
+    padding: 3px;
+    font-weight: bold;
+}
+
+.Navbarr .navs{
+    width: fit-content;
+}
+
 
 /*---cart modal---*/
 

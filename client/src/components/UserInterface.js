@@ -212,7 +212,7 @@ function UserInterface(props){
                     >
                       <img
                         src={
-                          product.product_image != null
+                          product.product_image !== null || product.product_image !== undefined || product.product_image !== ''
                             ? `${imagesURL}/` + product.product_image
                             : prodimg
                         }
