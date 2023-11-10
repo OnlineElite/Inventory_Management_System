@@ -43,7 +43,7 @@
     font-size: 3rem;
 }
 
-.user{
+#navbar .user{
     background-color: transparent;
     border-radius: 8px;
     color: white;
@@ -55,13 +55,13 @@
     font-size: 18px;
 }
 
-.user i{
+#navbar .user i{
     font-size: 2rem;
     color: white;
     margin-right: 0.3rem;
 }
 
-.bi-cart-fill{
+#navbar .bi-cart-fill{
     font-size: 1.5rem;
 }
 
@@ -75,7 +75,7 @@
     justify-content: flex-end;
 }
 
-.rightInfo .userLink:hover{
+#navbar .rightInfo .userLink:hover{
     font-weight: bold;
 }
 
@@ -101,17 +101,27 @@
     border-radius: none;
 }
 
-.Navbarr .collapse ul li .Link , .userLink{
+.Navbarr .offcanvas {
+    background-image: linear-gradient(rgb(0, 23, 56), rgb(2, 42, 97));
+    width: 80vw;
+}
+
+.Navbarr .offcanvas ul li .Link , .userLink{
     color: white;
     text-decoration: none;
 }
 
-.Navbarr .collapse .navs li, .logo li{
+.Navbarr .navs{
+    width: fit-content;
+}
+
+
+.Navbarr .offcanvas .navs li, .logo li{
     list-style: none;
     margin-inline: 1.2rem;
 }
 
-.Navbarr .collapse ul li .Link:hover{
+.Navbarr .offcanvas ul li .Link:hover{
     color: rgb(5, 5, 255);
     background-color: white;
     border-radius: 8px;
@@ -119,9 +129,7 @@
     font-weight: bold;
 }
 
-.Navbarr .navs{
-    width: fit-content;
-}
+
 
 
 /*---cart modal---*/

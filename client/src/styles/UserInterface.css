@@ -17,16 +17,11 @@ body{
     justify-content: center;
     margin-top: 1rem;
     padding-top: 0.3rem;
-    padding-left: 2rem;
     width: 97%;
     background-color: rgb(233, 233, 233);
    /*box-shadow: 0 4px 8px 0 rgb(59, 59, 59);*/
 }
 
-
-.userInterface #proods .row{
-    padding-left: 1.5rem;
-}
 
 .userInterface .pagination{
     width: 100%;
@@ -82,9 +77,10 @@ body{
     background-color: white;
 }
 
+
 .userInterface .container .card{
     margin-inline: 0.5rem;
-    width: 15rem;
+    width: 10rem;
     margin-bottom: 1rem;
     height: fit-content;
     transition: 1s;
@@ -97,8 +93,9 @@ body{
 
 .userInterface .container .card .card-img-top{
     border-radius: 6px;
-    height: 10rem;
-    padding: 1rem;
+    height: 5rem;
+    padding-inline: 1rem;
+    padding-top: 1rem;
 }
 
 .userInterface .container .card .card-img-top_equivalent{
@@ -148,7 +145,9 @@ body{
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
+    width: 100%;
+    font-size: 1rem;
 }
 
 .userInterface .card-body .line_desc_equivalent{
@@ -162,7 +161,7 @@ body{
 .userInterface .card-body .line_prices .prices{
     color:black;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
 }
 
 .userInterface .card-body .line_prices_equivalent .prices{
@@ -174,7 +173,7 @@ body{
 .userInterface .card-body .line_old_price .old_price {
     color: gray;
     text-decoration: line-through;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 .userInterface .card-body .line_old_price {
@@ -235,9 +234,8 @@ body{
 
 .userInterface .equivals .card{
     background-color: rgba(236, 248, 252, 0.979);
-    min-width: 9.4rem;
-    max-height: 14rem;
-    margin-inline: 0.5rem;
+    width: 8.8rem;
+    margin-inline: 0.3rem;
 }
 
 .userInterface .view .modal-body .row{
@@ -251,7 +249,7 @@ body{
 .userInterface .modal-body .price{
     color: black;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 1.3rem;
 }
 
 .userInterface .modal-footer .equivalet{

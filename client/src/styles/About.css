@@ -9,18 +9,18 @@
 }
 
 #about .row {
-    height: 100%;
+   height: fit-content;
 }
 
 #about video{
     width: 100%;
-    height: fit-content;
 }
 
 #about .vidBox{
     width: 100%;
-    height: 50%;
+
 }
+
 
 #about h3{
     color:rgb(113, 224, 1);
