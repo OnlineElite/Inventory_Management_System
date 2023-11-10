@@ -4,6 +4,8 @@
     padding: 0;
 }
 
+
+
 #slider .spanStyle {
     padding: 20px;
     background-color: #efefef;
@@ -22,4 +24,10 @@
 #slider .divStyle img{
     width: 100%;
     height: 100%;
+}
+
+@media screen and (max-width: 480px) {
+    #slider .divStyle{
+        height: 25vh;
+    }
 }

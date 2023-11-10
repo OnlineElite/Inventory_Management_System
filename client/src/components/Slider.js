@@ -45,7 +45,7 @@ function Slider(){
                 <Slide>
                 {slideImages.map((slideImage, index)=> (
                     <div key={index}>
-                        <div className='divStyle' >
+                        <div className='divStyle'>
                            <img src= {slideImage.url} alt='slideImg'/> 
                         </div>
                     </div>

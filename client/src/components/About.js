@@ -12,13 +12,13 @@ function About(){
         <div id='about' className='bg-light'>
             <Navbar/>
             <div className='container'>
-                <h1 className='w-100 text-center my-5'>ABOUT US</h1>
-                <div className='row mb-5'>
-                    <div className='col-12 col-sm-12 col-md-6 col-lg-6 '>
-                        <div className='vidBox'>
-                            <video className='h-100' src= {aboutVid} autoPlay />
+                <h1 className='w-100 text-center '>ABOUT US</h1>
+                <div className='row'>
+                    <div className='col-12 col-sm-12 col-md-6 col-lg-6 px-2'>
+                        <div className='vidBox mt-3'>
+                            <video className='' src= {aboutVid} autoPlay />
                         </div>
-                        <div>
+                        <div className='raisons'>
                             <h3>Why Choose Us?</h3>
                             <ul>
                                 <li>
@@ -54,7 +54,7 @@ function About(){
                             </ul>
                         </div>
                     </div>
-                    <div className=' col-12 col-sm-12 col-md-6 col-lg-6 px-4'>
+                    <div className=' col-12 col-sm-12 col-md-6 col-lg-6 px-2'>
                         <div>
                             <h3>About {ProjectName} </h3>
                             <p>

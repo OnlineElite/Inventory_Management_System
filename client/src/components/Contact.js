@@ -49,16 +49,8 @@ function Contact(props){
                 <div className='container'>
                     <h1 className='w-100 text-center text-black mt-5'>GET IN TOUCH</h1>
                     <div className='row my-5'>
-                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
-                            <form onSubmit={handleSend} id='contForm'>
-                                <input onChange={handleinputsChange} className='px-2 ' type="text" required value={formData.userName} id="userName" name="userName"  placeholder='Full Name *'/>
-                                <input onChange={handleinputsChange} className='px-2 ' type='email' required value={formData.userEmail} id='userEmail' name='userEmail' placeholder='Email *'/>
-                                <input onChange={handleinputsChange} className='px-2 ' type='text' required value={formData.userPhoneNumber} id='userPhoneNumber' name='userPhoneNumber' placeholder='Phone Number *'/>
-                                <textarea onChange={handleinputsChange} className='px-2' required value={formData.userMessage} id="userMessage" name="userMessage" placeholder='Message *'/>
-                                <button className='btn btn-danger ' type='submit'>Send</button>
-                            </form>
-                        </div>
-                        <div className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                        
+                        <div className='col-12 col-sm-12 col-md-6 col-lg-6 px-2 my-2'>
                             <div className='contactInfo'>
                                 <h5>CONTACT US:</h5>
                                 <p className='text-white'>We can't solve your problem if you don't tell us about it!</p>
@@ -77,6 +69,15 @@ function Contact(props){
                                     <a href='https://t.me/JML_Elite' target='_blank'><i className="bi bi-telegram"></i></a>
                                 </span>
                             </div>
+                        </div>
+                        <div className='col-12 col-sm-12 col-md-6 col-lg-6 px-2'>
+                            <form onSubmit={handleSend} id='contForm'>
+                                <input onChange={handleinputsChange} className='px-2 ' type="text" required value={formData.userName} id="userName" name="userName"  placeholder='Full Name *'/>
+                                <input onChange={handleinputsChange} className='px-2 ' type='email' required value={formData.userEmail} id='userEmail' name='userEmail' placeholder='Email *'/>
+                                <input onChange={handleinputsChange} className='px-2 ' type='text' required value={formData.userPhoneNumber} id='userPhoneNumber' name='userPhoneNumber' placeholder='Phone Number *'/>
+                                <textarea onChange={handleinputsChange} className='px-2' required value={formData.userMessage} id="userMessage" name="userMessage" placeholder='Message *'/>
+                                <button className='btn btn-danger ' type='submit'>Send</button>
+                            </form>
                         </div>
                     </div>
                 </div>

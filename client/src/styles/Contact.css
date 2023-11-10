@@ -4,23 +4,23 @@
     padding: 0;
 }
 
-#contact .contactInfo{
+#contact .body .container .contactInfo{
     background-color: rgb(97, 119, 141);
     border-radius: 4px;
-    width: fit-content;
+    width: 100%t;
     height: 100%;
     padding: 0.5rem;
 }
 
-#contact #contForm{
+#contact .body .container  #contForm{
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
 }
 
-#contact form input, #contact textarea{
-    width: 90%;
+#contact .body .container  form input, #contact .body .container  textarea{
+    width: 100%;
    padding-block: 7px;
    border: none;
    outline: none;
@@ -30,36 +30,36 @@
    color: white;
 }
 
-#contact textarea {
+#contact .body .container  textarea {
     height: 12rem;
 }
 
-#contact input::placeholder, #contact textarea::placeholder{
+#contact .body .container  input::placeholder, #contact .body .container  textarea::placeholder{
     color: white;
 }
 
-#contact button{
+#contact .body .container  button{
     padding-block: 5px;
     margin-top: 0.2rem;
-    width: 90%;
+    width: 100%;
     border: none;
    outline: none;
 }
 
-#contact h1{
+#contact .body .container  h1{
     color: black;
 }
 
-#contact h5{
+#contact .body .container  h5{
     color: yellow;
 }
 
-#contact ul li{
+#contact .body .container  ul li{
     color: white;
 
 }
 
-#contact .bi{
+#contact .body .container  .bi{
     color: white;
     font-size: 1.5rem;
     margin-inline: 0.5rem;

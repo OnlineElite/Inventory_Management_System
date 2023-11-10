@@ -24,7 +24,7 @@ function UserInterface(props){
   const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 12;
+  const productsPerPage = 18;
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
@@ -298,8 +298,8 @@ function UserInterface(props){
                 <div className="modal-body">
                   <div className="row">
                     <div className=" information col-12 col-sm-6 col-md-8 col-lg-8">
-                      <div className="  my-1">
-                        <span id="detailDescription" className="desc">{" "}</span>
+                      <div className=" m-0 p-0">
+                        <span id="detailDescription" className="desc ">{" "}</span>
                       </div>
                       <div className=' hr'></div>
                       <div className=" likePrices w-100 my-1">
@@ -337,7 +337,7 @@ function UserInterface(props){
                         <div
                           className="card border-primary mb-3"
                           key={product.product_ref}
-                          style={{ maxWidth: "9.2rem" }}
+                          style={{ maxWidth: "12rem" }}
                         >
                           <img
                             src={
@@ -361,7 +361,7 @@ function UserInterface(props){
                           </div>
                           <div className=" c-footer">
                             <button
-                              className="btn text-primary"
+                              className="btn text-primary p-0"
                               data-toggle="modal"
                               data-target="#viewproduct"
                               onClick={() => handleShow(product.product_ref)}

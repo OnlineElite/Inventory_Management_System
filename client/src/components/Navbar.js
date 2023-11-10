@@ -190,27 +190,27 @@ function Navbar(props){
                         </li>
                     </ul>
                     <div className='nav_body'>
-                        <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler bg-white mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class=" navs navbar-nav me-auto mb-2 mb-lg-0">
-                                <li>
-                                    <Link className='Link'  to= {props.isAuthenticated ? '/userInterface' : '/'}> Home </Link>
-                                </li>
-                                <li>
-                                    <Link className='Link' to='/about' > About </Link> 
-                                </li>
-                                <li>
-                                    <Link className='Link' to='/contact' > Contact </Link>
-                                </li>
-                            </ul>
-                            <form class="d-flex w-100" role="search">
-                                <input class="form-control mx-1 " laceholder='Search' type='text' name='HeaderSearsh' aria-label="Search"/>
-                                
-                                <i onClick={showSearsh} className='bi bi-search btn btn-outline-light'/>
-                                
-                            </form>
+                        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                            <div className='offcanvas-body'>
+                                <ul class=" navs navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li>
+                                        <Link className='Link'  to= {props.isAuthenticated ? '/userInterface' : '/'}> Home </Link>
+                                    </li>
+                                    <li>
+                                        <Link className='Link' to='/about' > About </Link> 
+                                    </li>
+                                    <li>
+                                        <Link className='Link' to='/contact' > Contact </Link>
+                                    </li>
+                                </ul>
+                                <form class="d-flex w-100" role="search">
+                                    <input class="form-control mx-1 bg-white " laceholder='Search' type='text' name='HeaderSearsh' aria-label="Search"/>
+                                    <i onClick={showSearsh} className='bi bi-search btn btn-outline-light'/>
+                                </form>
+                            </div>
                         </div>
                         {props.isAuthenticated ? 
                         (<>
