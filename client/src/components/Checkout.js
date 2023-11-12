@@ -240,7 +240,7 @@ function Checkout(props){
             <Navbar/>
             <div className='container bg-light'>
                 <div className='row'>
-                    <div id='customer_details' className=' form col-12 col-sm-5 col-md-7 col-lg-7 col-xl-8 bg-light'>
+                    <div id='customer_details' className=' form col-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 bg-light'>
                         {/* CUSTOMER ADDRESS */}
                         <button className="collap bg-white text-black mt-2" data-toggle="collapse" data-target="#customerAdress" 
                             aria-expanded="false" aria-controls="customerAdress" id='adresstogle'>
@@ -338,9 +338,9 @@ function Checkout(props){
                                         {props.incart.map((product)=>(                          
                                             <div key={product.product_ref}  className='prodInfo'>
                                                 <div className='prodimg'>                                                        
-                                                    <img src={product.product_image != null
-                                                        ? `${imagesURL}/${product.product_image}`
-                                                        : prodimg} alt='prodimage'/>                                              
+                                                    <img src={product.product_image === null || product.product_image === undefined || product.product_image === ''
+                                                        ? prodimg
+                                                        : `${imagesURL}/${product.product_image}`} alt='prodimage'/>                                              
                                                 </div>
                                                 <div className='prodName'>
                                                     <p className=' discrip text-black py-0 my-0'> {product.product_desc} </p>
@@ -395,7 +395,7 @@ function Checkout(props){
                             </div>
                         </div>                           
                     </div>
-                    <div className=' total bg-light col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'>
+                    <div className=' total bg-light col-12 col-sm-12 col-md-4 col-lg-4 col-xl-3'>
                         <div id="checkout" >
                             <div className='ro title '>CART SUMMARY</div>
                             <hr/>

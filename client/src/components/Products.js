@@ -118,7 +118,7 @@ function Products(props){
                     sp.textContent = row[0].brand_name
                     break;
                   case 'prodImage':
-                    sp.src = row[0].product_image === ""
+                    sp.src = row[0].product_image === "" || row[0].product_image === undefined || row[0].product_image === null
                           ? prodimg 
                           : `${imagesURL}/${row[0].product_image}`
                     break;
@@ -212,7 +212,7 @@ function Products(props){
                   >
                     <img
                       src={
-                        product.product_image === "" || product.product_image === undefined || product.product_image === ''
+                        product.product_image === "" || product.product_image === undefined || product.product_image === null
                           ? prodimg 
                           : `${imagesURL}/` + product.product_image
                       }

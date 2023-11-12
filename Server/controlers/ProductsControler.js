@@ -148,28 +148,32 @@ async function AddingProduct(req, res) {
 
 async function DeletingProduct(req, res) {
   try {
-    // Delete old image from firebase
-    console.log('body', req.body)
-    const oldImageSrc = req.body.image_src;
+    if(req.body.image_src !== null){
+      // Delete old image from firebase
+      const oldImageSrc = req.body.image_src;
+  
+      const parts = oldImageSrc.split("/");
+      const fullImageName = parts.pop();
+  
+      const imageParts = fullImageName.split("?");
+      const imageName = imageParts[0];
+  
+      await bucket
+        .file(`${imageName}`)
+        .delete()
+        .then(() => {
+          console.log("image deleted successfully");
+        })
+        .catch((error) => {
+          console.error("Error deleting image:", error);
+        });
 
-    const parts = oldImageSrc.split("/");
-    const fullImageName = parts.pop();
-
-    const imageParts = fullImageName.split("?");
-    const imageName = imageParts[0];
-
-    await bucket
-      .file(`${imageName}`)
-      .delete()
-      .then(() => {
-        console.log("image deleted successfully");
-      })
-      .catch((error) => {
-        console.error("Error deleting image:", error);
-      });
-
-    // Delete product from postgresql database
-    await ProductAction.deleteProduct(req.body.product_ref);
+      // Delete product from postgresql database
+      await ProductAction.deleteProduct(req.body.product_ref);
+    }else{
+      // Delete product from postgresql database
+      await ProductAction.deleteProduct(req.body.product_ref);
+    }
     res.status(201).json({ message: "Product deleted successfully" });
   } catch (error) {
     console.log(error);

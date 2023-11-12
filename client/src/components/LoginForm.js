@@ -67,21 +67,23 @@ function LoginForm(props){
     return(
         <div className='logincomp'>
             <Navbar/>
-            <div className="logingContainer">
-                <div className="row">
-                    <h1>Login</h1>
-                    <div className=" image col-12 col-md-6 col-sm-6 col-lg-6">
-                        <img src={loginimg} alt="login and register"/>
-                    </div>
-                    <div className=" form col-12 col-md-6 col-sm-6 col-lg-6">
-                        <form className="LoginForm" onSubmit={HandelSubmit} >
-                            <div className="ro"><label htmlFor="email">Email : </label><input type="email" id="email" name="email"/></div>
-                            <div className="ro"><label htmlFor="password">Password : </label><input type="password" id="password" name="password"/></div>
-                            <hr/>
-                            <button  id="login" type="submit" disabled>Login</button>
-                        </form>                      
-                    </div>
-                </div>   
+            <div className='logReg'>
+                <div className="logingContainer">
+                    <div className="row">
+                        <h1>Login</h1>
+                        <div className=" image col-12 col-md-6 col-sm-6 col-lg-6">
+                            <img src={loginimg} alt="login and register"/>
+                        </div>
+                        <div className=" form col-12 col-md-6 col-sm-6 col-lg-6">
+                            <form className="LoginForm" onSubmit={HandelSubmit} >
+                                <div className="ro"><label htmlFor="email">Email : </label><input type="email" id="email" name="email"/></div>
+                                <div className="ro"><label htmlFor="password">Password : </label><input type="password" id="password" name="password"/></div>
+                                <hr/>
+                                <button  id="login" type="submit" disabled>Login</button>
+                            </form>                      
+                        </div>
+                    </div>   
+                </div>
             </div>
             <ToastContainer
                 position="top-center"

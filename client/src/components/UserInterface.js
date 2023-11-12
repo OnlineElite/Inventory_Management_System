@@ -73,9 +73,9 @@ function UserInterface(props){
                   sp.textContent =row[0].product_price+'DH'
                   break;
                 case 'prodImage':
-                  sp.src = row[0].product_image != null
-                        ? `${imagesURL}/${row[0].product_image}`
-                        : prodimg  
+                  sp.src = row[0].product_image === null || row[0].product_image === undefined || row[0].product_image === ''
+                        ? prodimg
+                        : `${imagesURL}/${row[0].product_image}`
                   break;
               default :
                   sp.textContent = ''
@@ -212,9 +212,9 @@ function UserInterface(props){
                     >
                       <img
                         src={
-                          product.product_image !== null || product.product_image !== undefined || product.product_image !== ''
-                            ? `${imagesURL}/` + product.product_image
-                            : prodimg
+                          product.product_image === null || product.product_image === undefined || product.product_image === ''
+                            ? prodimg
+                            : `${imagesURL}/` + product.product_image
                         }
                         className="card-img-top"
                         alt="product"
@@ -341,9 +341,9 @@ function UserInterface(props){
                         >
                           <img
                             src={
-                              product.product_image != null
-                                ? `${imagesURL}/` + product.product_image
-                                : prodimg
+                              product.product_image === null || product.product_image === undefined || product.product_image === ''
+                                ? prodimg
+                                : `${imagesURL}/` + product.product_image
                             }
                             className="card-img-top_equivalent"
                             alt="product"

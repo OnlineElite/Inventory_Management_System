@@ -3,16 +3,23 @@
     padding: 0;
     margin: 0;
 }
-
+#check{
+    width: 100vw;
+}
 
 #check  .container{
     margin-top: 1rem;
 }
 #check .form, #check .total{
-    margin-inline: 1rem;
     background-color: white;
     border-radius: 5px;
     height: fit-content;
+}
+
+#check .row{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 #check #checkout{
