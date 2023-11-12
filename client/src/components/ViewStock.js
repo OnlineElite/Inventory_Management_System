@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import prodimg from '../images/Default.png'
-import DataTable from 'react-data-table-component'
-import {connect} from 'react-redux'
-import { addProductThunk, deleteProductThunk, updateProductThunk, bringProductsThunk} from '../actions/IMSAction'
+import prodimg from '../images/Default.png';
+import DataTable from 'react-data-table-component';
+import {connect} from 'react-redux';
+import { addProductThunk, deleteProductThunk, updateProductThunk, bringProductsThunk} from '../actions/IMSAction';
 import { DatePicker } from 'antd';
 import ClipLoader from "react-spinners/ClipLoader";
-import '../styles/Stock.css'
+import '../styles/Stock.css';
 
 const { RangePicker } = DatePicker;
 
@@ -18,14 +18,14 @@ function ViewStock(props){
   const [selectfilterCategory, setSelectfilterCategory] = useState('');
   const [selectaddbrand, setSelectaddbrand] = useState('');
   const [selectfilterBrand, setSelectfilterBrand] = useState('');
-  const [deleteCondition, setDeleteCondition] = useState(null)
-  const [equivalent, setEquivalent] = useState('')
-  const [extentionMsg, setExtentionMsg] = useState( '')
+  const [deleteCondition, setDeleteCondition] = useState(null);
+  const [equivalent, setEquivalent] = useState('');
+  const [extentionMsg, setExtentionMsg] = useState( '');
   const [selectedRange, setSelectedRange] = useState(null);
   const [imagetoUpdate, setImagetoUpdate] = useState(null); // old image path to update
   const [imageUrl, setImageUrl] = useState(null);
   const [isfiltred, setIsfiltred] = useState(false);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
   useEffect(() => {
@@ -104,15 +104,12 @@ function ViewStock(props){
       setImageUrl(imageUrl);
     }
   };
-
   
-  
-  function handleCloseModal(){ 
-          
-      document.getElementById("addproduct").classList.remove("show", "d-block");
-      document.getElementById("update").classList.remove("show", "d-block");
-      document.querySelectorAll(".modal-backdrop")
-          .forEach(el => el.classList.remove("modal-backdrop"));
+  function handleCloseModal(){       
+    document.getElementById("addproduct").classList.remove("show", "d-block");
+    document.getElementById("update").classList.remove("show", "d-block");
+    document.querySelectorAll(".modal-backdrop")
+    .forEach(el => el.classList.remove("modal-backdrop"));
   }
   
   const filterByName =(e)=>{
@@ -285,10 +282,17 @@ function ViewStock(props){
   }
 
   const handleDelete=(row)=>{
-    props.deleteProduct({
-      product_ref: row.product_ref,
-      image_src: row.product_image,
-    });
+    if(row.product_image === null || row.product_image === undefined || row.product_image === ''){
+      props.deleteProduct({
+        product_ref: row.product_ref,
+        image_src: null,
+      });
+    }else{
+      props.deleteProduct({
+        product_ref: row.product_ref,
+        image_src: row.product_image,
+      });
+    }
     props.deleteMsg? toast.success(`${props.deleteMsg}`) :  console.log('');
     props.response? toast.error(`${props.response}`) :  console.log(''); 
     setRecords(props.products)
@@ -323,9 +327,9 @@ function ViewStock(props){
                   sp.textContent = row.brand_name
                   break;
               case 'prodImg':
-                  sp.src = row.product_image != null
-                        ? `${imagesURL}/${row.product_image}`
-                        : prodimg
+                  sp.src = row.product_image === null || row.product_image === undefined || row.product_image === ''
+                        ? prodimg
+                        : `${imagesURL}/${row.product_image}`
                       break;
               default :
                   sp.textContent = ''
@@ -338,34 +342,32 @@ function ViewStock(props){
     const values = [];
     const ids = ['name', 'ref', 'quantity', 'price', 'desc', 'category', 'brand', 'image'];
     const inputs = ids.map((id) => document.getElementById(id));
-
     let catName, brandName;
 
     inputs.forEach((inp) => {
-    if (inp.id === 'category') {
-      const category = props.categories.find((item) => item.name === inp.value);
-      if (category){
-        values.push(category.id);
-        catName = category.name;
+      if (inp.id === 'category') {
+        const category = props.categories.find((item) => item.name === inp.value);
+        if (category){
+          values.push(category.id);
+          catName = category.name;
+        }   
+      } else if (inp.id === 'brand') {
+        const brand = props.brands.find((item) => item.name === inp.value);
+        if (brand){
+          values.push(brand.id);
+          brandName = brand.name;
+        }
+      } else if (inp.id === 'image' && inp.files.length > 0) {
+        values.push(inp.files[0].name);
+      } else {
+        values.push(inp.value);
       }
-        
-    } else if (inp.id === 'brand') {
-      const brand = props.brands.find((item) => item.name === inp.value);
-      if (brand){
-        values.push(brand.id);
-        brandName = brand.name;
-      }
-    } else if (inp.id === 'image' && inp.files.length > 0) {
-      values.push(inp.files[0].name);
-    } else {
-      values.push(inp.value);
-    }
     });
 
     const formData = new FormData();
     formData.append('name', values[0]);
     formData.append('ref', values[1]);
-    formData.append('quantity', values[2]); 
+    formData.append('quantity', values[2]);
     formData.append('price', values[3]);
     formData.append('desc', values[4]);
     formData.append('category', values[5]);
@@ -379,21 +381,24 @@ function ViewStock(props){
 
     function getExtension(filename) {
       return filename.split('.').pop()
-    }  
-    let extention = getExtension(inputs[7].files[0].name).toLowerCase()
-    if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
-      props.addProduct(formData)
+    }
+
+    if (inputs[7].type === "file" && inputs[7].files.length > 0) {
+      let extention = getExtension(inputs[7].files[0].name).toLowerCase()
+      if(extention === 'jpg' || extention === 'png' || extention === 'webp' || extention === 'jpeg'){
+        props.addProduct(formData)
+      }else{
+        setExtentionMsg('File extention not suported plase enter a file with(.jpg, .png or .webp)')
+        extentionMsg? toast.success(`${extentionMsg}`) :  console.log('');
+      }
     }else{
-      setExtentionMsg('File extention not suported plase enter a file with(.jpg, .png or .webp)')
-      extentionMsg? toast.success(`${extentionMsg}`) :  console.log('');
+      props.addProduct(formData)
     }
     props.addMsg? toast.success(`${props.addMsg}`) :  console.log('');
-    props.response? toast.error(`${props.response}`) :  console.log(''); 
-    handleCloseModal()     
-    setRecords(props.products)
+    props.response? toast.error(`${props.response}`) :  console.log('');
     //reset all fields
     const addImg = document.getElementById("addimage");
-    inputs.forEach((inp) => {
+    inputs.forEach((inp) =>{
       switch(inp.id){
         case 'category': inp.selectedIndex = 0; break;
         case 'brand': inp.selectedIndex = 0; break;
@@ -401,6 +406,8 @@ function ViewStock(props){
         default: inp.value = ''; break;
       }
     });
+    handleCloseModal()     
+    setRecords(props.products)
   }
 
   const tableCustomStyles = {
@@ -581,11 +588,11 @@ function ViewStock(props){
               <div className="modal-body">
                 <div className="roo">
                   <label htmlFor="name">Name:</label>
-                  <input id="name" type="text" name="name" />
+                  <input id="name" type="text" name="name"/>
                 </div>
                 <div className="roo">
                   <label htmlFor="ref">Ref :</label>
-                  <input id="ref" type="text" name="ref" />
+                  <input id="ref" type="text" name="ref"/>
                 </div>
                 <div className="roo">
                   <label htmlFor="quantity">Quantity :</label>
@@ -647,17 +654,16 @@ function ViewStock(props){
                 </div>
                 <div className="roo" id="up_Image">
                   <label htmlFor="image">Image :</label>
-                    <div className="img_roo">
-                      <div className="">
-                        <label htmlFor="image" className="bg-primary text-white p-1 border rounded">Choose File</label>
-                        <input className="p-0 w-25 inpChoose" type="file" id="image" name="image" alt="Selected"  onChange={handleImageChange} accept="image/*" />
-                      </div>
-                      <div id="img-preview" className="selecImg">
-                        {imageUrl? <img id="addimage"  src={imageUrl} alt="Selected" /> : ''}
-                      </div>
+                  <div className="img_roo">
+                    <div className="">
+                      <label htmlFor="image" className="bg-primary text-white p-1 border rounded">Choose File</label>
+                      <input className="p-0 w-25 inpChoose" type="file" id="image" name="image" alt="Selected"  onChange={handleImageChange} accept="image/*" />
                     </div>
-                </div>
-                
+                    <div id="img-preview" className="selecImg">
+                      {imageUrl? <img id="addimage"  src={imageUrl} alt="Selected" /> : <img className="d-none" id="addimage"  src='' alt="Selected" />}
+                    </div>
+                  </div>
+                </div>                
               </div>
 
               <div className="modal-footer">
@@ -767,7 +773,7 @@ function ViewStock(props){
                       <input className="p-0 w-25 inpChoose" type="file" id="upimage" name="choose-file" src={imageUrl} alt="Selected"  onChange={handleImageChange} accept="image/*" />
                     </div>
                     <div id="img-preview" className="selecImg">
-                      {imageUrl? <img id="selecImg"  src={imageUrl} alt="Selected" /> : <img src="" id="selecImg" alt="Product image"></img>}
+                      {imageUrl? <img id="selecImg"  src={imageUrl} alt="Selected" /> : <img src="" id="selecImg" alt="Product_image"></img>}
                     </div>
                   </div>
                 </div>

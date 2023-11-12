@@ -179,8 +179,8 @@ function Navbar(props){
     
     return(
         <div className='Navbarr ' id='navbar'>
-            <nav class="navbar navbar-expand-lg">
-                <div class="container-fluid px-4">
+            <nav className="navbar navbar-expand-lg">
+                <div className="container-fluid px-4">
                     <ul className='logo'>
                         <li className=''>
                             <Link className='Link_logo' to= '/'> 
@@ -190,12 +190,12 @@ function Navbar(props){
                         </li>
                     </ul>
                     <div className='nav_body'>
-                        <button class="navbar-toggler bg-white mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
+                        <button className="navbar-toggler bg-white mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
                         </button>
-                        <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                        <div className="offcanvas offcanvas-end " tabIndex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
                             <div className='offcanvas-body'>
-                                <ul class=" navs navbar-nav me-auto mb-2 mb-lg-0">
+                                <ul className=" navs navbar-nav me-auto mb-2 mb-lg-0">
                                     <li>
                                         <Link className='Link'  to= {props.isAuthenticated ? '/userInterface' : '/'}> Home </Link>
                                     </li>
@@ -206,8 +206,8 @@ function Navbar(props){
                                         <Link className='Link' to='/contact' > Contact </Link>
                                     </li>
                                 </ul>
-                                <form class="d-flex w-100" role="search">
-                                    <input class="form-control mx-1 bg-white " laceholder='Search' type='text' name='HeaderSearsh' aria-label="Search"/>
+                                <form className="d-flex w-100" role="search">
+                                    <input className="form-control mx-1 bg-white " laceholder='Search' type='text' name='HeaderSearsh' aria-label="Search"/>
                                     <i onClick={showSearsh} className='bi bi-search btn btn-outline-light'/>
                                 </form>
                             </div>
@@ -288,9 +288,9 @@ function Navbar(props){
                                             <div className='prodInfo'>
                                                 <div className='prodimg'>
                                                     <div className='imag'> 
-                                                        <img src={product.product_image !== null || product.product_image !== undefined || product.product_image !== ''
-                                                            ? `${imagesURL}/${product.product_image}`
-                                                            : prodimg} alt='prodimage'/>
+                                                        <img src={product.product_image === null || product.product_image === undefined || product.product_image === ''
+                                                            ? prodimg
+                                                            : `${imagesURL}/${product.product_image}`} alt='prodimage'/>
                                                     </div>
                                                     <div className='imgBotom'>
                                                         <button onClick={(e)=>handledeleteFromCart(product.product_id, e)} className='text-danger px-2'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
@@ -299,14 +299,14 @@ function Navbar(props){
                                                 </div>
 
                                                 <div className='prodName'>
-                                                    <p className=' descrip text-black'> {product.product_desc} </p>
+                                                    <p className=' descrip text-black d-none d-md-block d-sm-none d-lg-block d-xl-block '> {product.product_desc} </p>
                                                     <p className='text-warning'> {product.product_name} </p>
                                                     <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
                                                 </div>
                                             </div>
                                             <div className='prodPrice'>
                                                 <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
-                                                <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
+                                                <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'> -20%</span></div>
                                                 <div className='buttns'>
                                                     <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' data-id = {product.product_id} >+</button>
                                                     <span id={`count-${product.product_ref}`}> {product.incart_quantity} </span>
@@ -361,26 +361,26 @@ function Navbar(props){
                                             <div className='prodInfo'>
                                                 <div className='prodimg h-100 w-25'>
                                                     <div className='imag h-100 w-100'> 
-                                                        <img src={product.product_image !== null || product.product_image !== undefined || product.product_image !== ''
-                                                            ? `${imagesURL}/${product.product_image}`
-                                                            : prodimg} alt='prodimage'/>
+                                                        <img src={product.product_image === null || product.product_image === undefined || product.product_image === ''
+                                                            ? prodimg
+                                                            : `${imagesURL}/${product.product_image}`} alt='prodimage'/>
                                                     </div>
                                                 </div>
                                                 <div className='prodName'>
-                                                    <p className=' descrip text-black'> {product.product_desc} </p>
+                                                    <p className=' descrip text-black d-none d-md-block d-sm-none d-lg-block d-xl-block'> {product.product_desc} </p>
                                                     <p className='text-warning'> {product.product_name} </p>
                                                     <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
                                                     {product.product_stock !== 0?
-                                                        <button onClick={(e)=>HandeleAddToCart(product.product_id, e)} className='text-white my-2 bg-danger'><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
-                                                        :<button  className='text-white my-2' style={{backgroundColor: "gray" }} disabled ><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
+                                                        <button onClick={(e)=>HandeleAddToCart(product.product_id, e)} className='text-white my-1 mx-0 px-1 bg-danger'><i className=" mr-2 bi bi-cart-plus-fill"></i>Add to cart</button>
+                                                        :<button  className='text-white my-2 mx-0 px-1' style={{backgroundColor: "gray" }} disabled ><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
                                                     }
                                                 </div>
                                             </div>
                                             <div className='prodPrice'>
                                                 <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
-                                                <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'>-20%</span></div>
+                                                <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'> -20%</span></div>
                                                 <div className='buttns'>
-                                                    <button onClick={(e)=>handledeleteFromFavories(product.product_id, e)} className='text-white bg-danger'><i className="text-white bi bi-trash-fill"></i>DELETE</button>
+                                                    <button onClick={(e)=>handledeleteFromFavories(product.product_id, e)} className='text-white bg-danger px-1 mx-0'><i className="text-white bi bi-trash-fill"></i>DELETE</button>
                                                 </div>
                                             </div>
                                         </div> 
