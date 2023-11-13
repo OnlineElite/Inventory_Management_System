@@ -56,7 +56,15 @@ function Users(props){
         },
         {
             name : 'Created At',
-            selector : row => row.created_date,
+            selector : row =>{
+            let year = new Date(row.created_date).getFullYear();
+            let month = new Date(row.created_date).getMonth();
+            let day = new Date(row.created_date).getDay();
+            let hour = new Date(row.created_date).getHours();
+            let minute = new Date(row.created_date).getMinutes();
+            //let seconds = new Date(row.created_date).getSeconds();
+            return `${day+12}-${month+1}-${year} ${hour+1}:${minute}`
+        },
             sortable : true
         },
         {
@@ -236,11 +244,15 @@ function Users(props){
                                 let endDate = values[1].format('YYYY-MM-DD')
                                 const theRest = props.users.filter((row)=>{
 
-                                    const date = new Date(row.created_date);
+                                    let year = new Date(row.created_date).getFullYear();
+                                    let month = new Date(row.created_date).getMonth();
+                                    let day = new Date(row.created_date).getDay();
+                                    const formattedDate = `${year}-${month+1}-${day+12}`
+                                    /*const date = new Date(row.created_date);
                                     const year = date.getFullYear();
                                     const month = String(date.getMonth() + 1).padStart(2, '0');
                                     const day = String(date.getDate()).padStart(2, '0');
-                                    const formattedDate = `${year}-${month}-${day}`;
+                                    const formattedDate = `${year}-${month}-${day}`;*/
                                     
                                     return (startDate <= formattedDate && formattedDate<= endDate)
                                 })
