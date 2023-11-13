@@ -206,7 +206,7 @@ function Navbar(props){
                                         <Link className='Link' to='/contact' > Contact </Link>
                                     </li>
                                 </ul>
-                                <form className="d-flex w-100" role="search">
+                                <form className= {props.display} role="search">
                                     <input className="form-control mx-1 bg-white " laceholder='Search' type='text' name='HeaderSearsh' aria-label="Search"/>
                                     <i onClick={showSearsh} className='bi bi-search btn btn-outline-light'/>
                                 </form>

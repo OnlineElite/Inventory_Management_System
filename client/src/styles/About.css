@@ -23,7 +23,7 @@
 
 
 #about h3{
-    color:rgb(113, 224, 1);
+    color:rgb(1, 191, 224)
 }
 
 #about ul li,#about p, #about h1 {
@@ -32,5 +32,5 @@
 
 
 #about ul li strong{
-    color: rgb(194, 194, 9);
+    color: rgb(2, 27, 82);
 }

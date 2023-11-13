@@ -66,7 +66,7 @@ function LoginForm(props){
     })                   
     return(
         <div className='logincomp'>
-            <Navbar/>
+            <Navbar display = "d-none"/>
             <div className='logReg'>
                 <div className="logingContainer">
                     <div className="row">
