@@ -50,7 +50,15 @@ function ViewStock(props){
     },
     {
       name : 'Created At',
-      selector : row => row.product_date,
+      selector : row => {
+        let year = new Date(row.product_date).getFullYear();
+        let month = new Date(row.product_date).getMonth();
+        let day = new Date(row.product_date).getDay();
+        let hour = new Date(row.product_date).getHours();
+        let minute = new Date(row.product_date).getMinutes();
+        //let seconds = new Date(row.product_date).getSeconds();
+        return `${day+12}-${month+1}-${year} ${hour+1}:${minute}`
+      },
       sortable : true
     },
     {
@@ -463,11 +471,16 @@ function ViewStock(props){
                 let startDate = values[0].format("YYYY-MM-DD");
                 let endDate = values[1].format("YYYY-MM-DD");
                 const theRest = props.products.filter((row) => {
-                  const date = new Date(row.product_date);
+
+                  let year = new Date(row.product_date).getFullYear();
+                  let month = new Date(row.product_date).getMonth();
+                  let day = new Date(row.product_date).getDay();
+                  const formattedDate = `${year}-${month+1}-${day+12}`
+                 /* const date = new Date(row.product_date);
                   const year = date.getFullYear();
                   const month = String(date.getMonth() + 1).padStart(2, "0");
                   const day = String(date.getDate()).padStart(2, "0");
-                  const formattedDate = `${year}-${month}-${day}`;
+                  const formattedDate = `${year}-${month}-${day}`;*/
                   return (
                     startDate <= formattedDate && formattedDate <= endDate
                   );
