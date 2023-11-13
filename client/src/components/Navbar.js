@@ -307,7 +307,7 @@ function Navbar(props){
                                             <div className='prodPrice'>
                                                 <p className='price'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'DH'}</p>
                                                 <div><span className='oldPrice'>{product.product_price}DH</span><span className='remise'> -20%</span></div>
-                                                <div className='buttns'>
+                                                <div className='buttns ' id='incDec'>
                                                     <button  type='submit' onClick={hundellSubmit} data-btn = 'increase' data-id = {product.product_id} >+</button>
                                                     <span id={`count-${product.product_ref}`}> {product.incart_quantity} </span>
                                                     <button  type='submit' onClick={hundellSubmit} data-btn = 'decrease' data-id = {product.product_id}>–</button>

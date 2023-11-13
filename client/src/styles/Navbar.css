@@ -410,3 +410,8 @@
     outline: none;
     padding-block: 0.1rem;
 }
+
+#navbar .product_row .prodPrice #incDec button{
+    padding-inline: 0.7rem;
+    padding-block: 0.2rem;
+}
