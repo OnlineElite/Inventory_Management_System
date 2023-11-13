@@ -129,8 +129,14 @@
     font-weight: bold;
 }
 
+.Navbarr .offcanvas form{
+    display: flex;
+    width: 100%;
+}
 
-
+.Navbarr .offcanvas .offcanvas-body{
+    background-color: transparent;
+}
 
 /*---cart modal---*/
 

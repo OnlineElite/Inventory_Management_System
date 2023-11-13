@@ -237,7 +237,7 @@ function Checkout(props){
 
     return(
         <div className='check bg-light ' id='check'>
-            <Navbar/>
+            <Navbar display = "d-none"/>
             <div className='container bg-light'>
                 <div className='row'>
                     <div id='customer_details' className=' form col-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 bg-light'>

@@ -10,7 +10,7 @@ function About(){
 
     return(
         <div id='about' className='bg-light'>
-            <Navbar/>
+            <Navbar display = "d-none"/>
             <div className='container'>
                 <h1 className='w-100 text-center '>ABOUT US</h1>
                 <div className='row'>

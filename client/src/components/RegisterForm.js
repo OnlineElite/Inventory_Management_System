@@ -69,7 +69,7 @@ const RegisterForm = (props) => {
 
     return (
         <div className="registercomp">
-            <Navbar />
+            <Navbar display = "d-none"/>
             <div className='logReg'>
                 <div className="registerContainer">
                     <div className="row">
