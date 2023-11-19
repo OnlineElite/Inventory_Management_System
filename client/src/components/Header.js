@@ -10,10 +10,10 @@ function Header(props){
     }*/
 
     return(
-        <div className='Header ' id='Header'>
-            <nav className="navbar navbar-expand-lg shadow mb-5 bg-light position-sticky ">
+        <div className='Header ' id='Header' >
+            <nav className="navbar navbar-expand-lg shadow bg-light position-sticky ">
+                <button className="navbar-brand d-block rounded-0 border-0 bg-light p-0 mx-2 " onClick={props.Toggle}><i className="bi bi-list "   href='#/'></i></button>
                 <span className="navbar-brand d-none d-md-block px-3" href='#/'>Dashboard</span>
-                <button className="navbar-brand d-block d-md-none" onClick={props.Toggle}><i className="bi bi-list"   href='#/'></i></button>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -24,7 +24,7 @@ function Header(props){
                             <input className='HeaderSearsh ' placeholder='Search' type='text' name='HeaderSearsh' />
                             <i onClick={showSearsh} className='bi bi-search mx-1'/>
                         </li>*/}
-                        <li className="nav-item mx-2 border border-black rounded">
+                        <li className="nav-item mx-3 border border-black rounded">
                             <button className="nav-link text-black" aria-current='page'  href='#/'><i className="bi bi-person-circle"></i> {props.userfullName[0]} {props.userfullName[1]}{" "} </button>
                         </li>
                     </ul>

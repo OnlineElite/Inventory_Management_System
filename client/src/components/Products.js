@@ -14,7 +14,7 @@ function Products(props){
     const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
     const [currentPage, setCurrentPage] = useState(1);
-    const productsPerPage = 12;
+    const productsPerPage = 18;
     const indexOfLastProduct = currentPage * productsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
@@ -146,9 +146,9 @@ function Products(props){
 
     return (
       <div className="ProductsWindow" id="products">
-        <div className="container bg-light ">
-          <h1>Manage products</h1>
-          <div className="filters px-3">
+        <div className="container ">
+          <h4>products Management</h4>
+          <div className="filters">
             <input
               id="filterName"
               className="filterinp"
@@ -197,10 +197,10 @@ function Products(props){
                 </option>
               ))}
             </select>
-            <span className="btn btn-outline-primary mx-3" onClick={handeleReset}>Reset</span>
+            <span className="btn btn-outline-primary " onClick={handeleReset}>Reset</span>
           </div>
           {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
-          <div className="prod bg-light">
+          <div className="prod w-100 rounded">
             {currentProducts.map((product) => (
                 (
                   <div
@@ -220,38 +220,17 @@ function Products(props){
                       alt="product"
                     />
                     <div className="card-body">
-                      <div className="lines">
-                        <span className="detail">Reference:</span>
-                        <span className="result"> {product.product_ref} </span>
-                      </div>
-                      <div className="lines">
-                        <span className="detail">Name:</span>
-                        <span className="result"> {product.product_name} </span>
-                      </div>
-                      <div className="lines">
-                        <span className="detail">Brand:</span>
-                        <span className="result"> {product.brand_name} </span>
-                      </div>
-                      <div className="lines">
-                        <span className="detail">Quantity:</span>
-                        <span
-                          className="result"
-                          style={{
-                            color:
-                              product.product_stock === 0 ? "red" : "black",
-                          }}
-                        >
-                          {" "}
-                          {product.product_stock}{" "}
-                        </span>
-                      </div>
-                      <div className="lines">
-                        <span className="detail">Price :</span>
-                        <span className="result price">
-                          {" "}
-                          {product.product_price}DH{" "}
-                        </span>
-                      </div>
+                        <div className="line_desc">
+                          {product.product_desc}
+                        </div>
+                        <div className="line_prices ">
+                          <span className='prices'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'Dhs'}</span>
+                        </div>
+                        <div className="line_old_price">
+                          <span className="old_price"> {" "}{product.product_price}Dhs{" "} </span>
+                          <span className='remise'>-20%</span>
+                        </div>
+                     
                     </div>
                     <div className="card-footer text-muted">
                       <button className="btn btn-primary showMore">
@@ -376,7 +355,7 @@ function Products(props){
                 </div>
                 <div className="modal-footer">
                   <h3 className="text-dark equivalet">Recommended:</h3>
-                  <div className="equivals">
+                  {/*<div className="equivals">
                     {props.products.map((product) =>
                       product.category_name === equivalent.category &&
                       product.product_ref !== equivalent.ref ? (
@@ -443,6 +422,51 @@ function Products(props){
                         </div>
                       ) : (
                         ""
+                      )
+                    )}
+                  </div>*/}
+                  <div className="equivals">
+                    {props.products.map((product) =>
+                      product.category_name === equivalent.category &&
+                      product.product_ref !== equivalent.ref ? (
+                        <div
+                          className="card border-primary mb-3"
+                          key={product.product_ref}
+                          style={{ maxWidth: "12rem" }}
+                        >
+                          <img
+                            src={
+                              product.product_image === null || product.product_image === undefined || product.product_image === ''
+                                ? prodimg
+                                : `${imagesURL}/` + product.product_image
+                            }
+                            className="card-img-top_equivalent"
+                            alt="product"
+                          />
+                          <div className="card-body">
+                            <div className="line_desc_equivalent">
+                              {product.product_name}
+                            </div>
+                            <div className="line_prices_equivalent ">
+                              <span className='prices'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'Dhs'}</span>
+                            </div>
+                            <div className="line_old_price">
+                              <span className="old_price"> {" "}{product.product_price}Dhs{" "} </span>
+                            </div>
+                          </div>
+                          <div className=" c-footer">
+                            <button
+                              className="btn text-primary p-0"
+                              data-toggle="modal"
+                              data-target="#viewproduct"
+                              onClick={() => handleShow(product.product_ref)}
+                            >
+                              <i className="bi bi-eye-fill"></i>
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        ''
                       )
                     )}
                   </div>

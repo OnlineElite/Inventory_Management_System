@@ -2,7 +2,7 @@ let formidable = require("formidable");
 const nodemailer = require('nodemailer')
 const Mailgen = require('mailgen')
 const pool = require("../config/db");
-const { Product, ProductAction } = require("../models/Products.js");
+const { Product, ProductAction, ordersActions} = require("../models/Products.js");
 
 require("dotenv").config();
 // Initialize Firebase in Node.js script:
@@ -67,6 +67,44 @@ async function contactMessage (req, res){
     res.status(500).json({ error: "Internal server error" });
   }
 }
+
+// Orders Actions
+async function sendingOrders(req, res){
+  try{
+    console.log(req.body)
+    
+    await ordersActions.addOrder(req.body)
+    res.status(201).json({ message: "Order sent successfully"});
+
+  }catch(err){
+    console.error(err)
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+async function getOrders(req, res){
+  try {
+    const importedOrders = await ordersActions.importOrders()
+    //console.log('imported', importedOrders)
+    res.status(201).json({orders: importedOrders})
+
+  }catch(err){
+    console.error(err)
+    res.status(500).json({error: 'Internal server error'})
+  }
+}
+
+async function bringStatus(req, res) {
+  try {
+    const state = await ordersActions.importStatus();
+
+    res.status(201).json({ status: state });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 
 // Product Action
 async function getStatus(req, res) {
@@ -444,5 +482,8 @@ module.exports = {
   getIncart,
   updatingProductFromCart,
   getStatus,
-  contactMessage
+  contactMessage,
+  sendingOrders,
+  getOrders,
+  bringStatus
 };

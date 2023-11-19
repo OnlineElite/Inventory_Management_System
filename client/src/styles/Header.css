@@ -4,6 +4,9 @@
     padding: 0;
 }
 
+#Header {
+    margin-bottom: 1rem;
+}
 
 #Header .HeaderSearsh{
     width: 100%;
@@ -11,7 +14,11 @@
     background-color: transparent;
     border: none;
     padding: 5px;
+}
 
+#Header .bi-list{
+    color: #000;
+    font-size: 2rem;
 }
 #Header .HeaderSearsh::placeholder{
     color: black;

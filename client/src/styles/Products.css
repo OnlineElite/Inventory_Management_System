@@ -15,9 +15,11 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     margin-top: 1rem;
-    margin-bottom: 0;
-    padding-left: 1rem;
+    padding-top: 0.3rem;
+    width: 97%;
+    background-color: rgb(233, 233, 233);
 }
 
 .ProductsWindow .pagination{
@@ -50,14 +52,17 @@
 
 .ProductsWindow .container .card{
     margin-inline: 0.5rem;
-    width: 15rem;
+    width: 10rem;
     margin-bottom: 1rem;
     height: fit-content;
+    transition: 1s;
 }
 
 .ProductsWindow .card-img-top{
-    height: 10rem;
-    padding: 1rem;
+    border-radius: 6px;
+    height: 5rem;
+    padding-inline: 1rem;
+    padding-top: 1rem;
 }
 
 .ProductsWindow .card-body{
@@ -67,11 +72,11 @@
 }
 
 .ProductsWindow  .filters{
-    width: 97%;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    margin-block: 2rem;
+    justify-content: space-between;
+    margin-block: 1.5rem;
 }
 
 .ProductsWindow  .filters input, .ProductsWindow .filters select{
@@ -88,8 +93,36 @@
     padding: 5px;
 }
 
+.ProductsWindow .card-body .line_prices .prices{
+    color:black;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
 .ProductsWindow .price{
     color: rgb(5, 177, 5);
+}
+
+.ProductsWindow .remise{
+    background-color: rgb(177, 248, 177);
+    color: rgb(4, 156, 4);
+    margin-left: 0.5rem;
+}
+
+.ProductsWindow .card-body .line_old_price .old_price {
+    color: gray;
+    text-decoration: line-through;
+    font-size: 0.8rem;
+}
+
+.ProductsWindow .card-body .line_desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    font-size: 1rem;
 }
 
 .ProductsWindow .card-body .detail{
@@ -160,8 +193,8 @@
 
 .ProductsWindow .equivals .card{
     background-color: rgba(236, 248, 252, 0.979);
-    min-width: 9.2rem;
-    max-height: 12rem;
+    min-width: 8.9rem;
+    height: fit-content;
     margin-inline: 0.5rem;
 }
 
@@ -201,4 +234,31 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
+}
+
+.ProductsWindow  .card-body .line_prices_equivalent .prices{
+    color:black;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.ProductsWindow .card-body .line_desc_equivalent{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.ProductsWindow .card .card-img-top_equivalent{
+    border-radius: 6px;
+    height: 6rem;
+    padding: 0.2rem;
+}
+
+.ProductsWindow .equivals .card{
+    background-color: rgba(236, 248, 252, 0.979);
+    width: 8.8rem;
+    margin-inline: 0.3rem;
+    height: fit-content;
 }

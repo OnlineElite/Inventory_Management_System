@@ -48,8 +48,6 @@ create table products(
 	stock int not null,
 	price DECIMAL(10, 2),
 	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	inCart boolean Default false NOT NULL,
-	liked boolean Default false NOT NULL,
     updated_date TIMESTAMP,
     deleted_date TIMESTAMP,
 	Description varchar(500) not null,
@@ -85,7 +83,7 @@ create table infavories(
 	id serial primary key,
 	user_id int,
 	product_id int,
-	added_at timestamp DEFAULT current_timestamp,
+	added_at timestamp DEFAULT now(),
 	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 )
@@ -100,19 +98,56 @@ create table incart(
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 )
 
-select * from users
-select * from products
-select * from categories
-select * from brands
-select * from infavories
-select * from incart
-
+-------- Orders ---------------*/
 create table orders (
 	order_id serial PRIMARY KEY,
-    customer_id integer,
-    order_date date,
+    user_id int,
+	customer_name varchar(300),
+    created_date timestamp DEFAULT now(),
     total_amount numeric(10, 2),
-	customer_address varchar(300),
-	FOREIGN KEY (customer_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	status varchar(200) DEFAULT 'Pending',
+	total_item int,
+	payment_method varchar(300),
+	delivery_method varchar(300),
+	city varchar(100),
+	country varchar(100),
+	address varchar(300),
+	additional_info varchar(300),
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 )
  
+create table Order_Products(
+	order_id int,
+	product_id int,
+	product_ref int,
+	FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+)
+
+create table status(
+	id serial primary key,
+	name varchar(200) unique,
+	color varchar(200) unique,
+	created_date timestamp DEFAULT now(),
+    updated_date TIMESTAMP,
+    deleted_date TIMESTAMP
+)
+
+insert into status (name, color) 
+values ('Pending', '#ffa500'), ('In Progress', '#0099ff'), ('Delivered', '#07d407'), ('Return', '#ff0000')
+
+select * from orders
+
+SELECT
+      (SELECT COUNT(*) FROM users WHERE deleted_date IS NULL) AS total_users,
+      (SELECT COUNT(*) FROM categories WHERE deleted_date IS NULL) AS total_categories,
+      (SELECT COUNT(*) FROM brands WHERE deleted_date IS NULL) AS total_brands,
+      (SELECT COUNT(*) FROM products WHERE deleted_date IS NULL) AS total_products,
+      (SELECT COUNT(*) FROM products WHERE deleted_date IS NULL AND stock = 0) AS total_outOfStock,
+      (SELECT SUM(price) FROM products WHERE deleted_date IS NULL) AS total_values,
+	  (SELECT COUNT(*) FROM orders ) AS total_orders,
+	  (SELECT COUNT(*) FROM orders WHERE status = 'Delivered') AS total_Delivered,
+	  (SELECT COUNT(*) FROM orders WHERE status = 'In Progress') AS total_In_Progress,
+	  (SELECT COUNT(*) FROM orders WHERE status = 'Pending') AS total_Pending,
+	  (SELECT COUNT(*) FROM orders WHERE status = 'Return') AS total_Return
+	  

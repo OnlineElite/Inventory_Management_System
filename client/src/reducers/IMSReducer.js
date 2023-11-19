@@ -44,7 +44,10 @@ const userReducer = (state, action)=>{
         return { ...state, products: action.payload };
 
       case "CATEGORIES":
-        return { ...state, categories: action.payload };
+        return { ...state, categories: action.payload }
+
+      case "STATUS":
+        return { ...state, status: action.payload };
 
       case "SHOW_MESSAGE":
         return { ...state, deleteMsg: action.payload.message };
@@ -55,8 +58,7 @@ const userReducer = (state, action)=>{
       case "ADD_MESSAGE":
         return { ...state, addMsg: action.payload };      
         
-        case "ADD_PRODUCT":
-
+      case "ADD_PRODUCT":
         const newProducts = action.payload.product;
         const products = state.products;
 
@@ -172,10 +174,13 @@ const userReducer = (state, action)=>{
         return { ...state, states: action.payload };
 
       case "INCART":
-      return { ...state, incart: action.payload };
+        return { ...state, incart: action.payload };
 
       case "INFAVORIES":
-      return { ...state, infavories: action.payload };
+        return { ...state, infavories: action.payload };
+
+      case "IMPORT_ORDERS":
+        return { ...state, orders: action.payload };
 
       default:
         return state;

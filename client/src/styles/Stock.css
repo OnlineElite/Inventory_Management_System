@@ -11,11 +11,15 @@
     padding-top: 3rem;
 }
 
+#stock .container h3{
+    width: 100%;
+}
+
 #stock  .filters{
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+    align-items: baseline;
+    justify-content: space-between;
     margin-block: 1rem;
 }
 
@@ -177,7 +181,6 @@
 }
 #stock .dates{
     width: 100%;
-    margin-left: 2rem;
 }
 
 

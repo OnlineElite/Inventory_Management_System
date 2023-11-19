@@ -13,9 +13,9 @@
 #Category  .filters{
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    justify-content: flex-start;
     margin-block: 1rem;
-    padding-left: 2rem;
 }
 
 #Category  .filters .refresh{

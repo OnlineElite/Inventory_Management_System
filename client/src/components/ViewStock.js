@@ -73,7 +73,7 @@ function ViewStock(props){
   },
     {
       name : 'Price',
-      selector : row => row.product_price,
+      selector : row => row.product_price+' DH',
       sortable : true
     },
     /*{
@@ -101,7 +101,8 @@ function ViewStock(props){
         </div>
       ),
       ignoreRowClick: true,
-      allowoverflow: true,       
+      allowoverflow: true, 
+      center: true     
     }
   ];
 
@@ -461,97 +462,97 @@ function ViewStock(props){
   return (
     <div className="products bg-light" id="stock">
       <div className="container">
-        <h2>Stock Manager</h2>
-        <div className="dates mt-5">                           
-          <RangePicker
-            value={selectedRange}
-            id="filterDate"
-            onChange={(values) => {
-              if (values && values.length === 2) {
-                let startDate = values[0].format("YYYY-MM-DD");
-                let endDate = values[1].format("YYYY-MM-DD");
-                const theRest = props.products.filter((row) => {
-
-                  let year = new Date(row.product_date).getFullYear();
-                  let month = new Date(row.product_date).getMonth();
-                  let day = new Date(row.product_date).getDay();
-                  const formattedDate = `${year}-${month+1}-${day+12}`
-                 /* const date = new Date(row.product_date);
-                  const year = date.getFullYear();
-                  const month = String(date.getMonth() + 1).padStart(2, "0");
-                  const day = String(date.getDate()).padStart(2, "0");
-                  const formattedDate = `${year}-${month}-${day}`;*/
-                  return (
-                    startDate <= formattedDate && formattedDate <= endDate
-                  );
-                });
-                setRecords(theRest);
-                setSelectedRange(values);
-              } else {
-                setRecords(props.products);
-                setSelectedRange(null);
-              }
-            }}
-          />
-          <span
-            className="btn btn-outline-primary mx-3 py-2"
-            onClick={handeleReset}
-          >
-            Reset
-          </span>
-        </div>
-        <div className="filters">
-          <input
-            id="filterName"
-            className="filterinp py-2"
-            type="text"
-            placeholder="Filter by Name"
-            onChange={filterByName}
-          />
-          <input
-            id="filterRef"
-            className="filterinp py-2"
-            type="text"
-            placeholder="Filter by Ref"
-            onChange={filterByRef}
-          />
-          <select
-            id="filterCategory"
-            className="filterinp py-2"
-            value={selectfilterCategory}
-            onChange={filterByCategory}
-          >
-            <option disabled={true} value="">
-              {" "}
-              Category
-            </option>
-            {props.categories.map((category, index) => (
-              <option name="option" key={index}>
-                {" "}
-                {category.name}
-              </option>
-            ))}
-          </select>
-          <select
-            id="filterBrand"
-            className="filterinp py-2"
-            value={selectfilterBrand}
-            onChange={filterByBrand}
-          >
-            <option disabled={true} value="">
-              {" "}
-              Brand
-            </option>
-            {props.brands.map((brand, index) => (
-              <option name="option" key={index}>
-                {" "}
-                {brand.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        <h4 className="">Stock Management</h4>
         {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
-        <div className="container mt-3">
+        <div className="container p-0">
+          <div className="dates">                           
+            <RangePicker
+              value={selectedRange}
+              id="filterDate"
+              onChange={(values) => {
+                if (values && values.length === 2) {
+                  let startDate = values[0].format("YYYY-MM-DD");
+                  let endDate = values[1].format("YYYY-MM-DD");
+                  const theRest = props.products.filter((row) => {
+
+                    let year = new Date(row.product_date).getFullYear();
+                    let month = new Date(row.product_date).getMonth();
+                    let day = new Date(row.product_date).getDay();
+                    const formattedDate = `${year}-${month+1}-${day+12}`
+                  /* const date = new Date(row.product_date);
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, "0");
+                    const day = String(date.getDate()).padStart(2, "0");
+                    const formattedDate = `${year}-${month}-${day}`;*/
+                    return (
+                      startDate <= formattedDate && formattedDate <= endDate
+                    );
+                  });
+                  setRecords(theRest);
+                  setSelectedRange(values);
+                } else {
+                  setRecords(props.products);
+                  setSelectedRange(null);
+                }
+              }}
+            />
+            <span
+              className="btn btn-outline-primary mx-3 py-2"
+              onClick={handeleReset}
+            >
+              Reset
+            </span>
+          </div>
+          <div className="filters">
+            <input
+              id="filterName"
+              className="filterinp py-2"
+              type="text"
+              placeholder="Filter by Name"
+              onChange={filterByName}
+            />
+            <input
+              id="filterRef"
+              className="filterinp py-2"
+              type="text"
+              placeholder="Filter by Ref"
+              onChange={filterByRef}
+            />
+            <select
+              id="filterCategory"
+              className="filterinp py-2"
+              value={selectfilterCategory}
+              onChange={filterByCategory}
+            >
+              <option disabled={true} value="">
+                {" "}
+                Category
+              </option>
+              {props.categories.map((category, index) => (
+                <option name="option" key={index}>
+                  {" "}
+                  {category.name}
+                </option>
+              ))}
+            </select>
+            <select
+              id="filterBrand"
+              className="filterinp py-2"
+              value={selectfilterBrand}
+              onChange={filterByBrand}
+            >
+              <option disabled={true} value="">
+                {" "}
+                Brand
+              </option>
+              {props.brands.map((brand, index) => (
+                <option name="option" key={index}>
+                  {" "}
+                  {brand.name}
+                </option>
+              ))}
+            </select>
+          </div>
           <DataTable
             title={"Manage Stock"}
             columns={columns}

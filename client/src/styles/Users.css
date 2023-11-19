@@ -14,9 +14,9 @@
 #users  .filters{
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    justify-content: space-between;
     margin-block: 1rem;
-    padding-left: 2rem;
 }
 
 #users  .filters .refresh{

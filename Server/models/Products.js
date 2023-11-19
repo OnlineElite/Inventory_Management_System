@@ -30,7 +30,12 @@ class Product {
       (SELECT COUNT(*) FROM brands WHERE deleted_date IS NULL) AS total_brands,
       (SELECT COUNT(*) FROM products WHERE deleted_date IS NULL) AS total_products,
       (SELECT COUNT(*) FROM products WHERE deleted_date IS NULL AND stock = 0) AS total_outOfStock,
-      (SELECT SUM(price) FROM products WHERE deleted_date IS NULL) AS total_values;`;
+      (SELECT SUM(price) FROM products WHERE deleted_date IS NULL) AS total_values,
+      (SELECT COUNT(*) FROM orders ) AS total_orders,
+      (select COUNT(*) FROM orders WHERE status = 'Delivered') AS total_Delivered,
+      (select COUNT(*) FROM orders WHERE status = 'In Progress') AS total_In_Progress,
+      (select COUNT(*) FROM orders WHERE status = 'Pending') AS total_Pending,
+      (select COUNT(*) FROM orders WHERE status = 'Return') AS total_Return;`;
       const result = await pool.query(query);
       return result.rows;
     }
@@ -104,8 +109,6 @@ class Product {
       return result.rows[0];
     }
   }
-
-  
 
 class ProductAction {
 
@@ -238,7 +241,33 @@ class ProductAction {
   }
 
 }
+
+class ordersActions{
+  
+  static async addOrder(order){
+    const query = `insert into orders (user_id, customer_name, total_amount, total_item, payment_method,
+      delivery_method, city, country, address, additional_info)
+      values(${order.user_id}, '${order.fname} ${order.lname}', ${order.TotalAmount}, ${order.total_item},
+      '${order.payment}', '${order.Delivery}', '${order.city}', '${order.country}', '${order.address}',
+      '${order.info}')`
+
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async importOrders(){
+    const query =`select * from orders`
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async importStatus() {
+    const query = `select * from status where deleted_date is null`;
+    const result = await pool.query(query);
+    return result.rows;
+  }
+}
   
   
-  module.exports = {Product, ProductAction};
+  module.exports = {Product, ProductAction, ordersActions};
   

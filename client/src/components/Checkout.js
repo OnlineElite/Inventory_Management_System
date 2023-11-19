@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import {connect } from 'react-redux'
 import {useEffect, useState} from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 import {sendOrderThunk} from '../actions/IMSAction'
 import axios from 'axios'
 import {bringIncartThunk} from '../actions/IMSAction'
@@ -21,6 +22,7 @@ function Checkout(props){
     const [showAlertPhone2, setShowAlertPhone2] = useState(false);
     const [contries, setContries] = useState([]);
     const [cities, setCities] = useState([]);
+    const [orderProducts, setOrderProducts] = useState([])
 
     useEffect(()=>{
         if(!props.isAdmin && props.isAuthenticated){            
@@ -138,6 +140,7 @@ function Checkout(props){
 
     const handeleSaveDelivery =(e)=>{
         e.preventDefault()
+        let orderProductsList = []
         const formData2  = new FormData();
         const ids = ['toHome', 'toAgency']
         const inputs = ids.map((id)=> document.getElementById(id))
@@ -146,6 +149,11 @@ function Checkout(props){
                 (inp.id === 'toHome')? formData2.append(`${inp.name}`, 'Home Delivery') : formData2.append(`${inp.name}`, 'Agency Delivery')
             }
         })
+
+        props.incart.map((product)=>{
+            orderProductsList.push(product.product_ref)
+        } )
+        setOrderProducts(orderProductsList)
 
         let isAnyFieldChecked = inputs.some((inp)=> inp.checked === true)
         if(isAnyFieldChecked){   
@@ -229,10 +237,16 @@ function Checkout(props){
         for (var z of formData3.entries()) {
             allData.append(z[0], z[1]);
         }
+        allData.append('Products', orderProducts)
+        allData.append('TotalAmount', totalAmount)
+        allData.append('user_id', props.userfullName[2])
+        allData.append('total_item', totalItem)
         props.sendOrder(allData)
-        handeleCancelAddress(e);
-        handeleCancelDelivery(e);
-        handeleCancelPayment(e);
+        props.updateMsg? toast.success(`${props.updateMsg}`) :  console.log('');
+        props.response? toast.error(`${props.response}`) :  console.log(''); 
+        //handeleCancelAddress(e);
+        //handeleCancelDelivery(e);
+        //handeleCancelPayment(e);
     }
 
     return(
@@ -337,6 +351,7 @@ function Checkout(props){
                                     <div className='border border-secondary rounded my-2 px-2'>
                                         {props.incart.map((product)=>(                          
                                             <div key={product.product_ref}  className='prodInfo'>
+
                                                 <div className='prodimg'>                                                        
                                                     <img src={product.product_image === null || product.product_image === undefined || product.product_image === ''
                                                         ? prodimg
@@ -412,6 +427,18 @@ function Checkout(props){
                 </div>
             </div>
             <Footer/>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
         </div>
     )
 }
@@ -421,7 +448,9 @@ const mapStateToProps =(state)=>{
         userfullName : state.userfullName,
         isAuthenticated : state.isAuthenticated,
         isAdmin : state.isAdmin,
-        incart : state.incart
+        incart : state.incart,
+        addMsg : state.addMsg,
+        response : state.error,
     }
 
 }
