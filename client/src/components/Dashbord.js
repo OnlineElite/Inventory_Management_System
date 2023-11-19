@@ -12,36 +12,36 @@ import Settings from './Orders';
 import Users from './Users'
 import Brands from './Brands'
 import {connect} from 'react-redux'
-import {bringCategoriesThunk, bringBrandsThunk, bringStatesThunk, bringProductsThunk, bringUsersThunk} from '../actions/IMSAction'
-
+import {bringCategoriesThunk, bringBrandsThunk, bringStatesThunk, bringProductsThunk, bringUsersThunk, bringStatusThunk, bringOrdersThunk} from '../actions/IMSAction'
+import '../styles/Dashboard.css'
 
 function Dashboard(props){
 
     const [toggle, setToggle] = useState(false)
-
     function Toggle(){
       setToggle(!toggle)
     }
-
     useEffect(()=>{
         props.getCategories()
         props.getBrands()
         props.getStates()
         props.getProducts()
         props.getUsers()
+        props.getOrders()
+        props.getStatus()
     }, [])
     
-
+    
     return(
         <div>
-           <div className="d-flex">
-                <div className= {toggle? "d-none" :"w-auto position-fixed"}>
-                    <Sidebar/>
+           <div className=" d-flex">
+                <div className= '' style={toggle? {width: '5rem'}: {width : '14rem'} } >
+                    <Sidebar toggle = {toggle} />
                 </div>
-                <div className= {toggle? "d-none" :"invisible"}>
+                {/*<div className= {toggle? "d-block" :"invisible"}>
                     <Sidebar/>
-                </div>
-                <div className="col overflow-auto">
+                </div>*/}
+                <div className="col overflow-auto bg-light" style={toggle? {width: '80rem'}: {width : '71rem'} }>
                     <Header Toggle={Toggle}/> 
                     <Routes>
                         <Route path="/" element={<Home/>} />
@@ -83,6 +83,12 @@ const mapDispatchToProps =(dispatch)=>{
         },
         getUsers : ()=>{
             dispatch(bringUsersThunk())
+        },
+        getOrders: ()=>{
+            dispatch(bringOrdersThunk())
+        },
+        getStatus: ()=>{
+            dispatch(bringStatusThunk())
         }
     }
     

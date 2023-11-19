@@ -74,7 +74,7 @@ function Categories(props){
             ),
             ignoreRowClick: true,
             allowoverflow: true,
-            
+            center: true
         }
     ];
 
@@ -163,44 +163,44 @@ function Categories(props){
     
     return(
         <div className='Category' id='Category'>
-            <h1 className='px-3'>Categories Manager </h1>
-            <div className='filters'>
-                <div className='dates mt-3 mx-3 '>
-                    <RangePicker
-                        value={selectedRange}
-                        id = 'filterDate'
-                        onChange={(values) =>{
-                            if (values && values.length === 2) {
-                                let startDate = values[0].format('YYYY-MM-DD')
-                                let endDate = values[1].format('YYYY-MM-DD')
-                                const theRest = props.categories.filter((row)=>{
-
-                                    let year = new Date(row.created_date).getFullYear();
-                                    let month = new Date(row.created_date).getMonth();
-                                    let day = new Date(row.created_date).getDay();
-                                    const formattedDate = `${year}-${month+1}-${day+12}`
-                                    /*const date = new Date(row.created_date);
-                                    const year = date.getFullYear();
-                                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                                    const day = String(date.getDate()).padStart(2, '0');
-                                    const formattedDate = `${year}-${month}-${day}`;*/
-                                    
-                                    return (startDate <= formattedDate && formattedDate<= endDate)
-                                })
-                                setRecords(theRest)
-                                setSelectedRange(values);
-                            }else {
-                                setRecords(props.categories)
-                                setSelectedRange(null);
-                            }
-                        }}
-                    />  
-                </div>
-                <input id='filterName' className='filterinp py-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
-                <span className="btn btn-outline-primary mx-3 py-2 mt-3" onClick={handeleReset}>Reset</span>
-            </div>
             {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
-            <div className='container mt-3'>
+            <div className='container'>
+                <h4 className=''>Categories Management </h4>
+                <div className='filters '>
+                    <div className='dates '>
+                        <RangePicker
+                            value={selectedRange}
+                            id = 'filterDate'
+                            onChange={(values) =>{
+                                if (values && values.length === 2) {
+                                    let startDate = values[0].format('YYYY-MM-DD')
+                                    let endDate = values[1].format('YYYY-MM-DD')
+                                    const theRest = props.categories.filter((row)=>{
+
+                                        let year = new Date(row.created_date).getFullYear();
+                                        let month = new Date(row.created_date).getMonth();
+                                        let day = new Date(row.created_date).getDay();
+                                        const formattedDate = `${year}-${month+1}-${day+12}`
+                                        /*const date = new Date(row.created_date);
+                                        const year = date.getFullYear();
+                                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                                        const day = String(date.getDate()).padStart(2, '0');
+                                        const formattedDate = `${year}-${month}-${day}`;*/
+                                        
+                                        return (startDate <= formattedDate && formattedDate<= endDate)
+                                    })
+                                    setRecords(theRest)
+                                    setSelectedRange(values);
+                                }else {
+                                    setRecords(props.categories)
+                                    setSelectedRange(null);
+                                }
+                            }}
+                        />  
+                    </div>
+                    <input id='filterName' className='filterinp py-2 mx-2' type='text' placeholder='Filter by Name' onChange={filterByName}/>
+                    <span className="btn btn-outline-primary mx-3 py-2" onClick={handeleReset}>Reset</span>
+                </div>
                 <DataTable 
                     title = {'Manage categories'}
                     columns ={columns}

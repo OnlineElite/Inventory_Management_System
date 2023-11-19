@@ -20,7 +20,9 @@ const initialState = {
     incart : [],
     infavories :[],
     states :[],
-    isLoading: true
+    isLoading: true,
+    orders : [],
+    status : []
 }
 
 export  const store = createStore(userReducer, initialState, applyMiddleware(thunk))

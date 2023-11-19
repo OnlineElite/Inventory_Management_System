@@ -25,7 +25,10 @@ const {
   getInfavories,
   updatingProductFromCart,
   getStatus,
-  contactMessage
+  contactMessage,
+  sendingOrders,
+  getOrders,
+  bringStatus
 } = require("../controlers/ProductsControler");
 
 /*const storage = multer.diskStorage({
@@ -42,15 +45,18 @@ const upload = multer({ storage });*/
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// Product Routers
+// General Routers 
 router.get('/States',getStatus)
 router.post('/sendMessage', contactMessage)
+// Orders Routers
+router.post('/sendOrder', sendingOrders)
+router.get('/importOrders', getOrders)
+router.get('/status',bringStatus)
 // Product Routers
 router.get("/products", upload.any(), getProducts);
 router.post("/addProduct", upload.single("image"), AddingProduct);
 router.post('/deleteProduct', DeletingProduct)
 router.post('/updateProduct',upload.single("image"), UpdatingProduct)
-
 // incart Routers
 router.post('/incart',getIncart)
 router.post('/addTocart', addingProductToCart)

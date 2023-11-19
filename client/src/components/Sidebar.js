@@ -17,19 +17,21 @@ function Sidebar(props){
     }
 
     return (
-      <div className=" sidebar d-flex justify-content-between flex-column text-white">
+      <div className={props.toggle? 'sidebar short' : 'sidebar long'} >
         <div className="userInfo ">
            <img className='mx-2' src= {loggo} alt='logos'/>
-           <span > {ProjectName} </span>
+           {!props.toggle? <span>{ProjectName} </span> : '' }
         </div>
 
         <ul className="mainlinks">
+          
           <Link to="/dashboard">
             <li
               className={active === "dashboard" ? "active link" : "link"}
               onClick={(e) => setActive("dashboard")}
             >
-              <i className="bi bi-grid-1x2-fill mx-2"></i> Dashboard
+              <i className="bi bi-grid-1x2-fill mx-2"></i>
+              {!props.toggle? <span>Dashboard</span> : '' }
             </li>
           </Link>
           <Link to="/dashboard/stock">
@@ -37,7 +39,8 @@ function Sidebar(props){
               className={active === "stock" ? "active link" : "link"}
               onClick={(e) => setActive("stock")}
             >
-              <i className="bi bi-tags-fill mx-2"></i> View Stock
+              <i className="bi bi-tags-fill mx-2"></i>
+              {!props.toggle? <span>View Stock</span> : '' }
             </li>
           </Link>
           <Link to="/dashboard/products">
@@ -45,7 +48,8 @@ function Sidebar(props){
               className={active === "products" ? "active link" : "link"}
               onClick={(e) => setActive("products")}
             >
-              <i className="bi bi-award-fill mx-2"></i> Products
+              <i className="bi bi-award-fill mx-2"></i>
+              {!props.toggle? <span>Products</span> : '' }
             </li>
           </Link>
           <Link to="/dashboard/users">
@@ -53,7 +57,8 @@ function Sidebar(props){
               className={active === "users" ? "active link" : "link"}
               onClick={(e) => setActive("users")}
             >
-              <i className="bi bi-people-fill mx-2"></i> Users
+              <i className="bi bi-people-fill mx-2"></i>
+              {!props.toggle? <span>Users</span> : '' }
             </li>
           </Link>
           <Link to="/dashboard/categories">
@@ -61,7 +66,8 @@ function Sidebar(props){
               className={active === "categories" ? "active link" : "link"}
               onClick={(e) => setActive("categories")}
             >
-              <i className="bi bi-grid-3x3-gap-fill mx-2"></i> Categories
+              <i className="bi bi-grid-3x3-gap-fill mx-2"></i>
+              {!props.toggle? <span>Categories</span> : '' } 
             </li>
           </Link>
           <Link to="/dashboard/brands">
@@ -69,7 +75,8 @@ function Sidebar(props){
               className={active === "brands" ? "active link" : "link"}
               onClick={(e) => setActive("brands")}
             >
-              <i className="bi bi-flag-fill mx-2"></i> Brands
+              <i className="bi bi-flag-fill mx-2"></i>
+              {!props.toggle? <span>Brands</span> : '' }
             </li>
           </Link>
           <Link to="/dashboard/orders">
@@ -77,19 +84,21 @@ function Sidebar(props){
               className={active === "orders" ? "active link" : "link"}
               onClick={(e) => setActive("orders")}
             >
-              <FontAwesomeIcon className="i mx-2" icon="fa-solid fa-cubes" /> Orders
+              <FontAwesomeIcon className="i mx-2" icon="fa-solid fa-cubes" />
+              {!props.toggle? <span>Orders</span> : '' }
             </li>
           </Link>
         </ul>
 
         <hr />
-        <ul className="mainlinks ">
+        <ul className="mainlinks p-0 m-0" style = {{height : 'fitContent'}}>
           <Link className=" logout" to="/login" onClick={handelLogout}>
             <li
               className={active === "login" ? "active link" : "link "}
               onClick={(e) => setActive("login")}
             >
-              <i className="bi bi-box-arrow-right mx-2"></i> Log Out
+              <i className="bi bi-box-arrow-right mx-2"></i>
+              {!props.toggle? <span>Log Out</span> : '' }
             </li>
           </Link>
         </ul>

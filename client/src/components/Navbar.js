@@ -45,7 +45,7 @@ function Navbar(props){
             setFavRecords(props.infavories)
             setCartRecords(props.incart) 
         }
-    }, [props.isAdmin, props.isAuthenticated])
+    }, [])
 
     useEffect(()=>{
         if(!props.isAdmin && props.isAuthenticated){
@@ -207,7 +207,7 @@ function Navbar(props){
                                     </li>
                                 </ul>
                                 <form className= {props.display} role="search">
-                                    <input className="form-control mx-1 bg-white " laceholder='Search' type='text' name='HeaderSearsh' aria-label="Search"/>
+                                    <input className="form-control mx-1 bg-white "  laceholder='Search' type='text' name='HeaderSearsh' aria-label="Search"/>
                                     <i onClick={showSearsh} className='bi bi-search btn btn-outline-light'/>
                                 </form>
                             </div>
@@ -281,7 +281,7 @@ function Navbar(props){
                     <div className="modal-body " id='cart_modal_body'>
                         <div className='row'>
                             <div className=' prods col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9 my-2'>
-                                {cartRecords?
+                                {cartRecords && props.isAuthenticated?
                                 cartRecords.map((product)=>(                                                      
                                     <div key={product.product_ref}>
                                         <div className='product_row product-carts' id="cart-page " data-ref={product.product_ref}>
@@ -317,7 +317,13 @@ function Navbar(props){
                                         <hr/>
                                     </div>
                                 ))
-                                :''
+                                : <div className='w-100 h-100 d-flex align-items-center justify-content-center'>
+                                    <p > There is no records, please 
+                                        <Link className='' to='/login' >
+                                            <button onClick={handleCloseModal} className='rounded-0 border-0 text-danger bg-white px-1 '>Login</button> 
+                                        </Link>
+                                    </p>
+                                </div>
                             }
                                 
                             </div>

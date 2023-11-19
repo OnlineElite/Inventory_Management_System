@@ -57,7 +57,7 @@ function LoginForm(props){
         const ids = ['email', 'password'];
         const inputs = ids.map(id => document.getElementById(id));
         inputs.forEach((inp) => { inp.value =""})
-        props.response? toast.error(`${props.response}`) :  console.log(''); 
+        //props.response? toast.error(`${props.response}`) :  console.log(''); 
     }
     useEffect(()=>{
         if (props.isAuthenticated) {
