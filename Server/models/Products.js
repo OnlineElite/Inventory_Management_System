@@ -32,10 +32,10 @@ class Product {
       (SELECT COUNT(*) FROM products WHERE deleted_date IS NULL AND stock = 0) AS total_outOfStock,
       (SELECT SUM(price) FROM products WHERE deleted_date IS NULL) AS total_values,
       (SELECT COUNT(*) FROM orders ) AS total_orders,
-      (select COUNT(*) FROM orders WHERE status = 'Delivered') AS total_Delivered,
-      (select COUNT(*) FROM orders WHERE status = 'In Progress') AS total_In_Progress,
-      (select COUNT(*) FROM orders WHERE status = 'Pending') AS total_Pending,
-      (select COUNT(*) FROM orders WHERE status = 'Return') AS total_Return;`;
+      (select COUNT(*) FROM orders WHERE status_id = 3) AS total_Delivered,
+      (select COUNT(*) FROM orders WHERE status_id = 2) AS total_In_Progress,
+      (select COUNT(*) FROM orders WHERE status_id = 1) AS total_Pending,
+      (select COUNT(*) FROM orders WHERE status_id = 4) AS total_Return;`;
       const result = await pool.query(query);
       return result.rows;
     }
@@ -256,7 +256,24 @@ class ordersActions{
   }
 
   static async importOrders(){
-    const query =`select * from orders`
+    const query =`select 
+    orders.order_id as order_id,
+    orders.customer_name as customer_name,
+    orders.created_date as created_date,
+    orders.total_amount as total_amount,
+    orders.total_item as total_item,
+    orders.payment_method as payment_method,
+    orders.delivery_method as delivery_method,
+    orders.city as city,
+    orders.country as country,
+    orders.address as address,
+    orders.additional_info as additional_info,
+    orders.updated_date as updated_date,
+    orders.deleted_date,
+    status.name as orders_status,
+    status.color as status_color from orders
+    inner join status on status.id = orders.status_id
+    where orders.deleted_date is null`;
     const result = await pool.query(query);
     return result.rows;
   }

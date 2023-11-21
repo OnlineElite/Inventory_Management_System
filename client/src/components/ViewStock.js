@@ -447,8 +447,8 @@ function ViewStock(props){
       switch(inp.id){
         case 'filterName': inp.value = ''; break;
         case 'filterRef': inp.value = ''; break;
-        case 'filterCategory': inp.selectedIndex = 0; break;
-        case 'filterBrand': inp.selectedIndex = 0; break;
+        case 'filterCategory': setSelectfilterCategory(inp.firstChild.value); break;
+        case 'filterBrand': setSelectfilterBrand(inp.firstChild.value); break;
         case 'filterDate': 
           setSelectedRange(null);
           setRecords(props.products);; 

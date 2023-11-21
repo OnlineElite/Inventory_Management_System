@@ -112,7 +112,7 @@ function Home(props){
                                 <i class="bi bi-cart-check" style={{fontSize: '2rem'}}></i> 
                                     <div className=''>
                                         <p>Sales</p>
-                                        {items.total_Delivered? <h3 >{items.total_Delivered}</h3>: <h3>0</h3>}
+                                        {items.total_delivered? <h3 >{items.total_delivered}</h3>: <h3>0</h3>}
                                     </div>
                                 </div>
                             </div>

@@ -19,13 +19,13 @@ function Header(props){
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <ul className="navbar-nav ms-auto ">
                         {/*<li id='searsh' className="nav-item border border-black rounded mx-2">
                             <input className='HeaderSearsh ' placeholder='Search' type='text' name='HeaderSearsh' />
                             <i onClick={showSearsh} className='bi bi-search mx-1'/>
                         </li>*/}
-                        <li className="nav-item mx-3 border border-black rounded">
-                            <button className="nav-link text-black" aria-current='page'  href='#/'><i className="bi bi-person-circle"></i> {props.userfullName[0]} {props.userfullName[1]}{" "} </button>
+                        <li className="username nav-item mx-3 rounded">
+                            <button className="nav-link text-black" aria-current='page'  href='#/'><i className="bi bi-person-circle mx-1"></i> {props.userfullName[0]} {props.userfullName[1]}{" "} </button>
                         </li>
                     </ul>
                 </div>

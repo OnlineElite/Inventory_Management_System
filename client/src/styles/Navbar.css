@@ -303,7 +303,7 @@
 
 #navbar .product_row .prodInfo .prodimg .imag{
     width: 100%;
-    height: 70%;
+    height: 100%;
     background-color: white;
     margin-bottom: 0.5rem;
 }
@@ -386,15 +386,19 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 #navbar  .imgBotom i{
     font-size: 1.3rem;
+    cursor: pointer;
+}
+
+#navbar  .imgBotom button {
+    background-color: transparent;
 }
 
 #navbar  .imgBotom button i{
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 #navbar  .bi-cart-fill {
