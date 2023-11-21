@@ -185,7 +185,14 @@ function Users(props){
                 case 'detailIsAdmin':
                     row.admin?  sp.textContent = 'Yes' :  sp.textContent = 'No'; break;
                 case 'detailCreatedDate':
-                    sp.textContent = row.created_date; break;
+                    let year = new Date(row.created_date).getFullYear();
+                    let month = new Date(row.created_date).getMonth();
+                    let day = new Date(row.created_date).getDay();
+                    let hour = new Date(row.created_date).getHours();
+                    let minute = new Date(row.created_date).getMinutes();
+                    let seconds = new Date(row.created_date).getSeconds();
+                    const formattedDate = `${year}-${month+1}-${day+12}  ${hour+1}:${minute}:${seconds}`
+                    sp.textContent = formattedDate; break;
                 default : 
                     sp.textContent = null
             }

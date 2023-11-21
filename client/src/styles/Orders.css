@@ -4,6 +4,13 @@
     margin: 0;
 }
 
+#orders .loadind{
+    width: 100%;
+    height: 50vh;
+    text-align: center;
+    padding-top: 3rem;
+}
+
 #orders{
     width: 100%;
     display: flex;
@@ -96,10 +103,10 @@
 #orders .cartBox {
     position: relative;
     width: 100%;
-    padding: 20px;
+    padding: 0.5rem;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    grid-gap: 20px;
 }
   
 #orders .cartBox .cart {
@@ -116,7 +123,7 @@
 #orders .cartBox .cart .numbers {
     position: relative;
     font-weight: 500;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--blue);
 }
   
@@ -127,8 +134,8 @@
 }
   
 #orders .cartBox .cart .iconBx {
-    font-size: 2.5rem;
-    color: var(--black2);
+    font-size: 2.1rem;
+    
 }
   
 #orders .cartBox .cart:hover {

@@ -136,8 +136,8 @@ function Products(props){
             switch(inp.id){
                 case 'filterName': inp.value = ''; break;
                 case 'filterRef': inp.value = ''; break;
-                case 'filterCategory': inp.selectedIndex = 0; break;
-                case 'filterBrand': inp.selectedIndex = 0; break;
+                case 'filterCategory': setSelectfilterCategory(inp.firstChild.value); break;
+                case 'filterBrand':setSelectfilterBrand(inp.firstChild.value); break;
                 default: inp.value = ''
             }
         })
@@ -200,7 +200,7 @@ function Products(props){
             <span className="btn btn-outline-primary " onClick={handeleReset}>Reset</span>
           </div>
           {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
-          <div className="prod w-100 rounded">
+          <div className="prod w-100 rounded bg-light">
             {currentProducts.map((product) => (
                 (
                   <div

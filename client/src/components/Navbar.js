@@ -292,16 +292,16 @@ function Navbar(props){
                                                             ? prodimg
                                                             : `${imagesURL}/${product.product_image}`} alt='prodimage'/>
                                                     </div>
-                                                    <div className='imgBotom'>
-                                                        <button onClick={(e)=>handledeleteFromCart(product.product_id, e)} className='text-danger px-2'><i className="text-danger bi bi-trash-fill"></i>DELETE</button>
-                                                        <i onClick={(e)=>handeleAddToFavories(product.product_id, e)} className=" mx-2 bi bi-heart-fill" style={{color : isLiked? 'red' : 'black'}}></i>
-                                                    </div>
                                                 </div>
 
                                                 <div className='prodName'>
                                                     <p className=' descrip text-black d-none d-md-block d-sm-none d-lg-block d-xl-block '> {product.product_desc} </p>
                                                     <p className='text-warning'> {product.product_name} </p>
                                                     <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
+                                                    <div className='imgBotom'>
+                                                        <button onClick={(e)=>handledeleteFromCart(product.product_id, e)} className='text-danger px-2 '><i className="text-danger bi bi-trash-fill"></i></button>
+                                                        <i onClick={(e)=>handeleAddToFavories(product.product_id, e)} className=" mx-2 bi bi-heart-fill" style={{color : isLiked? 'red' : 'black'}}></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className='prodPrice'>
@@ -314,7 +314,7 @@ function Navbar(props){
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr/>
+                                        <hr className='my-1'/>
                                     </div>
                                 ))
                                 : <div className='w-100 h-100 d-flex align-items-center justify-content-center'>

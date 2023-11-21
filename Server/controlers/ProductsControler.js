@@ -69,10 +69,11 @@ async function contactMessage (req, res){
 }
 
 // Orders Actions
+
 async function sendingOrders(req, res){
   try{
-    console.log(req.body)
-    
+    //console.log(req.body)
+  
     await ordersActions.addOrder(req.body)
     res.status(201).json({ message: "Order sent successfully"});
 

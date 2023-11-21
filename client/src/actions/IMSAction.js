@@ -1,3 +1,4 @@
+import axios from 'axios';
 //********************* General Actions *********************//
 const isLoading =(value)=>{
 
@@ -13,6 +14,7 @@ const handellError = (message)=>{
         payload: message
     }
 }
+
 
 const addMessage = (message)=>{
     return {
@@ -242,7 +244,7 @@ const deleteProduct = (message, product_ref) => {
 
 const bringProductsThunk = () => async (dispatch)=>{
     try{
-        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const baseURL = process.env.REACT_APP_API_PROD_URL;
         const url = `${baseURL}/products`;
         const response = await fetch(url);
         const datarecived = await response.json();
@@ -801,42 +803,13 @@ const sendOrderThunk = (order)=> async (dispatch)=>{
         }
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/sendOrder`;
-        /************************/
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'multipart/form-data', // Change to application/json if sending JSON data
-            },
-            body: order,
-        });
-      
-        if (response.status !== 201) {
-            throw new Error(response.statusText);
+
+        const response = await axios.post(url, order);
+        if (response.status === 201) {
+            dispatch(addMessage(response.data.message));
+            console.log(response.data);
         }
-    
-        const result = await response.json();
-        dispatch(addMessage(result.message));
-        /*await fetch(url, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-            body: order,
-          })
-            .then((response) => {
-                if (response.status !== 201){
-                    throw new Error(response.statusText);
-                }
-                return response.json();
-            })
-            .then((res) => {
-                console.log(res.message)
-                dispatch(addMessage(res.message));
-            })
-            .catch((err) => {
-                dispatch(handellError(err))
-            });*/
-        /************************/
+
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -858,7 +831,7 @@ const bringOrdersThunk = ()=> async(dispatch)=>{
             return response.json()
         })
         .then((res)=>{
-            console.log(res.orders)
+            //console.log(res.orders)
             dispatch(getOrders(res.orders))
         })
         .catch((err)=>{

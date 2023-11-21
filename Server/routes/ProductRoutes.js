@@ -3,7 +3,6 @@ const verifyToken = require("../middleware/AuthMiddleware");
 const path = require('path')
 const multer =require('multer')
 const router = express.Router();
-
 const {
   getProducts, 
   getCategories, 
@@ -45,11 +44,11 @@ const upload = multer({ storage });*/
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// General Routers 
+// General Routers
 router.get('/States',getStatus)
 router.post('/sendMessage', contactMessage)
 // Orders Routers
-router.post('/sendOrder', sendingOrders)
+router.post('/sendOrder',upload.any(), sendingOrders)
 router.get('/importOrders', getOrders)
 router.get('/status',bringStatus)
 // Product Routers

@@ -6,6 +6,20 @@
 
 #Header {
     margin-bottom: 1rem;
+    padding: 0;
+}
+
+#Header .username button{
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+#Header .username button .bi{
+    font-size: 2rem;
+    
 }
 
 #Header .HeaderSearsh{
