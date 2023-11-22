@@ -100,7 +100,7 @@ function Home(props){
                             </div>
                             <div className=' cart col-md-4 col-12 col-sm-6 col-lg-3 p-3 ' >
                                 <div className='' style={stiling} >
-                                <i class="bi bi-boxes" style={{fontSize: '2rem'}}></i> 
+                                <i className="bi bi-boxes" style={{fontSize: '2rem'}}></i> 
                                     <div className=''>
                                         <p>Total Orders</p>
                                         {items.total_orders? <h3 >{items.total_orders}</h3>: <h3>0</h3>}
@@ -109,7 +109,7 @@ function Home(props){
                             </div>
                             <div className=' cart col-md-4 col-12 col-sm-6 col-lg-3 p-3 ' >
                                 <div className='' style={last} >
-                                <i class="bi bi-cart-check" style={{fontSize: '2rem'}}></i> 
+                                <i className="bi bi-cart-check" style={{fontSize: '2rem'}}></i> 
                                     <div className=''>
                                         <p>Sales</p>
                                         {items.total_delivered? <h3 >{items.total_delivered}</h3>: <h3>0</h3>}

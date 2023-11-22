@@ -132,14 +132,14 @@ insert into status (name, color)
 values ('Pending', '#ffa500'), ('In Progress', '#0099ff'), ('Delivered', '#07d407'), ('Return', '#ff0000')
 
 create table Order_Products(
+	Order_Products_id serial primary key,
+	product_ref varchar(200),
 	order_id int,
 	product_id int,
-	product_ref int,
 	FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 )
 
 select * from orders
+select * from Order_Products
 
-
-	  

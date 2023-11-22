@@ -245,14 +245,21 @@ class ProductAction {
 class ordersActions{
   
   static async addOrder(order){
-    const query = `insert into orders (user_id, customer_name, total_amount, total_item, payment_method,
+    const query1 = `insert into orders (user_id, customer_name, total_amount, total_item, payment_method,
       delivery_method, city, country, address, additional_info)
       values(${order.user_id}, '${order.fname} ${order.lname}', ${order.TotalAmount}, ${order.total_item},
       '${order.payment}', '${order.Delivery}', '${order.city}', '${order.country}', '${order.address}',
-      '${order.info}')`
-
-    const result = await pool.query(query);
-    return result.rows;
+      '${order.info}') returning *`
+    
+    const result1 = await pool.query(query1);
+    const orderId =  result1.rows[0].order_id;
+    const query2 = `insert into Order_Products (order_id, product_id, product_ref)
+      values ${JSON.parse(order.Products).map((product) => `(${orderId}, ${product.prod_id}, '${product.prod_ref}')`).join(', ')} 
+      returning *`;
+  
+    const result2 = await pool.query(query2);
+  
+    return { order: result1.rows[0], orderProducts: result2.rows };
   }
 
   static async importOrders(){
@@ -280,6 +287,29 @@ class ordersActions{
 
   static async importStatus() {
     const query = `select * from status where deleted_date is null`;
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async importOrderProducts(order_id){
+    const query = `select 
+    products.id as product_id,
+    products.name as product_name, 
+    products.ref as product_ref, 
+    products.stock as product_stock,
+    products.price as product_price,
+    products.Description as product_desc,
+    products.created_date as product_date,
+    products.image as product_image,
+    categories.name as category_name, 
+    brands.name as brand_name
+    from products
+    inner join categories on categories.id = products.category_id
+    inner join brands on brands.id = products.brand_id
+    inner join Order_Products on Order_Products.product_id =  products.id
+    inner join orders on Order_Products.order_id = orders.order_id
+    where Order_Products.order_id = ${order_id}`;
+
     const result = await pool.query(query);
     return result.rows;
   }

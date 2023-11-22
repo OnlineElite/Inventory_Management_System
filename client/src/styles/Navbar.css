@@ -291,8 +291,11 @@
 }
 
 #navbar .product_row .prodInfo .prodName .descrip{
-    width: fit-content;
-    height: fit-content;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #navbar .product_row .prodInfo .prodimg button{
