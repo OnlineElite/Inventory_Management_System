@@ -151,7 +151,7 @@ function Checkout(props){
         })
 
         props.incart.map((product)=>{
-            orderProductsList.push(product.product_ref)
+            orderProductsList.push({prod_id: product.product_id, prod_ref: product.product_ref })
         } )
         setOrderProducts(orderProductsList)
 
@@ -237,7 +237,7 @@ function Checkout(props){
         for (var z of formData3.entries()) {
             allData.append(z[0], z[1]);
         }
-        allData.append('Products', orderProducts)
+        allData.append('Products',JSON.stringify(orderProducts) )
         allData.append('TotalAmount', totalAmount)
         allData.append('user_id', props.userfullName[2])
         allData.append('total_item', totalItem)

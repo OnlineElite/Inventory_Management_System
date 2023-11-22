@@ -3,10 +3,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import {connect} from 'react-redux'
 import { DatePicker } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-//import Modal from 'react-modal';
+import Modal from 'react-modal';
 import DataTable from 'react-data-table-component'
 import ClipLoader from "react-spinners/ClipLoader";
-import { bringOrdersThunk, bringStatusThunk} from '../actions/IMSAction'
+import { bringOrdersThunk, bringStatusThunk, bringOrderProductsThunk} from '../actions/IMSAction'
 
 import '../styles/Orders.css'
 const { RangePicker } = DatePicker;
@@ -18,8 +18,8 @@ function Orders(props){
     const [isLoading, setIsLoading] = useState(true)
     const [selectfilterStatus, setSelectfilterStatus] = useState('');
     const [isfiltred, setIsfiltred] = useState(false);
-    //const [modalIsOpen, setModalIsOpen] = useState(false);
-    //const [selectedRowData, setSelectedRowData] = useState(null);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedRowData, setSelectedRowData] = useState(null);
 
     useEffect(()=>{
         if (props.orders.length === 0 || props.orders !== records) {
@@ -101,63 +101,80 @@ function Orders(props){
         },
       
     ];
-    /*const usercolumns = [
+    const productscolumns = [
         {
-            name : 'Full Name',
-            selector : row => row.first_name +' '+ row.last_name,
-            sortable : true
+          name : 'Name',
+          selector : row => row.product_name,
+          sortable : true
         },
         {
-            name : 'Usename',
-            selector : row => row.username,
-            sortable : true
-        },
-        {
-            name : 'Email',
-            selector : row => row.email,
-            sortable : true
-        },
-        {
-            name : 'IsAdmin',
-            selector : row => row.admin ? "Yes": "No",
-            sortable : true
-        },
-        {
-            name : 'Created At',
-            selector : row =>{
-            let year = new Date(row.created_date).getFullYear();
-            let month = new Date(row.created_date).getMonth();
-            let day = new Date(row.created_date).getDay();
-            let hour = new Date(row.created_date).getHours();
-            let minute = new Date(row.created_date).getMinutes();
-            //let seconds = new Date(row.created_date).getSeconds();
+          name : 'Created At',
+          selector : row => {
+            let year = new Date(row.product_date).getFullYear();
+            let month = new Date(row.product_date).getMonth();
+            let day = new Date(row.product_date).getDay();
+            let hour = new Date(row.product_date).getHours();
+            let minute = new Date(row.product_date).getMinutes();
+            //let seconds = new Date(row.product_date).getSeconds();
             return `${day+12}-${month+1}-${year} ${hour+1}:${minute}`
-        },
-            sortable : true
+          },
+          sortable : true
         },
         {
-            name: 'Actions',
-            cell: (row) => (
-              <div className='d-flex'>
-                <span className='btn text-primary' data-toggle="modal" data-target="#viewUser" onClick={''}><i className="bi bi-eye-fill"></i></span>
-                <span className="btn" data-toggle="modal" data-target="#updateUser" onClick={''}><i className="bi bi-pencil-fill"></i></span>
-                <span className='btn text-danger'   onClick={''}><i className="bi bi-trash-fill"></i></span>
-              </div>
-            ),
-            ignoreRowClick: true,
-            allowoverflow: true,
-            center: true
+          name : 'Ref',
+          selector : row => row.product_ref,
+          sortable : true
+        },
+        {
+          name : 'Stock',
+          selector : row => row.product_stock,
+          sortable : true
+      },
+        {
+          name : 'Price',
+          selector : row => row.product_price+' DH',
+          sortable : true
+        },
+        /*{
+          name : 'Description',
+          selector : row => row.product_desc,
+          sortable : true
+        },*/
+        {
+          name : 'Category',
+          selector : row => row.category_name,
+          sortable : true
+        },
+        {
+          name : 'Brand',
+          selector : row => row.brand_name,
+          sortable : true
+        },
+        {
+          name: 'Actions',
+          cell: (row) => (
+            <div className='d-flex'>
+              <span className='btn text-primary' data-toggle="modal" data-target="#viewproduct" ><i className="bi bi-eye-fill"></i></span>
+              <span className="btn" data-toggle="modal" data-target="#update" ><i className="bi bi-pencil-fill"></i></span>
+              <span className='btn text-danger'  ><i className="bi bi-trash-fill"></i></span>
+            </div>
+          ),
+          ignoreRowClick: true,
+          allowoverflow: true, 
+          center: true     
         }
-    ];
-
+      ];
     const handleRowClick = (row) => {
+        props.getOrderProducts(row.order_id)
         setSelectedRowData(row);
-        setModalIsOpen(true);
+        setTimeout(()=>{
+            setModalIsOpen(true);
+        },200)
     };
     
     const closeModal = () => {
         setModalIsOpen(false);
-    };*/
+    };
   
     const tableCustomStyles = {
         headRow: {
@@ -176,8 +193,23 @@ function Orders(props){
             backgroundColor: "NORMALCOLOR"
           }
         },
-        
     }
+
+    const modalCustomStyles = {
+        content: {
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 1000,
+        },
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 999,
+        },
+    };
 
     const filterByStatus =(e)=>{
         const newData = props.orders.filter(order =>{ 
@@ -327,7 +359,7 @@ function Orders(props){
                     data ={records} 
                     selectableRows 
                     selectableRowsHighlight
-                    //onRowClicked={handleRowClick}
+                    onRowClicked={handleRowClick}
                     highlightOnHover
                     fixedHeader 
                     bordered
@@ -335,32 +367,30 @@ function Orders(props){
                     customStyles={tableCustomStyles}
                 >
                 </DataTable>
-                {/*<Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Example Modal">
+                <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Example Modal" style={modalCustomStyles}>
                     {selectedRowData && (
                         <div className=' '>
-                            <div className='w-100 bg-danger d-flex align-items-center justify-content-between'>
-                                <h2>{`Order ID: ${selectedRowData.order_id}`}</h2>
+                            <div className='w-100 h-100 d-flex align-items-start justify-content-between'>
+                                <h5>{`Order ID: ${selectedRowData.order_id}`}</h5>
                                 <p>{`Customer name: ${selectedRowData.customer_name}`}</p>
                                 <p>{`Order status: ${selectedRowData.orders_status}`}</p>
-                                <button onClick={closeModal}>Close Modal</button>
+                                <button className='btn btn-danger' onClick={closeModal}>Close Modal</button>
                             </div>
+                            <hr/>
                             <DataTable 
-                                title = {'Manage Orders'}
-                                columns ={usercolumns}
-                                data ={props.users} 
-                                
+                                columns ={productscolumns}
+                                data ={props.orderProducts}
                                 selectableRowsHighlight
                                 onRowClicked={handleRowClick}
                                 highlightOnHover
                                 fixedHeader 
                                 bordered
-                                pagination
                                 customStyles={tableCustomStyles}
                             >
                             </DataTable>
                         </div>
                     )}
-                </Modal>*/}
+                </Modal>
             </div>}
             
         </div>
@@ -368,7 +398,7 @@ function Orders(props){
 }
 
 const mapStateToProps =(state)=>{
-    //console.log(state.states)
+
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
@@ -378,7 +408,7 @@ const mapStateToProps =(state)=>{
         orders : state.orders,
         status : state.status,
         states : state.states,
-        //users : state.users,
+        orderProducts : state.orderProducts
     }
 }
 
@@ -389,6 +419,9 @@ const mapDispatchToProps =(dispatch)=>{
         },
         getStatus: ()=>{
             dispatch(bringStatusThunk())
+        },
+        getOrderProducts: (order_id)=>{
+            dispatch(bringOrderProductsThunk(order_id))
         }
     }
     

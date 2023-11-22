@@ -182,6 +182,9 @@ const userReducer = (state, action)=>{
       case "IMPORT_ORDERS":
         return { ...state, orders: action.payload };
 
+      case "ORDER_PRODUCTS":
+        return { ...state, orderProducts: action.payload };
+
       default:
         return state;
     }

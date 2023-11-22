@@ -106,6 +106,16 @@ async function bringStatus(req, res) {
   }
 }
 
+async function bringOrderProducts(req, res){
+  try{
+    const prods = await ordersActions.importOrderProducts(req.body.order_id);
+    res.status(201).json({orderProducts : prods })
+
+  }catch(err){
+    console.error(err)
+    res.status(500).json({error: 'Internal server error'})
+  }
+}
 
 // Product Action
 async function getStatus(req, res) {
@@ -486,5 +496,6 @@ module.exports = {
   contactMessage,
   sendingOrders,
   getOrders,
-  bringStatus
+  bringStatus,
+  bringOrderProducts
 };

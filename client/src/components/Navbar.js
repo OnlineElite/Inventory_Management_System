@@ -337,9 +337,15 @@ function Navbar(props){
                                 <hr/>
                                 <div className='ro '><p id="delievery">Free Delievery abouve</p><span id='delev' >100DH</span></div>
                                 <hr/>
-                                <button className="cart-btn bg-danger" onClick={(e)=> handelCheckout(e)}>
-                                    <Link className='Link text-decoration-none text-white' to='/checkout' >Checkout</Link>
-                                </button> 
+                                {cartRecords.length !== 0 ?
+                                    <button className="cart-btn bg-danger" onClick={(e)=> handelCheckout(e)} >
+                                        <Link className='Link text-decoration-none text-white' to='/checkout' >Checkout</Link>
+                                    </button> 
+                                    :
+                                    <button className="cart-btn bg-secondary" disabled >
+                                        Checkout
+                                    </button> 
+                                }
                             </div>
                             </div>
                         </div>

@@ -799,7 +799,7 @@ const getOrders =(order)=>{
 const sendOrderThunk = (order)=> async (dispatch)=>{
     try{
         for (var pair of order.entries()){
-            console.log(pair[0] + ", " + pair[1]);
+            //console.log(pair[0] + ", " + pair[1]);
         }
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/sendOrder`;
@@ -850,6 +850,13 @@ const handelStatus = (statue)=>{
     }
 }
 
+const handelOrderProducts =(orderProds)=>{
+    return{
+        type : 'ORDER_PRODUCTS',
+        payload : orderProds
+    }
+}
+
 const bringStatusThunk = () => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
@@ -857,6 +864,27 @@ const bringStatusThunk = () => async (dispatch)=>{
         const response = await fetch(url);
         const datarecived = await response.json();
         dispatch(handelStatus(datarecived.status))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const bringOrderProductsThunk =(order_id)=> async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL; 
+        const url = `${baseURL}/orderProducts`;
+        /************************/
+        const data = {order_id : order_id}
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        const response = await fetch(url, header);
+        const datarecived = await response.json();
+        dispatch(handelOrderProducts(datarecived.orderProducts))
+
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -895,6 +923,7 @@ export {
     sendOrderThunk,
     contactMessageThunk,
     bringOrdersThunk,
-    bringStatusThunk
+    bringStatusThunk,
+    bringOrderProductsThunk
 }
 
