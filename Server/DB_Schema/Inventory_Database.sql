@@ -136,10 +136,16 @@ create table Order_Products(
 	product_ref varchar(200),
 	order_id int,
 	product_id int,
+	order_quantity int,
 	FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 )
 
 select * from orders
 select * from Order_Products
+select * from incart
 
+drop table Order_Products
+truncate orders restart identity
+
+delete from Order_Products where product_id = 61 and order_id = 2

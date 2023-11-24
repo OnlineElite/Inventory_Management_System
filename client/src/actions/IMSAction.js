@@ -891,6 +891,29 @@ const bringOrderProductsThunk =(order_id)=> async (dispatch)=>{
     }
 }
 
+const deleteProductFromOrderThunk = (ids) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/deleteProductFromOrder`;
+        const data = {
+            pod_id : ids.pid, 
+            ord_id : ids.oid
+        }
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        
+        dispatch(deleteMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
 //***************** Export Actions ****************/
 export {
     registerThunk, 
@@ -924,6 +947,7 @@ export {
     contactMessageThunk,
     bringOrdersThunk,
     bringStatusThunk,
-    bringOrderProductsThunk
+    bringOrderProductsThunk,
+    deleteProductFromOrderThunk
 }
 
