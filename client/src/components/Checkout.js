@@ -151,7 +151,11 @@ function Checkout(props){
         })
 
         props.incart.map((product)=>{
-            orderProductsList.push({prod_id: product.product_id, prod_ref: product.product_ref })
+            orderProductsList.push({
+                prod_id: product.product_id, 
+                prod_ref: product.product_ref, 
+                prod_quantity : product.incart_quantity  
+            })
         } )
         setOrderProducts(orderProductsList)
 

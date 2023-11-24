@@ -117,6 +117,17 @@ async function bringOrderProducts(req, res){
   }
 }
 
+async function deletingProductFromOrder(req, res) {
+  try{
+    console.log(req.body)
+    await ordersActions.deleteProductFromOrder(req.body)
+    res.status(201).json({ message: "Product deleted from order successfully" })
+  }catch(error){
+    console.error(error)
+    res.status(500).json({error: "Internal server error"})
+  }
+}
+
 // Product Action
 async function getStatus(req, res) {
   try {
@@ -497,5 +508,6 @@ module.exports = {
   sendingOrders,
   getOrders,
   bringStatus,
-  bringOrderProducts
+  bringOrderProducts,
+  deletingProductFromOrder
 };

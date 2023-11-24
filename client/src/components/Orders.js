@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Modal from 'react-modal';
 import DataTable from 'react-data-table-component'
 import ClipLoader from "react-spinners/ClipLoader";
-import { bringOrdersThunk, bringStatusThunk, bringOrderProductsThunk} from '../actions/IMSAction'
+import { bringOrdersThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk} from '../actions/IMSAction'
 
 import '../styles/Orders.css'
 const { RangePicker } = DatePicker;
@@ -29,11 +29,16 @@ function Orders(props){
               setRecords(props.orders)
               setIsfiltred(false)
             }
-        }
-       
+        } 
         if(props.orders.length !== 0 && props.status.length !== 0){
             setIsLoading(false)
+        }else{
+            setTimeout(()=>{
+                setIsLoading(false)
+            },1000)
         }
+
+
     }, [])
     const columns = [
         {
@@ -101,23 +106,11 @@ function Orders(props){
         },
       
     ];
+
     const productscolumns = [
         {
           name : 'Name',
           selector : row => row.product_name,
-          sortable : true
-        },
-        {
-          name : 'Created At',
-          selector : row => {
-            let year = new Date(row.product_date).getFullYear();
-            let month = new Date(row.product_date).getMonth();
-            let day = new Date(row.product_date).getDay();
-            let hour = new Date(row.product_date).getHours();
-            let minute = new Date(row.product_date).getMinutes();
-            //let seconds = new Date(row.product_date).getSeconds();
-            return `${day+12}-${month+1}-${year} ${hour+1}:${minute}`
-          },
           sortable : true
         },
         {
@@ -129,17 +122,22 @@ function Orders(props){
           name : 'Stock',
           selector : row => row.product_stock,
           sortable : true
-      },
+        },
+        {
+          name : 'Ordered',
+          selector : row => row.order_quantity,
+          sortable : true
+        },
         {
           name : 'Price',
           selector : row => row.product_price+' DH',
           sortable : true
         },
-        /*{
-          name : 'Description',
-          selector : row => row.product_desc,
+        {
+          name : 'order id',
+          selector : row => row.order_id,
           sortable : true
-        },*/
+        },
         {
           name : 'Category',
           selector : row => row.category_name,
@@ -154,23 +152,36 @@ function Orders(props){
           name: 'Actions',
           cell: (row) => (
             <div className='d-flex'>
-              <span className='btn text-primary' data-toggle="modal" data-target="#viewproduct" ><i className="bi bi-eye-fill"></i></span>
               <span className="btn" data-toggle="modal" data-target="#update" ><i className="bi bi-pencil-fill"></i></span>
-              <span className='btn text-danger'  ><i className="bi bi-trash-fill"></i></span>
+              <span className='btn text-danger' onClick={() => DeleteProductFromOrder(row.product_id, row.order_id)} ><i className="bi bi-trash-fill"></i></span>
             </div>
           ),
           ignoreRowClick: true,
           allowoverflow: true, 
           center: true     
         }
-      ];
+    ];
+
     const handleRowClick = (row) => {
         props.getOrderProducts(row.order_id)
         setSelectedRowData(row);
         setTimeout(()=>{
             setModalIsOpen(true);
-        },200)
+        },300)
     };
+
+    const handelCreatedDateAtModal =(date)=>{
+        let year = new Date(date).getFullYear();
+        let month = new Date(date).getMonth();
+        let day = new Date(date).getDay();
+        let hour = new Date(date).getHours();
+        let minute = new Date(date).getMinutes();
+        return `${day+12}-${month+1}-${year} ${hour+1}:${minute}`
+    }
+
+    const DeleteProductFromOrder =(product_id, order_id)=>{
+        props.deleteProdFromOrder({pid: product_id, oid : order_id})
+    }
     
     const closeModal = () => {
         setModalIsOpen(false);
@@ -201,6 +212,8 @@ function Orders(props){
           left: '50%',
           right: 'auto',
           bottom: 'auto',
+          width : '75vw',
+          height : '90vh',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
           zIndex: 1000,
@@ -369,12 +382,27 @@ function Orders(props){
                 </DataTable>
                 <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Example Modal" style={modalCustomStyles}>
                     {selectedRowData && (
-                        <div className=' '>
-                            <div className='w-100 h-100 d-flex align-items-start justify-content-between'>
-                                <h5>{`Order ID: ${selectedRowData.order_id}`}</h5>
-                                <p>{`Customer name: ${selectedRowData.customer_name}`}</p>
-                                <p>{`Order status: ${selectedRowData.orders_status}`}</p>
-                                <button className='btn btn-danger' onClick={closeModal}>Close Modal</button>
+                        <div className='ordermodal'>
+                            <div className='row px-3'>
+                                <div className='col-12 col-sm-6 col-md-3'>
+                                    <p className='fw-bold'> Order ID : <span className='fw-normal'>{selectedRowData.order_id}</span></p>
+                                    <p className='fw-bold'> Status : <span className='fw-normal'>{selectedRowData.orders_status}</span></p>
+                                    <p className='fw-bold'> City : <span className='fw-normal'>{selectedRowData.city}</span></p>
+                                </div>
+                                <div className='col-12 col-sm-6 col-md-3'>
+                                    <p className='fw-bold'> Client : <span className='fw-normal'>{selectedRowData.customer_name}</span></p>
+                                    <p className='fw-bold'> Payment : <span className='fw-normal'>{selectedRowData.payment_method}</span></p>
+                                    <p className='fw-bold'> Delivery : <span className='fw-normal'>{selectedRowData.delivery_method}</span></p>
+                                </div>
+                                <div className='col-12 col-sm-6 col-md-3'>
+                                    <p className='fw-bold'> Total Item : <span className='fw-normal'>{selectedRowData.total_item}</span></p>
+                                    <p className='fw-bold'> Total Amount : <span className='fw-normal'>{selectedRowData.total_amount} DH</span></p>
+                                    <p className='fw-bold'> Created Date : <span className='fw-normal'>{handelCreatedDateAtModal(selectedRowData.created_date)}</span></p>
+                                </div>
+                                <div className='col-12 col-sm-6 col-md-3 d-flex flex-column justify-content-between align-items-end'>
+                                    <button className='btn btn-outline-success w-75' onClick={closeModal}>Close Modal</button>
+                                    <button className='btn btn-outline-danger w-75' onClick={closeModal}>Transform</button>
+                                </div>
                             </div>
                             <hr/>
                             <DataTable 
@@ -422,6 +450,9 @@ const mapDispatchToProps =(dispatch)=>{
         },
         getOrderProducts: (order_id)=>{
             dispatch(bringOrderProductsThunk(order_id))
+        },
+        deleteProdFromOrder:(ids)=>{
+            dispatch(deleteProductFromOrderThunk(ids))
         }
     }
     

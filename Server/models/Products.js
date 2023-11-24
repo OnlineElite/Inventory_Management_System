@@ -253,13 +253,16 @@ class ordersActions{
     
     const result1 = await pool.query(query1);
     const orderId =  result1.rows[0].order_id;
-    const query2 = `insert into Order_Products (order_id, product_id, product_ref)
-      values ${JSON.parse(order.Products).map((product) => `(${orderId}, ${product.prod_id}, '${product.prod_ref}')`).join(', ')} 
+    const query2 = `insert into Order_Products (order_id, product_id, product_ref, order_quantity)
+      values ${JSON.parse(order.Products).map((product) => `(${orderId}, ${product.prod_id}, '${product.prod_ref}', ${product.prod_quantity})`).join(', ')} 
       returning *`;
   
     const result2 = await pool.query(query2);
+
+    const query3 = `delete from incart where user_id = ${order.user_id}`
+    const result3 = await pool.query(query3)
   
-    return { order: result1.rows[0], orderProducts: result2.rows };
+    return { order: result1.rows[0], orderProducts: result2.rows , clearCart : result3.rows};
   }
 
   static async importOrders(){
@@ -301,7 +304,9 @@ class ordersActions{
     products.Description as product_desc,
     products.created_date as product_date,
     products.image as product_image,
-    categories.name as category_name, 
+    categories.name as category_name,
+    Order_Products.order_quantity as order_quantity,
+    Order_Products.order_id as order_id,
     brands.name as brand_name
     from products
     inner join categories on categories.id = products.category_id
@@ -310,6 +315,12 @@ class ordersActions{
     inner join orders on Order_Products.order_id = orders.order_id
     where Order_Products.order_id = ${order_id}`;
 
+    const result = await pool.query(query);
+    return result.rows;
+  }
+
+  static async deleteProductFromOrder(ids){
+    const query = `delete from Order_Products where product_id = ${ids.pod_id} and order_id = ${ids.ord_id}`;
     const result = await pool.query(query);
     return result.rows;
   }
