@@ -29,7 +29,8 @@ const {
   getOrders,
   bringStatus,
   bringOrderProducts,
-  deletingProductFromOrder
+  deletingProductFromOrder,
+  ChangeOrderStatus
 } = require("../controlers/ProductsControler");
 
 /*const storage = multer.diskStorage({
@@ -55,6 +56,7 @@ router.get('/importOrders', getOrders)
 router.get('/status',bringStatus)
 router.post('/orderProducts', bringOrderProducts)
 router.post('/deleteProductFromOrder', deletingProductFromOrder)
+router.post('/changeStatus',ChangeOrderStatus)
 // Product Routers
 router.get("/products", upload.any(), getProducts);
 router.post("/addProduct", upload.single("image"), AddingProduct);

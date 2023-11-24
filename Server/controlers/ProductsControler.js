@@ -119,9 +119,20 @@ async function bringOrderProducts(req, res){
 
 async function deletingProductFromOrder(req, res) {
   try{
-    console.log(req.body)
+    //console.log(req.body)
     await ordersActions.deleteProductFromOrder(req.body)
     res.status(201).json({ message: "Product deleted from order successfully" })
+  }catch(error){
+    console.error(error)
+    res.status(500).json({error: "Internal server error"})
+  }
+}
+
+async function ChangeOrderStatus(req, res){
+  try{
+    //console.log(req.body)
+    await ordersActions.changeOrderStatus(req.body)
+    res.status(201).json({ message: "Staus changed successfully" })
   }catch(error){
     console.error(error)
     res.status(500).json({error: "Internal server error"})
@@ -509,5 +520,6 @@ module.exports = {
   getOrders,
   bringStatus,
   bringOrderProducts,
-  deletingProductFromOrder
+  deletingProductFromOrder,
+  ChangeOrderStatus
 };

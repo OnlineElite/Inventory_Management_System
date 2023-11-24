@@ -914,6 +914,30 @@ const deleteProductFromOrderThunk = (ids) => async (dispatch)=>{
         dispatch(handellError(err))
     }
 }
+
+const changeOrderStatusThunk = (ids) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/changeStatus`;
+        const data = {
+            stat_id : ids.st_id, 
+            ord_id : ids.or_id
+        }
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        
+        dispatch(addMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
 //***************** Export Actions ****************/
 export {
     registerThunk, 
@@ -948,6 +972,7 @@ export {
     bringOrdersThunk,
     bringStatusThunk,
     bringOrderProductsThunk,
-    deleteProductFromOrderThunk
+    deleteProductFromOrderThunk,
+    changeOrderStatusThunk
 }
 
