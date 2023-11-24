@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Modal from 'react-modal';
 import DataTable from 'react-data-table-component'
 import ClipLoader from "react-spinners/ClipLoader";
-import { bringOrdersThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk} from '../actions/IMSAction'
+import { bringOrdersThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk, changeOrderStatusThunk} from '../actions/IMSAction'
 
 import '../styles/Orders.css'
 const { RangePicker } = DatePicker;
@@ -20,9 +20,10 @@ function Orders(props){
     const [isfiltred, setIsfiltred] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
+    const [selectedStatus, setSelectedStatus] = useState('');
 
     useEffect(()=>{
-        if (props.orders.length === 0 || props.orders !== records) {
+        if ( props.orders !== records) {
             props.getOrders()
             props.getStatus()
             if(!isfiltred){
@@ -44,8 +45,7 @@ function Orders(props){
         {
             name : 'Order ID',
             selector : row => row.order_id,
-            sortable : true,
-            
+            sortable : true, 
         },
         {
             name : 'Created At',
@@ -58,14 +58,12 @@ function Orders(props){
                 //let seconds = new Date(row.created_date).getSeconds();
                 return `${day+12}-${month+1}-${year} ${hour+1}:${minute}`
             },
-            sortable : true,
-            
+            sortable : true,  
         },
         {
             name : 'Customer',
             selector : row => row.customer_name,
             sortable : true,
-            
         },
         {
             name : 'Total items',
@@ -77,19 +75,16 @@ function Orders(props){
             name : 'Total amount',
             selector : row => row.total_amount + ' DH',
             sortable : true,
-          
         },
         {
             name : 'Payment',
             selector : row => row.payment_method,
             sortable : true,
-            
         },
         {
             name : 'Delivery',
             selector : row => row.delivery_method,
             sortable : true,
-            
         },
         {
             name : 'Status',  
@@ -99,12 +94,10 @@ function Orders(props){
                         {row.orders_status}
                     </span>
                 </div>
-    
             ),
             sortable : true,
             right: true
         },
-      
     ];
 
     const productscolumns = [
@@ -124,18 +117,8 @@ function Orders(props){
           sortable : true
         },
         {
-          name : 'Ordered',
-          selector : row => row.order_quantity,
-          sortable : true
-        },
-        {
           name : 'Price',
           selector : row => row.product_price+' DH',
-          sortable : true
-        },
-        {
-          name : 'order id',
-          selector : row => row.order_id,
           sortable : true
         },
         {
@@ -149,10 +132,21 @@ function Orders(props){
           sortable : true
         },
         {
+            name : 'Ordered',
+            cell: (row) =>(
+                <div className='buttns ' id='incDec'>
+                    <button className='bg-primary'  type='submit' /*onClick={hundellSubmit}*/ data-btn = 'increase' data-id = {row.product_id} >+</button>
+                    <span id={`count-${row.product_ref}`}> {row.order_quantity} </span>
+                    <button className='bg-primary'  type='submit' /*onClick={hundellSubmit}*/ data-btn = 'decrease' data-id = {row.product_id}>–</button>
+                </div>
+            ),
+            selector : row => row.order_quantity,
+            sortable : true
+        },
+        {
           name: 'Actions',
           cell: (row) => (
             <div className='d-flex'>
-              <span className="btn" data-toggle="modal" data-target="#update" ><i className="bi bi-pencil-fill"></i></span>
               <span className='btn text-danger' onClick={() => DeleteProductFromOrder(row.product_id, row.order_id)} ><i className="bi bi-trash-fill"></i></span>
             </div>
           ),
@@ -176,11 +170,25 @@ function Orders(props){
         let day = new Date(date).getDay();
         let hour = new Date(date).getHours();
         let minute = new Date(date).getMinutes();
-        return `${day+12}-${month+1}-${year} ${hour+1}:${minute}`
+        return `${day+19}-${month+1}-${year} ${hour+1}:${minute}`
     }
 
     const DeleteProductFromOrder =(product_id, order_id)=>{
         props.deleteProdFromOrder({pid: product_id, oid : order_id})
+    }
+
+    const handelStatusChange =(e, order_id)=>{
+        let status_id;
+        const value = e.target.value;
+        props.status.map((statu)=>{
+            if(value === statu.name){
+                status_id =statu.id
+                e.target.style.backgroundColor = `${statu.color}`
+                e.target.style.color = 'white'
+            }
+        })
+        setSelectedStatus(value)
+        props.changeStaus({or_id:order_id, st_id:status_id})
     }
     
     const closeModal = () => {
@@ -400,8 +408,13 @@ function Orders(props){
                                     <p className='fw-bold'> Created Date : <span className='fw-normal'>{handelCreatedDateAtModal(selectedRowData.created_date)}</span></p>
                                 </div>
                                 <div className='col-12 col-sm-6 col-md-3 d-flex flex-column justify-content-between align-items-end'>
-                                    <button className='btn btn-outline-success w-75' onClick={closeModal}>Close Modal</button>
-                                    <button className='btn btn-outline-danger w-75' onClick={closeModal}>Transform</button>
+                                    <button className='btn btn-outline-danger w-75' onClick={closeModal}>Close Modal</button>
+                                    <select id="statusId" className="w-75 py-1"  value={selectedStatus?selectedStatus : selectedRowData.orders_status} onChange={(e)=> handelStatusChange(e,selectedRowData.order_id )}
+                                     style={{backgroundColor : selectedRowData.status_color, color : 'white',borderRadius: '5px'}} >
+                                        {props.status.map((statu, index) => (
+                                            <option className='bg-white' name="option" key={index} style={{color : statu.color}}> {" "} {statu.name} </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                             <hr/>
@@ -409,7 +422,6 @@ function Orders(props){
                                 columns ={productscolumns}
                                 data ={props.orderProducts}
                                 selectableRowsHighlight
-                                onRowClicked={handleRowClick}
                                 highlightOnHover
                                 fixedHeader 
                                 bordered
@@ -453,6 +465,9 @@ const mapDispatchToProps =(dispatch)=>{
         },
         deleteProdFromOrder:(ids)=>{
             dispatch(deleteProductFromOrderThunk(ids))
+        },
+        changeStaus:(ids)=>{
+            dispatch(changeOrderStatusThunk(ids))
         }
     }
     

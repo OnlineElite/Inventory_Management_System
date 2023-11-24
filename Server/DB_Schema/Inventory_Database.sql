@@ -11,7 +11,6 @@ CREATE TABLE users (
 	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_date TIMESTAMP,
     deleted_date TIMESTAMP
-	
 );
 
 CREATE TABLE login (
@@ -19,12 +18,11 @@ CREATE TABLE login (
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash VARCHAR(100) NOT NULL,
 	user_id INT REFERENCES users(user_id) ON DELETE CASCADE
-
 );
 
 update users set admin = true where email = 'admin@gmail.com'
 
---------Stock---------------*/
+--------Products---------------*/
 create table categories(
 	id serial primary key,
 	name varchar(255) unique,
@@ -140,12 +138,18 @@ create table Order_Products(
 	FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 )
-
+------------------------------------------------*/
 select * from orders
 select * from Order_Products
-select * from incart
+select * from status
+--drop table Order_Products
+--truncate orders restart identity
+--delete from Order_Products where product_id = 61 and order_id = 2
 
-drop table Order_Products
-truncate orders restart identity
 
-delete from Order_Products where product_id = 61 and order_id = 2
+
+
+
+
+
+

@@ -154,7 +154,8 @@ function Checkout(props){
             orderProductsList.push({
                 prod_id: product.product_id, 
                 prod_ref: product.product_ref, 
-                prod_quantity : product.incart_quantity  
+                prod_quantity : product.incart_quantity,
+                prod_stock : product.product_stock
             })
         } )
         setOrderProducts(orderProductsList)

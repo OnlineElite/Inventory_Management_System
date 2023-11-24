@@ -245,24 +245,35 @@ class ProductAction {
 class ordersActions{
   
   static async addOrder(order){
+    /******* Add orders *******/
     const query1 = `insert into orders (user_id, customer_name, total_amount, total_item, payment_method,
       delivery_method, city, country, address, additional_info)
       values(${order.user_id}, '${order.fname} ${order.lname}', ${order.TotalAmount}, ${order.total_item},
       '${order.payment}', '${order.Delivery}', '${order.city}', '${order.country}', '${order.address}',
       '${order.info}') returning *`
-    
     const result1 = await pool.query(query1);
     const orderId =  result1.rows[0].order_id;
+
+    /******* Add Order products *******/
     const query2 = `insert into Order_Products (order_id, product_id, product_ref, order_quantity)
       values ${JSON.parse(order.Products).map((product) => `(${orderId}, ${product.prod_id}, '${product.prod_ref}', ${product.prod_quantity})`).join(', ')} 
       returning *`;
-  
     const result2 = await pool.query(query2);
 
+    /*******Clear cart *******/
     const query3 = `delete from incart where user_id = ${order.user_id}`
     const result3 = await pool.query(query3)
-  
-    return { order: result1.rows[0], orderProducts: result2.rows , clearCart : result3.rows};
+
+    /******* Decrease Product Stock *******/
+    const query4 = `update products 
+    set stock = 
+      case
+        ${JSON.parse(order.Products).map((product) => ` when id = ${product.prod_id} then (${product.prod_stock} - ${product.prod_quantity})`).join(' ')}
+        else stock
+      end`;
+    const result4 = await pool.query(query4)
+
+    return { order: result1.rows[0], orderProducts: result2.rows , clearCart : result3.rows , DecreaseStock : result4.rows};
   }
 
   static async importOrders(){
@@ -320,9 +331,18 @@ class ordersActions{
   }
 
   static async deleteProductFromOrder(ids){
-    const query = `delete from Order_Products where product_id = ${ids.pod_id} and order_id = ${ids.ord_id}`;
-    const result = await pool.query(query);
-    return result.rows;
+    const query1 = `delete from Order_Products where product_id = ${ids.pod_id} and order_id = ${ids.ord_id}`;
+    const result1 = await pool.query(query1);
+
+    const query2 = `update orders set total_item = (total_item - 1) where order_id= ${ids.ord_id}`
+    const result2 = await pool.query(query2)
+    return {deleteProduct : result1.rows, decreaseTotalItem : result2.rows};
+  }
+
+  static async changeOrderStatus(ids){
+    const query = `update orders set status_id = ${ids.stat_id} where order_id = ${ids.ord_id}`
+    const result = await pool.query(query)
+    return result.rows
   }
 }
   

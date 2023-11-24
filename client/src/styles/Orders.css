@@ -147,3 +147,30 @@
     color: var(--white);
 }
 
+.buttns {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: baseline;
+}
+
+ .buttns button{
+    text-align: center;
+    padding-block: 0.2rem;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
+    border: none;
+    outline: none;
+}
+
+.buttns span{
+    font-size: 18px;
+    font-weight: bold;
+    margin-inline: 1rem;
+}
+
+#incDec button{
+    padding-inline: 0.7rem;
+    padding-block: 0.2rem;
+}
