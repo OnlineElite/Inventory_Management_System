@@ -4,6 +4,9 @@ const userReducer = (state, action)=>{
       case "REGISTER_USER":
         return { ...state, RegisterRespond: action.payload };
 
+      case "REGISTER_ERROR":
+        return { ...state, RegisterError: action.payload }
+
       case "SET_TOKEN":
         localStorage.setItem("token", action.payload);
         return { ...state, token: action.payload };
@@ -56,7 +59,13 @@ const userReducer = (state, action)=>{
         return { ...state, brands: action.payload };
 
       case "ADD_MESSAGE":
-        return { ...state, addMsg: action.payload };      
+        return { ...state, addMsg: action.payload };  
+        
+      case "SEND_ORDER":
+        return { ...state, sendOrderMsg: action.payload }; 
+
+      case "ERROR_ORDER":
+        return { ...state, errorOrderMsg: action.payload };
         
       case "ADD_PRODUCT":
         const newProducts = action.payload.product;

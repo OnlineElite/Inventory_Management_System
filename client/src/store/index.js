@@ -4,6 +4,7 @@ import {userReducer} from '../reducers/IMSReducer'
 
 const initialState = {
     RegisterRespond : null,
+    RegisterError : null,
     error : null,
     isAdmin : true,
     isAuthenticated: !!localStorage.getItem("token"),  //true or false (if local storage empty or not)
@@ -16,6 +17,8 @@ const initialState = {
     addMsg : null,
     deleteMsg : null,
     updateMsg : null,
+    sendOrderMsg : null,
+    errorOrderMsg : null,
     users : [],
     incart : [],
     infavories :[],

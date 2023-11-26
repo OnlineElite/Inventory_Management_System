@@ -247,8 +247,8 @@ function Checkout(props){
         allData.append('user_id', props.userfullName[2])
         allData.append('total_item', totalItem)
         props.sendOrder(allData)
-        props.updateMsg? toast.success(`${props.updateMsg}`) :  console.log('');
-        props.response? toast.error(`${props.response}`) :  console.log(''); 
+        props.sendOrderMsg? toast.success(`${props.sendOrderMsg}`) :  console.log('');
+        props.errorOrderMsg? toast.error(`${props.errorOrderMsg}`) :  console.log(''); 
         //handeleCancelAddress(e);
         //handeleCancelDelivery(e);
         //handeleCancelPayment(e);
@@ -456,6 +456,8 @@ const mapStateToProps =(state)=>{
         incart : state.incart,
         addMsg : state.addMsg,
         response : state.error,
+        sendOrderMsg : state.sendOrderMsg,
+        errorOrderMsg : state.errorOrderMsg
     }
 
 }

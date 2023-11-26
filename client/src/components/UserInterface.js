@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import prodimg from '../images/Default.png'
 import {connect} from 'react-redux'
-import {bringProductsThunk, bringInfavoriesThunk, bringIncartThunk, bringCategoriesThunk, bringBrandsThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
+import {bringProductsThunk, bringInfavoriesThunk, bringOrdersThunk, bringIncartThunk, bringCategoriesThunk, bringBrandsThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
 import Footer from '../components/Footer'
 import MiniSlider from '../components/MiniSlider'
 import { ToastContainer, toast } from 'react-toastify';
@@ -29,6 +29,11 @@ function UserInterface(props){
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
   useEffect(()=>{
+    /*if(!props.isAdmin && props.isAuthenticated){
+      props.getIncart(props.userfullName[2])
+      props.getInfavories(props.userfullName[2])
+      props.getOrders()
+    }*/
     props.getProducts()
     props.getCategories()
     props.getBrands()
@@ -37,7 +42,8 @@ function UserInterface(props){
     }
   }, [])
   
-  const currentProducts = ((records.length === 0)? props.products :records ).slice(indexOfFirstProduct, indexOfLastProduct);
+  
+  const currentProducts = props.products? ((records.length === 0)? props.products :records ).slice(indexOfFirstProduct, indexOfLastProduct) : []
 
   const nextPage = () => {
     if (currentPage < Math.ceil(((records.length === 0)? props.products :records ).length / productsPerPage)) {
@@ -456,6 +462,9 @@ const mapDispatchToProps =(dispatch)=>{
     },
     getIncart : (user_id)=>{
       dispatch(bringIncartThunk(user_id))
+    },
+    getOrders: ()=>{
+      dispatch(bringOrdersThunk())
     },
     getInfavories : (user_id)=>{
         dispatch(bringInfavoriesThunk(user_id))

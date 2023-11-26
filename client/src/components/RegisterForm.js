@@ -56,12 +56,9 @@ const RegisterForm = (props) => {
     const HandelSubmit = (e)=>{
         e.preventDefault() 
         props.next(info)
-        if(props.response === 'User registered successfully'){
-           return toast.success(`${props.response}`)
-        }
-        else if(props.response === 'Email already exists'){
-           return toast.error(`${props.response}`)
-        }
+        props.RegisterRespond? toast.success(`${props.RegisterRespond}`) : console.log('')
+        props.RegisterError? toast.error(`${props.RegisterError}`) : console.log('')
+      
         const ids = ['firstname', 'lastname', 'email', 'username', 'password'];
         const inputs = ids.map(id => document.getElementById(id));
         inputs.forEach((inp) =>  inp.value ="")
@@ -124,7 +121,8 @@ const RegisterForm = (props) => {
 
 const mapStateToProps =(state)=>{
     return{
-        response : state.RegisterRespond
+        RegisterError : state.RegisterError,
+        RegisterRespond : state.RegisterRespond
     }
 }
 
