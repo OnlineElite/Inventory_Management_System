@@ -91,11 +91,19 @@ const contactMessageThunk = (message)=> async (dispatch)=>{
 }
 
 //******************** Authentication Actions *********************//
-const registerUser = (answer)=>{
+const registerUser = (message)=>{
 
     return{
         type : 'REGISTER_USER',
-        payload : answer
+        payload : message
+    }
+}
+
+const registerError = (message)=>{
+
+    return{
+        type : 'REGISTER_ERROR',
+        payload : message
     }
 }
 
@@ -154,12 +162,20 @@ const registerThunk = (user) => async (dispatch)=>{
         };
         
         const response = await fetch(url ,header );
-        const datarecived = await response.json();
-        dispatch(registerUser(datarecived.message))
-        dispatch(handellError(datarecived.error))
+        if (response.status === 201){
+            const dataReceived = await response.json();
+            dispatch(registerUser(dataReceived.message));
+        } else if(response.status === 409) {
+            const dataReceived = await response.json();
+            dispatch(registerError(dataReceived.error));
+        }
+        else if(response.status === 500) {
+            const dataReceived = await response.json();
+            dispatch(registerError(dataReceived.error));
+        }
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(registerError(err))
     }
 }
 
@@ -796,6 +812,19 @@ const getOrders =(order)=>{
     }
 }
 
+const addOrderMessage=(message)=>{
+    return{
+        type : 'SEND_ORDER',
+        payload : message
+    }
+}
+
+const errorOrderMessage=(message)=>{
+    return{
+        type : 'ERROR_ORDER',
+        payload : message
+    }
+}
 const sendOrderThunk = (order)=> async (dispatch)=>{
     try{
         for (var pair of order.entries()){
@@ -806,13 +835,13 @@ const sendOrderThunk = (order)=> async (dispatch)=>{
 
         const response = await axios.post(url, order);
         if (response.status === 201) {
-            dispatch(addMessage(response.data.message));
-            console.log(response.data);
+            dispatch(addOrderMessage(response.data.message));
+            //console.log(response.data);
         }
 
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(errorOrderMessage(err))
     }
 }
 
@@ -938,6 +967,32 @@ const changeOrderStatusThunk = (ids) => async (dispatch)=>{
         dispatch(handellError(err))
     }
 }
+
+const updateOrderProductThunk = (values) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/updateOrderProducts`;
+        const data = {
+            prod_id :values.product_id,
+            ord_id :values.order_id,
+            newVal :values.newValue,
+            total : values.total
+        }
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        
+        dispatch(updateMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
 //***************** Export Actions ****************/
 export {
     registerThunk, 
@@ -973,6 +1028,7 @@ export {
     bringStatusThunk,
     bringOrderProductsThunk,
     deleteProductFromOrderThunk,
-    changeOrderStatusThunk
+    changeOrderStatusThunk,
+    updateOrderProductThunk
 }
 

@@ -279,6 +279,7 @@ class ordersActions{
   static async importOrders(){
     const query =`select 
     orders.order_id as order_id,
+	  orders.user_id as user_id,
     orders.customer_name as customer_name,
     orders.created_date as created_date,
     orders.total_amount as total_amount,
@@ -343,6 +344,15 @@ class ordersActions{
     const query = `update orders set status_id = ${ids.stat_id} where order_id = ${ids.ord_id}`
     const result = await pool.query(query)
     return result.rows
+  }
+
+  static async updateOrderProductsQuantity(vals){
+    const query1 = `update orders set total_amount = ${vals.total} where order_id = ${vals.ord_id}`;
+    const result1 = await pool.query(query1);
+
+    const query2 = `update Order_Products set order_quantity = ${vals.newVal} where order_id= ${vals.ord_id} and product_id = ${vals.prod_id} `
+    const result2 = await pool.query(query2)
+    return {deleteProduct : result1.rows, decreaseTotalItem : result2.rows};
   }
 }
   

@@ -142,14 +142,4 @@ create table Order_Products(
 select * from orders
 select * from Order_Products
 select * from status
---drop table Order_Products
---truncate orders restart identity
---delete from Order_Products where product_id = 61 and order_id = 2
-
-
-
-
-
-
-
-
+select * from products

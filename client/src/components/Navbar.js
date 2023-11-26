@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer, toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {Collapse} from 'react-collapse';
 import loggo from '../images/TechWave.png'
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
 import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk, addToFavoriesThunk,
-     deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk, updateInCartThunk} from '../actions/IMSAction'
+     deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk, updateInCartThunk, bringOrdersThunk} from '../actions/IMSAction'
 import prodimg from '../images/Default.png'
 //import {useQuery} from '@tanstack/react-query'
 //import axios from 'axios'
@@ -27,7 +29,9 @@ function Navbar(props){
     const [totalAmount, setTotalAmount] = useState(null);
     const [favRecords, setFavRecords] = useState(props.infavories)
     const [cartRecords, setCartRecords] = useState(props.incart)
+    //const [orderrecords, setOrderrecords] = useState(props.orders)
     const [isLiked, setIsLiked] = useState(false);
+    //const [isCollapsed, setIsCollapsed] = useState({});
     const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
     const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;
 
@@ -37,13 +41,22 @@ function Navbar(props){
             .forEach(el => el.classList.remove("modal-backdrop"));
     }
 
+    /*const handleOrderCollapseToggle = (order_id) => {
+        
+        setIsCollapsed((prev) => ({
+            ...prev,
+            [order_id]: !prev[order_id] || false,
+        }));
+    };*/
 
     useEffect(()=>{
         if(!props.isAdmin && props.isAuthenticated){
             props.getIncart(props.userfullName[2])
             props.getInfavories(props.userfullName[2])
+            //props.getOrders()
             setFavRecords(props.infavories)
-            setCartRecords(props.incart) 
+            setCartRecords(props.incart)
+            //setOrderrecords(props.orders)
         }
     }, [])
 
@@ -64,6 +77,15 @@ function Navbar(props){
             }
         }
     }, [props.incart, cartRecords, props.getIncart])
+
+   /* useEffect(()=>{
+        if(!props.isAdmin && props.isAuthenticated){         
+            if (props.orders !== orderrecords){
+                props.getOrders()
+                setOrderrecords(props.orders)
+            }
+        }
+    }, [props.orders, orderrecords, props.getOrders])*/
 
     const hundellSubmit =(e)=>{
         e.preventDefault()
@@ -93,6 +115,15 @@ function Navbar(props){
         }
         HandelTotalItem_TotalAmount();
     }
+
+    /*const handelOrderCreatedDate =(date)=>{
+        let year = new Date(date).getFullYear();
+        let month = new Date(date).getMonth();
+        let day = new Date(date).getDay();
+        let hour = new Date(date).getHours();
+        let minute = new Date(date).getMinutes();
+        return `${day+19}-${month+1}-${year} ${hour+1}:${minute}`
+    }*/
 
     const handleLogout =(e)=>{
         props.fetchlogout(props.userEmail)
@@ -230,11 +261,15 @@ function Navbar(props){
                                     <div className="dropdown-menu">
                                         <Link className='userLink d-block' >
                                             <i className="bi bi-person-lines-fill text-black mx-2"></i>
-                                            <span className="text-black" >You profile</span>
+                                            <span className="text-black" >Profile</span>
                                         </Link>
                                         <Link className='userLink d-block' >
                                             <i className="bi bi-heart-fill text-black mx-2"></i>
-                                            <span className="text-black"  data-toggle="modal" data-target="#FavoriesModal">You Favories</span>
+                                            <span className="text-black"  data-toggle="modal" data-target="#FavoriesModal">Favories</span>
+                                        </Link>
+                                        <Link className='userLink d-block' >
+                                            <FontAwesomeIcon className="i mx-2  text-black " icon="fa-solid fa-cubes" />
+                                            <span className="text-black"  data-toggle="modal" data-target="#OrdersModal">Orders</span>
                                         </Link>
                                         <div className="dropdown-divider"></div>
                                         <Link className='userLink' to='/login' >
@@ -408,6 +443,50 @@ function Navbar(props){
                     </div>
                 </div>
             </div>
+            {/* Orders Modal */}
+            <div className="modal fade " id="OrdersModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-xl">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h3 className="modal-title  text-primary m-auto" id="exampleModalLabel">My Orders</h3>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span  aria-hidden="true ">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body " id='ordersModalBody' >
+                        <div className=''>
+                            <div className='orders'>
+                            
+                            {/*orderrecords?
+                                orderrecords.map((order)=>(
+                                (order.user_id === props.userfullName[2])?
+                                    <div key={order.order_id} >
+                                        <div className='order_row' onClick={handleOrderCollapseToggle(order.order_id)}>
+                                            <span className='px-3 py-0 w-25 text-start'>{handelOrderCreatedDate(order.created_date)}</span>
+                                            <span className='px-3 py-0 w-25 text-center'>Order ID: {order.order_id}</span>
+                                            <span className='px-3 py-0 w-25 text-center'>Total: {order.total_amount} DH</span>
+                                            <span className='px-3 py-0 w-25 text-center'>Items: {order.total_item}</span>
+                                            <span className='w-25 px-3 text-end'>
+                                                <span className='px-2 py-1 rounded' style={{color: 'white' ,backgroundColor : order.status_color}}>{order.orders_status}</span>
+                                            </span>
+                                        </div>
+                                        <Collapse isOpened={!isCollapsed[order.order_id]}>
+                                            <div>Random content</div>
+                                            <div>Random content</div>
+                                            <div>Random content</div>
+                                            <div>Random content</div>
+                                            <div>Random content</div>
+                                        </Collapse>
+                                    </div> /*: ''*/
+                               // ))
+                                //: ''
+                            }
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
             <ToastContainer
                 position="top-center"
                 autoClose={2000}
@@ -425,7 +504,7 @@ function Navbar(props){
 }
 
 const mapStateToProps =(state)=>{
-    //console.log('incart', state.incart)
+    //console.log('orders', state.orders)
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
@@ -436,6 +515,7 @@ const mapStateToProps =(state)=>{
         updateMsg : state.updateMsg,
         userfullName : state.userfullName,
         incart : state.incart,
+        orders : state.orders,
         infavories : state.infavories
     }
 }
@@ -468,6 +548,9 @@ const mapDispatchToProps =(dispatch)=>{
         },
         updateIncart : (info)=>{
             dispatch(updateInCartThunk(info))
+        },
+        getOrders: ()=>{
+            dispatch(bringOrdersThunk())
         }
     }
 }

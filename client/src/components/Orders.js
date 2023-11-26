@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Modal from 'react-modal';
 import DataTable from 'react-data-table-component'
 import ClipLoader from "react-spinners/ClipLoader";
-import { bringOrdersThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk, changeOrderStatusThunk} from '../actions/IMSAction'
+import { bringOrdersThunk, bringProductsThunk, updateOrderProductThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk, changeOrderStatusThunk} from '../actions/IMSAction'
 
 import '../styles/Orders.css'
 const { RangePicker } = DatePicker;
@@ -21,11 +21,15 @@ function Orders(props){
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedRowData, setSelectedRowData] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState('');
+    const [totalItem, setTotalItem] = useState(null);
+    const [totalAmount, setTotalAmount] = useState(null);
+    const [productsRef, setProductsRef] = useState([])
 
     useEffect(()=>{
         if ( props.orders !== records) {
             props.getOrders()
             props.getStatus()
+            props.getProducts()
             if(!isfiltred){
               setRecords(props.orders)
               setIsfiltred(false)
@@ -135,9 +139,9 @@ function Orders(props){
             name : 'Ordered',
             cell: (row) =>(
                 <div className='buttns ' id='incDec'>
-                    <button className='bg-primary'  type='submit' /*onClick={hundellSubmit}*/ data-btn = 'increase' data-id = {row.product_id} >+</button>
+                    <button className='bg-primary'  type='submit' onClick={(e)=>hundellSubmit(e, row.order_id)} data-btn = 'increase' data-id = {row.product_id} >+</button>
                     <span id={`count-${row.product_ref}`}> {row.order_quantity} </span>
-                    <button className='bg-primary'  type='submit' /*onClick={hundellSubmit}*/ data-btn = 'decrease' data-id = {row.product_id}>–</button>
+                    <button className='bg-primary'  type='submit' onClick={(e)=>hundellSubmit(e, row.order_id)} data-btn = 'decrease' data-id = {row.product_id}>–</button>
                 </div>
             ),
             selector : row => row.order_quantity,
@@ -157,12 +161,78 @@ function Orders(props){
     ];
 
     const handleRowClick = (row) => {
+        let refs = []
         props.getOrderProducts(row.order_id)
         setSelectedRowData(row);
         setTimeout(()=>{
             setModalIsOpen(true);
-        },300)
+        },500)
+
+        props.products.map((product)=>{
+            refs.push(product.product_ref)
+        })
+        setProductsRef(refs)
     };
+
+    const hundellSubmit =(e, order_id)=>{
+        e.preventDefault()
+        let btnType = e.target.dataset.btn;
+        let id =e.target.dataset.id
+        let count = e.target.parentElement.children[1]
+        let currentCounter = e.target.parentElement.children[1].textContent
+        switch (btnType) {
+            case "increase":
+                if (currentCounter >= 20) {
+                    count.textContent = currentCounter;
+                } else {
+                    count.textContent = Number(currentCounter) + 1;
+                    props.updateOrderProducts({
+                        product_id : id,
+                        order_id : order_id,
+                        newValue :Number(currentCounter) + 1,
+                        total : totalAmount
+                    })
+                }
+                break;
+            case "decrease":
+                if (currentCounter <= 1) {
+                    count.textContent = 1;
+                } else {
+                    count.textContent = Number(currentCounter) - 1;
+                    props.updateOrderProducts({
+                        product_id : id,
+                        order_id : order_id,
+                        newValue : Number(currentCounter) - 1,
+                        total : totalAmount
+                    })
+                }
+                break;
+            default:
+            console.log("wrong button");
+        }
+        HandelTotalItem_TotalAmount(order_id);
+    }
+
+    const HandelTotalItem_TotalAmount= (order_id)=>{
+        if(props.orderProducts){
+            var total = 0;
+            const orderProds = []
+            props.orderProducts.forEach((prod)=>{
+                if(prod.order_id === order_id){
+                    orderProds.push(prod)
+                }
+            })
+
+            orderProds.forEach((product)=>{
+                const count = document.getElementById(`count-${product.product_ref}`)
+                let quantity = props.isAuthenticated? count.textContent: ''
+                total = total + Number(quantity) * Number(product.product_price);
+            })
+            let TotalAmount = (total - (total * 20) / 100).toFixed(2);
+            setTotalAmount(TotalAmount)
+            setTotalItem(orderProds.length)
+        }
+    }
 
     const handelCreatedDateAtModal =(date)=>{
         let year = new Date(date).getFullYear();
@@ -194,6 +264,10 @@ function Orders(props){
     const closeModal = () => {
         setModalIsOpen(false);
     };
+
+    const addProductToOrder =()=>{
+        
+    }
   
     const tableCustomStyles = {
         headRow: {
@@ -224,11 +298,11 @@ function Orders(props){
           height : '90vh',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
-          zIndex: 1000,
+          zIndex: 10,
         },
         overlay: {
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          zIndex: 999,
+          zIndex: 9,
         },
     };
 
@@ -403,18 +477,35 @@ function Orders(props){
                                     <p className='fw-bold'> Delivery : <span className='fw-normal'>{selectedRowData.delivery_method}</span></p>
                                 </div>
                                 <div className='col-12 col-sm-6 col-md-3'>
-                                    <p className='fw-bold'> Total Item : <span className='fw-normal'>{selectedRowData.total_item}</span></p>
-                                    <p className='fw-bold'> Total Amount : <span className='fw-normal'>{selectedRowData.total_amount} DH</span></p>
+                                    <p className='fw-bold'> Total Item : <span className='fw-normal'>{totalItem? totalItem : selectedRowData.total_item}</span></p>
+                                    <p className='fw-bold'> Total Amount : <span className='fw-normal'>{totalAmount? totalAmount : selectedRowData.total_amount} DH</span></p>
                                     <p className='fw-bold'> Created Date : <span className='fw-normal'>{handelCreatedDateAtModal(selectedRowData.created_date)}</span></p>
                                 </div>
                                 <div className='col-12 col-sm-6 col-md-3 d-flex flex-column justify-content-between align-items-end'>
-                                    <button className='btn btn-outline-danger w-75' onClick={closeModal}>Close Modal</button>
+                                    <button className='btn btn-outline-primary w-75' onClick={addProductToOrder}  data-toggle="modal" data-target="#addproductmodal">Add product</button>
                                     <select id="statusId" className="w-75 py-1"  value={selectedStatus?selectedStatus : selectedRowData.orders_status} onChange={(e)=> handelStatusChange(e,selectedRowData.order_id )}
                                      style={{backgroundColor : selectedRowData.status_color, color : 'white',borderRadius: '5px'}} >
                                         {props.status.map((statu, index) => (
                                             <option className='bg-white' name="option" key={index} style={{color : statu.color}}> {" "} {statu.name} </option>
-                                        ))}
+                                            ))}
                                     </select>
+                                    <button className='btn btn-outline-success w-75' onClick={closeModal} >Done</button>
+                                    {/*<div class="modal fade" id="addproductmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                                        <div class="modal-dialog" style={{zIndex: '1100', position : 'relative'}}>
+                                            <div class="modal-content">
+                                            <div class="px-2 d-flex align-items-center justify-content-between">
+                                                <h4 class="modal-title fs-5" id="exampleModalLabel">Add product </h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                  
+                                            </div>
+                                            <div class="text-end p-2">
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>*/}
                                 </div>
                             </div>
                             <hr/>
@@ -438,7 +529,7 @@ function Orders(props){
 }
 
 const mapStateToProps =(state)=>{
-
+    //console.log('orders', state.orders)
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
@@ -448,6 +539,7 @@ const mapStateToProps =(state)=>{
         orders : state.orders,
         status : state.status,
         states : state.states,
+        products : state.products,
         orderProducts : state.orderProducts
     }
 }
@@ -468,6 +560,12 @@ const mapDispatchToProps =(dispatch)=>{
         },
         changeStaus:(ids)=>{
             dispatch(changeOrderStatusThunk(ids))
+        },
+        updateOrderProducts:(values)=>{
+            dispatch(updateOrderProductThunk(values))
+        },
+        getProducts : ()=>{
+            dispatch(bringProductsThunk())
         }
     }
     
