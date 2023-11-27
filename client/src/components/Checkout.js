@@ -230,7 +230,7 @@ function Checkout(props){
         const adressCheck = document.getElementById('adressCheck')
         const deliveryCheck = document.getElementById('deliveryCheck')
         const paymentCheck = document.getElementById('paymentCheck')
-
+        
         let formData1 = handeleSaveAddress(e);
         let formData2 = handeleSaveDelivery(e);
         let formData3 = handeleSavePayment(e);
@@ -246,24 +246,25 @@ function Checkout(props){
         for (var z of formData3.entries()) {
             allData.append(z[0], z[1]);
         }
-        allData.append('Products',JSON.stringify(orderProducts) )
+        allData.append('Products',JSON.stringify(orderProducts))
         allData.append('TotalAmount', totalAmount)
         allData.append('user_id', props.userfullName[2])
         allData.append('total_item', totalItem)
 
         if(adressCheck.checked && deliveryCheck.checked && paymentCheck.checked){
-            console.log('you can')
+            console.log('you can now')
             props.sendOrder(allData)
             handeleCancelAddress(e);
             handeleCancelDelivery(e);
             handeleCancelPayment(e);
-        }
-        else{
+        }else{
             console.log('you can not')
         }
-        props.sendOrderMsg? toast.success(`${props.sendOrderMsg}`) :  console.log('');
-        props.errorOrderMsg? toast.error(`${props.errorOrderMsg}`) :  console.log(''); 
-       
+        props.sendOrderMsg? toast.success(`${props.sendOrderMsg}`) :  console.log('no success message');
+        props.errorOrderMsg? toast.error(`${props.errorOrderMsg}`) :  console.log('no error message'); 
+        //deliveryCheck.checked = false;
+        //adressCheck.checked = false;
+        //paymentCheck.checked = false;
     }
 
     return(
@@ -436,7 +437,7 @@ function Checkout(props){
                             <div className='ro'><p id="total-price">Total Amount :</p><span> {totalAmount === null? 0 : totalAmount}DH</span></div>
                             <hr/>
                             <div className='ro '><p id="delievery">Free Delievery abouve</p><span id='delev' >100DH</span></div>
-                            <button  id='send'  className="cart-btn " onClick={handeleSendOrder} >
+                            <button  id='send'  className="cart-btn "  onClick={handeleSendOrder} >
                                 CONFIRM ORDER
                             </button> 
                         </div>

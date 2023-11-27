@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Modal from 'react-modal';
 import DataTable from 'react-data-table-component'
 import ClipLoader from "react-spinners/ClipLoader";
-import { bringOrdersThunk, bringProductsThunk, updateOrderProductThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk, changeOrderStatusThunk} from '../actions/IMSAction'
+import { bringOrdersThunk,changeOrderTotalAmountThunk, bringProductsThunk, updateOrderProductThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk, changeOrderStatusThunk} from '../actions/IMSAction'
 
 import '../styles/Orders.css'
 const { RangePicker } = DatePicker;
@@ -23,7 +23,7 @@ function Orders(props){
     const [selectedStatus, setSelectedStatus] = useState('');
     const [totalItem, setTotalItem] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
-    const [productsRef, setProductsRef] = useState([])
+    //const [productsRef, setProductsRef] = useState([])
 
     useEffect(()=>{
         if ( props.orders !== records) {
@@ -171,13 +171,13 @@ function Orders(props){
         props.products.map((product)=>{
             refs.push(product.product_ref)
         })
-        setProductsRef(refs)
+        //setProductsRef(refs)
     };
 
-    const hundellSubmit =(e, order_id)=>{
+    const hundellSubmit = async (e, order_id)=>{
         e.preventDefault()
         let btnType = e.target.dataset.btn;
-        let id =e.target.dataset.id
+        let id = parseInt(e.target.dataset.id) 
         let count = e.target.parentElement.children[1]
         let currentCounter = e.target.parentElement.children[1].textContent
         switch (btnType) {
@@ -186,11 +186,10 @@ function Orders(props){
                     count.textContent = currentCounter;
                 } else {
                     count.textContent = Number(currentCounter) + 1;
-                    props.updateOrderProducts({
+                    await props.updateOrderProducts({
                         product_id : id,
                         order_id : order_id,
-                        newValue :Number(currentCounter) + 1,
-                        total : totalAmount
+                        newValue :Number(currentCounter) + 1
                     })
                 }
                 break;
@@ -199,11 +198,10 @@ function Orders(props){
                     count.textContent = 1;
                 } else {
                     count.textContent = Number(currentCounter) - 1;
-                    props.updateOrderProducts({
+                    await props.updateOrderProducts({
                         product_id : id,
                         order_id : order_id,
-                        newValue : Number(currentCounter) - 1,
-                        total : totalAmount
+                        newValue : Number(currentCounter) - 1
                     })
                 }
                 break;
@@ -222,7 +220,6 @@ function Orders(props){
                     orderProds.push(prod)
                 }
             })
-
             orderProds.forEach((product)=>{
                 const count = document.getElementById(`count-${product.product_ref}`)
                 let quantity = props.isAuthenticated? count.textContent: ''
@@ -231,6 +228,12 @@ function Orders(props){
             let TotalAmount = (total - (total * 20) / 100).toFixed(2);
             setTotalAmount(TotalAmount)
             setTotalItem(orderProds.length)
+            props.changeTotalAmount(
+                {
+                    total : TotalAmount,
+                    or_id : order_id
+                }
+            )
         }
     }
 
@@ -263,6 +266,8 @@ function Orders(props){
     
     const closeModal = () => {
         setModalIsOpen(false);
+        setTotalAmount(null);
+        setTotalItem(null);
     };
 
     const addProductToOrder =()=>{
@@ -352,6 +357,10 @@ function Orders(props){
           }
         })
         setRecords(props.orders)
+    }
+
+    const handelRowSelected =(rows)=>{
+        //console.log(rows)
     }
     
     return(
@@ -456,6 +465,7 @@ function Orders(props){
                     selectableRowsHighlight
                     onRowClicked={handleRowClick}
                     highlightOnHover
+                    onRowSelected = {handelRowSelected}
                     fixedHeader 
                     bordered
                     pagination
@@ -467,19 +477,19 @@ function Orders(props){
                         <div className='ordermodal'>
                             <div className='row px-3'>
                                 <div className='col-12 col-sm-6 col-md-3'>
-                                    <p className='fw-bold'> Order ID : <span className='fw-normal'>{selectedRowData.order_id}</span></p>
-                                    <p className='fw-bold'> Status : <span className='fw-normal'>{selectedRowData.orders_status}</span></p>
-                                    <p className='fw-bold'> City : <span className='fw-normal'>{selectedRowData.city}</span></p>
+                                    <p className='fw-bold text-secondary'> Order ID : <span className='fw-normal text-black'>{selectedRowData.order_id}</span></p>
+                                    <p className='fw-bold text-secondary'> Status : <span className='fw-normal text-black'>{selectedRowData.orders_status}</span></p>
+                                    <p className='fw-bold text-secondary'> City : <span className='fw-normal text-black'>{selectedRowData.city}</span></p>
                                 </div>
                                 <div className='col-12 col-sm-6 col-md-3'>
-                                    <p className='fw-bold'> Client : <span className='fw-normal'>{selectedRowData.customer_name}</span></p>
-                                    <p className='fw-bold'> Payment : <span className='fw-normal'>{selectedRowData.payment_method}</span></p>
-                                    <p className='fw-bold'> Delivery : <span className='fw-normal'>{selectedRowData.delivery_method}</span></p>
+                                    <p className='fw-bold text-secondary'> Client : <span className='fw-normal text-black'>{selectedRowData.customer_name}</span></p>
+                                    <p className='fw-bold text-secondary'> Payment : <span className='fw-normal text-black'>{selectedRowData.payment_method}</span></p>
+                                    <p className='fw-bold text-secondary'> Delivery : <span className='fw-normal text-black'>{selectedRowData.delivery_method}</span></p>
                                 </div>
                                 <div className='col-12 col-sm-6 col-md-3'>
-                                    <p className='fw-bold'> Total Item : <span className='fw-normal'>{totalItem? totalItem : selectedRowData.total_item}</span></p>
-                                    <p className='fw-bold'> Total Amount : <span className='fw-normal'>{totalAmount? totalAmount : selectedRowData.total_amount} DH</span></p>
-                                    <p className='fw-bold'> Created Date : <span className='fw-normal'>{handelCreatedDateAtModal(selectedRowData.created_date)}</span></p>
+                                    <p className='fw-bold text-secondary'> Total Item : <span className='fw-normal text-black'>{totalItem? totalItem : selectedRowData.total_item}</span></p>
+                                    <p className='fw-bold text-secondary'> Total Amount : <span className='fw-normal text-black'>{totalAmount? totalAmount : selectedRowData.total_amount} DH</span></p>
+                                    <p className='fw-bold text-secondary'> Created Date : <span className='fw-normal text-black'>{handelCreatedDateAtModal(selectedRowData.created_date)}</span></p>
                                 </div>
                                 <div className='col-12 col-sm-6 col-md-3 d-flex flex-column justify-content-between align-items-end'>
                                     <button className='btn btn-outline-primary w-75' onClick={addProductToOrder}  data-toggle="modal" data-target="#addproductmodal">Add product</button>
@@ -566,6 +576,9 @@ const mapDispatchToProps =(dispatch)=>{
         },
         getProducts : ()=>{
             dispatch(bringProductsThunk())
+        },
+        changeTotalAmount:(vals)=>{
+            dispatch(changeOrderTotalAmountThunk(vals))
         }
     }
     
