@@ -227,6 +227,10 @@ function Checkout(props){
 
     const handeleSendOrder =(e)=>{
         e.preventDefault();
+        const adressCheck = document.getElementById('adressCheck')
+        const deliveryCheck = document.getElementById('deliveryCheck')
+        const paymentCheck = document.getElementById('paymentCheck')
+
         let formData1 = handeleSaveAddress(e);
         let formData2 = handeleSaveDelivery(e);
         let formData3 = handeleSavePayment(e);
@@ -246,12 +250,20 @@ function Checkout(props){
         allData.append('TotalAmount', totalAmount)
         allData.append('user_id', props.userfullName[2])
         allData.append('total_item', totalItem)
-        props.sendOrder(allData)
+
+        if(adressCheck.checked && deliveryCheck.checked && paymentCheck.checked){
+            console.log('you can')
+            props.sendOrder(allData)
+            handeleCancelAddress(e);
+            handeleCancelDelivery(e);
+            handeleCancelPayment(e);
+        }
+        else{
+            console.log('you can not')
+        }
         props.sendOrderMsg? toast.success(`${props.sendOrderMsg}`) :  console.log('');
         props.errorOrderMsg? toast.error(`${props.errorOrderMsg}`) :  console.log(''); 
-        //handeleCancelAddress(e);
-        //handeleCancelDelivery(e);
-        //handeleCancelPayment(e);
+       
     }
 
     return(
