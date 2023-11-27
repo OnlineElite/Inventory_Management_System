@@ -139,7 +139,18 @@ async function ChangeOrderStatus(req, res){
   }
 }
 
-async function updateOrderProducts(req, res){
+async function updateOrderTotalAmount(req, res){
+  try{
+    //console.log(req.body)
+    await ordersActions.changeOrderTotalAmount(req.body)
+    res.status(201).json({ message: "Total amount changed successfully" })
+  }catch(error){
+    console.error(error)
+    res.status(500).json({error: "Internal server error"})
+  }
+}
+
+async function changeOrderProductsQuantity(req, res){
   try{
     //console.log(req.body)
     await ordersActions.updateOrderProductsQuantity(req.body)
@@ -533,5 +544,6 @@ module.exports = {
   bringOrderProducts,
   deletingProductFromOrder,
   ChangeOrderStatus,
-  updateOrderProducts
+  changeOrderProductsQuantity,
+  updateOrderTotalAmount
 };

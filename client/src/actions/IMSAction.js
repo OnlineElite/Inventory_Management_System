@@ -961,7 +961,30 @@ const changeOrderStatusThunk = (ids) => async (dispatch)=>{
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         
-        dispatch(addMessage(datarecived.message))
+        dispatch(updateMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
+
+const changeOrderTotalAmountThunk = (vals) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/changeTotalAmount`;
+        const data = {
+            total : vals.total, 
+            ord_id : vals.or_id
+        }
+        //console.log(data)
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
         dispatch(handellError(err))
@@ -975,18 +998,16 @@ const updateOrderProductThunk = (values) => async (dispatch)=>{
         const data = {
             prod_id :values.product_id,
             ord_id :values.order_id,
-            newVal :values.newValue,
-            total : values.total
+            newVal :values.newValue
         }
+        //console.log(data)
         const header = {
           method: 'POST',
           headers: { 'Content-Type':'application/json'},
           body: JSON.stringify(data)
         };
-        
         const response = await fetch(url ,header );
         const datarecived = await response.json();
-        
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
@@ -1029,6 +1050,7 @@ export {
     bringOrderProductsThunk,
     deleteProductFromOrderThunk,
     changeOrderStatusThunk,
-    updateOrderProductThunk
+    updateOrderProductThunk,
+    changeOrderTotalAmountThunk
 }
 
