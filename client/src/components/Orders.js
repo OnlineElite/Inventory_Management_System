@@ -11,6 +11,13 @@ import { bringOrdersThunk,changeOrderTotalAmountThunk, bringProductsThunk, updat
 import '../styles/Orders.css'
 const { RangePicker } = DatePicker;
 
+const CustomCheckbox = ({ checked, onChange }) => (
+    <div>
+      <input type="checkbox" checked={checked} onChange={onChange} />
+      <button onClick={() => alert('Delete clicked')}>Delete</button>
+    </div>
+);
+
 function Orders(props){
 
     const [selectedRange, setSelectedRange] = useState(null);
@@ -23,6 +30,7 @@ function Orders(props){
     const [selectedStatus, setSelectedStatus] = useState('');
     const [totalItem, setTotalItem] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
+    const [selectedRows, setSelectedRows] = useState([]);
     //const [productsRef, setProductsRef] = useState([])
 
     useEffect(()=>{
@@ -359,9 +367,11 @@ function Orders(props){
         setRecords(props.orders)
     }
 
-    const handelRowSelected =(rows)=>{
-        //console.log(rows)
+    const handelRowSelected =(row)=>{
+        console.log(row.selectedRows)
+        setSelectedRows(row.selectedRows)
     }
+
     
     return(
         <div className='orders' id='orders'>
@@ -377,7 +387,7 @@ function Orders(props){
                             </div>
 
                             <div className="iconBx" style={{color: '#ffa500'}}>
-                                <i class="bi bi-clock-history"></i>
+                                <i className="bi bi-clock-history"></i>
                             </div>
                         </div>
 
@@ -388,7 +398,7 @@ function Orders(props){
                             </div>
 
                             <div className="iconBx" style={{color: '#0099ff'}}>
-                                <i class="bi bi-stopwatch-fill"></i>
+                                <i className="bi bi-stopwatch-fill"></i>
                             </div>
                         </div>
 
@@ -410,7 +420,7 @@ function Orders(props){
                             </div>
 
                             <div className="iconBx" style={{color: '#ff0000'}}>
-                                <i class="bi bi-x-circle-fill"></i>
+                                <i className="bi bi-x-circle-fill"></i>
                             </div>
                         </div>
                     </div>
@@ -465,8 +475,8 @@ function Orders(props){
                     selectableRowsHighlight
                     onRowClicked={handleRowClick}
                     highlightOnHover
-                    onRowSelected = {handelRowSelected}
-                    fixedHeader 
+                    onSelectedRowsChange = {handelRowSelected}
+                    //selectableRowsComponentProps={selectableRowsComponentProps}
                     bordered
                     pagination
                     customStyles={tableCustomStyles}
