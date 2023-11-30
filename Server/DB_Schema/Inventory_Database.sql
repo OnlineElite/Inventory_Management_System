@@ -144,7 +144,5 @@ select * from Order_Products
 select * from status
 select * from products
 
-
-
-
+insert into Order_Products (product_ref, order_id, order_quantity) values ('', , , )
 

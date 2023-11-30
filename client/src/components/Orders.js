@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Modal from 'react-modal';
 import DataTable from 'react-data-table-component'
 import ClipLoader from "react-spinners/ClipLoader";
-import { bringOrdersThunk,changeOrderTotalAmountThunk, bringProductsThunk, updateOrderProductThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk, changeOrderStatusThunk} from '../actions/IMSAction'
+import { bringOrdersThunk, changeOrderTotalAmountThunk, addProductToOrderThunk, bringProductsThunk, updateOrderProductThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk, changeOrderStatusThunk} from '../actions/IMSAction'
 
 import '../styles/Orders.css'
 const { RangePicker } = DatePicker;
@@ -31,7 +31,6 @@ function Orders(props){
     const [totalItem, setTotalItem] = useState(null);
     const [totalAmount, setTotalAmount] = useState(null);
     const [selectedRows, setSelectedRows] = useState([]);
-    //const [productsRef, setProductsRef] = useState([])
 
     useEffect(()=>{
         if ( props.orders !== records) {
@@ -48,11 +47,9 @@ function Orders(props){
         }else{
             setTimeout(()=>{
                 setIsLoading(false)
-            },1000)
+            },5000)
         }
-
-
-    }, [])
+    }, [props.orders, props.status ])
     const columns = [
         {
             name : 'Order ID',
@@ -169,17 +166,11 @@ function Orders(props){
     ];
 
     const handleRowClick = (row) => {
-        let refs = []
         props.getOrderProducts(row.order_id)
         setSelectedRowData(row);
         setTimeout(()=>{
             setModalIsOpen(true);
-        },500)
-
-        props.products.map((product)=>{
-            refs.push(product.product_ref)
-        })
-        //setProductsRef(refs)
+        },600)
     };
 
     const hundellSubmit = async (e, order_id)=>{
@@ -190,7 +181,7 @@ function Orders(props){
         let currentCounter = e.target.parentElement.children[1].textContent
         switch (btnType) {
             case "increase":
-                if (currentCounter >= 20) {
+                if (currentCounter >= 100) {
                     count.textContent = currentCounter;
                 } else {
                     count.textContent = Number(currentCounter) + 1;
@@ -277,11 +268,7 @@ function Orders(props){
         setTotalAmount(null);
         setTotalItem(null);
     };
-
-    const addProductToOrder =()=>{
-        
-    }
-  
+ 
     const tableCustomStyles = {
         headRow: {
           style: {
@@ -300,7 +287,7 @@ function Orders(props){
           }
         },
     }
-
+    
     const modalCustomStyles = {
         content: {
           top: '50%',
@@ -358,20 +345,59 @@ function Orders(props){
             case 'filterPayment': inp.value = ''; break;
             case 'filterStatus': setSelectfilterStatus(inp.firstChild.value); break;
             case 'filterDate': 
-              setSelectedRange(null);
-              setRecords(props.orders);; 
+            setSelectedRange(null);
+            setRecords(props.orders);; 
               break;
             default: inp.value = ''
           }
         })
         setRecords(props.orders)
     }
-
+    
     const handelRowSelected =(row)=>{
         console.log(row.selectedRows)
         setSelectedRows(row.selectedRows)
     }
 
+    const hundellSubmitAddProduct = (e)=>{
+        e.preventDefault()
+        let btnType = e.target.dataset.btn;
+        let count = e.target.parentElement.children[1]
+        let currentCounter = e.target.parentElement.children[1].textContent
+        switch (btnType) {
+            case "increase":
+                if (currentCounter >= 100) {
+                    count.textContent = currentCounter;
+                } else {
+                    count.textContent = Number(currentCounter) + 1;
+                }
+                break;
+            case "decrease":
+                if (currentCounter <= 0) {
+                    count.textContent = 0;
+                } else {
+                    count.textContent = Number(currentCounter) - 1;
+                }
+                break;
+            default:
+            console.log("wrong button");
+        }
+    }
+    
+    const addProductToOrder = (order_id)=>{
+        let prodName = document.getElementById('prodName').value;
+        let Counter = document.getElementById('count').textContent;
+        props.products.map((prod)=>{
+            if(prod.product_name === prodName){
+                props.addProductToOrder({
+                    order_id: order_id,
+                    prod_ref: prod.product_ref,
+                    prod_id: prod.product_id,
+                    quantity: Number(Counter) 
+                })
+            }
+        })
+    }
     
     return(
         <div className='orders' id='orders'>
@@ -435,17 +461,10 @@ function Orders(props){
                                     let startDate = values[0].format('YYYY-MM-DD')
                                     let endDate = values[1].format('YYYY-MM-DD')
                                     const theRest = props.orders.filter((row)=>{
-
                                         let year = new Date(row.created_date).getFullYear();
                                         let month = new Date(row.created_date).getMonth();
                                         let day = new Date(row.created_date).getDay();
                                         const formattedDate = `${year}-${month+1}-${day+12}`
-                                        /*const date = new Date(row.created_date);
-                                        const year = date.getFullYear();
-                                        const month = String(date.getMonth() + 1).padStart(2, '0');
-                                        const day = String(date.getDate()).padStart(2, '0');
-                                        const formattedDate = `${year}-${month}-${day}`;*/
-                                        
                                         return (startDate <= formattedDate && formattedDate<= endDate)
                                     })
                                     setRecords(theRest)
@@ -502,7 +521,7 @@ function Orders(props){
                                     <p className='fw-bold text-secondary'> Created Date : <span className='fw-normal text-black'>{handelCreatedDateAtModal(selectedRowData.created_date)}</span></p>
                                 </div>
                                 <div className='col-12 col-sm-6 col-md-3 d-flex flex-column justify-content-between align-items-end'>
-                                    <button className='btn btn-outline-primary w-75' onClick={addProductToOrder}  data-toggle="modal" data-target="#addproductmodal">Add product</button>
+                                    <button className='btn btn-outline-primary w-75'  data-toggle="modal" data-target="#addproductmodal" data-backdrop="false">Add product</button>
                                     <select id="statusId" className="w-75 py-1"  value={selectedStatus?selectedStatus : selectedRowData.orders_status} onChange={(e)=> handelStatusChange(e,selectedRowData.order_id )}
                                      style={{backgroundColor : selectedRowData.status_color, color : 'white',borderRadius: '5px'}} >
                                         {props.status.map((statu, index) => (
@@ -510,22 +529,34 @@ function Orders(props){
                                             ))}
                                     </select>
                                     <button className='btn btn-outline-success w-75' onClick={closeModal} >Done</button>
-                                    {/*<div class="modal fade" id="addproductmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                                        <div class="modal-dialog" style={{zIndex: '1100', position : 'relative'}}>
-                                            <div class="modal-content">
-                                            <div class="px-2 d-flex align-items-center justify-content-between">
-                                                <h4 class="modal-title fs-5" id="exampleModalLabel">Add product </h4>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div className="modal fade" id="addproductmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                                        <div className="modal-dialog text-white" >
+                                            <div className="modal-content" style={{backgroundColor: 'rgb(2, 42, 97)', color : 'white', }}>
+                                            <div className="px-2 d-flex align-items-center justify-content-between">
+                                                <h4 className="modal-title fs-5" id="exampleModalLabel">Add product </h4>
+                                                <button type="button" className="btn-close" style={{backgroundColor: 'white'}} data-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                  
+                                            <div className="modal-body">
+                                                <input id='prodName' className='px-2 py-1 rounded-1 border-0' list="brow" placeholder='Product name'/>
+                                                <datalist id="brow">
+                                                {props.products.map((prod, index) => (
+                                                        <option name="option" value={prod.product_name} key={index}> {" "}{prod.product_name} </option>
+                                                    ))}
+                                                </datalist> 
+                                                <div className='me-2 fw-semibold mt-3'>Quantity:</div>
+                                                <div className='buttns ' id='incDec'>
+                                                    <button className='bg-primary rounded-1'  type='submit' onClick={(e)=>hundellSubmitAddProduct(e)} data-btn = 'increase'>+</button>
+                                                    <span id='count'> {''} 0 </span>
+                                                    <button className='bg-primary rounded-1'  type='submit' onClick={(e)=>hundellSubmitAddProduct(e)} data-btn = 'decrease'>–</button>
+                                                </div>
                                             </div>
-                                            <div class="text-end p-2">
-                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            <div className="text-end p-2">
+                                                <button type="button" className="btn btn-danger mx-1" data-dismiss="modal">Cancel</button>
+                                                <button type="button" className="btn btn-primary mx-1" onClick={()=>addProductToOrder(selectedRowData.order_id)} >Add</button>
                                             </div>
                                             </div>
                                         </div>
-                                    </div>*/}
+                                    </div>
                                 </div>
                             </div>
                             <hr/>
@@ -589,6 +620,9 @@ const mapDispatchToProps =(dispatch)=>{
         },
         changeTotalAmount:(vals)=>{
             dispatch(changeOrderTotalAmountThunk(vals))
+        },
+        addProductToOrder: (vals)=>{
+            dispatch(addProductToOrderThunk(vals))
         }
     }
     
