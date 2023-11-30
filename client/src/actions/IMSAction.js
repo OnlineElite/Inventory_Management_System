@@ -1014,6 +1014,31 @@ const updateOrderProductThunk = (values) => async (dispatch)=>{
         dispatch(handellError(err))
     }
 }
+
+const addProductToOrderThunk = (values) => async (dispatch)=>{
+    try{
+        const baseURL = process.env.REACT_APP_API_PROD_URL;  
+        const url = `${baseURL}/addingProductToOrder`;
+        const data = {
+            prod_id :values.prod_id,
+            ord_id :values.order_id,
+            prod_ref :values.prod_ref,
+            prod_quantity : values.quantity
+        }
+        //console.log(data)
+        const header = {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json'},
+          body: JSON.stringify(data)
+        };
+        const response = await fetch(url ,header );
+        const datarecived = await response.json();
+        dispatch(addMessage(datarecived.message))
+    }catch(err){
+        console.error(err)
+        dispatch(handellError(err))
+    }
+}
 //***************** Export Actions ****************/
 export {
     registerThunk, 
@@ -1051,6 +1076,7 @@ export {
     deleteProductFromOrderThunk,
     changeOrderStatusThunk,
     updateOrderProductThunk,
-    changeOrderTotalAmountThunk
+    changeOrderTotalAmountThunk,
+    addProductToOrderThunk
 }
 

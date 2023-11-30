@@ -95,7 +95,7 @@ function Navbar(props){
         let currentCounter = e.target.parentElement.children[1].textContent
         switch (btnType) {
             case "increase":
-                if (currentCounter >= 20) {
+                if (currentCounter >= 100) {
                     count.textContent = currentCounter;
                 } else {
                     count.textContent = Number(currentCounter) + 1;
