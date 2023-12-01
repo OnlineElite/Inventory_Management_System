@@ -359,11 +359,16 @@ class ordersActions{
   }
 
   static async addProductToOrder(vals){
-    const query = `insert into Order_Products (product_ref, order_id, product_id, order_quantity)
+    const query1 = `insert into Order_Products (product_ref, order_id, product_id, order_quantity)
     values ('${vals.prod_ref}', ${vals.ord_id}, ${vals.prod_id}, ${vals.prod_quantity})`;
 
-    const result = await pool.query(query);
-    return result.rows;
+    const result1 = await pool.query(query1);
+
+    const query2 = `update orders set total_item = (total_item + 1) where order_id= ${vals.ord_id}`
+    const result2 = await pool.query(query2)
+
+    return {addProduct : result1.rows, increaseTotalItem : result2.rows};
+
   }
 }
   

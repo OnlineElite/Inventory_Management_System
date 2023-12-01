@@ -49,7 +49,7 @@ function Orders(props){
                 setIsLoading(false)
             },5000)
         }
-    }, [props.orders, props.status ])
+    }, [props.orders])
     const columns = [
         {
             name : 'Order ID',
@@ -78,7 +78,7 @@ function Orders(props){
             name : 'Total items',
             selector : row => row.total_item,
             sortable : true,
-            center: true
+            center: 'true'
         },
         {
             name : 'Total amount',
