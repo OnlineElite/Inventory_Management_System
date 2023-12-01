@@ -1018,19 +1018,19 @@ const updateOrderProductThunk = (values) => async (dispatch)=>{
 const addProductToOrderThunk = (values) => async (dispatch)=>{
     try{
         const baseURL = process.env.REACT_APP_API_PROD_URL;  
-        const url = `${baseURL}/addingProductToOrder`;
+        const url = `${baseURL}/addProductToOrder`;
         const data = {
             prod_id :values.prod_id,
             ord_id :values.order_id,
             prod_ref :values.prod_ref,
             prod_quantity : values.quantity
         }
-        //console.log(data)
         const header = {
-          method: 'POST',
-          headers: { 'Content-Type':'application/json'},
-          body: JSON.stringify(data)
+            method: 'POST',
+            headers: { 'Content-Type':'application/json'},
+            body: JSON.stringify(data)
         };
+        console.log(header.body)
         const response = await fetch(url ,header );
         const datarecived = await response.json();
         dispatch(addMessage(datarecived.message))

@@ -62,7 +62,7 @@ router.post('/deleteProductFromOrder', deletingProductFromOrder)
 router.post('/changeStatus', ChangeOrderStatus)
 router.post('/changeTotalAmount', updateOrderTotalAmount)
 router.post('/updateOrderProducts', changeOrderProductsQuantity)
-router.post('/addingProductToOrder', addingProductToOrder)
+router.post('/addProductToOrder', addingProductToOrder)
 // Product Routers
 router.get("/products", upload.any(), getProducts);
 router.post("/addProduct", upload.single("image"), AddingProduct);

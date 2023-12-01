@@ -102,7 +102,7 @@ function ViewStock(props){
       ),
       ignoreRowClick: true,
       allowoverflow: true, 
-      center: true     
+      center: 'true'     
     }
   ];
 
@@ -167,6 +167,7 @@ function ViewStock(props){
   const addCategory =(e)=>{
       setSelecaddcategory(e.target.value);
   }
+  
   const addBrand =(e)=>{
       setSelectaddbrand(e.target.value);
   }

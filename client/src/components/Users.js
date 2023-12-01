@@ -78,7 +78,7 @@ function Users(props){
             ),
             ignoreRowClick: true,
             allowoverflow: true,
-            center: true
+            center: 'true'
         }
     ];
 
