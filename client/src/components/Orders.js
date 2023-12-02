@@ -123,7 +123,8 @@ function Orders(props){
         {
           name : 'Stock',
           selector : row => row.product_stock,
-          sortable : true
+          sortable : true,
+          center: 'true'
         },
         {
           name : 'Price',
@@ -144,13 +145,14 @@ function Orders(props){
             name : 'Ordered',
             cell: (row) =>(
                 <div className='buttns ' id='incDec'>
-                    <button className='bg-primary'  type='submit' onClick={(e)=>hundellSubmit(e, row.order_id)} data-btn = 'increase' data-id = {row.product_id} >+</button>
+                    <button className='bg-primary px-2 py-0 rounded-1 pb-1'  type='submit' onClick={(e)=>hundellSubmit(e, row.order_id)} data-btn = 'increase' data-id = {row.product_id} >+</button>
                     <span id={`count-${row.product_ref}`}> {row.order_quantity} </span>
-                    <button className='bg-primary'  type='submit' onClick={(e)=>hundellSubmit(e, row.order_id)} data-btn = 'decrease' data-id = {row.product_id}>–</button>
+                    <button className='bg-primary px-2 py-0 pb-1 rounded-1'  type='submit' onClick={(e)=>hundellSubmit(e, row.order_id)} data-btn = 'decrease' data-id = {row.product_id}>–</button>
                 </div>
             ),
             selector : row => row.order_quantity,
-            sortable : true
+            sortable : true,
+            center: 'true'
         },
         {
           name: 'Actions',
@@ -161,7 +163,7 @@ function Orders(props){
           ),
           ignoreRowClick: true,
           allowoverflow: true, 
-          center: true     
+          center: 'true'     
         }
     ];
 
@@ -521,14 +523,14 @@ function Orders(props){
                                     <p className='fw-bold text-secondary'> Created Date : <span className='fw-normal text-black'>{handelCreatedDateAtModal(selectedRowData.created_date)}</span></p>
                                 </div>
                                 <div className='col-12 col-sm-6 col-md-3 d-flex flex-column justify-content-between align-items-end'>
-                                    <button className='btn btn-outline-primary w-75'  data-toggle="modal" data-target="#addproductmodal" data-backdrop="false">Add product</button>
-                                    <select id="statusId" className="w-75 py-1"  value={selectedStatus?selectedStatus : selectedRowData.orders_status} onChange={(e)=> handelStatusChange(e,selectedRowData.order_id )}
+                                    <select id="statusId" className="w-50 py-1"  value={selectedStatus?selectedStatus : selectedRowData.orders_status} onChange={(e)=> handelStatusChange(e,selectedRowData.order_id )}
                                      style={{backgroundColor : selectedRowData.status_color, color : 'white',borderRadius: '5px'}} >
                                         {props.status.map((statu, index) => (
                                             <option className='bg-white' name="option" key={index} style={{color : statu.color}}> {" "} {statu.name} </option>
                                             ))}
                                     </select>
-                                    <button className='btn btn-outline-success w-75' onClick={closeModal} >Done</button>
+                                    <button className='btn btn-primary w-50 py-1'  data-toggle="modal" data-target="#addproductmodal" data-backdrop="false">Add product</button>
+                                    <button className='btn btn-success text-white py-1 w-50' onClick={closeModal} >Done</button>
                                     <div className="modal fade" id="addproductmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                                         <div className="modal-dialog text-white" >
                                             <div className="modal-content" style={{backgroundColor: 'rgb(2, 42, 97)', color : 'white', }}>
