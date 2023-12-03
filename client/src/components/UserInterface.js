@@ -176,16 +176,16 @@ function UserInterface(props){
 }
   
   return(
-    <div className='userInterface'>
+    <div className='userInterface bg-white'>
       <Navbar navSearch = {filterByDiscription} />
       <Slider/>
       <MiniSlider/>
       {props.isLoading? <div className='loadind'><ClipLoader color={'#36d7b7'} loading={props.isLoading} size={60} />Loading... </div>:
       <>
-        <div id='proods' className='bg-primary'>
-          <div className='row m-auto w-100'>
+        <div id='proods' className='px-0'>
+          <div className='row ps-3 mx-0 w-100'>
             <div className=' col-12 col-sm-3 col-md-2 col-l-2 col-xl-2'>
-              <div className=' container sideFilter px-2 border  rounded'>
+              <div className=' container sideFilter border  rounded'>
                 <h5 className='w-100 text-dark '>Filter by category</h5>
                 <ul className='categs'>
                   {props.categories.map((categ, index)=>(
@@ -207,10 +207,10 @@ function UserInterface(props){
               </div>
             </div>
             <div className=' main  col-12 col-sm-9 col-md-10 col-l-10 col-xl-10'>
-              <div className='container  prod border rounded' >
+              <div className='container  prod border rounded px-1' >
                   {currentProducts.map((product)=>(
                       <div
-                      className="card "
+                      className="card px-0"
                       key={product.product_ref}
                       onClick={() => handleShow(product.product_ref)}
                       data-toggle="modal"
@@ -222,10 +222,10 @@ function UserInterface(props){
                             ? prodimg
                             : `${imagesURL}/` + product.product_image
                         }
-                        className="card-img-top"
+                        className="card-img-top p-2"
                         alt="product"
                       />
-                      <div className="card-body">
+                      <div className="card-body px-2">
                         <div className="line_desc">
                           {product.product_desc}
                         </div>
@@ -237,11 +237,11 @@ function UserInterface(props){
                           <span className='remise'>-20%</span>
                         </div>
                       </div>
-                      <div className="card-footer">
-                        <button className="btn btn-primary showMore">
+                     { /*<div className="card-footer px-1">
+                        <button className="btn btn-primary showMore w-100">
                           Show Details
                         </button>
-                      </div>
+                      </div>*/}
                     </div>
                   ))}
               </div>
@@ -288,7 +288,7 @@ function UserInterface(props){
           >
             <div className="modal-dialog modal-lg view">
               <div className="modal-content">
-                <div className="modal-header">
+                <div className="modal-header py-0">
                   <h3 className="modal-title" id="exampleModalLabel">
                     Product Details 
                   </h3>
@@ -297,6 +297,7 @@ function UserInterface(props){
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
+                    style={{fontSize : '2rem'}}
                   >
                     <span aria-hidden="true">&times;</span>
                   </span>
@@ -364,6 +365,7 @@ function UserInterface(props){
                           className="card border-primary mb-3"
                           key={product.product_ref}
                           style={{ maxWidth: "12rem" }}
+                          onClick={() => handleShow(product.product_ref)}
                         >
                           <img
                             src={
@@ -374,7 +376,7 @@ function UserInterface(props){
                             className="card-img-top_equivalent"
                             alt="product"
                           />
-                          <div className="card-body">
+                          <div className="card-body px-2">
                             <div className="line_desc_equivalent">
                               {product.product_name}
                             </div>
@@ -383,9 +385,10 @@ function UserInterface(props){
                             </div>
                             <div className="line_old_price">
                               <span className="old_price"> {" "}{product.product_price}Dhs{" "} </span>
+                              <span className='remise'>-20%</span>
                             </div>
                           </div>
-                          <div className=" c-footer">
+                          {/*<div className=" c-footer">
                             <button
                               className="btn text-primary p-0"
                               data-toggle="modal"
@@ -394,7 +397,7 @@ function UserInterface(props){
                             >
                               <i className="bi bi-eye-fill"></i>
                             </button>
-                          </div>
+                          </div>*/}
                         </div>
                       ) : (
                         ""

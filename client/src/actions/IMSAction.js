@@ -827,9 +827,9 @@ const errorOrderMessage=(message)=>{
 }
 const sendOrderThunk = (order)=> async (dispatch)=>{
     try{
-        for (var pair of order.entries()){
-            //console.log(pair[0] + ", " + pair[1]);
-        }
+        /*for (var pair of order.entries()){
+            console.log(pair[0] + ", " + pair[1]);
+        }*/
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/sendOrder`;
 
