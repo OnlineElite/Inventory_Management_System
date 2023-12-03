@@ -245,7 +245,7 @@ function Navbar(props){
                         </div>
                         {props.isAuthenticated ? 
                         (<>
-                            <ul className='rightInfo mx-3'>                            
+                            <ul className='rightInfo '>                            
                                 <li className='mx-3'>
                                     <span onClick={HandelTotalItem_TotalAmount} className=' cart d-flex align-items-center text-white ' data-toggle="modal" data-target="#cartModal">
                                         <i className="bi bi-cart-fill text-white mx-1">
