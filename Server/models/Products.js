@@ -1,6 +1,5 @@
 const pool = require("../config/db");
 
-//products.inCart as product_incart,
 
 class Product {
     static async importProducts() {
@@ -16,6 +15,7 @@ class Product {
       products.image as product_image,
       categories.name as category_name, 
       brands.name as brand_name
+      products.inCart as product_incart,
       from products
       inner join categories on categories.id = products.category_id
       inner join brands on brands.id = products.brand_id
