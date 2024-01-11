@@ -14,7 +14,7 @@ class Product {
       products.liked as product_liked,
       products.image as product_image,
       categories.name as category_name, 
-      brands.name as brand_name
+      brands.name as brand_name,
       products.inCart as product_incart,
       from products
       inner join categories on categories.id = products.category_id
