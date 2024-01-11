@@ -1,5 +1,7 @@
 const pool = require("../config/db");
 
+//products.inCart as product_incart,
+
 class Product {
     static async importProducts() {
       const query = `select 
@@ -10,7 +12,6 @@ class Product {
       products.price as product_price,
       products.Description as product_desc,
       products.created_date as product_date,
-      products.inCart as product_incart,
       products.liked as product_liked,
       products.image as product_image,
       categories.name as category_name, 
