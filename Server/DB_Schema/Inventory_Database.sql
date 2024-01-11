@@ -20,7 +20,7 @@ CREATE TABLE login (
 	user_id INT REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-update users set admin = true where email = 'admin@gmail.com'
+--update users set admin = true where email = 'admin@gmail.com'
 
 --------Products---------------*/
 create table categories(
@@ -56,8 +56,11 @@ create table products(
     FOREIGN KEY (brand_id) REFERENCES brands(id)
 )
 
-insert into categories (name) values( 'Phone'), ('Pc Portable'), ('Smart TV'), ('Watch'), ('Camera'), ('Printer'), ('Tablet');
-insert into brands (name) values ( 'Samsung'), ('HP'), ('Lenovo'), ('Apple'), ('LG'),('Hwaui'), ('Asus'), ('Nokia'), ('Oppo'),('Canon')																
+insert into categories (name) 
+values( 'Phone'), ('Pc Portable'), ('Smart TV'), ('Watch'), ('Camera'), ('Printer'), ('Tablet');
+
+insert into brands (name) 
+values ( 'Samsung'), ('HP'), ('Lenovo'), ('Apple'), ('LG'),('Hwaui'), ('Asus'), ('Nokia'), ('Oppo'),('Canon')																
 
 insert into products (name , ref, stock, price, Description, category_id, brand_id)
 values ('Smart TV 32"', 'STV32LED', 4,2200.00,'32 inch Intelligent Network TV Ultraclear 1920x1080, LED Screen Computer Monitor WiFi Wireless.', 3, 1),
@@ -97,6 +100,15 @@ create table incart(
 )
 
 -------- Orders ---------------*/
+create table status(
+	id serial primary key,
+	name varchar(200) unique,
+	color varchar(200) unique,
+	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_date TIMESTAMP,
+    deleted_date TIMESTAMP
+)
+
 create table orders (
 	order_id serial PRIMARY KEY,
     user_id int,
@@ -117,15 +129,6 @@ create table orders (
 	FOREIGN KEY (status_id) REFERENCES status(id) ON DELETE CASCADE
 )
 
-create table status(
-	id serial primary key,
-	name varchar(200) unique,
-	color varchar(200) unique,
-	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_date TIMESTAMP,
-    deleted_date TIMESTAMP
-)
-
 insert into status (name, color) 
 values ('Pending', '#ffa500'), ('In Progress', '#0099ff'), ('Delivered', '#07d407'), ('Return', '#ff0000')
 
@@ -138,11 +141,10 @@ create table Order_Products(
 	FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 )
-------------------------------------------------*/
+--------------------- Selections ---------------------------*/
 select * from orders
 select * from Order_Products
 select * from status
 select * from products
 
-insert into Order_Products (product_ref, order_id, order_quantity) values ('', , , )
 
