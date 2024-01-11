@@ -2,27 +2,27 @@ const pool = require("../config/db");
 
 
 class Product {
-    static async importProducts() {
-      const query = `select 
-      products.id as product_id,
-      products.name as product_name, 
-      products.ref as product_ref, 
-      products.stock as product_stock,
-      products.price as product_price,
-      products.Description as product_desc,
-      products.created_date as product_date,
-      products.liked as product_liked,
-      products.image as product_image,
-      categories.name as category_name, 
-      brands.name as brand_name,
-      products.inCart as product_incart,
-      from products
-      inner join categories on categories.id = products.category_id
-      inner join brands on brands.id = products.brand_id
-      where products.deleted_date is null`;
-      const result = await pool.query(query);
-      return result.rows;
-    }
+  static async importProducts() {
+    const query = `select 
+    products.id as product_id,
+    products.name as product_name, 
+    products.ref as product_ref, 
+    products.stock as product_stock,
+    products.price as product_price,
+    products.Description as product_desc,
+    products.created_date as product_date,
+    products.inCart as product_incart,
+    products.liked as product_liked,
+    products.image as product_image,
+    categories.name as category_name, 
+    brands.name as brand_name
+    from products
+    inner join categories on categories.id = products.category_id
+    inner join brands on brands.id = products.brand_id
+    where products.deleted_date is null`;
+    const result = await pool.query(query);
+    return result.rows;
+  }
 
     static async importStatus() {
       const query = `SELECT
