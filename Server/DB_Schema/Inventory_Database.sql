@@ -46,6 +46,8 @@ create table products(
 	stock int not null,
 	price DECIMAL(10, 2),
 	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	inCart boolean Default false NOT NULL,
+	liked boolean Default false NOT NULL,
     updated_date TIMESTAMP,
     deleted_date TIMESTAMP,
 	Description varchar(500) not null,
