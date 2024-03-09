@@ -129,6 +129,7 @@ function Navbar(props){
         props.fetchlogout(props.userEmail)
         props.logoutset()
     }
+    
 
     const handledeleteFromCart =(id,e)=>{
         e.preventDefault()

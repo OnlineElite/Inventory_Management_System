@@ -152,7 +152,7 @@ const userFallName =(faullName)=>{
 
 const registerThunk = (user) => async (dispatch)=>{
     try{
-        const baseURL = process.env.REACT_APP_API_URL; 
+        const baseURL = process.env.REACT_APP_API_URL;
         const url = `${baseURL}/register`;
         const data = {...user}
         const header = {
@@ -160,11 +160,12 @@ const registerThunk = (user) => async (dispatch)=>{
           headers: { 'Content-Type':'application/json'},
           body: JSON.stringify(data)
         };
-        
+
         const response = await fetch(url ,header );
         if (response.status === 201){
             const dataReceived = await response.json();
             dispatch(registerUser(dataReceived.message));
+
         } else if(response.status === 409) {
             const dataReceived = await response.json();
             dispatch(registerError(dataReceived.error));
@@ -181,7 +182,7 @@ const registerThunk = (user) => async (dispatch)=>{
 
 const loginThunk = (user) => async (dispatch)=>{
     try{
-        const baseURL = process.env.REACT_APP_API_URL; 
+        const baseURL = process.env.REACT_APP_API_URL;
         const url = `${baseURL}/login`;
         const data = {...user}
         const header = {
@@ -203,7 +204,7 @@ const loginThunk = (user) => async (dispatch)=>{
             dispatch(setAuthenticated(false));
             dispatch(handellError(datarecived.error));
         }
-        
+
     }catch(err){
         console.error("catch error", err)
         dispatch(handellError(err))
@@ -212,7 +213,7 @@ const loginThunk = (user) => async (dispatch)=>{
 
 const LogOutThunk = (useremail) => async (dispatch)=>{
     try{
-        const baseURL = process.env.REACT_APP_API_URL; 
+        const baseURL = process.env.REACT_APP_API_URL;
         const url = `${baseURL}/logout`;
         const data = {email : useremail}
         const header = {

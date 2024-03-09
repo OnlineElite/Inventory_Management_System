@@ -1,137 +1,154 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import 'bootstrap/dist/js/bootstrap.bundle.js';
-import React, { useEffect, useState } from 'react';
-import Navbar from './Navbar';
-import registerimg from '../images/Inventory-Management.png'
-import { ToastContainer, toast } from 'react-toastify';
-import {connect} from 'react-redux'
-import {registerThunk} from '../actions/IMSAction'
-import '../styles/LogReg.css'
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { registerThunk, loginThunk } from "../actions/IMSAction";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Navbar from "./Navbar";
+import registerimg from "../images/Inventory-Management.png";
+import "../styles/LogReg.css";
 
 const RegisterForm = (props) => {
-  
-    const [info, setInfo] = useState({})
+  const [info, setInfo] = useState({});
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const ids = ["firstname", "lastname", "email", "username", "password"];
+    const inputs = ids.map((id) => document.getElementById(id));
+    const register = document.getElementById("register");
+    const isAnyInputEmpty = () => inputs.some((inp) => inp.value === "");
+
+    const isChanged = (e) => {
+      e.preventDefault();
+      if (isAnyInputEmpty()) {
+        register.disabled = true;
+        register.style.backgroundColor = "lightgray";
+        register.style.color = "grey";
+      } else {
+        register.disabled = false;
+        register.style.backgroundColor = "#00afdb";
+        register.style.color = "white";
+        const values = ids.map((id) => document.getElementById(id).value);
+        setInfo({
+          firstname: values[0],
+          lastname: values[1],
+          email: values[2],
+          username: values[3],
+          password: values[4],
+        });
+      }
+    };
+
+    inputs.forEach((inp) => {
+      inp.addEventListener("input", isChanged);
+      return () => inp.removeEventListener("input", isChanged);
+    });
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.next(info);
+
+    const ids = ["firstname", "lastname", "email", "username", "password"];
+    ids.forEach((id) => (document.getElementById(id).value = ""));
+  };
 
     useEffect(() => {
-        const ids = ['firstname', 'lastname', 'email', 'username', 'password'];
-        const inputs = ids.map(id => document.getElementById(id));
-        const register = document.getElementById('register');
-        const isAnyInputEmpty = () => {
-            return inputs.some(inp => inp.value === ''); // true or false
-        };
+        let mounted = true;
 
-        const isChanged = (e) => {
-            e.preventDefault()
-            if (isAnyInputEmpty()) {
-                register.disabled = true;
-                register.style.backgroundColor = 'lightgray';
-                register.style.color = 'grey';
-            } else {
-                register.disabled = false;
-                register.style.backgroundColor = '#00afdb';
-                register.style.color = 'white';
-                const values = ids.map(id => document.getElementById(id).value);
-                setInfo({
-                    firstname : values[0],
-                    lastname : values[1],
-                    email : values[2],
-                    username : values[3],
-                    password : values[4]
-                })
-            }
-        };
-        
-        inputs.forEach(inp => {
-        inp.addEventListener('input', isChanged);
-        });
+        if (props.RegisterRespond && mounted) {
+            toast.success(`${props.RegisterRespond}`);
+            const user = {
+            email: info.email,
+            password: info.password,
+            };
+            props.login(user);
+        }
 
+        if (props.RegisterError && mounted) {
+            toast.error(`${props.RegisterError}`);
+        }
+
+        // Clear toast messages when component unmounts
         return () => {
-            inputs.forEach(inp => {
-                inp.removeEventListener('input', isChanged);
-            });
+            mounted = false;
+            toast.dismiss();
         };
-        
-    }, []);
+    }, [props.RegisterRespond, props.RegisterError]);
 
-    const HandelSubmit = (e)=>{
-        e.preventDefault() 
-        props.next(info)
-        props.RegisterRespond? toast.success(`${props.RegisterRespond}`) : console.log('')
-        props.RegisterError? toast.error(`${props.RegisterError}`) : console.log('')
-      
-        const ids = ['firstname', 'lastname', 'email', 'username', 'password'];
-        const inputs = ids.map(id => document.getElementById(id));
-        inputs.forEach((inp) =>  inp.value ="")
+
+  useEffect(() => {
+    if (props.isAuthenticated) {
+      navigate("/dashboard");
     }
+  }, [props.isAuthenticated]);
 
-    return (
-        <div className="registercomp">
-            <Navbar display = "d-none"/>
-            <div className='logReg'>
-                <div className="registerContainer">
-                    <div className="row">
-                        <h1>Register</h1>
-                        <div className=" image col-12 col-md-6 col-sm-6 col-lg-6">
-                            <img src={registerimg} alt="login and register"/>
-                        </div>
-                        <div className=" form col-12 col-md-6 col-sm-6 col-lg-6">
-                            <form className="RegisterForm" onSubmit={HandelSubmit}>
-                                <div className="ro">
-                                    <label htmlFor="firstname">First name : </label>
-                                    <input type="text" id="firstname" name="firstname" />
-                                </div>
-                                <div className="ro">
-                                    <label htmlFor="lastname">Last name : </label>
-                                    <input type="text" id="lastname" name="lastname" />
-                                </div>
-                                <div className="ro">
-                                    <label htmlFor="email">Email : </label>
-                                    <input type="email" id="email" name="email" />
-                                </div>
-                                <div className="ro">
-                                    <label htmlFor="username">Username : </label>
-                                    <input type="text" id="username" name="username" />
-                                </div>
-                                <div className="ro">
-                                    <label htmlFor="password">Password : </label>
-                                    <input type="password" id="password" name="password" />
-                                </div>
-                                <hr />
-                                <button id="register" disabled type='submit' > Register </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <div className="registercomp">
+      <Navbar display="d-none" />
+      <div className="logReg">
+        <div className="registerContainer">
+          <div className="row">
+            <h1>Register</h1>
+            <div className="image col-12 col-md-6 col-sm-6 col-lg-6">
+              <img src={registerimg} alt="login and register" />
             </div>
-            <ToastContainer
-                position="top-center"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
+            <div className="form col-12 col-md-6 col-sm-6 col-lg-6">
+              <form className="RegisterForm" onSubmit={handleSubmit}>
+                <div className="ro">
+                  <label htmlFor="firstname">First name : </label>
+                  <input type="text" id="firstname" name="firstname" />
+                </div>
+                <div className="ro">
+                  <label htmlFor="lastname">Last name : </label>
+                  <input type="text" id="lastname" name="lastname" />
+                </div>
+                <div className="ro">
+                  <label htmlFor="email">Email : </label>
+                  <input type="email" id="email" name="email" />
+                </div>
+                <div className="ro">
+                  <label htmlFor="username">Username : </label>
+                  <input type="text" id="username" name="username" />
+                </div>
+                <div className="ro">
+                  <label htmlFor="password">Password : </label>
+                  <input type="password" id="password" name="password" />
+                </div>
+                <hr />
+                <button id="register" disabled type="submit">
+                  Register
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-    );
+      </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </div>
+  );
 };
 
-const mapStateToProps =(state)=>{
-    return{
-        RegisterError : state.RegisterError,
-        RegisterRespond : state.RegisterRespond
-    }
-}
+const mapStateToProps = (state) => ({
+  RegisterError: state.RegisterError,
+  RegisterRespond: state.RegisterRespond,
+  isAuthenticated: state.isAuthenticated,
+});
 
-const mapDispatchToProps =(dispatch)=>{
-    return{
-        next : (user)=>{
-            dispatch(registerThunk(user))
-        }
-    }
-}
+const mapDispatchToProps = (dispatch) => ({
+  next: (user) => dispatch(registerThunk(user)),
+  login: (user) => dispatch(loginThunk(user)),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps) (RegisterForm);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
