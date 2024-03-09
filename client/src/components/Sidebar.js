@@ -5,7 +5,10 @@ import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { connect } from 'react-redux';
 import loggo from '../images/TechWave.png'
-import {LogOutThunk, logout} from '../actions/IMSAction'
+import {
+  LogOutThunk,
+  logout,
+} from "../actions/Authentication/authenticationActions";
 function Sidebar(props){
     const [active, setActive] = useState("dashboard");
     const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;

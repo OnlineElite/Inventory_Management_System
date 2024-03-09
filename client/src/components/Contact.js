@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import '../styles/Contact.css'
 import { connect } from 'react-redux'
-import {contactMessageThunk} from '../actions/IMSAction'
+import {contactMessageThunk} from '../actions/General/generalActions'
 import { ToastContainer, toast } from 'react-toastify';
 function Contact(props){
     const [formData, setFormData] = useState({

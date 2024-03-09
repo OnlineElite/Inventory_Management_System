@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { registerThunk, loginThunk } from "../actions/IMSAction";
+import {
+  registerThunk,
+  loginThunk,
+} from "../actions/Authentication/authenticationActions";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
