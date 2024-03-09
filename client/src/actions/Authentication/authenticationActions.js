@@ -96,6 +96,8 @@ const loginThunk = (user) => async (dispatch) => {
     const response = await fetch(url, header);
     const dataReceived = await response.json();
     if (response.ok) {
+      dispatch(registerUser(""));
+      dispatch(registerError(""));
       dispatch(setToken(dataReceived.token));
       dispatch(isAdmin(dataReceived.isAdmin));
       dispatch(setAuthenticated(true));
