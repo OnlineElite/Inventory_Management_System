@@ -8,8 +8,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 import { connect } from 'react-redux';
-import {LogOutThunk, logout, deleteFromCartThunk, addToCartThunk, addToFavoriesThunk,
-     deleteFromFavoriesThunk, bringInfavoriesThunk, bringIncartThunk, updateInCartThunk, bringOrdersThunk} from '../actions/IMSAction'
+import {
+  LogOutThunk,
+  logout,
+} from "../actions/Authentication/authenticationActions";
+import {
+  deleteFromCartThunk,
+  addToCartThunk,
+  addToFavoriesThunk,
+  deleteFromFavoriesThunk,
+  bringInfavoriesThunk,
+  bringIncartThunk,
+  updateInCartThunk,
+  bringOrdersThunk,
+} from "../actions/IMSAction";
 import prodimg from '../images/Default.png'
 //import {useQuery} from '@tanstack/react-query'
 //import axios from 'axios'

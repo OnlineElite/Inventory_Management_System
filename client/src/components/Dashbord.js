@@ -12,7 +12,17 @@ import Settings from './Orders';
 import Users from './Users'
 import Brands from './Brands'
 import {connect} from 'react-redux'
-import {bringCategoriesThunk, bringBrandsThunk, bringStatesThunk, bringProductsThunk, bringUsersThunk, bringStatusThunk, bringOrdersThunk} from '../actions/IMSAction'
+import {
+  bringStatesThunk,
+} from "../actions/General/generalActions";
+import {
+  bringCategoriesThunk,
+  bringBrandsThunk,
+  bringProductsThunk,
+  bringUsersThunk,
+  bringStatusThunk,
+  bringOrdersThunk,
+} from "../actions/IMSAction";
 import '../styles/Dashboard.css'
 
 function Dashboard(props){

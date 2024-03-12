@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import {connect} from 'react-redux'
 import loginimg from '../images/Inventory-Management.png'
 import '../styles/LogReg.css'
-import {loginThunk} from '../actions/IMSAction'
+import { loginThunk } from "../actions/Authentication/authenticationActions";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -38,7 +38,7 @@ function LoginForm(props){
                 })
             }
         };
-        
+
         inputs.forEach(inp => {
         inp.addEventListener('input', isChanged);
         });
@@ -48,7 +48,7 @@ function LoginForm(props){
                 inp.removeEventListener('input', isChanged);
             });
         };
-        
+
     }, []);
 
     const HandelSubmit = (e)=>{
@@ -62,8 +62,8 @@ function LoginForm(props){
     useEffect(()=>{
         if (props.isAuthenticated) {
             navigate(`/dashboard`);
-        } 
-    })                   
+        }
+    })
     return(
         <div className='logincomp'>
             <Navbar display = "d-none"/>

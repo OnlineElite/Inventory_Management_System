@@ -1,233 +1,13 @@
 import axios from 'axios';
-//********************* General Actions *********************//
-const isLoading =(value)=>{
+import {
+  handelError,
+  isLoading,
+  addMessage,
+  deleteMessage,
+  updateMessage,
+  formDataToJson,
+} from "./General/generalActions";
 
-    return{
-        type: 'IS_LOADING',
-        payload: value
-    }
-}
-
-const handellError = (message)=>{
-    return{
-        type : 'ERROR_MESSAGE',
-        payload: message
-    }
-}
-
-
-const addMessage = (message)=>{
-    return {
-      type: "ADD_MESSAGE",
-      payload: message,
-    };
-}
-
-const deleteMessage = (message, productRef) => {
-    return {
-      type: "SHOW_MESSAGE",
-      payload: { message, productRef },
-    };
-  };
-  
-const updateMessage = (message)=>{
-    return {
-    type: "UPDATE_MESSAGE",
-    payload: message,
-    };
-}
-
-const handelStates = (states)=>{
-    return {
-        type : 'STATES',
-        payload : states
-    }
-}
-
-const formDataToJson = (formData) => {
-    const jsonObject = {};
-  
-    // Convert the FormData to an array of key-value pairs
-    const formDataArray = Array.from(formData.entries());
-  
-    for (const [key, value] of formDataArray) {
-      jsonObject[key] = value;
-    }
-  
-    return jsonObject;
-  };
-  
-const bringStatesThunk = () => async (dispatch)=>{
-    try{
-        const baseURL = process.env.REACT_APP_API_PROD_URL; 
-        const url = `${baseURL}/States`;
-        
-        const response = await fetch(url);
-        const datarecived = await response.json();
-        dispatch(handelStates(datarecived.states))
-    }catch(err){
-        console.error(err)
-        dispatch(handellError(err))
-    }
-}
-
-const contactMessageThunk = (message)=> async (dispatch)=>{
-    try{
-        console.log(message)
-       const baseURL = process.env.REACT_APP_API_PROD_URL; 
-        const url = `${baseURL}/sendMessage`;
-        const response = await fetch(url, {
-            method : 'POST',
-            headers: { 'Content-Type':'application/json'},
-            body : JSON.stringify(message)
-        })
-        const data = await response.json()
-        dispatch(addMessage(data.message))
-
-    }catch(err){
-        console.error(err)
-        dispatch(handellError(err))
-    }
-}
-
-//******************** Authentication Actions *********************//
-const registerUser = (message)=>{
-
-    return{
-        type : 'REGISTER_USER',
-        payload : message
-    }
-}
-
-const registerError = (message)=>{
-
-    return{
-        type : 'REGISTER_ERROR',
-        payload : message
-    }
-}
-
-const setAuthenticated = (isAuthenticated) =>{
-    return {
-        type: "SET_AUTHENTICATED",
-        payload: isAuthenticated
-    }
-}
-
-const setToken = (token) =>{
-    return {
-        type: "SET_TOKEN",
-        payload: token
-    }
-}
-
-const logout = () => {
-    return {
-        type: "LOGOUT"
-    }
-}
-
-const userEmail =(email)=>{
-    return{
-        type: 'USER_EMAIL',
-        payload : email
-    }
-}
-
-const isAdmin =(value)=>{
-
-    return{
-        type: 'IS_ADMIN',
-        payload: value
-    }
-}
-
-const userFallName =(faullName)=>{
-
-    return{
-        type: 'USER_FULL_NAME',
-        payload: faullName
-    }
-}
-
-const registerThunk = (user) => async (dispatch)=>{
-    try{
-        const baseURL = process.env.REACT_APP_API_URL; 
-        const url = `${baseURL}/register`;
-        const data = {...user}
-        const header = {
-          method: 'POST',
-          headers: { 'Content-Type':'application/json'},
-          body: JSON.stringify(data)
-        };
-        
-        const response = await fetch(url ,header );
-        if (response.status === 201){
-            const dataReceived = await response.json();
-            dispatch(registerUser(dataReceived.message));
-        } else if(response.status === 409) {
-            const dataReceived = await response.json();
-            dispatch(registerError(dataReceived.error));
-        }
-        else if(response.status === 500) {
-            const dataReceived = await response.json();
-            dispatch(registerError(dataReceived.error));
-        }
-    }catch(err){
-        console.error(err)
-        dispatch(registerError(err))
-    }
-}
-
-const loginThunk = (user) => async (dispatch)=>{
-    try{
-        const baseURL = process.env.REACT_APP_API_URL; 
-        const url = `${baseURL}/login`;
-        const data = {...user}
-        const header = {
-          method: 'POST',
-          headers: { 'Content-Type':'application/json'},
-          body: JSON.stringify(data)
-        };
-        const response = await fetch(url ,header );
-        const datarecived = await response.json();
-        if(response.ok){
-            dispatch(setToken(datarecived.token));
-            dispatch(isAdmin(datarecived.isAdmin));
-            dispatch(setAuthenticated(true));
-            dispatch(handellError(datarecived.error));
-            dispatch(userEmail(datarecived.userEmail)); //to delete the user from login table
-            dispatch(userFallName(datarecived.fullName));
-        }else{
-
-            dispatch(setAuthenticated(false));
-            dispatch(handellError(datarecived.error));
-        }
-        
-    }catch(err){
-        console.error("catch error", err)
-        dispatch(handellError(err))
-    }
-}
-
-const LogOutThunk = (useremail) => async (dispatch)=>{
-    try{
-        const baseURL = process.env.REACT_APP_API_URL; 
-        const url = `${baseURL}/logout`;
-        const data = {email : useremail}
-        const header = {
-          method: 'POST',
-          headers: { 'Content-Type':'application/json'},
-          body: JSON.stringify(data)
-        };
-        const response = await fetch(url ,header );
-        const datarecived = await response.json();
-        //console.log(datarecived)
-    }catch(err){
-        console.error(err)
-        dispatch(handellError(err))
-    }
-}
 
 //********************* Products Actions *********************//
 const handelProducts = (products)=>{
@@ -268,7 +48,7 @@ const bringProductsThunk = () => async (dispatch)=>{
         if(datarecived.products){return dispatch(isLoading(false))}
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
         isLoading(false)
     }
 }
@@ -301,7 +81,7 @@ const addProductThunk = (product) => async (dispatch)=>{
         dispatch(addProduct(datarecived.message, updatedProductJson));
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -326,7 +106,7 @@ const deleteProductThunk = ({product_ref, image_src}) => async (dispatch)=>{
         //dispatch(deleteMessage(datarecived.message, product_ref));
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -356,7 +136,7 @@ const updateProductThunk = (product) => async (dispatch)=>{
   
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -391,7 +171,7 @@ const bringCategoriesThunk = () => async (dispatch)=>{
         dispatch(handelCategories(datarecived.categories))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -413,7 +193,7 @@ const addCategoryThunk = (category) => async (dispatch)=>{
         dispatch(addMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -438,7 +218,7 @@ const updateCategoryThunk = (category) => async (dispatch)=>{
         }
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -462,7 +242,7 @@ const deleteCategoryThunk = (categName) => async (dispatch)=>{
         }
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -498,7 +278,7 @@ const bringBrandsThunk = () => async (dispatch)=>{
         dispatch(handelBrands(datarecived.brands))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -520,7 +300,7 @@ const addBrandThunk = (brand) => async (dispatch)=>{
         dispatch(addMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -544,7 +324,7 @@ const updateBrandThunk = (brand) => async (dispatch)=>{
         }
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -566,7 +346,7 @@ const deleteBrandThunk = (brandName) => async (dispatch)=>{
         dispatch(deleteBrand(datarecived.message, brandName));
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -594,7 +374,7 @@ const bringIncartThunk = (user_id) => async (dispatch)=>{
         //console.log('incartfetched', datarecived.products)
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -615,7 +395,7 @@ const addToCartThunk = (info) => async (dispatch)=>{
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -636,7 +416,7 @@ const updateInCartThunk = (info) => async (dispatch)=>{
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -657,7 +437,7 @@ const deleteFromCartThunk = (info) => async (dispatch)=>{
         dispatch(deleteMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 //********************* Infavories Actions *********************//
@@ -684,7 +464,7 @@ const bringInfavoriesThunk = (user_id) => async (dispatch)=>{
         //console.log('infavoriesfetched', datarecived.products)
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -705,7 +485,7 @@ const addToFavoriesThunk = (info) => async (dispatch)=>{
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -726,7 +506,7 @@ const deleteFromFavoriesThunk = (info) => async (dispatch)=>{
         dispatch(deleteMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -756,7 +536,7 @@ const bringUsersThunk = () => async (dispatch)=>{
         dispatch(handelUsers(datarecived.Users))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -778,7 +558,7 @@ const updateUserThunk = (Userinfo) => async (dispatch)=>{
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -800,7 +580,7 @@ const deleteUserThunk = (condition) => async (dispatch)=>{
         dispatch(deleteUser(datarecived.message, condition));
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -864,11 +644,11 @@ const bringOrdersThunk = ()=> async(dispatch)=>{
             dispatch(getOrders(res.orders))
         })
         .catch((err)=>{
-            dispatch(handellError(err))
+            dispatch(handelError(err))
         })
 
     }catch(err){
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -895,7 +675,7 @@ const bringStatusThunk = () => async (dispatch)=>{
         dispatch(handelStatus(datarecived.status))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -916,7 +696,7 @@ const bringOrderProductsThunk =(order_id)=> async (dispatch)=>{
 
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -940,7 +720,7 @@ const deleteProductFromOrderThunk = (ids) => async (dispatch)=>{
         dispatch(deleteMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -964,7 +744,7 @@ const changeOrderStatusThunk = (ids) => async (dispatch)=>{
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -987,7 +767,7 @@ const changeOrderTotalAmountThunk = (vals) => async (dispatch)=>{
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -1011,7 +791,7 @@ const updateOrderProductThunk = (values) => async (dispatch)=>{
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 
@@ -1036,15 +816,11 @@ const addProductToOrderThunk = (values) => async (dispatch)=>{
         dispatch(addMessage(datarecived.message))
     }catch(err){
         console.error(err)
-        dispatch(handellError(err))
+        dispatch(handelError(err))
     }
 }
 //***************** Export Actions ****************/
 export {
-    registerThunk, 
-    loginThunk, 
-    LogOutThunk, 
-    logout, 
     bringProductsThunk,
     bringCategoriesThunk, 
     bringBrandsThunk,
@@ -1067,9 +843,7 @@ export {
     bringIncartThunk,
     bringInfavoriesThunk,
     updateInCartThunk,
-    bringStatesThunk,
     sendOrderThunk,
-    contactMessageThunk,
     bringOrdersThunk,
     bringStatusThunk,
     bringOrderProductsThunk,
