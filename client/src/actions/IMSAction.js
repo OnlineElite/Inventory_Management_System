@@ -270,6 +270,7 @@ const updateBrand = (message, brand) => {
 
 const bringBrandsThunk = () => async (dispatch)=>{
     try{
+        console.log("get brands thank ");
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/brands`;
         
