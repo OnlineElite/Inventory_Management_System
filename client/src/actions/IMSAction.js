@@ -389,10 +389,10 @@ const addToCartThunk = (info) => async (dispatch)=>{
           headers: { 'Content-Type':'application/json'},
           body: JSON.stringify(data)
         };
-        
+
         const response = await fetch(url ,header );
         const datarecived = await response.json();
-     
+
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)

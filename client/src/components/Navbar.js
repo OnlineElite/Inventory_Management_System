@@ -62,12 +62,11 @@ function Navbar(props){
     };*/
 
     useEffect(()=>{
+
         if(!props.isAdmin && props.isAuthenticated){
             props.getIncart(props.userfullName[2])
             props.getInfavories(props.userfullName[2])
             //props.getOrders()
-            setFavRecords(props.infavories)
-            setCartRecords(props.incart)
             //setOrderrecords(props.orders)
         }
     }, [])
@@ -75,29 +74,18 @@ function Navbar(props){
     useEffect(()=>{
         if(!props.isAdmin && props.isAuthenticated){
             if (props.infavories !== favRecords) {
-                props.getInfavories(props.userfullName[2])
-                setFavRecords(props.infavories)
+                setFavRecords(props.infavories);
             }
         }
     }, [props.infavories, favRecords, props.getInfavories])
 
     useEffect(()=>{
-        if(!props.isAdmin && props.isAuthenticated){         
+        if(!props.isAdmin && props.isAuthenticated){
             if (props.incart !== cartRecords){
-                props.getIncart(props.userfullName[2])
-                setCartRecords(props.incart)
+                setCartRecords(props.incart);
             }
         }
     }, [props.incart, cartRecords, props.getIncart])
-
-   /* useEffect(()=>{
-        if(!props.isAdmin && props.isAuthenticated){         
-            if (props.orders !== orderrecords){
-                props.getOrders()
-                setOrderrecords(props.orders)
-            }
-        }
-    }, [props.orders, orderrecords, props.getOrders])*/
 
     const hundellSubmit =(e)=>{
         e.preventDefault()
@@ -516,7 +504,6 @@ function Navbar(props){
 }
 
 const mapStateToProps =(state)=>{
-    //console.log('orders', state.orders)
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
