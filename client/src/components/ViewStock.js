@@ -24,14 +24,14 @@ function ViewStock(props){
   const [selectedRange, setSelectedRange] = useState(null);
   const [imagetoUpdate, setImagetoUpdate] = useState(null); // old image path to update
   const [imageUrl, setImageUrl] = useState(null);
-  const [isfiltred, setIsfiltred] = useState(false);
+  const [isfiltred, setIsfiltred] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
   useEffect(() => {
     if (props.products.length === 0 || props.products !== records) {
       props.getProducts()
-      if(!isfiltred){
+      if(isfiltred){
         setRecords(props.products)
         setIsfiltred(false)
       }
@@ -41,7 +41,7 @@ function ViewStock(props){
       setIsLoading(false)
     }
   }, [props.products]);
-  
+
   const columns = [
     {
       name : 'Name',
@@ -51,10 +51,12 @@ function ViewStock(props){
     {
       name : 'Created At',
       selector : row => {
+
         var originalDate = row.product_date;
         var dateObject = new Date(originalDate);
         var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
         return formattedDate
+
       },
       width : '16%',
       sortable : true
@@ -136,7 +138,7 @@ function ViewStock(props){
   }
 
   const filterByCategory =(e)=>{
-      const newData = props.products.filter(row =>{ 
+      const newData = props.products.filter(row =>{
           if(e.target.value === 'Category'){
               return props.products
           }else{
@@ -146,14 +148,14 @@ function ViewStock(props){
       setRecords(newData)
       setIsfiltred(true)
       setSelectfilterCategory(e.target.value)
-      
+
   }
 
   const filterByBrand =(e)=>{
-      const newData = props.products.filter(row =>{ 
+      const newData = props.products.filter(row =>{
           if(e.target.value === 'Brand'){
               return props.products
-          }else{         
+          }else{
               return row.brand_name.toLowerCase() === e.target.value.toLowerCase()
           }
       })
@@ -165,13 +167,13 @@ function ViewStock(props){
   const addCategory =(e)=>{
       setSelecaddcategory(e.target.value);
   }
-  
+
   const addBrand =(e)=>{
       setSelectaddbrand(e.target.value);
   }
 
-  const clickUpdateButton=(row)=>{     
-    //console.log(row) 
+  const clickUpdateButton=(row)=>{
+    //console.log(row)
     const ids = ['upname', 'upref', 'upquantity', 'upprice','updesc', 'upcategory', 'upbrand', 'selecImg']
     const inputs = ids.map((id) => document.getElementById(id))
     setImagetoUpdate(row.product_image)
@@ -194,13 +196,13 @@ function ViewStock(props){
       }
     }
 
-    inputs.forEach((inp) => { 
+    inputs.forEach((inp) => {
       switch(inp.id){
         case 'upname':
           inp.value = row.product_name
           break;
         case 'upref':
-          inp.value = row.product_ref 
+          inp.value = row.product_ref
           break;
         case 'upquantity':
           inp.value = row.product_stock
@@ -285,8 +287,8 @@ function ViewStock(props){
       }
       props.updateMsg? toast.success(`${props.updateMsg}`) :  console.log('');
       props.response? toast.error(`${props.response}`) :  console.log('');
-      handleCloseModal()     
-      setRecords(props.products) 
+      handleCloseModal()
+      setRecords(props.products)
   }
 
   const handleDelete=(row)=>{
@@ -317,7 +319,7 @@ function ViewStock(props){
                   sp.textContent = row.product_name
                   break;
               case 'detailRef':
-                  sp.textContent = row.product_ref 
+                  sp.textContent = row.product_ref
                   break;
               case 'detailQuantity':
                   sp.textContent = row.product_stock
@@ -344,7 +346,7 @@ function ViewStock(props){
           }
       })
   }
-  
+
   const HandellAddItem = (e)=>{
     e.preventDefault()
     const values = [];
@@ -358,7 +360,7 @@ function ViewStock(props){
         if (category){
           values.push(category.id);
           catName = category.name;
-        }   
+        }
       } else if (inp.id === 'brand') {
         const brand = props.brands.find((item) => item.name === inp.value);
         if (brand){
@@ -382,7 +384,7 @@ function ViewStock(props){
     formData.append('brand', values[6]);
     formData.append("categoryName", catName);
     formData.append("brandName", brandName);
-    
+
     if (inputs[7].type === "file" && inputs[7].files.length > 0) {
       formData.append("image", inputs[7].files[0]);
     }
@@ -414,7 +416,7 @@ function ViewStock(props){
         default: inp.value = ''; break;
       }
     });
-    handleCloseModal()     
+    handleCloseModal()
     setRecords(props.products)
   }
 
@@ -448,9 +450,9 @@ function ViewStock(props){
         case 'filterRef': inp.value = ''; break;
         case 'filterCategory': setSelectfilterCategory(inp.firstChild.value); break;
         case 'filterBrand': setSelectfilterBrand(inp.firstChild.value); break;
-        case 'filterDate': 
+        case 'filterDate':
           setSelectedRange(null);
-          setRecords(props.products);; 
+          setRecords(props.products);
           break;
         default: inp.value = ''
       }
@@ -464,7 +466,7 @@ function ViewStock(props){
         <h4 className="">Stock Management</h4>
         {isLoading? <div className='loadind '><ClipLoader color={'#36d7b7'} loading={isLoading} size={60} />Loading... </div>:
         <div className="container p-0">
-          <div className="dates">                           
+          <div className="dates">
             <RangePicker
               value={selectedRange}
               id="filterDate"
@@ -676,7 +678,7 @@ function ViewStock(props){
                       {imageUrl? <img id="addimage"  src={imageUrl} alt="Selected" /> : <img className="d-none" id="addimage"  src='' alt="Selected" />}
                     </div>
                   </div>
-                </div>                
+                </div>
               </div>
 
               <div className="modal-footer">
@@ -1005,7 +1007,7 @@ function ViewStock(props){
 }
 
 const mapStateToProps =(state)=>{
-    
+
     return{
         response : state.error,
         isAuthenticated : state.isAuthenticated,
@@ -1035,7 +1037,7 @@ const mapDispatchToProps =(dispatch)=>{
             dispatch(updateProductThunk(product))
         }
     }
-    
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (ViewStock);
