@@ -17,70 +17,64 @@ function Brands(props){
   const [isfiltred, setIsfiltred] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
-
    useEffect(() => {
      props.getBrands();
    }, []);
+
 
      useEffect(() => {
        setFilteredBrands(props.brands);
        setIsLoading(props.brands.length === 0);
      }, [props.brands]);
+    
+    const columns = [
+        {
+            name : 'Name',
+            selector : row => row.name,
+            sortable : true
+        },
+        {
+            name : 'Created At',
+            selector : row => {
+                var originalDate = row.created_date;
+                var dateObject = new Date(originalDate);
+                var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+                return formattedDate
+            },
+            width : '16%',
+            sortable : true
+        },
+        {
+            name : 'Updated At',
+            selector : row => {
+                if(row.updated_date === null){
+                    return '——'
+                }else{
+                    var originalDate = row.updated_date;
+                    var dateObject = new Date(originalDate);
+                    var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+                    return formattedDate
+                }
+            },
+            center : true,
+            width : '16%',
+            sortable : true
+        },
+        {
+            name: 'Actions',
+            cell: (row) => (
+              <div className='d-flex'>
+                <span className="btn" data-toggle="modal" data-target="#updateBrand" onClick={() => clickUpdateButton(row)}><i className="bi bi-pencil-fill"></i></span>
+                <span className='btn text-danger'   onClick={() => handleDelete(row)}><i className="bi bi-trash-fill"></i></span>
+              </div>
+            ),
+            ignoreRowClick: true,
+            allowoverflow: true,
+            center: true
+        }
+    ];
 
-  const columns = [
-    {
-      name: "Name",
-      selector: (row) => row.name,
-      sortable: true,
-    },
-    {
-      name: "Created At",
-      selector: (row) => {
-        let year = new Date(row.created_date).getFullYear();
-        let month = new Date(row.created_date).getMonth();
-        let day = new Date(row.created_date).getDay();
-        let hour = new Date(row.created_date).getHours();
-        let minute = new Date(row.created_date).getMinutes();
-        //let seconds = new Date(row.created_date).getSeconds();
-        return `${day + 12}-${month + 1}-${year} ${hour + 1}:${minute}`;
-      },
-      sortable: true,
-    },
-    {
-      name: "Updated At",
-      selector: (row) => {
-        let year = new Date(row.updated_date).getFullYear();
-        let month = new Date(row.created_date).getMonth();
-        let day = new Date(row.updated_date).getDay();
-        let hour = new Date(row.updated_date).getHours();
-        let minute = new Date(row.updated_date).getMinutes();
-        //let seconds = new Date(row.updated_date).getSeconds();
-        return `${day + 12}-${month + 1}-${year} ${hour + 1}:${minute}`;
-      },
-      sortable: true,
-    },
-    {
-      name: "Actions",
-      cell: (row) => (
-        <div className="d-flex">
-          <span
-            className="btn"
-            data-toggle="modal"
-            data-target="#updateBrand"
-            onClick={() => clickUpdateButton(row)}
-          >
-            <i className="bi bi-pencil-fill"></i>
-          </span>
-          <span className="btn text-danger" onClick={() => handleDelete(row)}>
-            <i className="bi bi-trash-fill"></i>
-          </span>
-        </div>
-      ),
-      ignoreRowClick: true,
-      allowoverflow: true,
-      center: true,
-    },
-  ];
+
 
   function handleCloseModal() {
     document.getElementById("addBrand").classList.remove("show", "d-block");

@@ -65,7 +65,7 @@ class Product {
       products.Description as product_desc,
       products.created_date as product_date,
       products.image as product_image,
-      categories.name as category_name, 
+      categories.name as category_name,
       brands.name as brand_name
       from products
       inner join categories on categories.id = products.category_id

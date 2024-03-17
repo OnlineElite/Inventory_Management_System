@@ -46,16 +46,19 @@ function ViewStock(props){
     {
       name : 'Name',
       selector : row => row.product_name,
-      sortable : true
+      sortable : true,
     },
     {
       name : 'Created At',
       selector : row => {
-        let year = new Date(row.product_date).getFullYear();
-        let month = new Date(row.product_date).getMonth();
-        let day = new Date(row.product_date).getDay();
-        return `${day+12}-${month+1}-${year}`
+
+        var originalDate = row.product_date;
+        var dateObject = new Date(originalDate);
+        var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+        return formattedDate
+
       },
+      width : '16%',
       sortable : true
     },
     {
