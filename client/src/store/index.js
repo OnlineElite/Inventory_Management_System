@@ -6,7 +6,7 @@ const initialState = {
   RegisterRespond: null,
   RegisterError: null,
   error: null,
-  isAdmin: localStorage.getItem("isAdmin") || false,
+  isAdmin: localStorage.getItem("isAdmin") == "true" ? true : false,
   isAuthenticated: !!localStorage.getItem("token"), //true or false (if local storage empty or not)
   token: localStorage.getItem("token") || "",
   userEmail: null,
