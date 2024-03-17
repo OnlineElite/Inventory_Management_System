@@ -40,28 +40,29 @@ function Brands(props){
         },
         {
             name : 'Created At',
-            selector : row =>{
-                let year = new Date(row.created_date).getFullYear();
-                let month = new Date(row.created_date).getMonth();
-                let day = new Date(row.created_date).getDay();
-                let hour = new Date(row.created_date).getHours();
-                let minute = new Date(row.created_date).getMinutes();
-                //let seconds = new Date(row.created_date).getSeconds();
-                return `${day+12}-${month+1}-${year} ${hour+1}:${minute}`
+            selector : row => {
+                var originalDate = row.created_date;
+                var dateObject = new Date(originalDate);
+                var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+                return formattedDate
             },
+            width : '16%',
             sortable : true
         },
         {
             name : 'Updated At',
-            selector : row =>{
-                let year = new Date(row.updated_date).getFullYear();
-                let month = new Date(row.created_date).getMonth();
-                let day = new Date(row.updated_date).getDay();
-                let hour = new Date(row.updated_date).getHours();
-                let minute = new Date(row.updated_date).getMinutes();
-                //let seconds = new Date(row.updated_date).getSeconds();
-                return `${day+12}-${month+1}-${year} ${hour+1}:${minute}`
+            selector : row => {
+                if(row.updated_date === null){
+                    return '——'
+                }else{
+                    var originalDate = row.updated_date;
+                    var dateObject = new Date(originalDate);
+                    var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+                    return formattedDate
+                }
             },
+            center : true,
+            width : '16%',
             sortable : true
         },
         {

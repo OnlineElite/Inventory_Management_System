@@ -10,9 +10,12 @@ import {
   logout,
 } from "../actions/Authentication/authenticationActions";
 function Sidebar(props){
-    const [active, setActive] = useState("dashboard");
-    const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;
+    var url = window.location.href.split("/")
+    let tab = url[url.length-1]
 
+    const [active, setActive] = useState(`${tab}`);
+    const ProjectName = process.env.REACT_APP_API_PROJECT_NAME;
+ 
     const handelLogout =(e)=>{
       e.preventDefault()
       props.fetchlogout(props.userEmail)

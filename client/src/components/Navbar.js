@@ -29,7 +29,7 @@ import prodimg from '../images/Default.png'
 
 function Navbar(props){
     //const baseURL = process.env.REACT_APP_API_PROD_URL;
-
+    
     /*const {data : incart, isLoading, isError, refetch} = useQuery(['incart'], ()=>{
         const url = `${baseURL}/incart`;
         if(!props.isAdmin && props.isAuthenticated)
@@ -54,7 +54,6 @@ function Navbar(props){
     }
 
     /*const handleOrderCollapseToggle = (order_id) => {
-        
         setIsCollapsed((prev) => ({
             ...prev,
             [order_id]: !prev[order_id] || false,
