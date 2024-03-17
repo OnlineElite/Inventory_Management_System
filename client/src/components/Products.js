@@ -9,7 +9,7 @@ function Products(props){
     const [selectfilterBrand, setSelectfilterBrand] = useState('');
     const [selectfilterCategory, setSelectfilterCategory] = useState('');
     const [equivalent, setEquivalent] = useState('')
-    const [isfiltred, setIsfiltred] = useState(false);
+    const [isfiltred, setIsfiltred] = useState(true);
     const [isLoading, setIsLoading] = useState(true)
     const imagesURL = process.env.REACT_APP_API_IMAGES_URL;
 
@@ -21,7 +21,7 @@ function Products(props){
     useEffect(() => {
       if (props.products !== records) {
         //props.getProducts()
-        if(!isfiltred){
+        if(isfiltred){
           setRecords(props.products)
           setIsfiltred(false)
         } 

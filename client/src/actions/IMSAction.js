@@ -270,6 +270,7 @@ const updateBrand = (message, brand) => {
 
 const bringBrandsThunk = () => async (dispatch)=>{
     try{
+        console.log("get brands thank ");
         const baseURL = process.env.REACT_APP_API_PROD_URL; 
         const url = `${baseURL}/brands`;
         
@@ -388,10 +389,10 @@ const addToCartThunk = (info) => async (dispatch)=>{
           headers: { 'Content-Type':'application/json'},
           body: JSON.stringify(data)
         };
-        
+
         const response = await fetch(url ,header );
         const datarecived = await response.json();
-     
+
         dispatch(updateMessage(datarecived.message))
     }catch(err){
         console.error(err)

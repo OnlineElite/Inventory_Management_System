@@ -21,6 +21,7 @@ class Product {
     inner join brands on brands.id = products.brand_id
     where products.deleted_date is null`;
     const result = await pool.query(query);
+
     return result.rows;
   }
 

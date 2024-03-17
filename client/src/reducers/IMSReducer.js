@@ -31,6 +31,7 @@ const userReducer = (state, action)=>{
         return { ...state, admission: action.payload };
 
       case "IS_ADMIN":
+        localStorage.setItem("isAdmin", action.payload);
         return { ...state, isAdmin: action.payload };
 
       case "LOGOUT":

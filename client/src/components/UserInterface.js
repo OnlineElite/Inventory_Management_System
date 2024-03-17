@@ -15,7 +15,7 @@ import  '../styles/UserInterface.css'
 
 function UserInterface(props){
 
-  const [isfiltred, setIsfiltred] = useState(false);
+  const [isfiltred, setIsfiltred] = useState(true);
   const [records, setRecords] = useState(props.products)
   const [equivalent, setEquivalent] = useState('')
   const [addToCart, setAddToCart] = useState('')
@@ -37,8 +37,9 @@ function UserInterface(props){
     props.getProducts()
     props.getCategories()
     props.getBrands()
-    if(!isfiltred){
+    if(isfiltred){
       setRecords(props.products)
+      setIsfiltred(false);
     }
   }, [])
   
