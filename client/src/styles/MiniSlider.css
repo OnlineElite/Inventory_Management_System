@@ -32,12 +32,9 @@
 }
 
 .miniSlide .first {
-    animation: primary 7s linear infinite;
+    animation: primary 12s linear infinite;
 }
   
-.miniSlide .second {
-    animation: secondary 7s linear infinite;
-}
 
 @keyframes primary {
     from {
@@ -48,14 +45,6 @@
     }
 }
 
-@keyframes secondary {
-    from {
-        left: 100%;
-    }
-    to {
-        left: 0%;
-    }
-}
 
 .miniSlide img{
     width: 100%;
@@ -69,3 +58,25 @@
 }*/
 
 
+.miniSlide .boxes{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 1rem;
+    margin-top: 0;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.miniSlide .boxes .box{
+    box-shadow: 0 4px 8px 0 black;
+    color: white;
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 1s;
+    background-image: linear-gradient(rgb(0, 38, 255), rgb(234, 0, 255));
+    
+}

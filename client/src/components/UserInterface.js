@@ -8,6 +8,8 @@ import {connect} from 'react-redux'
 import {bringProductsThunk, bringInfavoriesThunk, bringOrdersThunk, bringIncartThunk, bringCategoriesThunk, bringBrandsThunk, addToCartThunk, addToFavoriesThunk} from '../actions/IMSAction'
 import Footer from '../components/Footer'
 import MiniSlider from '../components/MiniSlider'
+import BrandSlider from '../components/BrandSlider';
+import CategoriesSlider from '../components/CategoriesSlider';
 import { ToastContainer, toast } from 'react-toastify';
 import ClipLoader from "react-spinners/ClipLoader";
 import Slider from './Slider';
@@ -259,24 +261,26 @@ function UserInterface(props){
           </div>
         </div>
         <div id='ourBrands' className='caroseel'>
-          <h5 className='caroseel_header'>OUR BEST BRANDS</h5>
-          <div className='boxes bg-light'>
-          {props.brands.map((brand, index)=>(
-            <div className='box' key={index}>
-              <p className=''>{brand.name}</p>
-            </div>
-          ))}
-          </div>
+          <h5 className='caroseel_header'>OUR BRANDS</h5>
+          <BrandSlider/>
+          {/* <div className='boxes bg-light'>
+            {props.brands.map((brand, index)=>(
+              <div className='box' key={index}>
+                <p className=''>{brand.name}</p>
+              </div>
+            ))}
+          </div> */}
         </div>
         <div id='ourCategories' className='caroseel'>
-          <h5 className='caroseel_header'>Our Categories</h5>
-          <div className='boxes bg-light'>
-          {props.categories.map((categ, index)=>(
-            <div className='box' key={index}>
-              <p className=''>{categ.name}</p>
-            </div>
-          ))}
-          </div>
+          <h5 className='caroseel_header'>OUR CATEGORIES </h5>
+          {/* <div className='boxes bg-light'>
+            {props.categories.map((categ, index)=>(
+              <div className='box' key={index}>
+                <p className=''>{categ.name}</p>
+              </div>
+            ))}
+          </div> */}
+          <CategoriesSlider/>
         </div>
         <div className='container'>            
           {/* View Item Modal */}

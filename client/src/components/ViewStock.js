@@ -54,7 +54,7 @@ function ViewStock(props){
 
         var originalDate = row.product_date;
         var dateObject = new Date(originalDate);
-        var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+        var formattedDate = dateObject.getFullYear() + "/" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "/" + ('0' + dateObject.getDate()).slice(-2) + "   " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
         return formattedDate
 
       },
@@ -862,12 +862,7 @@ function ViewStock(props){
                         {" "}
                       </span>
                     </div>
-                    <div className="lines">
-                      <span className="detail">Description:</span>
-                      <span id="detailDescription" className="leftR">
-                        {" "}
-                      </span>
-                    </div>
+                    
                     <div className="lines">
                       <span className="detail">Category:</span>
                       <span id="detailCategory" className="leftR">
@@ -880,22 +875,28 @@ function ViewStock(props){
                         {" "}
                       </span>
                     </div>
-                    <div className="lines">
-                      <span className="detail">Recommended:</span>
-                      <span id="detailBrand" className="leftR">
+                    <div className="lines d-flex" >
+                      <span className="detail" style={{width : 'fit-content'}}>Recommended:</span>
+                      <span id="detailBrand" className="leftR px-1 ">
                         {props.products.map((product) =>
                           (
                             product.category_name === equivalent.category &&
                               product.product_ref !== equivalent.ref
                           ) ? (
-                            <span className="text-success" key={product.product_ref}>
+                            <span className="text-primary" key={product.product_ref}>
                               {" "}
-                              {product.product_ref},{" "}
+                              {product.product_ref},  {" "}
                             </span>
                           ) : (
                             ""
                           )
                         )}
+                      </span>
+                    </div>
+                    <div className="lines">
+                      <span className="detail">Description:</span>
+                      <span id="detailDescription" className="leftR">
+                        {" "}
                       </span>
                     </div>
                   </div>
@@ -923,62 +924,30 @@ function ViewStock(props){
                         className="card border-primary mb-3"
                         style={{ maxWidth: "9.2rem" }}
                         key={product.product_ref}
+                        onClick={(e) => handleShow(product, e)}
                       >
-                        <div className="card-body text-primary infor ">
-                          <div className="lines">
-                            <span className="detail">Reference:</span>
-                            <span className="result">
-                              {" "}
-                              {product.product_ref}{" "}
-                            </span>
+                        <img
+                          src={
+                            product.product_image === null || product.product_image === undefined || product.product_image === ''
+                              ? prodimg
+                              : `${imagesURL}/` + product.product_image
+                          }
+                          className="card-img-top_equivalent"
+                          alt="product"
+                        />
+                        <div className="card-body ">
+                          <div className="line_desc_equivalent">
+                            {product.product_name}
                           </div>
-                          <div className="lines">
-                            <span className="detail">Name:</span>
-                            <span className="result">
-                              {" "}
-                              {product.product_name}{" "}
-                            </span>
+                          <div className="line_prices_equivalent ">
+                            <span className='prices'> {((product.product_price)-(product.product_price)*20/100).toFixed(2)+'Dhs'}</span>
                           </div>
-                          <div className="lines">
-                            <span className="detail">Brand:</span>
-                            <span className="result">
-                              {" "}
-                              {product.brand_name}{" "}
-                            </span>
-                          </div>
-                          <div className="lines">
-                            <span className="detail">Quantity:</span>
-                            <span
-                              className="result"
-                              style={{
-                                color:
-                                  product.product_stock === 0
-                                    ? "red"
-                                    : "black",
-                              }}
-                            >
-                              {" "}
-                              {product.product_stock}{" "}
-                            </span>
-                          </div>
-                          <div className="lines">
-                            <span className="detail">Price :</span>
-                            <span className="result text-danger">
-                              {" "}
-                              {product.product_price}DH{" "}
-                            </span>
+                          <div className="line_old_price">
+                            <span className="old_price"> {" "}{product.product_price}Dhs{" "} </span>
+                            <span className='remise'>-20%</span>
                           </div>
                         </div>
-                        <div className=" c-footer">
-                          <button
-                            className="btn text-primary"
-                            data-toggle="modal"
-                            data-target="#viewproduct"
-                            onClick={(e) => handleShow(product, e)}
-                          >
-                            <i className="bi bi-eye-fill"></i>
-                          </button>
-                        </div>
+                        
                       </div>
                     ) : (
                       ""

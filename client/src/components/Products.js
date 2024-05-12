@@ -145,7 +145,7 @@ function Products(props){
     }
 
     return (
-      <div className="ProductsWindow" id="products">
+      <div className="ProductsWindow" id="products bg-light">
         <div className="container ">
           <h4>products Management</h4>
           <div className="filters">
@@ -232,11 +232,11 @@ function Products(props){
                         </div>
                      
                     </div>
-                    <div className="card-footer text-muted">
+                    {/* <div className="card-footer text-muted">
                       <button className="btn btn-primary showMore">
                         Show Details
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 )
               )
@@ -270,13 +270,14 @@ function Products(props){
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
+                    style={{fontSize : '2rem'}}
                   >
                     <span aria-hidden="true">&times;</span>
                   </span>
                 </div>
                 <div className="modal-body">
                   <div className="row">
-                    <div className=" left col-auto col-sm-6 col-md-6 col-lg-6">
+                    <div className=" left col-auto col-sm-6 col-md-6 col-lg-6 ">
                       <div className="lines">
                         <span className="detail ">Reference:</span>
                         <span id="detailRef" className="leftR text-primary">
@@ -313,14 +314,14 @@ function Products(props){
                           {" "}
                         </span>
                       </div>
-                      <div className="lines">
-                        <span className="detail">Recommended:</span>
-                        <span id="detailBrand" className="leftR">
+                      <div className="lines d-flex ">
+                        <span className="detail"  style={{width : 'fit-content'}}>Recommended:</span>
+                        <span id="detailBrand" className="leftR px-1  ">
                           {props.products.map((product) =>
                             product.category_name === equivalent.category &&
                             product.product_ref !== equivalent.ref ? (
                               <span
-                                className="text-success"
+                                className="text-primary"
                                 key={product.product_ref}
                               >
                                 {" "}
@@ -433,6 +434,7 @@ function Products(props){
                           className="card border-primary mb-3"
                           key={product.product_ref}
                           style={{ maxWidth: "12rem" }}
+                          onClick={() => handleShow(product.product_ref)}
                         >
                           <img
                             src={
@@ -452,9 +454,10 @@ function Products(props){
                             </div>
                             <div className="line_old_price">
                               <span className="old_price"> {" "}{product.product_price}Dhs{" "} </span>
+                              <span className='remise'>-20%</span>
                             </div>
                           </div>
-                          <div className=" c-footer">
+                          {/* <div className=" c-footer">
                             <button
                               className="btn text-primary p-0"
                               data-toggle="modal"
@@ -463,7 +466,7 @@ function Products(props){
                             >
                               <i className="bi bi-eye-fill"></i>
                             </button>
-                          </div>
+                          </div> */}
                         </div>
                       ) : (
                         ''

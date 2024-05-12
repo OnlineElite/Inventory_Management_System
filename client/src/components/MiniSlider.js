@@ -11,8 +11,6 @@ import oppo from '../images/oppoBrand.webp'
 import samsung from '../images/Samsung.jpg'
 import '../styles/MiniSlider.css'
 function Settings(){
-
-    
     
     return(
         <div className='miniSlide'>
@@ -79,9 +77,7 @@ function Settings(){
                 <div className='slide'>
                     <img src= {canon} alt='slide'/>
                 </div>
-            </div>
-            
-            
+            </div>  
         </div>
     )
 }

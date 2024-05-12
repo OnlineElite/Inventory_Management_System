@@ -4,6 +4,7 @@
     margin: 0;
 }
 
+
 #stock  .loadind{
     width: 100%;
     height: 50vh;
@@ -87,12 +88,12 @@
 
 
 #stock  .productImage{
-    width: 50%;
+    width: 70%;
     height: 200px;
-    background-color: lightgrey;
+    background-color: white;
     border: 1px solid rgb(185, 183, 183);
     border-radius: 6px;
-    
+    padding: 0.3rem;
 }
 
 #stock  .productImage img{
@@ -107,6 +108,9 @@
     align-items: flex-end;
 }
 
+#stock .modal-body .row .left{
+    padding-right: 0rem;
+}
 
 #stock .modal-body .detail{
     font-weight: bold;
@@ -137,9 +141,21 @@
 
 #stock .equivals .card{
     background-color: rgba(236, 248, 252, 0.979);
-    min-width: 9.2rem;
-    max-height: 12rem;
-    margin-inline: 0.5rem;
+    min-width: 8.8rem;
+    height: fit-content;
+    margin-inline: 0.3rem;
+    transition: 1s;
+}
+
+#stock .equivals .card:hover{
+    transform: scale(1);
+    box-shadow: 0 5px 8px 0 black, 0 7px 20px 0 gray;
+}
+
+#stock .card .card-img-top_equivalent{
+    border-radius: 6px;
+    height: 6rem;
+    padding: 0.2rem;
 }
 
 #stock .view .modal-body .row{
@@ -158,7 +174,7 @@
 
 #stock .modal-body .leftR{
     float: right;
-    margin-right: 1.5rem;
+    margin-right: 0.5rem;
 }
 
 #stock .modal-footer .equivalet{
@@ -250,3 +266,35 @@
     width: 100%;
     margin-left: 1.5rem;
 }*/
+
+#stock .card-body .line_prices_equivalent .prices{
+    color:black;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+#stock .equivals .card-body .line_old_price .old_price {
+    color: gray;
+    text-decoration: line-through;
+    font-size: 0.8rem;
+}
+
+#stock .card-body .line_desc_equivalent{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+#stock .remise{
+    background-color: rgb(177, 248, 177);
+    color: rgb(4, 156, 4);
+    margin-left: 0.5rem;
+}
+#stock .equivals .line_old_price{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+

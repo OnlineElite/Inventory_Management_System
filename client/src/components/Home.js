@@ -29,7 +29,7 @@ function Home(props){
     }
 
     return(
-        <div className=' home p-3 bg-white' id='home'>
+        <div className=' home p-3 bg-light' id='home'>
             <h3 className=' px-3 '>Inventory State</h3>
             {isLoading? 
             <div className='loadind ' style={{width:'100%', height:'50vh', textAlign:'center', paddingTop:'3rem'}}>

@@ -37,7 +37,7 @@
 }
 
 
-#Brands .dates input, #Category .modal-body input{
+#Brands .dates input, #Brands .modal-body input{
     border-radius: 5px;
     padding: 5px;
     color: black;

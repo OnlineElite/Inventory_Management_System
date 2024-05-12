@@ -15,9 +15,20 @@
 #footer h5{
     color: rgb(0, 217, 255);
 }
-
 #footer ul li{
     color: white;
+}
+
+#footer .boxs {
+    display: grid;
+	gap: 4px; 
+	grid-template-columns: 1fr 1fr;
+	width: 300px;
+}
+
+#footer .box{
+    color: white;
+    width: 100px;
 }
 
 #footer .bi{
