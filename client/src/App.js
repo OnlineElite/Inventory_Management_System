@@ -30,7 +30,7 @@ const PrivateRoute = ({ element, isAuthenticated, isAdmin }) => {
 function App(props){
 
   return (
-    <div className='app'>
+    <div className='app bg-light'>
       <QueryClientProvider client={client}>
         <Routes>
           <Route exact path='/' element={<UserInterface/>} />

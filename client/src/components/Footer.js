@@ -9,17 +9,17 @@ function Footer (props){
             <div className='row px-5 py-3'>
                 <div className='col-12 col-sm-12 col-md-4 col col-lg-4'>
                         <h5>OUR CATEGORIES:</h5>
-                        <ul>
+                        <ul className='boxs'>
                             {props.categories.map((category)=>(
-                                <li className='text-white' key={category.name}>{category.name}</li>
+                                <li className='box text-white' key={category.name}>{category.name}</li>
                             ))}
                         </ul>
                 </div>
                 <div className='col-12 col-sm-12 col-md-4 col col-lg-4'>
                         <h5>TOP BRANDS:</h5>
-                        <ul>
+                        <ul className='boxs'>
                             {props.brands.map((brand)=>(
-                                <li className='text-white' key={brand.name}>{brand.name}</li>
+                                <li className='box text-white' key={brand.name}>{brand.name}</li>
                             ))}
                         </ul>
                 </div>

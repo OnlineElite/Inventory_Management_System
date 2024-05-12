@@ -38,7 +38,7 @@ function Brands(props){
             selector : row => {
                 var originalDate = row.created_date;
                 var dateObject = new Date(originalDate);
-                var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+                var formattedDate = dateObject.getFullYear() + "/" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "/" + ('0' + dateObject.getDate()).slice(-2) + "   " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
                 return formattedDate
             },
             width : '16%',
@@ -52,7 +52,7 @@ function Brands(props){
                 }else{
                     var originalDate = row.updated_date;
                     var dateObject = new Date(originalDate);
-                    var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+                    var formattedDate = dateObject.getFullYear() + "/" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "/" + ('0' + dateObject.getDate()).slice(-2) + "   " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
                     return formattedDate
                 }
             },
@@ -253,14 +253,15 @@ const filterByName = (e) => {
         <div className="modal-dialog modal-sm">
           <div className="modal-content">
             <div className="modal-header">
-              <h3 className="modal-title" id="exampleModalLabel">
+              <h4 className="modal-title" id="exampleModalLabel">
                 Add New Brand
-              </h3>
+              </h4>
               <span
                 type="button"
                 className="close"
                 data-dismiss="modal"
                 aria-label="Close"
+                style={{fontSize : '2rem'}}
               >
                 <span aria-hidden="true">&times;</span>
               </span>
@@ -307,14 +308,15 @@ const filterByName = (e) => {
         <div className="modal-dialog modal-sm">
           <div className="modal-content">
             <div className="modal-header">
-              <h3 className="modal-title" id="exampleModalLabel">
+              <h4 className="modal-title" id="exampleModalLabel">
                 Update Brand
-              </h3>
+              </h4>
               <span
                 type="button"
                 className="close"
                 data-dismiss="modal"
                 aria-label="Close"
+                style={{fontSize : '2rem'}}
               >
                 <span aria-hidden="true">&times;</span>
               </span>

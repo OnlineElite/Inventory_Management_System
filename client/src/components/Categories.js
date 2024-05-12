@@ -43,7 +43,7 @@ function Categories(props){
             selector : row => {
                 var originalDate = row.created_date;
                 var dateObject = new Date(originalDate);
-                var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+                var formattedDate = dateObject.getFullYear() + "/" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "/" + ('0' + dateObject.getDate()).slice(-2) + "   " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
                 return formattedDate
             },
             width : '16%',
@@ -57,7 +57,7 @@ function Categories(props){
                 }else{
                     var originalDate = row.updated_date;
                     var dateObject = new Date(originalDate);
-                    var formattedDate = dateObject.getFullYear() + "-" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "-" + ('0' + dateObject.getDate()).slice(-2) + " / " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
+                    var formattedDate = dateObject.getFullYear() + "/" + ('0' + (dateObject.getMonth() + 1)).slice(-2) + "/" + ('0' + dateObject.getDate()).slice(-2) + "   " + ('0' + dateObject.getHours()).slice(-2) + ":" + ('0' + dateObject.getMinutes()).slice(-2) + ":" + ('0' + dateObject.getSeconds()).slice(-2);
                     return formattedDate
                 }
             },
@@ -222,8 +222,8 @@ function Categories(props){
                 <div className="modal-dialog modal-sm">
                     <div className="modal-content">
                     <div className="modal-header">
-                        <h3 className="modal-title" id="exampleModalLabel">Add New Category</h3>
-                        <span type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <h4 className="modal-title" id="exampleModalLabel">Add New Category</h4>
+                        <span type="button" className="close" data-dismiss="modal" aria-label="Close" style={{fontSize : '2rem'}}>
                             <span aria-hidden="true">&times;</span>
                         </span>
                     </div>
@@ -246,8 +246,8 @@ function Categories(props){
                 <div className="modal-dialog modal-sm">
                     <div className="modal-content">
                     <div className="modal-header">
-                        <h3 className="modal-title" id="exampleModalLabel">Update Category</h3>
-                        <span type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <h4 className="modal-title" id="exampleModalLabel">Update Category</h4>
+                        <span type="button" className="close" data-dismiss="modal" aria-label="Close" style={{fontSize : '2rem'}}>
                             <span aria-hidden="true">&times;</span>
                         </span>
                     </div>
