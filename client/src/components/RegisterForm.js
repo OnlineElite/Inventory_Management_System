@@ -14,6 +14,7 @@ import "../styles/LogReg.css";
 const RegisterForm = (props) => {
   const [info, setInfo] = useState({});
   const navigate = useNavigate();
+  const [shwoPass, setShwoPass] = useState(false)
 
   useEffect(() => {
     const ids = ["firstname", "lastname", "email", "username", "password"];
@@ -86,6 +87,25 @@ const RegisterForm = (props) => {
     }
   }, [props.isAuthenticated]);
 
+  const showPassword =(e)=>{
+    e.preventDefault();
+    const parent = document.getElementById("passw")
+    const eye = parent.lastChild
+    if(!shwoPass){  
+        parent.children[1].type = 'text'
+        console.log(parent.children[1].type)
+        setShwoPass(true)
+        eye.className = 'bi bi-eye-slash-fill'
+        console.log(eye.className)
+    }else{
+        parent.children[1].type = 'password'
+        console.log(parent.children[1].type)
+        setShwoPass(false)
+        eye.className = 'bi bi-eye-fill'
+        console.log(eye.className)
+    }
+}
+
   return (
     <div className="registercomp">
       <Navbar display="d-none" />
@@ -114,9 +134,10 @@ const RegisterForm = (props) => {
                   <label htmlFor="username">Username : </label>
                   <input type="text" id="username" name="username" />
                 </div>
-                <div className="ro">
+                <div className="ro pass" id='passw'>
                   <label htmlFor="password">Password : </label>
                   <input type="password" id="password" name="password" />
+                  <i onClick={showPassword} className="bi bi-eye-fill" id='eye'></i>
                 </div>
                 <hr />
                 <button id="register" disabled type="submit">

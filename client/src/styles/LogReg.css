@@ -193,3 +193,11 @@
     height: fit-content;
 }
 
+.pass{
+    position: relative;
+}
+
+.pass i{
+    position: absolute;
+    right: 2rem;
+}
