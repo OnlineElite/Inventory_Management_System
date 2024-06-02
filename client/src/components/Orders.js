@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Modal from 'react-modal';
 import DataTable from 'react-data-table-component'
 import ClipLoader from "react-spinners/ClipLoader";
-import { bringOrdersThunk, changeOrderTotalAmountThunk, addProductToOrderThunk, bringProductsThunk, updateOrderProductThunk, bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk, changeOrderStatusThunk} from '../actions/IMSAction'
+import { bringOrdersThunk, changeOrderTotalAmountThunk, addProductToOrderThunk, bringProductsThunk, updateOrderProductThunk,
+     bringStatusThunk, bringOrderProductsThunk, deleteProductFromOrderThunk, changeOrderStatusThunk} from '../actions/IMSAction'
 
 import '../styles/Orders.css'
 const { RangePicker } = DatePicker;
@@ -408,7 +409,8 @@ function Orders(props){
                     <div className="cartBox" key={index}>
                         <div className="cart">
                             <div className='texto'>
-                                {items.total_pending ? <div style={{color: '#ffa500'}} className="numbers">{items.total_pending}</div>: <div style={{color: '#ffa500'}} className="numbers">0</div>}
+                                {items.total_pending ? <div style={{color: '#ffa500'}} className="numbers">{items.total_pending}</div>
+                                : <div style={{color: '#ffa500'}} className="numbers">0</div>}
                                 <div className="cartName">Pending</div>
                             </div>
 
@@ -419,7 +421,8 @@ function Orders(props){
 
                         <div className="cart">
                             <div className='texto'>
-                                {items.total_in_progress? <div style={{color: '#0099ff'}} className="numbers">{items.total_in_progress}</div>: <div style={{color: '#0099ff'}} className="numbers">0</div>}
+                                {items.total_in_progress? <div style={{color: '#0099ff'}} className="numbers">{items.total_in_progress}</div>
+                                : <div style={{color: '#0099ff'}} className="numbers">0</div>}
                                 <div className="cartName">In Progress</div>
                             </div>
 
@@ -430,7 +433,8 @@ function Orders(props){
 
                         <div className="cart">
                             <div className='texto'>
-                                {items.total_delivered? <div style={{color: '#07d407'}} className="numbers">{items.total_delivered}</div>: <div style={{color: '#07d407'}} className="numbers">0</div>}
+                                {items.total_delivered? <div style={{color: '#07d407'}} className="numbers">{items.total_delivered}</div>
+                                : <div style={{color: '#07d407'}} className="numbers">0</div>}
                                 <div className="cartName">Delivered</div>
                             </div>
 
@@ -441,7 +445,8 @@ function Orders(props){
 
                         <div className="cart">
                             <div className='texto'>
-                                {items.total_return? <div style={{color: '#ff0000'}} className="numbers">{items.total_return}</div>: <div style={{color: '#ff0000'}} className="numbers">0</div>}
+                                {items.total_return? <div style={{color: '#ff0000'}} className="numbers">{items.total_return}</div>
+                                : <div style={{color: '#ff0000'}} className="numbers">0</div>}
                                 <div className="cartName">Return</div>
                             </div>
 

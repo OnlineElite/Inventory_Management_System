@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Children } from 'react'
 import Navbar from './Navbar'
 import { useState, useEffect } from 'react';
 import {connect} from 'react-redux'
@@ -12,6 +12,7 @@ function LoginForm(props){
 
     const navigate = useNavigate();
     const [info, setInfo] = useState({})
+    const [shwoPass, setShwoPass] = useState(false)
 
     useEffect(() => {
         const ids = ['email', 'password'];
@@ -64,7 +65,26 @@ function LoginForm(props){
             navigate(`/dashboard`);
         }
     })
-    return(
+
+    const showPassword =(e)=>{
+        e.preventDefault();
+        const parent = document.getElementById("passw")
+        const eye = parent.lastChild
+        if(!shwoPass){  
+            parent.children[1].type = 'text'
+            console.log(parent.children[1].type)
+            setShwoPass(true)
+            eye.className = 'bi bi-eye-slash-fill'
+            console.log(eye.className)
+        }else{
+            parent.children[1].type = 'password'
+            console.log(parent.children[1].type)
+            setShwoPass(false)
+            eye.className = 'bi bi-eye-fill'
+            console.log(eye.className)
+        }
+    }
+        return(
         <div className='logincomp'>
             <Navbar display = "d-none"/>
             <div className='logReg'>
@@ -76,8 +96,14 @@ function LoginForm(props){
                         </div>
                         <div className=" form col-12 col-md-6 col-sm-6 col-lg-6">
                             <form className="LoginForm" onSubmit={HandelSubmit} >
-                                <div className="ro"><label htmlFor="email">Email : </label><input type="email" id="email" name="email"/></div>
-                                <div className="ro"><label htmlFor="password">Password : </label><input type="password" id="password" name="password"/></div>
+                                <div className="ro"><label htmlFor="email">Email : </label>
+                                    <input type="email" id="email" name="email"/>
+                                </div>
+                                <div className="ro pass" id='passw'>
+                                    <label htmlFor="password">Password : </label>
+                                    <input type="password" id="password" name="password"/>
+                                    <i onClick={showPassword} className="bi bi-eye-fill" id='eye'></i>
+                                </div>
                                 <hr/>
                                 <button  id="login" type="submit" disabled>Login</button>
                             </form>                      
