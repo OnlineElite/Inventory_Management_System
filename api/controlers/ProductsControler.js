@@ -70,6 +70,17 @@ async function contactMessage (req, res){
 
 // Orders Actions
 
+async function testControle (req, res){
+  try{
+    const all = await ordersActions.testOrders()
+    console.log(all)
+    res.status(201).json({tous: all})
+  }catch(err){
+    console.error(err)
+    res.status(500).json({error : "Internal server error"})
+  }
+}
+
 async function sendingOrders(req, res){
   try{
     //console.log(req.body)
@@ -528,6 +539,7 @@ async function DeletingBrand(req, res) {
   }
 }
 module.exports = {
+  testControle,
   getProducts,
   getCategories,
   getBrands,

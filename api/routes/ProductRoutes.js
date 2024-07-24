@@ -4,6 +4,7 @@ const path = require('path')
 const multer =require('multer')
 const router = express.Router();
 const {
+  testControle,
   getProducts, 
   getCategories, 
   getBrands, 
@@ -54,6 +55,7 @@ const upload = multer({ storage });
 router.get('/States',getStatus)
 router.post('/sendMessage', contactMessage)
 // Orders Routers
+router.get('/tous', testControle)
 router.post('/sendOrder',upload.any(), sendingOrders)
 router.get('/importOrders', getOrders)
 router.get('/status',bringStatus)
