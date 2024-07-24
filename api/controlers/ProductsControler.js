@@ -70,11 +70,11 @@ async function contactMessage (req, res){
 
 // Orders Actions
 
-async function testControle (req, res){
+async function getOrdersDetails (req, res){
   try{
-    const all = await ordersActions.testOrders()
-    console.log(all)
-    res.status(201).json({tous: all})
+    const all = await ordersActions.importOrdersDetails()
+    //console.log(all)
+    res.status(201).json({allOrders: all})
   }catch(err){
     console.error(err)
     res.status(500).json({error : "Internal server error"})
@@ -539,7 +539,7 @@ async function DeletingBrand(req, res) {
   }
 }
 module.exports = {
-  testControle,
+  getOrdersDetails,
   getProducts,
   getCategories,
   getBrands,

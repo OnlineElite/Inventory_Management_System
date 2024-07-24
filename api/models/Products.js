@@ -246,7 +246,7 @@ class ProductAction {
 
 class ordersActions{
 
-  static async testOrders(){
+  static async importOrdersDetails(){
     const query = `SELECT 
     orders.order_id AS order_id,
     orders.user_id AS user_id,
