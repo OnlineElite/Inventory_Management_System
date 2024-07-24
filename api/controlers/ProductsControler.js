@@ -73,8 +73,8 @@ async function contactMessage (req, res){
 async function getOrdersDetails (req, res){
   try{
     const all = await ordersActions.importOrdersDetails()
-    console.log(all)
-    res.status(201).json({tous: all})
+    //console.log(all)
+    res.status(201).json({allOrders: all})
   }catch(err){
     console.error(err)
     res.status(500).json({error : "Internal server error"})
