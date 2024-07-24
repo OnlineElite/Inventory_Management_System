@@ -70,9 +70,9 @@ async function contactMessage (req, res){
 
 // Orders Actions
 
-async function testControle (req, res){
+async function getOrdersDetails (req, res){
   try{
-    const all = await ordersActions.testOrders()
+    const all = await ordersActions.importOrdersDetails()
     console.log(all)
     res.status(201).json({tous: all})
   }catch(err){
@@ -539,7 +539,7 @@ async function DeletingBrand(req, res) {
   }
 }
 module.exports = {
-  testControle,
+  getOrdersDetails,
   getProducts,
   getCategories,
   getBrands,
