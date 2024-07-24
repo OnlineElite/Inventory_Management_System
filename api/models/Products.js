@@ -287,7 +287,7 @@ class ordersActions{
         status.name, 
         status.color;`
     const result = await pool.query(query);
-    return result.rows[0]
+    return result.rows
   }
   
   static async addOrder(order){
