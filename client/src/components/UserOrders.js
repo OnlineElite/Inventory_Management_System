@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { connect } from 'react-redux';
 import '../styles/UserOrders.css'
-import { bringOrderProductsThunk} from '../actions/IMSAction'
+//import { bringOrderProductsThunk} from '../actions/IMSAction'
 
 const retrieveOrders = async () => {
     const baseURL = process.env.REACT_APP_API_PROD_URL; 
@@ -76,12 +76,12 @@ const mapStateToProps =(state)=>{
     }
 } 
 
-const mapDispatchToProps =(dispatch)=>{
+/* const mapDispatchToProps =(dispatch)=>{
     return{
         getOrderProducts: (order_id)=>{
             dispatch(bringOrderProductsThunk(order_id))
         }
     }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps) (UserOrders);
+ */
+export default connect(mapStateToProps) (UserOrders);

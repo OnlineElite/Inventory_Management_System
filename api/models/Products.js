@@ -245,6 +245,50 @@ class ProductAction {
 }
 
 class ordersActions{
+
+  static async testOrders(){
+    const query = `SELECT 
+    orders.order_id AS order_id,
+    orders.user_id AS user_id,
+    orders.customer_name AS customer_name,
+    orders.created_date AS created_date,
+    orders.total_amount AS total_amount,
+    orders.total_item AS total_item,
+    orders.payment_method AS payment_method,
+    orders.delivery_method AS delivery_method,
+    orders.city AS city,
+    orders.country AS country,
+    orders.address AS address,
+    orders.additional_info AS additional_info,
+    orders.updated_date AS updated_date,
+    orders.deleted_date AS deleted_date,
+    status.name AS orders_status,
+    status.color AS status_color,
+    JSON_AGG(order_products.*) AS order_products
+    FROM orders
+    INNER JOIN status ON status.id = orders.status_id
+    LEFT JOIN order_products ON order_products.order_id = orders.order_id
+    WHERE orders.deleted_date IS NULL
+    GROUP BY 
+        orders.order_id, 
+        orders.user_id, 
+        orders.customer_name, 
+        orders.created_date, 
+        orders.total_amount, 
+        orders.total_item, 
+        orders.payment_method, 
+        orders.delivery_method, 
+        orders.city, 
+        orders.country, 
+        orders.address, 
+        orders.additional_info, 
+        orders.updated_date, 
+        orders.deleted_date, 
+        status.name, 
+        status.color;`
+    const result = await pool.query(query);
+    return result.rows[0]
+  }
   
   static async addOrder(order){
     /******* Add orders *******/
