@@ -369,7 +369,6 @@ function Checkout(props){
                                     <div className='border border-secondary rounded my-2 px-2'>
                                         {props.incart.map((product)=>(                          
                                             <div key={product.product_ref}  className='prodInfo'>
-
                                                 <div className='prodimg'>                                                        
                                                     <img src={product.product_image === null || product.product_image === undefined || product.product_image === ''
                                                         ? prodimg
@@ -468,6 +467,7 @@ const mapStateToProps =(state)=>{
         isAdmin : state.isAdmin,
         incart : state.incart,
         addMsg : state.addMsg,
+        products : state.products,
         response : state.error,
         sendOrderMsg : state.sendOrderMsg,
         errorOrderMsg : state.errorOrderMsg
