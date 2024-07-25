@@ -377,12 +377,12 @@ function Navbar(props){
                                                     </div>
                                                 </div>
                                                 <div className='prodName'>
-                                                    <p className=' descrip text-black d-none d-md-block d-sm-none d-lg-block d-xl-block'> {product.product_desc} </p>
+                                                    <p className='descrip text-black d-none d-md-block d-sm-none d-lg-block d-xl-block'> {product.product_desc} </p>
                                                     <p className='text-warning'> {product.product_name} </p>
                                                     <p className= {(product.product_stock !== 0)? 'greenColor' : 'redColor'}> {(product.product_stock !== 0)? 'Available': 'not Available' } </p>
                                                     {product.product_stock !== 0?
                                                         <button onClick={(e)=>HandeleAddToCart(product.product_id, e)} className='text-white my-1 mx-0 px-1 bg-danger'><i className=" mr-2 bi bi-cart-plus-fill"></i>Add to cart</button>
-                                                        :<button  className='text-white my-2 mx-0 px-1' style={{backgroundColor: "gray" }} disabled ><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
+                                                        :<button  className='text-white my-1 mx-0 px-1' style={{backgroundColor: "gray" }} disabled ><i className=" mx-2 bi bi-cart-plus-fill"></i>Add to cart</button>
                                                     }
                                                 </div>
                                             </div>
